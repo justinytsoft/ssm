@@ -1,0 +1,10 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head th:include="fragment/import :: header"></head>
+	
+	<body>
+		<div style="text-align: center;line-height: 45px">
+			欢迎您登录: <span th:text="${session.user.name}"></span><a style="margin-left: 20px" th:href="@{/logout}">安全退出</a>
+		</div>
+	</body>
+</html>

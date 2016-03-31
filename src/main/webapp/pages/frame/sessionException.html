@@ -1,0 +1,12 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head th:include="fragment/import :: header"></head>
+	
+	<body>
+		<script type="text/javascript" th:inline="javascript">
+			/*<![CDATA[*/
+				location.href = [[@{/login(msg=${msg})}]];
+			/*]]>*/
+		</script>
+	</body>
+</html>
