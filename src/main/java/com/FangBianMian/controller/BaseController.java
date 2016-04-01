@@ -19,11 +19,11 @@ public class BaseController {
 	public String login(Model model, @RequestParam(required=false) String msg) {
 		if(!StringUtils.isBlank(msg)){
 			if("LOGIN.FAILD".equals(msg)){
-				model.addAttribute("msg", "ÓÃ»§Ãû»òÃÜÂë´íÎó");
-			}else if("SEESION.INVALID".equals(msg)){
-				model.addAttribute("msg", "session³¬Ê±,ÇëÖØĞÂµÇÂ¼");
+				model.addAttribute("msg", "ç”¨æˆ·åæˆ–å¯†ç é”™è¯¯");
+			}else if("SESSION.INVALID".equals(msg)){
+				model.addAttribute("msg", "sessionè¿‡æœŸ,è¯·é‡æ–°ç™»å½•");
 			}else if("SESSION.MULTI".equals(msg)){
-				model.addAttribute("msg", "¸ÃÕÊºÅÒÑ´ÓÆäËûµØ·½µÇÂ¼");
+				model.addAttribute("msg", "è¯¥å¸å·å·²ä»å…¶ä»–åœ°æ–¹ç™»å½•");
 			}
 		}
 		return "pages/frame/login";

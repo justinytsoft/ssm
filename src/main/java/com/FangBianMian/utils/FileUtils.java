@@ -33,11 +33,10 @@ public class FileUtils {
 	}
 
 	/**
-	 * Retrieves the filename separated by name and extension.
+	 * 返回文件的 文件名 和 后缀
 	 * 
-	 * @param filename
-	 *            File to be used.
-	 * @return A pair consisting of name and extension of the passed file.
+	 * @param filename 文件名
+	 * @return 返回一个包含了 文件名 和 后缀 的数组, 下标 0 返回 name, 1 返回后缀
 	 */
 	public String[] getFileNameAndExtension(String filename) {
 		String name = filename.substring(0, filename.lastIndexOf("."));

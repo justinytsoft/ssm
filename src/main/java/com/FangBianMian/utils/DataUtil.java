@@ -43,6 +43,8 @@ public class DataUtil {
 	 * 每位允许的字符
 	 */
 	private static final String POSSIBLE_CHARS = "0123456789";
+	public static final char[] ARRAY = { 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '0', '1', '2', '3', '4',
+		'5', '6', '7', '8', '9', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'Z', 'X', 'C', 'V', 'B', 'N', 'M' };
 
 	/**
 	 * 生产一个指定长度的随机字符串
@@ -60,20 +62,12 @@ public class DataUtil {
 		return sb.toString();
 	}
 
-	public static String formatData(int number, int width) {
-		if (number <= 0)
-			return null;
-		String sNum = number + "";
-		if (sNum.length() < width) {
-			int w = width - sNum.length();
-			for (int i = 0; i < w; i++) {
-				sNum = "0" + sNum;
-			}
-		}
-		return sNum;
-	}
-
-	public static String encodeStr(String str) {
+	/**
+	 * GBK
+	 * @param str
+	 * @return
+	 */
+	public static String encodeStrGBK(String str) {
 		if (str == null)
 			return null;
 		try {
@@ -84,6 +78,11 @@ public class DataUtil {
 		}
 	}
 
+	/**
+	 * UTF8
+	 * @param str
+	 * @return
+	 */
 	public static String encodeStrUTF8(String str) {
 		if (StringUtils.isBlank(str))
 			return null;
@@ -95,52 +94,20 @@ public class DataUtil {
 		}
 	}
 
-	public static final char[] array = { 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '0', '1', '2', '3', '4',
-			'5', '6', '7', '8', '9', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'Z', 'X', 'C', 'V', 'B', 'N', 'M' };
-
-	public static String _10_to_62(long number) {
-		Long rest = number;
-		Stack<Character> stack = new Stack<Character>();
-		StringBuilder result = new StringBuilder(0);
-		while (rest != 0) {
-			stack.add(array[new Long((rest - (rest / 62) * 62)).intValue()]);
-			rest = rest / 62;
-		}
-		for (; !stack.isEmpty();) {
-			result.append(stack.pop());
-		}
-		return result.toString();
-	}
-
-	public static long _62_to_10(String sixty_str) {
-		int multiple = 1;
-		long result = 0;
-		Character c;
-		for (int i = 0; i < sixty_str.length(); i++) {
-			c = sixty_str.charAt(sixty_str.length() - i - 1);
-			result += _62_value(c) * multiple;
-			multiple = multiple * 62;
-		}
-		return result;
-	}
-
-	private static int _62_value(Character c) {
-		for (int i = 0; i < array.length; i++) {
-			if (c == array[i]) {
-				return i;
-			}
-		}
-		return -1;
-	}
-
+	/**
+	 * 根据文件名删除文件
+	 * @param fileName
+	 */
 	public static void deleteByUploadImg(String fileName) {
-		String sep = System.getProperty("file.separator");
-		String fileDir = SettingUtil.getCommonSetting("upload.image.path");// 存放文件文件夹名称
-
-		String filePath = fileDir + sep + fileName;
-		FileUtils.deleteFile(filePath);
-
+		
 		if (!StringUtils.isBlank(fileName)) {
+			
+			String sep = System.getProperty("file.separator");
+			String fileDir = SettingUtil.getCommonSetting("upload.image.path");// 存放文件文件夹名称
+	
+			String filePath = fileDir + sep + fileName;
+			FileUtils.deleteFile(filePath);
+
 			String[] parsedName = new FileUtils().getFullFileNameAndExtension(filePath);
 			String thumbPath = parsedName[0] + parsedName[1] + "_S" + parsedName[2];
 			FileUtils.deleteFile(thumbPath);
@@ -168,8 +135,8 @@ public class DataUtil {
 			}
 			Random random = new Random();
 			StringBuffer sb = new StringBuffer();
-			sb.append(array[random.nextInt(array.length)]);
-			sb.append(array[random.nextInt(array.length)]);
+			sb.append(ARRAY[random.nextInt(ARRAY.length)]);
+			sb.append(ARRAY[random.nextInt(ARRAY.length)]);
 
 			subDir.append(sb.toString());
 		}
@@ -273,8 +240,8 @@ public class DataUtil {
 			}
 			Random random = new Random();
 			StringBuffer sb = new StringBuffer();
-			sb.append(array[random.nextInt(array.length)]);
-			sb.append(array[random.nextInt(array.length)]);
+			sb.append(ARRAY[random.nextInt(ARRAY.length)]);
+			sb.append(ARRAY[random.nextInt(ARRAY.length)]);
 
 			subDir.append(sb.toString());
 		}
@@ -378,6 +345,46 @@ public class DataUtil {
 		}
 	}
 	
+	/**
+	 * 获取一个随机生成的字符串
+	 * @param number
+	 * @return
+	 */
+	public static String _10_to_62(long number) {
+		Long rest = number;
+		Stack<Character> stack = new Stack<Character>();
+		StringBuilder result = new StringBuilder(0);
+		while (rest != 0) {
+			stack.add(ARRAY[new Long((rest - (rest / 62) * 62)).intValue()]);
+			rest = rest / 62;
+		}
+		for (; !stack.isEmpty();) {
+			result.append(stack.pop());
+		}
+		return result.toString();
+	}
+
+	public static long _62_to_10(String sixty_str) {
+		int multiple = 1;
+		long result = 0;
+		Character c;
+		for (int i = 0; i < sixty_str.length(); i++) {
+			c = sixty_str.charAt(sixty_str.length() - i - 1);
+			result += _62_value(c) * multiple;
+			multiple = multiple * 62;
+		}
+		return result;
+	}
+
+	private static int _62_value(Character c) {
+		for (int i = 0; i < ARRAY.length; i++) {
+			if (c == ARRAY[i]) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
 	public static void mergeFile(String fileName, String ext, String toFileName, int size) {
 		String sep = System.getProperty("file.separator");
 		String fileDir = SettingUtil.getCommonSetting("upload.file.temp.path");// 存放文件文件夹名称
@@ -446,8 +453,8 @@ public class DataUtil {
 			}
 			Random random = new Random();
 			StringBuffer sb = new StringBuffer();
-			sb.append(DataUtil.array[random.nextInt(DataUtil.array.length)]);
-			sb.append(DataUtil.array[random.nextInt(DataUtil.array.length)]);
+			sb.append(DataUtil.ARRAY[random.nextInt(DataUtil.ARRAY.length)]);
+			sb.append(DataUtil.ARRAY[random.nextInt(DataUtil.ARRAY.length)]);
 
 			subDir.append(sb.toString());
 		}
@@ -460,20 +467,6 @@ public class DataUtil {
 		org.apache.commons.io.FileUtils.moveFileToDirectory(srcFile, dstDir, true);
 
 		if (createThumb) {
-			//String heightS = SettingUtil.getCommonSetting("thumbnailator.height");
-			//String widthS = SettingUtil.getCommonSetting("thumbnailator.width");
-
-			//Integer height = !StringUtils.isBlank(heightS) ? Integer.valueOf(heightS) : 0;
-			//Integer width = !StringUtils.isBlank(widthS) ? Integer.valueOf(widthS) : 0;
-
-			//ImageResizer.resizeImage(imgFileDir + sep + subDir + sep + filename, width, height, "_S");
-//			String fileName = imgFileDir + sep + subDir + sep + filename;
-//			ImageResizer.resizeImage(fileName, 640, 320, "_Z");
-//			String[] fileNames = fileName.split("\\.");
-//			ImageResizer.cutCenterImage(fileNames[0]+"_Z"+"."+fileNames[1], fileNames[0]+"_S"+"."+fileNames[1], 640, 320);
-//			FileUtils.deleteFile(fileNames[0]+"_Z"+"."+fileNames[1]);
-			
-			
 			String  StandardHeight= SettingUtil.getCommonSetting("commoditythumb.height");
 			String  StandardWidth = SettingUtil.getCommonSetting("commoditythumb.width");
 			
@@ -482,8 +475,6 @@ public class DataUtil {
 		
 			String fileName = imgFileDir + sep + subDir + sep + filename;
 			ImageResizer.resizeImage(fileName, 200, 200, "_S");
-			//String[] fileNames = fileName.split("\\.");
-			//ImageUtil.ScaleAndCutCommodityImage(fileNames[0]+"."+fileNames[1], fileNames[0]+"_S"+"."+fileNames[1], width, height);
 		}
 
 		return subDir + sep + filename;
@@ -498,13 +489,11 @@ public class DataUtil {
 	 *                       标准尺寸为：宽500*高400.
 	 *                       如果高度比例低于5：4的，不进行裁剪
 	 *                       如果高度比例等于5：4的，按照宽度比例进行缩放
-	 *                       如果高度比例打印5：4的，按照宽带比例进行缩放，同时长度超过比例的部分，采取留中间部分的策略
+	 *                       如果高度比例大于5：4的，按照宽带比例进行缩放，同时长度超过比例的部分，采取留中间部分的策略
 	 * 
 	 * @return
 	 * @throws IOException
 	 */
-	
-	
 	public static String movePicForCommodity(String filename, boolean createThumb) throws IOException {
 		String fileDir = SettingUtil.getCommonSetting("upload.file.temp.path");
 		String sep = System.getProperty("file.separator");
@@ -528,8 +517,8 @@ public class DataUtil {
 			}
 			Random random = new Random();
 			StringBuffer sb = new StringBuffer();
-			sb.append(DataUtil.array[random.nextInt(DataUtil.array.length)]);
-			sb.append(DataUtil.array[random.nextInt(DataUtil.array.length)]);
+			sb.append(DataUtil.ARRAY[random.nextInt(DataUtil.ARRAY.length)]);
+			sb.append(DataUtil.ARRAY[random.nextInt(DataUtil.ARRAY.length)]);
 
 			subDir.append(sb.toString());
 		}
@@ -542,14 +531,6 @@ public class DataUtil {
 		org.apache.commons.io.FileUtils.moveFileToDirectory(srcFile, dstDir, true);
 
 		if (createThumb) {
-			//String heightS = SettingUtil.getCommonSetting("thumbnailator.height");
-			//String widthS = SettingUtil.getCommonSetting("thumbnailator.width");
-
-			//Integer height = !StringUtils.isBlank(heightS) ? Integer.valueOf(heightS) : 0;
-			//Integer width = !StringUtils.isBlank(widthS) ? Integer.valueOf(widthS) : 0;
-
-			//ImageResizer.resizeImage(imgFileDir + sep + subDir + sep + filename, width, height, "_S");
-			
 			String  StandardHeight= SettingUtil.getCommonSetting("commoditythumb.height");
 			String  StandardWidth = SettingUtil.getCommonSetting("commoditythumb.width");
 			
@@ -559,7 +540,6 @@ public class DataUtil {
 			String fileName = imgFileDir + sep + subDir + sep + filename;
 			String[] fileNames = fileName.split("\\.");
 			ImageUtil.ScaleAndCutCommodityImage(fileNames[0]+"."+fileNames[1], fileNames[0]+"_S"+"."+fileNames[1], width, height);
-//			FileUtils.deleteFile(fileNames[0]+"_Z"+"."+fileNames[1]);
 		}
 
 		return subDir + sep + filename;
@@ -596,8 +576,8 @@ public class DataUtil {
 			}
 			Random random = new Random();
 			StringBuffer sb = new StringBuffer();
-			sb.append(DataUtil.array[random.nextInt(DataUtil.array.length)]);
-			sb.append(DataUtil.array[random.nextInt(DataUtil.array.length)]);
+			sb.append(DataUtil.ARRAY[random.nextInt(DataUtil.ARRAY.length)]);
+			sb.append(DataUtil.ARRAY[random.nextInt(DataUtil.ARRAY.length)]);
 
 			subDir.append(sb.toString());
 		}
@@ -611,11 +591,6 @@ public class DataUtil {
 		String fileName = imgFileDir + sep + subDir + sep + filename;
 		String subfilename = ImageResizer.resizeCutImage(fileName, "_S", width);
 		ImageResizer.saveResizedCutImage(subfilename, fileName, cx, cy, left, top);
-			/*String fileName = imgFileDir + sep + subDir + sep + filename;
-			ImageResizer.resizeImage(fileName, width, 0, "_S");
-			String[] fileNames = fileName.split("\\.");
-			ImageResizer.cutCenterImage(fileNames[0]+"_S"+"."+fileNames[1], fileName, 640, 320);*/
-			//FileUtils.deleteFile(fileNames[0]+"_Z"+"."+fileNames[1]);
 
 		return subDir + sep + URLEncoder.encode(filename);
 	}
@@ -662,9 +637,6 @@ public class DataUtil {
 					int w=200;
 					int h=200;
 					ImageResizer.resizeImage(fileName, w, h, "_S");
-					/*String[] fileNames = fileName.split("\\.");
-					ImageResizer.cutCenterImage(fileNames[0]+"_Z"+"."+fileNames[1], fileNames[0]+"_S"+"."+fileNames[1], w, h);
-					FileUtils.deleteFile(fileNames[0]+"_Z"+"."+fileNames[1]);*/
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -676,9 +648,16 @@ public class DataUtil {
 	}
 
 	
+	/**
+	 * 将文件上传到临时文件夹
+	 * @param filename 临时文件的名称
+	 * @param image 上传的文件名称
+	 * @return
+	 */
 	public static String uploadImageToTmp(String filename, String image){
 		return DataUtil.uploadImageToTmp(filename, image, 0, 0);
 	}
+	
 	/**
 	 * 存放终端上传的图片到临时目录
 	 * 
@@ -713,9 +692,6 @@ public class DataUtil {
 				h=200;
 			}
 			ImageResizer.resizeImage(filenames, w, h, "_S");
-			/*String[] fileNames = filenames.split("\\.");
-			ImageResizer.cutCenterImage(fileNames[0]+"_Z"+"."+fileNames[1], fileNames[0]+"_S"+"."+fileNames[1], w, h);
-			FileUtils.deleteFile(fileNames[0]+"_Z"+"."+fileNames[1]);*/
 			return filename;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -759,9 +735,6 @@ public class DataUtil {
 			if (createThumb) {
 				String fileName = toDir + sep + filename;
 				ImageResizer.resizeImage(fileName, 200, 200, "_S");
-				/*String[] fileNames = fileName.split("\\.");
-				ImageResizer.cutCenterImage(fileNames[0]+"_Z"+"."+fileNames[1], fileNames[0]+"_S"+"."+fileNames[1], 640, 320);
-				FileUtils.deleteFile(fileNames[0]+"_Z"+"."+fileNames[1]);*/
 			}
 			return dirName + sep + filename;
 		} catch (Exception e) {
@@ -801,8 +774,8 @@ public class DataUtil {
 			}
 			Random random = new Random();
 			StringBuffer sb = new StringBuffer();
-			sb.append(DataUtil.array[random.nextInt(DataUtil.array.length)]);
-			sb.append(DataUtil.array[random.nextInt(DataUtil.array.length)]);
+			sb.append(DataUtil.ARRAY[random.nextInt(DataUtil.ARRAY.length)]);
+			sb.append(DataUtil.ARRAY[random.nextInt(DataUtil.ARRAY.length)]);
 
 			subDir.append(sb.toString());
 		}
@@ -851,10 +824,5 @@ public class DataUtil {
 	           temp =  true;
 	       }
 	       return temp;
-	}
-	
-	public static List<String> toUrlEncode(String str) {
-		
-		return null;
 	}
 }

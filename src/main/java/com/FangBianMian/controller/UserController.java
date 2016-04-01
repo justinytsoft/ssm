@@ -24,7 +24,7 @@ public class UserController {
 	private IUserService userService;
 	
 	/**
-	 * 获取用户菜单
+	 * 鑾峰彇鐢ㄦ埛鑿滃崟
 	 * @param pid
 	 * @return
 	 */
@@ -37,8 +37,16 @@ public class UserController {
 		}
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("uid", su.getId());
-		//param.put("pid", (pid==null?0:pid));
 		List<EasyUiTree> datas = userService.getMenus(param);
 		return datas;
+	}
+	
+	/**
+	 * 娉ㄥ唽椤甸潰
+	 * @return
+	 */
+	@RequestMapping("/signup")
+	public String signup(){
+		return "pages/user/signup";
 	}
 }

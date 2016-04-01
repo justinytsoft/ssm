@@ -1,6 +1,5 @@
 package com.FangBianMian.utils;
 
-
 public class EasyUiTree {
 
 	private Integer id; //当前节点的ID
