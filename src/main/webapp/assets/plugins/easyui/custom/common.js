@@ -10,8 +10,6 @@ $(function(){
 			padding:0
 		});
 	});
-	
-	
 });
 
 /*打开dialog*/
@@ -31,7 +29,7 @@ function createTree(id, url){
 	    animate:true,
 	    onClick: function(node){
 			var url = node.attributes;
-	    	if(url != ""){
+	    	if(url != null){
 				$("#right").panel("refresh",rootPath + url);
 			}
 		},
@@ -44,7 +42,6 @@ function createTree(id, url){
 			$.each($("#navigate div"),function(){
 				var obj = $(this);
 				obj.css("font-size","50px");
-				obj.css("color","red");
 				obj.css("padding","10px 0px");
 			});
 		}

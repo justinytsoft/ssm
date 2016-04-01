@@ -5,7 +5,8 @@
 	<body>
 		<script type="text/javascript" th:inline="javascript">
 			/*<![CDATA[*/
-			   $(function(){        
+			   $(function(){  
+				   
 	   				$("#jobList").datagrid({
 	   					url : rootPath + "job/list",
 					    fitColumns : true, //设置为 true, 则自动调整宽度 
@@ -18,73 +19,75 @@
 					    pagination:true, //设置为 true，则在数据网格（datagrid）底部显示分页工具栏。
 					    pageSize:10, //当设置了 pagination 属性时，初始化页面尺寸。
 					    pageList:[5,10,20,30,50], //当设置了 pagination 属性时，初始化页面尺寸的选择列表。
-					    columns:[[ //设置表头 
-							{
-								field:'jobName',
-								title:'职位名称',
-								align:"center",
-								width:20,
-								formatter: function(value,row,index){ //value:当前遍历对象的real_name的值 , row:当前遍历的对象, index:第几个对象
-									var aHtml = [];
-					    			aHtml.push("<a class='apply-name' href='"+rootPath+"/job/detail?id="+row.id+"'>");
-					            	aHtml.push(value);
-					            	aHtml.push('</a>');
-									return aHtml.join('');
-								}
-							},
-							{
-								field:'create_time',
-								title:'发布时间',
-								sortable:false,
-								align:"left",
-								width:20,
-								formatter: function(value,row,index){
-									var currentTime = new Date(value);
-									return currentTime.toLocaleString();
-								}
-							},
-							{
-								field:'refresh_time',
-								title:'刷新时间',
-								sortable:false,
-								align:"left",
-								width:20,
-								formatter: function(value,row,index){
-									var currentTime = new Date(value);
-									return currentTime.toLocaleString();
-								}
-							},
-							{
-								field:'phone',
-								title:'联系电话',
-								align:"left",
-								width:20
-							},
-							{
-								field:'status',
-								title:'职位状态',
-								sortable:false,
-								align:"left",
-								width:15,
-								formatter: function(value,row,index){
-									if (value=="1"){
-										return "招聘结束";
-									} else if(value=="0"){
-										return "招聘中";
-									} else if(value=="2"){
-										return "未发布";
+					    columns:[
+					        [//设置表的主体
+								{
+									field:'jobName',
+									title:"职位名称",
+									align:"center",
+									width:20,
+									formatter: function(value,row,index){ //value:当前遍历对象的real_name的值 , row:当前遍历的对象, index:第几个对象
+										var aHtml = [];
+						    			aHtml.push("<a class='apply-name' href='"+rootPath+"/job/detail?id="+row.id+"'>");
+						            	aHtml.push(value);
+						            	aHtml.push('</a>');
+										return aHtml.join('');
 									}
+								},
+								{
+									title:"创建时间",
+									field:'create_time',
+									sortable:false,
+									align:"left",
+									width:20,
+									formatter: function(value,row,index){
+										var currentTime = new Date(value);
+										return currentTime.toLocaleString();
+									}
+								},
+								{
+									title:"更新时间",
+									field:'refresh_time',
+									sortable:false,
+									align:"left",
+									width:20,
+									formatter: function(value,row,index){
+										var currentTime = new Date(value);
+										return currentTime.toLocaleString();
+									}
+								},
+								{
+									title:"联系电话",
+									field:'phone',
+									align:"left",
+									width:20
+								},
+								{
+									title:"职位状态",
+									field:'status',
+									sortable:false,
+									align:"left",
+									width:15,
+									formatter: function(value,row,index){
+										if (value=="1"){
+											return "招聘结束";
+										} else if(value=="0"){
+											return "招聘中";
+										} else if(value=="2"){
+											return "未发布";
+										}
+									}
+								},
+								{
+									title:"学历要求",
+									field:'education',
+									align:"left",
+									width:20
 								}
-							},
-							{
-								field:'education',
-								title:'学历要求',
-								align:"left",
-								width:20
-							}
-					    ]],
+					    	]
+					    ], 
 					    onLoadSuccess:function(data){
-					    	/* $.each($("td"),function(){
+					    	$.each($("td"),function(){
 					    		$(this).css("border-style","none");
 					    	});
 					    	//根据返回的数据显示datagrid
@@ -106,12 +109,12 @@
 				            	//显示复选框
 				            	$(this).datagrid("showColumn","id");
 				            }
-					    	*/
 					    } 
 					});
 				});
 	        /*]]>*/
 		</script>
-		<table id="jobList" class="easyui-datagrid"></table>
+		
+	 	<table id="jobList" style="height:550px;"></table> 
 	</body>
 </html>
