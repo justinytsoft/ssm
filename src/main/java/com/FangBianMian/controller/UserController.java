@@ -1,10 +1,12 @@
 package com.FangBianMian.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -13,7 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.FangBianMian.domain.SecurityUser;
+import com.FangBianMian.domain.TestUpload;
+import com.FangBianMian.response.JsonResWrapper;
+import com.FangBianMian.response.ResponseStatus;
 import com.FangBianMian.service.IUserService;
+import com.FangBianMian.utils.DataUtil;
 import com.FangBianMian.utils.EasyUiTree;
 
 @Controller
@@ -30,11 +36,27 @@ public class UserController {
 	}
 	
 	@RequestMapping("/save_signup")
-	public String save_signup(@RequestParam(required=false) String name, 
-							  @RequestParam(required=false) String head,
-							  @RequestParam(required=false) String doc){
-		
-		return "redirect: list";
+	@ResponseBody
+	public JsonResWrapper save_signup(@RequestParam(required=false) String name, 
+							  @RequestParam(required=false) String headTempName
+							 ){
+		JsonResWrapper jwr = new JsonResWrapper();
+		if(StringUtils.isBlank(name) || StringUtils.isBlank(headTempName)){
+			jwr.setStatus(ResponseStatus.FAILED_PARAM_LOST);
+			jwr.setMessage("提交参数为空");
+			return jwr;
+		}
+		try {
+			String path = DataUtil.moveToDir(headTempName, true);
+			TestUpload tu = new TestUpload();
+			tu.setName(name);
+			tu.setHead(path);
+			userService.saveTestUpload(tu);
+			jwr.setMessage("保存成功");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return jwr;
 	}
 	
 	/**

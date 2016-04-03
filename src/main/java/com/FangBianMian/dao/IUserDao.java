@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 import com.FangBianMian.domain.SecurityUser;
+import com.FangBianMian.domain.TestUpload;
 import com.FangBianMian.utils.EasyUiTree;
 
 public interface IUserDao {
@@ -13,5 +14,7 @@ public interface IUserDao {
 	SecurityUser selectUserByUsername(@Param("username") String username);
 
 	List<EasyUiTree> getMenus(@Param("param") Map<String, Object> param);
+
+	void saveTestUpload(TestUpload tu);
 
 }

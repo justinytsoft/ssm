@@ -27,8 +27,8 @@ public class FileUtils {
 	 * @return 
 	 */
 	public static String getFileName(String path) {
-		String[] ne = getFileNameAndExtension(path);
-		String name = ne[0] + ne[1];
+		String[] ne = getFullFileNameAndExtension(path);
+		String name = ne[1] + ne[2];
 		return name;
 	}
 
@@ -51,7 +51,7 @@ public class FileUtils {
 	 *            File to be used.
 	 * @return A set consisting of path, name and extension of the passed file.
 	 */
-	public String[] getFullFileNameAndExtension(String filename) {
+	public static String[] getFullFileNameAndExtension(String filename) {
 		String path = new File(filename).getParentFile().getPath() + File.separator;
 		String[] fullname = getFileNameAndExtension(new File(filename).getName());
 

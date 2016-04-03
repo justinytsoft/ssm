@@ -43,10 +43,9 @@ public class UploadController {
 		try {
 			String path = DataUtil.uploadImg(request,true,0,0).get(0);
 			if (!StringUtils.isBlank(path)) {
-				String tempName = FileUtils.getFileName(path);
 				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("path", path);
-				map.put("tempName", tempName);
+				map.put("tempName", path);
 				jrw.setData(map);
 			}else{
 				jrw.setStatus(ResponseStatus.FAILED_PARAM_LOST);

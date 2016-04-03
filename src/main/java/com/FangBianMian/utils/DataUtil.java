@@ -270,14 +270,13 @@ public class DataUtil {
 		org.apache.commons.io.FileUtils.moveFileToDirectory(srcFile, dstDir, true);
 
 		if (createThumb) {
-			String  StandardHeight= SettingUtil.getCommonSetting("commoditythumb.height");
-			String  StandardWidth = SettingUtil.getCommonSetting("commoditythumb.width");
-			
-			Integer height = !StringUtils.isBlank(StandardHeight) ? Integer.valueOf(StandardHeight) : 400;
-			Integer width = !StringUtils.isBlank(StandardWidth) ? Integer.valueOf(StandardWidth) : 500;
+			String widthS = SettingUtil.getCommonSetting("thumbnailator.width");
+			String heightS = SettingUtil.getCommonSetting("thumbnailator.height");
+			Integer width = !StringUtils.isBlank(widthS) ? Integer.valueOf(widthS) : 400;
+			Integer height = !StringUtils.isBlank(heightS) ? Integer.valueOf(heightS) : 500;
 		
 			String fileName = imgFileDir + sep + subDir + sep + filename;
-			ImageResizer.resizeImage(fileName, 200, 200, "_S");
+			ImageResizer.resizeImage(fileName, width, height, "_S");
 		}
 
 		return subDir + sep + filename;
@@ -348,7 +347,6 @@ public class DataUtil {
 				}
 				
 				reader.close();
-				
 				file.delete();
 			}
 		} catch (FileNotFoundException e) {
@@ -362,7 +360,6 @@ public class DataUtil {
 				} catch (IOException e) {
 				}
 			}
-
 			if (reader != null) {
 				try {
 					reader.close();
@@ -388,8 +385,6 @@ public class DataUtil {
 		String fileDir = SettingUtil.getCommonSetting("upload.file.temp.path");
 		String sep = System.getProperty("file.separator");
 		String imgFileDir = SettingUtil.getCommonSetting("upload.image.path");
-
-		System.out.println("use this method to cut pic......");
 		
 		File srcFile = new File(fileDir + sep + filename);
 		try {

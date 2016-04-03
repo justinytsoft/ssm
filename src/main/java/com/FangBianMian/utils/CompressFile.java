@@ -28,7 +28,16 @@ public class CompressFile {
 	public static CompressFile getInstance() {
 		return instance;
 	}
-
+	
+/*	public static void main(String[] args) {
+		try {
+			CompressFile.getInstance().zip("d:/home", "d:/a.zip");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}*/
+	
 	/**
 	 * 压缩文件或者文件目录到指定的zip包
 	 * 
@@ -79,10 +88,8 @@ public class CompressFile {
 			out.putNextEntry(new ZipEntry(base + "/"));
 			base = base.length() == 0 ? "" : base + "/";
 			for(File f:inputFiles){
-			//for (int i = 0; i < inputFiles.length; i++) {
 				zip(f, out, base + f.getName());
 			}
-
 		} else {
 			if (base.length() > 0) {
 				out.putNextEntry(new ZipEntry(base));

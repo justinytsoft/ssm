@@ -14,7 +14,7 @@ function isPhoneNumber(phone) {
 }
 
 // 验证手机号码
-function validatemobile(mobile) {
+function isCellPhone(mobile) {
 	if (mobile.length == 0) {
 		return false;
 	}
@@ -73,6 +73,22 @@ function isNumberOrPoint(event, obj) {
 		return false;
 	}
 }
+
+//保存Cookie
+function saveCookie() {
+	if ($("#rmbUser").attr("checked") == true) {
+		var userName = $("#j_username").val();
+		var passWord = $("#j_password").val();
+		$.cookie("rmbUser", "true", {expires : 7}); // 存储一个带7天期限的 cookie
+		$.cookie("userName", userName, {expires : 7}); // 存储一个带7天期限的 cookie
+		$.cookie("passWord", passWord, {expires : 7}); // 存储一个带7天期限的 cookie
+	} else {
+		$.cookie("rmbUser", "false", {expires : -1});
+		$.cookie("userName", '', {expires : -1});
+		$.cookie("passWord", '', {expires : -1});
+	}
+}
+
 
 // 判断开始时间是否大于结束时间
 function isGreaterBeginTime(bId, eId) {

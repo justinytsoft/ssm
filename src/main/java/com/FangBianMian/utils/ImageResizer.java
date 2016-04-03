@@ -72,14 +72,6 @@ public class ImageResizer {
     }
 
    thumb = new ImageIcon(image.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
-    
-    // just conserve the width fixed
-    //thumb = new ImageIcon(image.getImage().getScaledInstance(width, -1, Image.SCALE_SMOOTH));
-
-    // to validate height limits
-//    if (thumb.getIconHeight() > height) {
-//      thumb = new ImageIcon(image.getImage().getScaledInstance(-1, height, Image.SCALE_SMOOTH));
-//    }
 
     return thumb.getImage();
   }
@@ -119,12 +111,9 @@ public class ImageResizer {
 
     // only applies for image files
     String fileName = originalFileName.toLowerCase();
-    /*if (!fileName.endsWith("jpg")  && !fileName.endsWith("jpeg")) {
-      return null;
-    }*/
 
     String resizedFileName = "";
-    String[] parsedName = new FileUtils().getFullFileNameAndExtension(originalFileName);
+    String[] parsedName = FileUtils.getFullFileNameAndExtension(originalFileName);
     ImageResizer resizer = new ImageResizer(originalFileName);
 
     // set the scale

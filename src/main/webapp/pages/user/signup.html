@@ -7,6 +7,7 @@
 	<script type="text/javascript" th:src="@{/assets/js/ajaxfileupload.js}"></script>
 	<script type="text/javascript" th:inline="javascript">
 		/*<![CDATA[*/
+		
 			$(function(){
 				$.each($("a[name=upload]"),function(){
 					$(this).click(function(){
@@ -26,6 +27,7 @@
 		                    	if(data.status=="200"){
 									var path = [[${application.baseTempUrl}]] + data.data.path;
 			                    	$("#showImg").attr("src",path).show();
+			                    	$("input[name=headTempName]").val(data.data.tempName);
 		                    	}else{
 		                    		$.messager.alert('Warning','upload failed. cause:'+data.message);
 		                    	}
@@ -38,19 +40,30 @@
 						return false;
 					});
 				});
+				
+				$("#save").click(function(){
+					$.post([[@{/user/save_signup}]],$("#saveForm").serialize(),function(data){
+						if(data.status=="200"){
+							$.messager.alert('Info',data.message);
+						}else{
+							$.messager.alert('Warning','save failed. cause:'+data.message);
+						}
+					});
+				});
 			});
 		/*]]>*/
 	</script>
-
-	<form th:action="login_auth" method="post">
+	
+	<form id="saveForm" method="post">
 		<div class="easyui-panel" title="Signup" style="width: 400px; padding: 30px 70px 50px 70px">
 			<div style="margin-bottom: 20px">
 				<div>Name:</div>
-				<input class="easyui-textbox" style="width: 100%"/>
+				<input class="easyui-textbox" name="name" style="width: 100%"/>
 			</div>
 			<div style="margin-bottom: 10px">
 				<div>Head Portrait:</div>
 				<input class="easyui-filebox" name="head" data-options="prompt:'Choose a file...'" style="width: 100%"/>
+				<input type="hidden" name="headTempName"/>
 			</div>
 			<div style="margin-bottom: 20px">
 				<img id="showImg" alt="预览头像" style="display: none;width: 100px;height:100px"/>
@@ -66,7 +79,7 @@
 				<div style="clear: right"></div>
 			</div>
 			<div>
-				<a href="#" class="easyui-linkbutton" style="width: 100%">save</a>
+				<a href="javascript:" id="save" class="easyui-linkbutton" style="width: 100%">save</a>
 			</div>
 		</div>
 	</form>
