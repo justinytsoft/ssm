@@ -31,6 +31,8 @@ public class StartupListener extends ContextLoaderListener implements ServletCon
 		context.setAttribute("baseImageUrl", baseImageUrl);
 		String baseFileUrl = SettingUtil.getCommonSetting("base.file.url");
 		context.setAttribute("baseFileUrl", baseFileUrl);
+		String baseTempUrl = SettingUtil.getCommonSetting("base.temp.url");
+		context.setAttribute("baseTempUrl", baseTempUrl);
 		
 	}
 }

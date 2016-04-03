@@ -36,12 +36,12 @@ public class UploadController {
 	 * @throws IllegalStateException
 	 * @throws IOException
 	 */
-	@RequestMapping("/temp/img"  )  
+	@RequestMapping("/temp/img")  
 	@ResponseBody
-	public JsonResWrapper upload2(HttpServletRequest request){
+	public JsonResWrapper tempUpload(HttpServletRequest request){
 		JsonResWrapper jrw = new JsonResWrapper();
 		try {
-			String path = DataUtil.uploadImg(request).get(0);
+			String path = DataUtil.uploadImg(request,true,0,0).get(0);
 			if (!StringUtils.isBlank(path)) {
 				String tempName = FileUtils.getFileName(path);
 				Map<String, Object> map = new HashMap<String, Object>();

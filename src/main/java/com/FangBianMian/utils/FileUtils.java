@@ -327,18 +327,18 @@ public class FileUtils {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}finally{
-            try {
-                if (zos != null) {
-                    zos.close();
-                }
-                if (os != null) {
-            		os.flush();
-            		os.close();
-            	}
-            } catch (IOException e) {
-            	e.printStackTrace(); 
-            }
-            FileUtils.deleteDirectory(sourcePath);
+	            try {
+	                if (zos != null) {
+	                    zos.close();
+	                }
+	                if (os != null) {
+	            		os.flush();
+	            		os.close();
+	            	}
+	            } catch (IOException e) {
+	            	e.printStackTrace(); 
+	            }
+	            FileUtils.deleteDirectory(sourcePath);
 			}
     }
 }

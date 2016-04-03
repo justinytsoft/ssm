@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,10 +27,8 @@ import javax.imageio.stream.MemoryCacheImageInputStream;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 /**
@@ -96,7 +93,7 @@ public class DataUtil {
 	}
 
 	/**
-	 * 根据文件名删除正式文件夹下的图片
+	 * 根据文件名删除正式文件夹下的图片和缩略图
 	 * @param fileName
 	 */
 	public static void deleteByUploadImg(String fileName) {
@@ -112,34 +109,33 @@ public class DataUtil {
 	}
 
 	/**
-	 * 上传图片到正式文件夹
+	 * 上传图片
 	 * @param request
+	 * @param isTemp 判断文件存放位置, true 临时目录, false 正式目录
 	 * @param createThumb 是否创建缩略图
 	 * @param W 缩略图的宽
 	 * @param H 缩略图的高
 	 * @return
 	 * @throws Exception
 	 */
-	private static List<String> uploadImg(HttpServletRequest request, boolean createThumb, Integer W , Integer H) throws Exception {
+	private static List<String> uploadImg(HttpServletRequest request, boolean isTemp, boolean createThumb, Integer W , Integer H) throws Exception {
 		List<String> files = new ArrayList<String>(); //返回上传到服务器的路径
 		String sep = System.getProperty("file.separator"); //文件分隔符
-		String fileDir = SettingUtil.getCommonSetting("upload.image.path");// 存放图片的路径
-
-		//增加两层目录
-		StringBuffer subDir = new StringBuffer();
-		for (int i = 0; i < 2; i++) {
-			if (i != 0) {
-				subDir.append(sep);
-			}
-			Random random = new Random();
-			StringBuffer sb = new StringBuffer();
-			sb.append(ARRAY[random.nextInt(ARRAY.length)]);
-			sb.append(ARRAY[random.nextInt(ARRAY.length)]);
-			subDir.append(sb.toString());
+		String fileDir = null;// 存放图片的路径
+		String subDir = null;// 如果存放的是正式目录在增加子目录
+		File dirPath = null;
+		
+		//判断存放的目录
+		if(isTemp){
+			fileDir = SettingUtil.getCommonSetting("upload.file.temp.path");
+			dirPath = new File(fileDir);
+		}else{
+			fileDir = SettingUtil.getCommonSetting("upload.image.path");
+			subDir = buildDirName(2);
+			dirPath = new File(fileDir + sep + subDir);
 		}
 
 		//创建存放图片的目录
-		File dirPath = new File(fileDir + sep + subDir.toString());
 		if (!dirPath.exists()) {
 			dirPath.mkdirs();
 		}
@@ -172,7 +168,15 @@ public class DataUtil {
 						newFileName.append(System.currentTimeMillis());
 						newFileName.append(ext);
 						// 定义上传路径
-						String fileName = fileDir + sep + subDir.toString() + sep + newFileName.toString();
+						String fileName = null;
+						if(subDir!=null){
+							fileName = fileDir + sep + subDir + sep + newFileName.toString();
+							// 添加上传后的路径
+							files.add(subDir + sep + newFileName.toString());
+						}else{
+							fileName = fileDir + sep + newFileName.toString();
+							files.add(newFileName.toString());
+						}
 						File localFile = new File(fileName);
 						// 保存上传的文件
 						file.transferTo(localFile);
@@ -188,8 +192,6 @@ public class DataUtil {
 								ImageResizer.resizeImage(fileName, W, H, "_S");
 							}
 						}
-						// 添加上传后的路径
-						files.add(subDir.toString() + sep + newFileName.toString());
 					}else{
 						files.add("");
 					}
@@ -203,240 +205,36 @@ public class DataUtil {
 	}
 
 	/**
-	 * 上传图片到正式文件夹,不会创建缩略图
+	 * 上传图片,不会创建缩略图
 	 * @param req
+	 * @param isTemp 判断文件存放位置, true 临时目录, false 正式目录
 	 * @return 返回上传后的路径
 	 * @throws Exception
 	 */
-	public static List<String> uploadImg(HttpServletRequest req) throws Exception {
-		return uploadImg(req,false,0,0);
+	public static List<String> uploadImg(HttpServletRequest req, boolean isTemp) throws Exception {
+		return uploadImg(req,isTemp,false,0,0);
 	}
 	
 	/**
 	 * 上传图片到正式文件夹,会创建缩略图,如果 W 和 H 都传入 0 则使用配置文件中的配置
 	 * @param req
+	 * @param isTemp 判断文件存放位置, true 临时目录, false 正式目录
 	 * @param W 缩略图的宽
 	 * @param H 缩略图的高
 	 * @return 返回上传后的路径
 	 * @throws Exception
 	 */
-	public static List<String> uploadImg(HttpServletRequest req,Integer W, Integer H) throws Exception {
-		return uploadImg(req,true,W,H);
+	public static List<String> uploadImg(HttpServletRequest req, boolean isTemp, Integer W, Integer H) throws Exception {
+		return uploadImg(req,isTemp,true,W,H);
 	}
 	
 	/**
-	 * 小文件和传
-	 * 
-	 * @param req
-	 * @param name
+	 * 将临时文件夹中的图片移到正式目录中
+	 * @param filename
 	 * @param createThumb
 	 * @return
-	 * @throws Exception
+	 * @throws IOException
 	 */
-	public static List<String> uploadFile(HttpServletRequest req, String name, boolean createThumb) throws Exception {
-		MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) req;
-		String sep = System.getProperty("file.separator");
-		String fileDir = SettingUtil.getCommonSetting("upload.file.path");// 存放文件文件夹名称
-
-		StringBuffer subDir = new StringBuffer();
-		for (int i = 0; i < 2; i++) {
-			if (i != 0) {
-				subDir.append(sep);
-			}
-			Random random = new Random();
-			StringBuffer sb = new StringBuffer();
-			sb.append(ARRAY[random.nextInt(ARRAY.length)]);
-			sb.append(ARRAY[random.nextInt(ARRAY.length)]);
-
-			subDir.append(sb.toString());
-		}
-
-		File dirPath = new File(fileDir + sep + subDir.toString());
-		if (!dirPath.exists()) {
-			dirPath.mkdirs();
-		}
-
-		List<MultipartFile> mfs = multiRequest.getFiles(name);
-		List<String> files = new ArrayList<String>();
-		for (MultipartFile mft : mfs) {
-			CommonsMultipartFile mf = (CommonsMultipartFile) mft;
-			byte[] bytes = mf.getBytes();
-			StringBuffer newFileName = new StringBuffer();
-			if (bytes.length != 0) {
-				String fileTrueName = mf.getOriginalFilename();
-				String ext = fileTrueName.substring(fileTrueName.lastIndexOf("."));
-				newFileName.append(System.currentTimeMillis());
-				newFileName.append(ext);
-				String fileName = fileDir + sep + subDir.toString() + sep + newFileName.toString();
-
-				File uploadedFile = new File(fileName);
-				try {
-					FileCopyUtils.copy(bytes, uploadedFile);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-
-				files.add(subDir.toString() + sep + newFileName.toString());
-			}
-
-		}
-
-		return files;
-	}
-
-	/**
-	 * 图片上传临时文件夹
-	 * @param req
-	 * @return
-	 */
-	public static String uploadImgdFile(HttpServletRequest req){
-		MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) req;
-		String sep = System.getProperty("file.separator");
-		String fileDir = SettingUtil.getCommonSetting("upload.file.temp.path");// 存放文件文件夹名称
-
-		File dirPath = new File(fileDir);
-		if (!dirPath.exists()) {
-			dirPath.mkdirs();
-		}
-
-		MultipartFile mf = multiRequest.getFile("file2");
-		try {
-			byte[] src = mf.getBytes();
-			String name = DataUtil.generateRandomString(8)+"_"+ mf.getOriginalFilename();
-			if (src != null && src.length != 0) {
-				File dst = new File(fileDir + sep + name.toLowerCase());
-				FileUtils.copyByteToFile(src, dst);
-				return name.toLowerCase();
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
-	
-	/**
-	 * 用于处理上传分片的文件
-	 * 
-	 * @param req
-	 * @param name
-	 */
-	public static void uploadSegmentedFile(HttpServletRequest req, String name) {
-		MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) req;
-		String sep = System.getProperty("file.separator");
-		String fileDir = SettingUtil.getCommonSetting("upload.file.temp.path");// 存放文件文件夹名称
-
-		File dirPath = new File(fileDir);
-		if (!dirPath.exists()) {
-			dirPath.mkdirs();
-		}
-
-		MultipartFile mf = multiRequest.getFile("file");
-		try {
-			byte[] src = mf.getBytes();
-			if (src != null && src.length != 0) {
-				File dst = new File(fileDir + sep + name);
-				FileUtils.copyByteToFile(src, dst);
-				//String fileName = fileDir + sep + name;
-				//ImageResizer.resizeImage(fileDir + sep + name, 640, 320, "_Z");
-				//String[] fileNames = fileName.split("\\.");
-				//ImageResizer.cutCenterImage(fileNames[0]+"_Z"+"."+fileNames[1], fileNames[0]+"_S"+"."+fileNames[1], 640, 320);
-				//FileUtils.deleteFile(fileNames[0]+"_Z"+"."+fileNames[1]);
-				//System.out.println("resize-------------");
-			}
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	/**
-	 * 获取一个随机生成的字符串
-	 * @param number
-	 * @return
-	 */
-	public static String _10_to_62(long number) {
-		Long rest = number;
-		Stack<Character> stack = new Stack<Character>();
-		StringBuilder result = new StringBuilder(0);
-		while (rest != 0) {
-			stack.add(ARRAY[new Long((rest - (rest / 62) * 62)).intValue()]);
-			rest = rest / 62;
-		}
-		for (; !stack.isEmpty();) {
-			result.append(stack.pop());
-		}
-		return result.toString();
-	}
-
-	public static long _62_to_10(String sixty_str) {
-		int multiple = 1;
-		long result = 0;
-		Character c;
-		for (int i = 0; i < sixty_str.length(); i++) {
-			c = sixty_str.charAt(sixty_str.length() - i - 1);
-			result += _62_value(c) * multiple;
-			multiple = multiple * 62;
-		}
-		return result;
-	}
-
-	private static int _62_value(Character c) {
-		for (int i = 0; i < ARRAY.length; i++) {
-			if (c == ARRAY[i]) {
-				return i;
-			}
-		}
-		return -1;
-	}
-	
-	public static void mergeFile(String fileName, String ext, String toFileName, int size) {
-		String sep = System.getProperty("file.separator");
-		String fileDir = SettingUtil.getCommonSetting("upload.file.temp.path");// 存放文件文件夹名称
-		
-		OutputStream writer = null;
-		InputStream reader = null;
-		try {
-			writer = new FileOutputStream(fileDir + sep + toFileName);
-			int len;
-			byte[] cbuf = new byte[1024 * 250];
-			File file;
-			for (int i = 0; i < size; i++) {
-				file = new File(fileDir + sep + fileName + i + ext);
-				if (!file.exists()) {
-					break;
-				}
-				reader = new FileInputStream(file);
-				while ((len = reader.read(cbuf, 0, cbuf.length)) != -1) {
-					writer.write(cbuf, 0, len);
-					writer.flush();
-				}
-				
-				reader.close();
-				
-				file.delete();
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (writer != null) {
-				try {
-					writer.close();
-				} catch (IOException e) {
-				}
-			}
-
-			if (reader != null) {
-				try {
-					reader.close();
-				} catch (IOException e) {
-				}
-			}
-		}
-	}
-
 	public static String moveToDir(String filename, boolean createThumb) throws IOException {
 		String fileDir = SettingUtil.getCommonSetting("upload.file.temp.path");
 		String sep = System.getProperty("file.separator");
@@ -485,8 +283,95 @@ public class DataUtil {
 		return subDir + sep + filename;
 	}
 	
+	/*======================================================================*/
+	/*======================================================================*/
+	/*======================================================================*/
+	/*======================================================================*/
+	/*======================================================================*/
 	
+	/**
+	 * 用于处理上传分片的文件
+	 * 
+	 * @param req
+	 * @param name
+	 */
+	public static void uploadSegmentedFile(HttpServletRequest req, String name) {
+		MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) req;
+		String sep = System.getProperty("file.separator");
+		String fileDir = SettingUtil.getCommonSetting("upload.file.temp.path");// 存放文件文件夹名称
+
+		File dirPath = new File(fileDir);
+		if (!dirPath.exists()) {
+			dirPath.mkdirs();
+		}
+
+		MultipartFile mf = multiRequest.getFile("file");
+		try {
+			byte[] src = mf.getBytes();
+			if (src != null && src.length != 0) {
+				File dst = new File(fileDir + sep + name);
+				FileUtils.copyByteToFile(src, dst);
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
+	/**
+	 * 合并文件
+	 * @param fileName
+	 * @param ext
+	 * @param toFileName
+	 * @param size
+	 */
+	public static void mergeFile(String fileName, String ext, String toFileName, int size) {
+		String sep = System.getProperty("file.separator");
+		String fileDir = SettingUtil.getCommonSetting("upload.file.temp.path");// 存放文件文件夹名称
+		
+		OutputStream writer = null;
+		InputStream reader = null;
+		try {
+			writer = new FileOutputStream(fileDir + sep + toFileName);
+			int len;
+			byte[] cbuf = new byte[1024 * 250];
+			File file;
+			for (int i = 0; i < size; i++) {
+				file = new File(fileDir + sep + fileName + i + ext);
+				if (!file.exists()) {
+					break;
+				}
+				reader = new FileInputStream(file);
+				while ((len = reader.read(cbuf, 0, cbuf.length)) != -1) {
+					writer.write(cbuf, 0, len);
+					writer.flush();
+				}
+				
+				reader.close();
+				
+				file.delete();
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (writer != null) {
+				try {
+					writer.close();
+				} catch (IOException e) {
+				}
+			}
+
+			if (reader != null) {
+				try {
+					reader.close();
+				} catch (IOException e) {
+				}
+			}
+		}
+	}
+
 	/**
 	 *  将商品图片图片从临时文件夹移动到正式文件里面，
 	 * @param filename
@@ -550,11 +435,6 @@ public class DataUtil {
 		return subDir + sep + filename;
 	}
 	
-	
-	
-	
-	
-	
 	/**
 	 * 图片裁剪
 	 * @param filename 图片名
@@ -572,7 +452,6 @@ public class DataUtil {
 		String imgFileDir = SettingUtil.getCommonSetting("upload.image.path");
 
 		File srcFile = new File(fileDir + sep + filename);
-		//String filenames = fileDir + sep + filename;
 		
 		StringBuffer subDir = new StringBuffer();
 		for (int i = 0; i < 2; i++) {
@@ -598,69 +477,6 @@ public class DataUtil {
 		ImageResizer.saveResizedCutImage(subfilename, fileName, cx, cy, left, top);
 
 		return subDir + sep + URLEncoder.encode(filename);
-	}
-	
-
-	/**
-	 * 上传图片至临时目录
-	 * 
-	 * @param req
-	 * @param name
-	 * @param createThumb
-	 * @return
-	 * @throws Exception
-	 */
-	public static String uploadImgToTempDir(HttpServletRequest req, String name,boolean thumb) throws Exception {
-		MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) req;
-		String sep = System.getProperty("file.separator");
-		String fileDir = SettingUtil.getCommonSetting("upload.file.temp.path");// 存放文件文件夹名称
-
-		File dirPath = new File(fileDir);
-		if (!dirPath.exists()) {
-			dirPath.mkdirs();
-		}
-
-		MultipartFile mft = multiRequest.getFile(name);
-		CommonsMultipartFile mf = (CommonsMultipartFile) mft;
-		byte[] bytes = mf.getBytes();
-		StringBuffer newFileName = new StringBuffer();
-		if (bytes.length != 0) {
-			String fileTrueName = mf.getOriginalFilename();
-			String ext = fileTrueName.substring(fileTrueName.lastIndexOf("."));
-			if (!".jpg/.jpeg/.gif/.bmp/.png".contains(ext.toLowerCase())) {
-				throw new Exception("格式错误！");
-			}
-			newFileName.append(System.currentTimeMillis());
-			newFileName.append(ext);
-			String fileName = fileDir + sep + newFileName.toString();
-
-			File uploadedFile = new File(fileName);
-
-			try {
-				FileCopyUtils.copy(bytes, uploadedFile);
-				if(thumb){
-					int w=200;
-					int h=200;
-					ImageResizer.resizeImage(fileName, w, h, "_S");
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-				throw e;
-			}
-		}
-
-		return newFileName.toString();
-	}
-
-	
-	/**
-	 * 将文件上传到临时文件夹
-	 * @param filename 临时文件的名称
-	 * @param image 上传的文件名称
-	 * @return
-	 */
-	public static String uploadImageToTmp(String filename, String image){
-		return DataUtil.uploadImageToTmp(filename, image, 0, 0);
 	}
 	
 	/**
@@ -720,7 +536,7 @@ public class DataUtil {
 		FileOutputStream fos = null;
 		try {
 			String sep = System.getProperty("file.separator");
-			String dirName = buildDirName();
+			String dirName = buildDirName(2);
 			String toDir = SettingUtil.getCommonSetting("upload.image.path"); // 存储路径
 			toDir += (sep + dirName);
 			sun.misc.BASE64Decoder a = new sun.misc.BASE64Decoder();
@@ -770,10 +586,15 @@ public class DataUtil {
 		return r.getFormatName().toLowerCase();
 	}
 
-	public static String buildDirName() {
+	/**
+	 * 通过num,创建多级目录的名称
+	 * @param num 创建几级
+	 * @return 创建好的目录字符串
+	 */
+	public static String buildDirName(int num) {
 		String sep = System.getProperty("file.separator");
 		StringBuffer subDir = new StringBuffer();
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < num; i++) {
 			if (i != 0) {
 				subDir.append(sep);
 			}

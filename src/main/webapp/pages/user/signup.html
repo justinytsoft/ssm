@@ -8,28 +8,35 @@
 	<script type="text/javascript" th:inline="javascript">
 		/*<![CDATA[*/
 			$(function(){
-				$("#upload").click(function(){
-					var id = $(this).parent().prev().find("input[type=file]").attr("id");
-					console.info(id);
-					$.ajaxFileUpload({
-	                    url: [[@{/upload/temp/img}]], //用于文件上传的服务器端请求地址
-	                    secureuri: false, //是否需要安全协议，一般设置为false
-	                    fileElementId: id, //文件上传域的ID
-	                    dataType: 'json', //返回值类型 一般设置为json
-	                    success: function (data, status)  //服务器成功响应处理函数
-	                    {
-	                    	if(data.status=="200"){
-								var path = [[${application.baseImageUrl}]] + data.data.path;
-		                    	$("#showImg").attr("src",path).show();
-	                    	}else{
-	                    		$.messager.alert('Warning','upload failed');
-	                    	}
-	                    },
-	                    error: function (data, status, e)//服务器响应失败处理函数
-	                    {
-	                        alert(e);
-	                    }
-		        	});
+				$.each($("a[name=upload]"),function(){
+					$(this).click(function(){
+						var id = $(this).parent().prev().find("input[type=file]").attr("id");
+						var content = $(this).parent().prev().find("input[type=file]").val();
+						if(content==""){
+							$.messager.alert('Warning',"请选择文件");
+							return false;
+						}
+						$.ajaxFileUpload({
+		                    url: [[@{/upload/temp/img}]], //用于文件上传的服务器端请求地址
+		                    secureuri: false, //是否需要安全协议，一般设置为false
+		                    fileElementId: id, //文件上传域的ID
+		                    dataType: 'json', //返回值类型 一般设置为json
+		                    success: function (data, status)  //服务器成功响应处理函数
+		                    {
+		                    	if(data.status=="200"){
+									var path = [[${application.baseTempUrl}]] + data.data.path;
+			                    	$("#showImg").attr("src",path).show();
+		                    	}else{
+		                    		$.messager.alert('Warning','upload failed. cause:'+data.message);
+		                    	}
+		                    },
+		                    error: function (data, status, e)//服务器响应失败处理函数
+		                    {
+		                        alert(e);
+		                    }
+			        	});
+						return false;
+					});
 				});
 			});
 		/*]]>*/
@@ -46,8 +53,16 @@
 				<input class="easyui-filebox" name="head" data-options="prompt:'Choose a file...'" style="width: 100%"/>
 			</div>
 			<div style="margin-bottom: 20px">
-				<img id="showImg" alt="预览头像" style="display: none"/>
-				<a id="upload" class="easyui-linkbutton" style="float: right;width:75px;height:20px" >upload</a>
+				<img id="showImg" alt="预览头像" style="display: none;width: 100px;height:100px"/>
+				<a name="upload" href="javascript:" class="easyui-linkbutton" style="float: right;width:75px;height:20px" >upload</a>
+				<div style="clear: right"></div>
+			</div>
+			<div style="margin-bottom: 10px">
+				<div>Readme Doc:</div>
+				<input class="easyui-filebox" name="doc" href="javascript:" data-options="prompt:'Choose a file...'" style="width: 100%"/>
+			</div>
+			<div style="margin-bottom: 20px">
+				<a name="upload" class="easyui-linkbutton" style="float: right;width:75px;height:20px" >upload</a>
 				<div style="clear: right"></div>
 			</div>
 			<div>

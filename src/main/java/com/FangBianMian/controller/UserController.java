@@ -23,6 +23,29 @@ public class UserController {
 	@Autowired
 	private IUserService userService;
 	
+	@RequestMapping("/list")
+	public String list(){
+		
+		return "pages/user/list";
+	}
+	
+	@RequestMapping("/save_signup")
+	public String save_signup(@RequestParam(required=false) String name, 
+							  @RequestParam(required=false) String head,
+							  @RequestParam(required=false) String doc){
+		
+		return "redirect: list";
+	}
+	
+	/**
+	 * 注册页面
+	 * @return
+	 */
+	@RequestMapping("/signup")
+	public String signup(){
+		return "pages/user/signup";
+	}
+	
 	/**
 	 * 获取用户菜单
 	 * @param pid
@@ -39,14 +62,5 @@ public class UserController {
 		param.put("uid", su.getId());
 		List<EasyUiTree> datas = userService.getMenus(param);
 		return datas;
-	}
-	
-	/**
-	 * 注册页面
-	 * @return
-	 */
-	@RequestMapping("/signup")
-	public String signup(){
-		return "pages/user/signup";
 	}
 }
