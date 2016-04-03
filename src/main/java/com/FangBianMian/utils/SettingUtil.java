@@ -2,14 +2,12 @@ package com.FangBianMian.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
 /**
- * ¼ÓÔØÅäÖÃÎÄ¼ş£¬²¢Ìá¹©¶ÁÈ¡µÄ·½·¨
+ * åŠ è½½é…ç½®æ–‡ä»¶ï¼Œå¹¶æä¾›è¯»å–çš„æ–¹æ³•
  */
 public class SettingUtil {
 
@@ -17,7 +15,7 @@ public class SettingUtil {
 	private static Map<String, Properties> pools = new HashMap<String, Properties>();
 	
 	/**
-	 * ¼ÓÔØÏµÍ³¼¶µÄÅäÖÃÎÄ¼ş
+	 * åŠ è½½ç³»ç»Ÿçº§çš„é…ç½®æ–‡ä»¶
 	 * 
 	 * @param uri
 	 * @return
@@ -25,7 +23,7 @@ public class SettingUtil {
 	public static Properties loadSetting(String uri) {
 		Properties prop = pools.get(uri);
 		if (prop == null) {
-			// Ã»ÓĞ¼ÓÔØÔò¼ÓÔØ
+			// æ²¡æœ‰åŠ è½½åˆ™åŠ è½½
 			InputStream is = SettingUtil.class.getResourceAsStream(uri);
 			if (is == null) {
 				throw new IllegalArgumentException("Resource [" + uri + "] not found");
@@ -42,7 +40,7 @@ public class SettingUtil {
 	}
 
 	/**
-	 * ¶ÁÈ¡common.propertiesÎÄ¼şÖĞµÄÖµ
+	 * è¯»å–common.propertiesæ–‡ä»¶ä¸­çš„å€¼
 	 * 
 	 * @param key
 	 * @return

@@ -22,14 +22,14 @@ import javax.servlet.http.HttpServletResponse;
 public class FileUtils {
 
 	/**
-	 * Retrieves the filename separated by name and extension.
-	 * 
-	 * @param file
-	 *            File to be used.
-	 * @return A pair consisting of name and extension of the passed file.
+	 * 获取目录的文件名
+	 * @param path
+	 * @return 
 	 */
-	public String[] getFileNameAndExtension(File file) {
-		return getFileNameAndExtension(file.getName());
+	public static String getFileName(String path) {
+		String[] ne = getFileNameAndExtension(path);
+		String name = ne[0] + ne[1];
+		return name;
 	}
 
 	/**
@@ -38,7 +38,7 @@ public class FileUtils {
 	 * @param filename 文件名
 	 * @return 返回一个包含了 文件名 和 后缀 的数组, 下标 0 返回 name, 1 返回后缀
 	 */
-	public String[] getFileNameAndExtension(String filename) {
+	public static String[] getFileNameAndExtension(String filename) {
 		String name = filename.substring(0, filename.lastIndexOf("."));
 		String extension = filename.substring(filename.lastIndexOf("."));
 		return new String[] { name, extension };

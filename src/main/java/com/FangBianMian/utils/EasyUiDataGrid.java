@@ -7,8 +7,8 @@ import org.apache.poi.hssf.record.formula.functions.T;
 @SuppressWarnings("hiding")
 public class EasyUiDataGrid<T> {
 
-	private Integer total; //×Ü¼ÇÂ¼Êı
-	private List<T> rows; //Êı¾İ
+	private Integer total; //æ€»è®°å½•æ•°
+	private List<T> rows; //æ˜¾ç¤ºçš„æ•°æ®
 	
 	public Integer getTotal() {
 		return total;

@@ -1,34 +1,27 @@
 package com.FangBianMian.utils;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.gson.GsonBuilder;
 
 public class JsonUtil {
 
+	private static GsonBuilder instance;
+
+	private static synchronized GsonBuilder build() {
+		if (instance == null) {
+			instance = new GsonBuilder();
+		}
+		return instance;
+	}
 	
-	 /**
-     * Ω‚ŒˆJSON
-     * @param jsonStr
-     * @return
-     */
-    public static String parseJSON(String jsonStr){
-    	
-    	StringBuffer parseStr = new StringBuffer();
-    	
-    	try {
-            JSONArray results = new JSONArray(jsonStr);
-            for (int i = 0; i < results.length(); i++) {
-            	JSONObject result = results.getJSONObject(i);
-            	String sTime = result.getString("start_time") + " - ";
-            	String eTime = result.getString("end_time") + ":" + (char)11; //(char)11 ªª––
-            	String content = "    " + result.getString("content") + (char)11 + (char)11;
-            	parseStr.append(sTime).append(eTime).append(content);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        
-        return parseStr.toString();
-    }
+	private static GsonBuilder getInstance(){
+		return build();
+	}
+	
+	public static String toJson(Object obj){
+		return getInstance().disableHtmlEscaping().create().toJson(obj);
+	}
+	
+	public static <T> T fromJson(String json, Class<T> clazz){
+		return getInstance().create().fromJson(json, clazz);
+	}
 }

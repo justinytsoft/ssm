@@ -32,6 +32,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 /**
  * @author Administrator
@@ -95,19 +96,15 @@ public class DataUtil {
 	}
 
 	/**
-	 * 根据文件名删除文件
+	 * 根据文件名删除正式文件夹下的图片
 	 * @param fileName
 	 */
 	public static void deleteByUploadImg(String fileName) {
-		
 		if (!StringUtils.isBlank(fileName)) {
-			
 			String sep = System.getProperty("file.separator");
 			String fileDir = SettingUtil.getCommonSetting("upload.image.path");// 存放文件文件夹名称
-	
 			String filePath = fileDir + sep + fileName;
 			FileUtils.deleteFile(filePath);
-
 			String[] parsedName = new FileUtils().getFullFileNameAndExtension(filePath);
 			String thumbPath = parsedName[0] + parsedName[1] + "_S" + parsedName[2];
 			FileUtils.deleteFile(thumbPath);
@@ -115,19 +112,20 @@ public class DataUtil {
 	}
 
 	/**
-	 * 上传图片
-	 * 
-	 * @param req
-	 * @param name
-	 * @param createThumb
+	 * 上传图片到正式文件夹
+	 * @param request
+	 * @param createThumb 是否创建缩略图
+	 * @param W 缩略图的宽
+	 * @param H 缩略图的高
 	 * @return
 	 * @throws Exception
 	 */
-	public static List<String> uploadImg(HttpServletRequest req, String name, boolean createThumb,Integer W , Integer H) throws Exception {
-		MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) req;
-		String sep = System.getProperty("file.separator");
-		String fileDir = SettingUtil.getCommonSetting("upload.image.path");// 存放文件文件夹名称
+	private static List<String> uploadImg(HttpServletRequest request, boolean createThumb, Integer W , Integer H) throws Exception {
+		List<String> files = new ArrayList<String>(); //返回上传到服务器的路径
+		String sep = System.getProperty("file.separator"); //文件分隔符
+		String fileDir = SettingUtil.getCommonSetting("upload.image.path");// 存放图片的路径
 
+		//增加两层目录
 		StringBuffer subDir = new StringBuffer();
 		for (int i = 0; i < 2; i++) {
 			if (i != 0) {
@@ -137,86 +135,93 @@ public class DataUtil {
 			StringBuffer sb = new StringBuffer();
 			sb.append(ARRAY[random.nextInt(ARRAY.length)]);
 			sb.append(ARRAY[random.nextInt(ARRAY.length)]);
-
 			subDir.append(sb.toString());
 		}
 
+		//创建存放图片的目录
 		File dirPath = new File(fileDir + sep + subDir.toString());
 		if (!dirPath.exists()) {
 			dirPath.mkdirs();
 		}
-
-		List<MultipartFile> mfs = multiRequest.getFiles(name);
-		List<String> files = new ArrayList<String>();
-		for (MultipartFile mft : mfs) {
-			CommonsMultipartFile mf = (CommonsMultipartFile) mft;
-			byte[] bytes = mf.getBytes();
-			StringBuffer newFileName = new StringBuffer();
-			if (bytes.length != 0) {
-				String fileTrueName = mf.getOriginalFilename();
-				String ext = fileTrueName.substring(fileTrueName.lastIndexOf("."));
-				if (!".jpg/.jpeg/.gif/.bmp/.png".contains(ext.toLowerCase())) {
-					throw new Exception("格式错误！");
-				}
-				newFileName.append(System.currentTimeMillis());
-				newFileName.append(ext);
-				String fileName = fileDir + sep + subDir.toString() + sep + newFileName.toString();
-
-				File uploadedFile = new File(fileName);
-				try {
-					FileCopyUtils.copy(bytes, uploadedFile);
-					if (createThumb) {
-						String heightS = SettingUtil.getCommonSetting("thumbnailator.height");
-						String widthS = SettingUtil.getCommonSetting("thumbnailator.width");
-
-						Integer height = !StringUtils.isBlank(heightS) ? Integer.valueOf(heightS) : 0;
-						Integer width = !StringUtils.isBlank(widthS) ? Integer.valueOf(widthS) : 0;
-						
-						if(W != 0 && H != 0){
-							ImageResizer.resizeImage(fileName, 200, 200, "_S");
-							/*String[] fileNames = fileName.split("\\.");
-							ImageResizer.cutCenterImage(fileNames[0]+"_Z"+"."+fileNames[1], fileNames[0]+"_S"+"."+fileNames[1], W, H);
-							FileUtils.deleteFile(fileNames[0]+"_Z"+"."+fileNames[1]);*/
-						} else {
-							ImageResizer.resizeImage(fileName, 200, 200, "_S");
-						}
+		
+		// 创建一个通用的多部分解析器
+		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+		// 判断 request 是否有文件上传,即多部分请求
+		if (multipartResolver.isMultipart(request)) {
+			// 转换成多部分request
+			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
+			// 取得request中的所有文件名
+			Iterator<String> iter = multiRequest.getFileNames();
+			while (iter.hasNext()) {
+				//新生成的临时文件的文件名
+				StringBuffer newFileName = new StringBuffer();
+				// 取得上传文件
+				MultipartFile file = multiRequest.getFile(iter.next());
+				if (file != null && file.getBytes().length != 0) {
+					// 取得当前上传文件的文件名称
+					String fileTrueName = file.getOriginalFilename();
+					// 获取文件后缀
+					String ext = fileTrueName.substring(fileTrueName.lastIndexOf("."));
+					// 判断上传文件的后缀是否合法
+					if (!".jpg/.jpeg/.gif/.bmp/.png".contains(ext.toLowerCase())) {
+						throw new Exception("格式错误！");
 					}
-				} catch (IOException e) {
-					e.printStackTrace();
+					// 如果名称不为“”,说明该文件存在，否则说明该文件不存在
+					if (fileTrueName.trim() != "") {
+						// 重命名上传后的文件名
+						newFileName.append(System.currentTimeMillis());
+						newFileName.append(ext);
+						// 定义上传路径
+						String fileName = fileDir + sep + subDir.toString() + sep + newFileName.toString();
+						File localFile = new File(fileName);
+						// 保存上传的文件
+						file.transferTo(localFile);
+						//是否创建缩略图
+						if (createThumb) {
+							if(W == 0 && H == 0){
+								String widthS = SettingUtil.getCommonSetting("thumbnailator.width");
+								String heightS = SettingUtil.getCommonSetting("thumbnailator.height");
+								Integer width = !StringUtils.isBlank(widthS) ? Integer.valueOf(widthS) : 0;
+								Integer height = !StringUtils.isBlank(heightS) ? Integer.valueOf(heightS) : 0;
+								ImageResizer.resizeImage(fileName, width, height, "_S");
+							} else {
+								ImageResizer.resizeImage(fileName, W, H, "_S");
+							}
+						}
+						// 添加上传后的路径
+						files.add(subDir.toString() + sep + newFileName.toString());
+					}else{
+						files.add("");
+					}
+				}else{
+					files.add("");
 				}
-
-				files.add(subDir.toString() + sep + newFileName.toString());
-			} else {
-				files.add("");
 			}
-
 		}
-
+		
 		return files;
 	}
 
 	/**
-	 * 上传图片
-	 * 
+	 * 上传图片到正式文件夹,不会创建缩略图
 	 * @param req
-	 * @param name
-	 * @return
+	 * @return 返回上传后的路径
 	 * @throws Exception
 	 */
-	public static List<String> uploadImg(HttpServletRequest req, String name) throws Exception {
-		return uploadImg(req, name, false,0,0);
+	public static List<String> uploadImg(HttpServletRequest req) throws Exception {
+		return uploadImg(req,false,0,0);
 	}
 	
 	/**
-	 * 上传图片
-	 * 
+	 * 上传图片到正式文件夹,会创建缩略图,如果 W 和 H 都传入 0 则使用配置文件中的配置
 	 * @param req
-	 * @param name
-	 * @return
+	 * @param W 缩略图的宽
+	 * @param H 缩略图的高
+	 * @return 返回上传后的路径
 	 * @throws Exception
 	 */
-	public static List<String> uploadImg(HttpServletRequest req, String name,boolean createThumb) throws Exception {
-		return uploadImg(req, name, createThumb,0,0);
+	public static List<String> uploadImg(HttpServletRequest req,Integer W, Integer H) throws Exception {
+		return uploadImg(req,true,W,H);
 	}
 	
 	/**

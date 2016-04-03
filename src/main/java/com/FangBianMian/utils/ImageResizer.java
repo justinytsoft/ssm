@@ -150,8 +150,7 @@ public class ImageResizer {
    * @return Name of the new created image
    * @throws IOException
    */
-  public static String resizeImage(String originalFileName, int width, int height, String suffix)
-      throws IOException {
+  public static String resizeImage(String originalFileName, int width, int height, String suffix) throws IOException {
     return resizeImage(originalFileName, width, height, suffix, Boolean.FALSE);
   }
   

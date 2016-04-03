@@ -2,12 +2,12 @@ package com.FangBianMian.utils;
 
 public class EasyUiTree {
 
-	private Integer id; //µ±Ç°½ÚµãµÄID
-	private Integer parentId; //¸¸½ÚµãID
-	private String text; //ÏÔÊ¾ÎÄ±¾
-	private String state; //ÊÇ·ñÕ¹¿ª, open(Ä¬ÈÏÖµ) Õ¹¿ª, closed ²»Õ¹¿ª
-	private boolean checked; //Ö¸Ê¾½ÚµãÊÇ·ñ±»Ñ¡ÖĞ¡£
-	private String attributes; //×Ô¶¨ÒåÊôĞÔ
+	private Integer id;
+	private Integer parentId;
+	private String text; //æ˜¾ç¤ºæ–‡æœ¬
+	private String state; //æ˜¯å¦æ‰“å¼€, open(é»˜è®¤Öµ) æ‰“å¼€, closed å…³é—­
+	private boolean checked; //Ö¸æ˜¯å¦è¢«é€‰ä¸­
+	private String attributes; //è‡ªå®šä¹‰å±æ€§
 	
 	public Integer getId() {
 		return id;
