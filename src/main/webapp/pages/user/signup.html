@@ -51,8 +51,39 @@
 					});
 				});
 			});
+		
+		 	/* var d1 = Math.floor((Math.random()*30)+1);
+	        var d2 = Math.floor((Math.random()*30)+1);
+	        function formatDay(date){
+	            var m = date.getMonth()+1;
+	            var d = date.getDate();
+	            var opts = $(this).calendar('options');
+	            if (opts.month == m && d == d1){
+	                return '<div class="md">' + d + '</div>';
+	            } else if (opts.month == m && d == d2){
+	                return '<div class="md">' + d + '</div>';
+	            }
+	            return d;
+	        } */
+	        function formatDay(date){
+	            var d = date.getDate();
+	            var div = $('<div class="md">' + d + '</div>');
+	            var c = '<p>样式</p>';
+	            div.append(c);
+                return div.html();
+	        }
 		/*]]>*/
 	</script>
+	<style scoped="scoped">
+        .md{
+            height:16px;
+            line-height:16px;
+            background-position:2px center;
+            font-weight:bold;
+        }
+    </style>
+	
+	<div class="easyui-calendar" style="width:500px;height:500px;" data-options="formatter:formatDay"></div>
 	
 	<form id="saveForm" method="post">
 		<div class="easyui-panel" title="Signup" style="width: 400px; padding: 30px 70px 50px 70px">
