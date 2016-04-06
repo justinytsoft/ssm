@@ -72,12 +72,34 @@ public class DateUtil {
 	}
 	
 	/**
+	 * 获取指定日期指定天数后的日期
+	 * @param date 指定的时间
+	 * @param later 指定的天数
+	 * @return
+	 */
+	public static Date getLaterDay(Date date, Integer later){
+		long curren = date.getTime();
+		return new Date(curren + later * 24 * 60 * 60 * 1000);
+	}
+
+	/**
+	 * 获取指定日期指定天数前的日期
+	 * @param date 指定的时间
+	 * @param later 指定的天数
+	 * @return
+	 */
+	public static Date getPreviouslyDay(Date date, Integer later){
+		long curren = date.getTime();
+		return new Date(curren - later * 24 * 60 * 60 * 1000);
+	}
+	
+	/**
 	 * 获取指定日期指定小时后的日期
 	 * @param date 指定的时间
 	 * @param later 指定的小时
 	 * @return
 	 */
-	public static Date getLaterDate(Date date, Integer later){
+	public static Date getLaterHour(Date date, Integer later){
 		long curren = date.getTime();
 		return new Date(curren + later * 60 * 60 * 1000);
 	}
@@ -88,7 +110,7 @@ public class DateUtil {
 	 * @param later 指定的小时
 	 * @return
 	 */
-	public static Date getPreviouslyDate(Date date, Integer later){
+	public static Date getPreviouslyHour(Date date, Integer later){
 		long curren = date.getTime();
 		return new Date(curren - later * 60 * 60 * 1000);
 	}
