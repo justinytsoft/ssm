@@ -37,9 +37,6 @@
 		.calendar-selected{
 			border:none;
 		}
-		.c{
-			background: red;
-		}
 	</style>
 
 	<script type="text/javascript" th:inline="javascript">
@@ -120,6 +117,7 @@
 					 lines:true,
 					 onClickRow:function(index, row){
 						 var date = new Date(row.text);
+						 cAlert(row.text);
 						 $("#cc").calendar("moveTo", new Date(2012,6,1));
 					 }
 				});

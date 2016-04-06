@@ -1,6 +1,6 @@
 $(function(){
-	var dialogs = $(".easyui-dialog");
 	
+	var dialogs = $(".easyui-dialog");
 	/*格式化dialog的样式*/
 	$.each(dialogs,function(){
 		var obj = $(this);
@@ -21,6 +21,14 @@ function closeDialog(id){
 	$("#"+id).dialog("close",true);
 }
 
+/*自定义alert*/
+function cAlert(msg){
+	$.messager.alert("",msg);
+	$(".window-shadow").css("height","0px");
+	$(".messager-button *").trigger("blur");
+	$(".messager-body").css({"text-align":"center","line-height":"7","background":"#fafafa"});
+}
+
 /*创建树节点*/
 function createTree(id, url){
 	$('#'+id).tree({
@@ -28,8 +36,10 @@ function createTree(id, url){
 	    animate:true,
 	    onClick: function(node){
 			var url = node.attributes;
-	    	if(url != null){
+	    	if(url != null && url != ""){
 				$("#right").panel("refresh",rootPath + url);
+			}else{
+				cAlert("该功能还未开通,请耐心等待。");
 			}
 		},
 	    loadFilter: function(rows){
