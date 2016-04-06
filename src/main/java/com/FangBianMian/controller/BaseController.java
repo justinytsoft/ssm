@@ -15,12 +15,6 @@ public class BaseController {
 /*	@Autowired
 	private BaseDao baseDao;*/
 	
-	
-	@RequestMapping("/custom")
-	public String custom() {
-		return "pages/custom/index";
-	}
-	
 	@RequestMapping("/login")
 	public String login(Model model, @RequestParam(required=false) String msg) {
 		if(!StringUtils.isBlank(msg)){
