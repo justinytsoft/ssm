@@ -1,6 +1,5 @@
 $(function(){
 	var dialogs = $(".easyui-dialog");
-	var datagrids = $(".easyui-datagrid")
 	
 	/*格式化dialog的样式*/
 	$.each(dialogs,function(){

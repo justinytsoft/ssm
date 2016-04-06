@@ -3,6 +3,18 @@
 	<head th:include="fragment/import :: header"></head>
 	
 	<body>
+		<style type="text/css">
+			/* datagrid样式 */
+			.datagrid-header-row td {
+				background-color: rgb(250, 250, 250);
+				height: 50px;
+			}
+			
+			.datagrid-header .datagrid-cell span {
+				font-size: 20px;
+				color: rgb(43, 179, 230);
+			}
+		</style>
 		<script type="text/javascript" th:inline="javascript">
 			/*<![CDATA[*/
 			   $(function(){  
@@ -37,7 +49,6 @@
 								{
 									title:"创建时间",
 									field:'create_time',
-									sortable:false,
 									align:"left",
 									width:20,
 									formatter: function(value,row,index){
@@ -48,7 +59,7 @@
 								{
 									title:"更新时间",
 									field:'refresh_time',
-									sortable:false,
+									sortable:true,
 									align:"left",
 									width:20,
 									formatter: function(value,row,index){
@@ -57,6 +68,7 @@
 									}
 								},
 								{
+									sortable:true,
 									title:"联系电话",
 									field:'phone',
 									align:"left",
@@ -95,8 +107,6 @@
 				                //添加一个新数据行，第一列的值为你需要的提示信息，然后将其他列合并到第一列来，注意修改colspan参数为你columns配置的总列数
 					    		var msg = '<div id="nothing" style="font-size:20px;height:200px;line-height:200px;text-align:center;color:rgb(200,200,200)">没有查询到职位哦~</div>';
 				                $(this).datagrid('appendRow', { jobName: msg}).datagrid('mergeCells', { index: 0, field: 'jobName', colspan: 9})
-				                //将复选框隐藏
-				                $(this).datagrid("hideColumn","id");
 				                //隐藏分页导航条，这个需要熟悉datagrid的html结构，直接用jquery操作DOM对象，easyui datagrid没有提供相关方法隐藏导航条
 				                $(this).closest('div.datagrid-wrap').find('div.datagrid-pager').hide();
 				                //移除鼠标移到行上面时,背景发生改变
@@ -106,9 +116,7 @@
 				            } else { 
 				            	//如果通过调用reload方法重新加载数据有数据时显示出分页导航容器
 				            	$(this).closest('div.datagrid-wrap').find('div.datagrid-pager').show();
-				            	//显示复选框
-				            	$(this).datagrid("showColumn","id");
-				            }
+				            } 
 					    } 
 					});
 				});
@@ -116,5 +124,6 @@
 		</script>
 		
 	 	<table id="jobList"></table> 
+	 	
 	</body>
 </html>

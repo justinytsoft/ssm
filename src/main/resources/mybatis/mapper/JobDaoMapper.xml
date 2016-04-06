@@ -3,10 +3,11 @@
 <mapper namespace="com.FangBianMian.dao.IJobDao">
 
 	<select id="getAllJobs" resultType="com.FangBianMian.domain.Job">
-		SELECT * FROM job LIMIT #{param.page}, #{param.rows}
+		SELECT * FROM job 
 		<if test="param.sort!=null and param.order!=null">
 			ORDER BY #{param.sort} #{param.order}
 		</if>
+		LIMIT #{param.page}, #{param.rows}
 	</select>
 
 	<select id="getJobTotal" resultType="int">
