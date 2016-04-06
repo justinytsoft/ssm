@@ -18,7 +18,7 @@
 	<!-- 触发器 -->
 	<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
        <property name="jobDetail" ref="myJobTask"/>  
-       <property name="cronExpression" value="0 0 1 1 * ?"/><!-- 每隔1秒钟触发一次 --> 
+       <property name="cronExpression" value="*/5 * * * * ?"/>
        <!-- 
        		 说明：
 	         1）Cron表达式的格式：秒 分 时 日 月 周 年(可选)。

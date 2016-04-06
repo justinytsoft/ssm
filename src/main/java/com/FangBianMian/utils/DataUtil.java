@@ -216,7 +216,7 @@ public class DataUtil {
 	}
 	
 	/**
-	 * 上传图片到正式文件夹,会创建缩略图,如果 W 和 H 都传入 0 则使用配置文件中的配置
+	 * 上传图片,会创建缩略图,如果 W 和 H 都传入 0 则使用配置文件中的配置
 	 * @param req
 	 * @param isTemp 判断文件存放位置, true 临时目录, false 正式目录
 	 * @param W 缩略图的宽

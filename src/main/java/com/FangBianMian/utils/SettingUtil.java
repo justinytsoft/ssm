@@ -1,5 +1,6 @@
 package com.FangBianMian.utils;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -11,6 +12,7 @@ import java.util.Properties;
  */
 public class SettingUtil {
 
+	public static final String SEPARATOR = File.separator;
 	public static String FILE_COMMON = "/common.properties";
 	private static Map<String, Properties> pools = new HashMap<String, Properties>();
 	
