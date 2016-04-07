@@ -4,7 +4,30 @@
 	<body>
 		<script type="text/javascript" th:inline="javascript">
 			/*<![CDATA[*/
-			    createTree("navigate",[[@{/user/getMenus}]]);
+			    $('#navigate').tree({
+				    url:[[@{/user/getMenus}]],
+				    animate:true,
+				    onClick: function(node){
+						var url = node.attributes;
+				    	if(url != null && url != ""){
+							$("#right").panel("refresh",rootPath + url);
+						}else{
+							cConfirm("该功能还未开通,请耐心等待。",function(flag){alert(flag)});
+						}
+					},
+				    loadFilter: function(rows){
+				    	/* 转换树节点 */
+						return convert(rows);
+					},
+					onLoadSuccess: function(node, data){
+						/* 树节点的样式 */
+						$.each($("#navigate div"),function(){
+							var obj = $(this);
+							obj.css("font-size","50px");
+							obj.css("padding","10px 0px");
+						});
+					}
+				}); 
 			/*]]>*/
 		</script>
 		

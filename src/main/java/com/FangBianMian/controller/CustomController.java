@@ -15,6 +15,7 @@ import com.FangBianMian.utils.EasyUiDataList;
 @RequestMapping("/custom")
 public class CustomController {
 
+	/*easyui*/
 	@RequestMapping("/calender")
 	public String custom() {
 		return "pages/custom/calender";
@@ -33,5 +34,11 @@ public class CustomController {
 			datas.add(eudl);
 		}
 		return datas;
+	}
+	
+	/*kindEditor*/
+	@RequestMapping("/editor")
+	public String kindEditor() {
+		return "pages/editor/index";
 	}
 }

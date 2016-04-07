@@ -1,5 +1,4 @@
 $(function(){
-	
 	var dialogs = $(".easyui-dialog");
 	/*格式化dialog的样式*/
 	$.each(dialogs,function(){
@@ -21,40 +20,24 @@ function closeDialog(id){
 	$("#"+id).dialog("close",true);
 }
 
-/*自定义alert*/
+/*alert*/
 function cAlert(msg){
 	$.messager.alert("",msg);
+	messagerCommon()
+}
+
+/*confirm*/
+function cConfirm(msg,fun){
+	$.messager.confirm('',msg,fun);
+	messagerCommon()
+}
+
+/*弹出框通用样式*/
+function messagerCommon(){
 	$(".window-shadow").css("height","0px");
 	$(".messager-button *").trigger("blur");
 	$(".messager-body").css({"text-align":"center","line-height":"7","background":"#fafafa"});
-}
-
-/*创建树节点*/
-function createTree(id, url){
-	$('#'+id).tree({
-	    url:url,
-	    animate:true,
-	    onClick: function(node){
-			var url = node.attributes;
-	    	if(url != null && url != ""){
-				$("#right").panel("refresh",rootPath + url);
-			}else{
-				cAlert("该功能还未开通,请耐心等待。");
-			}
-		},
-	    loadFilter: function(rows){
-	    	/* 转换树节点 */
-			return convert(rows);
-		},
-		onLoadSuccess: function(node, data){
-			/* 树节点的样式 */
-			$.each($("#navigate div"),function(){
-				var obj = $(this);
-				obj.css("font-size","50px");
-				obj.css("padding","10px 0px");
-			});
-		}
-	}); 
+	$(".messager-icon").remove();
 }
 
 /*转换树节点*/

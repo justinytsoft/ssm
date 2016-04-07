@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.poi.hssf.record.formula.functions.T;
 
-@SuppressWarnings("hiding")
 public class EasyUiDataGrid<T> {
 
 	private Integer total; //总记录数

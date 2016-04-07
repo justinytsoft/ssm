@@ -4,14 +4,13 @@
 	opacity: 0.6;
 }
 
+/* µ¯³ö¿òÑùÊ½ */
 .messager-window{
 	background: rgb(247,247,247);
 }
-
 .messager-window .dialog-button{
 	border: none;
 }
-
 .messager-window .window-body{
 	border: none;
 }
