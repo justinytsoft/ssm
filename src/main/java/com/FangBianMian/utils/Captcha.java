@@ -70,7 +70,7 @@ public class Captcha {
         }
         setResponseHeaders(response);
         String token = EncoderHelper.getChallangeAndWriteImage(cs, "png", response.getOutputStream());
-        session.setAttribute("captchaToken", token);
+        session.setAttribute(Constant.SESSION_GENERATED_CAPTCHA_KEY, token);
     }
     
     protected void setResponseHeaders(HttpServletResponse response) {

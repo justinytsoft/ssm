@@ -7,25 +7,25 @@
 				obj.src = [[@{/captcha}]] + "?" + Math.random();
 			}
 		</script>
-		<form th:action="j_spring_security_check" method="post">
+		<form th:action="@{/auth}" method="post">
 			<table>
 				<tr>
 					<td>用户名:</td>
-					<td><input name="j_username" value="admin"/></td>
+					<td><input name="username" value="admin"/></td>
 				</tr>
 				<tr>
 					<td>密码:</td>
-					<td><input type="password" name="j_password" value="111111"/></td>
+					<td><input type="password" name="password" value="111111"/></td>
 				</tr>
 				<tr>
 					<td>验证码:</td>
 					<td>
-						<input type="text" name="captcha"/>
-						<img onclick="update(this)" style="width: 150px; height: 50px" alt="captcha" title="点击更换" th:src="@{/captcha}"/>
+						<input type="text" name="captcha" style="vertical-align:middle" />
+						<img onclick="update(this)" style="vertical-align:middle;width: 150px; height: 50px" alt="captcha" title="点击更换" th:src="@{/captcha}"/>
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2"><input type="checkbox" name="_spring_security_remember_me" /> 免登录 </td>
+					<td colspan="2"><input type="checkbox" name="remember_me" /> 免登录 </td>
 				</tr>
 				<tr>
 					<td colspan="2"><input type="submit" value="submit"/></td>
