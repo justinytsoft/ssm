@@ -1,3 +1,7 @@
+A:link{text-decoration:none;}
+A:visited{text-decoration:none;}
+A:active{text-decoration:none;}
+
 /* 遮罩颜色和透明度 */
 .window-proxy-mask, .window-mask {
 	background: black;

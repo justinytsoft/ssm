@@ -31,6 +31,12 @@
 			<param-value>true</param-value>
 		</init-param>
 	</filter>
+	<filter>
+		<filter-name>LoginFilter</filter-name>
+		<display-name>LoginFilter</display-name>
+		<description></description>
+		<filter-class>com.FangBianMian.security.LoginFilter</filter-class>
+	</filter>
 
 	<filter-mapping>
 		<filter-name>springSecurityFilterChain</filter-name>
@@ -40,6 +46,10 @@
 	<filter-mapping>
 		<filter-name>characterEncodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>LoginFilter</filter-name>
+		<url-pattern>/LoginFilter</url-pattern>
 	</filter-mapping>
 
 	<listener>

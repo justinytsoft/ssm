@@ -29,12 +29,12 @@
 			                    	$("#showImg").attr("src",path).show();
 			                    	$("input[name=headTempName]").val(data.data.tempName);
 		                    	}else{
-		                    		$.messager.alert('Warning','upload failed. cause:'+data.message);
+		                    		cAlert('upload failed. cause:'+data.message);
 		                    	}
 		                    },
 		                    error: function (data, status, e)//服务器响应失败处理函数
 		                    {
-		                        alert(e);
+		                    	cAlert(e);
 		                    }
 			        	});
 						return false;
@@ -44,9 +44,9 @@
 				$("#save").click(function(){
 					$.post([[@{/user/save_signup}]],$("#saveForm").serialize(),function(data){
 						if(data.status=="200"){
-							$.messager.alert('Info',data.message);
+							cAlert(data.message);
 						}else{
-							$.messager.alert('Warning','save failed. cause:'+data.message);
+							cAlert('save failed. cause:'+data.message)
 						}
 					});
 				});
@@ -68,14 +68,6 @@
 			<div style="margin-bottom: 20px">
 				<img id="showImg" alt="预览头像" style="display: none;width: 100px;height:100px"/>
 				<a name="upload" href="javascript:" class="easyui-linkbutton" style="float: right;width:75px;height:20px" >upload</a>
-				<div style="clear: right"></div>
-			</div>
-			<div style="margin-bottom: 10px">
-				<div>Readme Doc:</div>
-				<input class="easyui-filebox" name="doc" href="javascript:" data-options="prompt:'Choose a file...'" style="width: 100%"/>
-			</div>
-			<div style="margin-bottom: 20px">
-				<a name="upload" class="easyui-linkbutton" style="float: right;width:75px;height:20px" >upload</a>
 				<div style="clear: right"></div>
 			</div>
 			<div>

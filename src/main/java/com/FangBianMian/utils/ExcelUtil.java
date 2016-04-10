@@ -19,7 +19,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
  * Created by Administrator on 2016-1-24.
  * @author hansen
  */
-public class ExportExcel {
+public class ExcelUtil {
 	
     /**
      * 将数据导出到EXCEL

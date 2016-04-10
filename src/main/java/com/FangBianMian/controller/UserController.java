@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -55,6 +57,8 @@ public class UserController {
 			jwr.setMessage("保存成功");
 		} catch (IOException e) {
 			e.printStackTrace();
+			jwr.setStatus(ResponseStatus.BACK_EXCEPTION);
+			jwr.setMessage(e.getMessage());
 		}
 		return jwr;
 	}
@@ -75,7 +79,7 @@ public class UserController {
 	 */
 	@RequestMapping("/getMenus")
 	@ResponseBody
-	public List<EasyUiTree> getMenus(@RequestParam(required=false) Integer pid){
+	public List<EasyUiTree> getMenus(HttpServletResponse response, @RequestParam(required=false) Integer pid){
 		SecurityUser su = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if(su == null){
 			return new ArrayList<EasyUiTree>();

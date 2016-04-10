@@ -19,9 +19,9 @@ import com.FangBianMian.domain.SecurityUser;
  * 登录验证成功处理器
  * @author Luxh
  */
-public class LoginAuthenticationSuccessHandler implements AuthenticationSuccessHandler{
+public class LoginSuccessHandler implements AuthenticationSuccessHandler{
     
-    private static Logger log = LoggerFactory.getLogger(LoginAuthenticationSuccessHandler.class);
+    private static Logger log = LoggerFactory.getLogger(LoginSuccessHandler.class);
     
     //登录验证成功后需要跳转的url
     private String defaultTargetUrl;

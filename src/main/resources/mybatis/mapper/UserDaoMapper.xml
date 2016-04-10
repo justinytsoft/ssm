@@ -3,7 +3,7 @@
 <mapper namespace="com.FangBianMian.dao.IUserDao">
 
 	<insert id="saveTestUpload" parameterType="com.FangBianMian.domain.TestUpload">
-		INSERT INTO test_upload SET name=#{name},head=#{head},doc=#{doc}
+		INSERT INTO test_upload SET name=#{name},head=#{head}
 	</insert>
 
 	<select id="selectUserByUsername" resultType="com.FangBianMian.domain.SecurityUser">

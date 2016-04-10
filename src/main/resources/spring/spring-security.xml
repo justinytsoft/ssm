@@ -13,11 +13,12 @@
 
     <http pattern="/login" security="none"/>
     <http pattern="/sessionException" security="none"/>
+    <http pattern="/captcha" security="none"/>
 		
     <!--
         auto-config='true'将自动配置几种常用的权限控制机制，包括form, anonymous, rememberMe。
     -->
-    <http auto-config="true" use-expressions="true" access-denied-page="/pages/error/403.html">
+    <http use-expressions="true" entry-point-ref="authenticationProcessingFilterEntryPoint" access-denied-page="/pages/error/403.html">   
     
     	<!-- 
  			intercept-url来判断用户需要具有何种权限才能访问对应的url资源，可以在pattern中指定一个特定的url资源，也可以使用通配符指定一组类似的url资源。
@@ -28,25 +29,6 @@
     	-->
     	<intercept-url pattern="/**" access="isAuthenticated()"/>
     
-    
-    	<!-- 
-    		login-page 请求被拦截后跳转的页面
-    		default-target-url 指定了从登录页面登录成功后进行跳转的页面
-    		always-use-default-target true 表示登录成功后强制跳转 
-            authentication-failure-url 表示验证失败后进入的页面 
-    		authentication-success-handler-ref 表示登录成功后进入的处理类
-            login-processing-url 设置验证登录验证地址，如果不设置，默认是j_spring_security_check 
-            username-parameter,password-parameter 设置登录用户名和密码的请求name，默认：j_username,j_password 
-        -->
-		<form-login login-page="/login"
-                	always-use-default-target="false"
-					login-processing-url="/login_auth"
-					username-parameter="username"
-					password-parameter="password"
-    				authentication-failure-url="/login?msg=LOGIN.FAILD"
-    				authentication-success-handler-ref="authenticationSuccessHandler"
-    	/>
-    				
         <!-- 退出后到登陆页面 -->
         <logout logout-url="/logout" logout-success-url="/login" />
         
@@ -78,17 +60,38 @@
             -->
             <concurrency-control max-sessions="1" error-if-maximum-exceeded="false" expired-url="/sessionException?msg=SESSION.MULTI"/>
         </session-management>
+        
+        <!-- 自定义的登陆拦截器 -->
+    	<custom-filter ref="loginFilter" position="FORM_LOGIN_FILTER" />  
     </http>
+
+	<!-- 登陆点 -->
+ 	<beans:bean id="authenticationProcessingFilterEntryPoint" class="com.FangBianMian.security.LoginPageEntryPoint">  
+        <beans:property name="loginPageStrategy" ref="urlMappingLoginPageStrategy"></beans:property>  
+    </beans:bean>  
     
-    <authentication-manager>  
+    <!-- 登陆点实现策略 -->
+	<beans:bean id="urlMappingLoginPageStrategy" class="com.FangBianMian.security.UrlMappingLoginPageStrategy"/>
+
+	<!-- 自定义的登陆拦截器 -->
+    <beans:bean id="loginFilter" class="com.FangBianMian.security.LoginFilter">  
+        <beans:property name="filterProcessesUrl" value="/j_spring_security_check"></beans:property>  
+        <beans:property name="authenticationFailureHandler" ref="loginFailureHandler"></beans:property>  
+        <beans:property name="authenticationSuccessHandler" ref="loginSuccessHandler"></beans:property>  
+        <beans:property name="authenticationManager" ref="authenticationManager"></beans:property>  
+    </beans:bean>  
+    
+    <!-- 验证管理器 -->
+    <authentication-manager alias="authenticationManager">  
        <authentication-provider ref="daoAuthenticationProvider" />  
     </authentication-manager>  
       
+    <!-- 验证提供者 -->
     <beans:bean id="daoAuthenticationProvider"  class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">  
         <beans:property name="passwordEncoder" ref="passwordEncoder" />  
         <beans:property name="userDetailsService" ref="UserDetailsService" />  
     </beans:bean>  
-  
+    
   	<!-- 给提交过来的密码加密 -->
     <beans:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />  
       
@@ -96,11 +99,124 @@
     <beans:bean id="UserDetailsService" class="com.FangBianMian.security.UserDetailsServiceImpl" />
     
     <!-- 登录成功业务处理 -->
+    <beans:bean id="loginSuccessHandler" class="com.FangBianMian.security.LoginSuccessHandler">
+        <beans:property name="defaultTargetUrl" value="/index"></beans:property>  
+        <beans:property name="forwardToDestination" value="false"></beans:property>
+    </beans:bean>
+    
+    <!-- 登陆失败处理器 -->
+    <beans:bean id="loginFailureHandler" class="com.FangBianMian.security.LoginFailureHandler">  
+        <!-- 可以配置相应的跳转方式。属性forwardToDestination为true(默认)采用forward false为sendRedirect -->  
+        <beans:property name="defaultFailureUrl" value="/login"/>  
+    </beans:bean> 
+    
+    
+</beans:beans>
+
+<!-- <beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:context="http://www.springframework.org/schema/context"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security-3.2.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+
+    <http pattern="/login" security="none"/>
+    <http pattern="/sessionException" security="none"/>
+    <http pattern="/captcha" security="none"/>
+		
+    
+        auto-config='true'将自动配置几种常用的权限控制机制，包括form, anonymous, rememberMe。
+   
+    <http auto-config="true" use-expressions="true" access-denied-page="/pages/error/403.html">
+    
+    	
+ 			intercept-url来判断用户需要具有何种权限才能访问对应的url资源，可以在pattern中指定一个特定的url资源，也可以使用通配符指定一组类似的url资源。
+        	Spring Security采用的是一种就近原则，就是说当用户访问的url资源满足多个intercepter-url时，
+        	系统将使用第一个符合条件的intercept-url进行权限控制。
+        	
+    		access="isAuthenticated()" 表示所有访问都的用户都必须是已验证的 
+    	
+    	<intercept-url pattern="/**" access="isAuthenticated()"/>
+    
+    	
+    		login-page 请求被拦截后跳转的页面
+    		default-target-url 指定了从登录页面登录成功后进行跳转的页面
+    		always-use-default-target true 表示登录成功后强制跳转 
+            authentication-failure-url 表示验证失败后进入的页面 
+    		authentication-success-handler-ref 表示登录成功后进入的处理类
+            login-processing-url 设置验证登录验证地址，如果不设置，默认是j_spring_security_check 
+            username-parameter,password-parameter 设置登录用户名和密码的请求name，默认：j_username,j_password 
+       
+		<form-login login-page="/login"
+                	always-use-default-target="false"
+					login-processing-url="/login_auth"
+					username-parameter="username"
+					password-parameter="password"
+    				authentication-failure-url="/login?msg=LOGIN.FAILD"
+    				authentication-success-handler-ref="authenticationSuccessHandler"
+    	/>
+
+  		 退出后到登陆页面
+        <logout logout-url="/logout" logout-success-url="/login" />
+        
+        
+        	记住密码 
+        	默认是存cookie
+        	如果添加 data-source-ref 属性, 则是添加到数据库, 并且需要创建相关表
+       
+        <remember-me data-source-ref="dataSource" />
+
+        
+            session-fixation-protection 
+                                    值为:migrateSession
+         	 防止伪造sessionid攻击. 用户登录成功后会销毁用户当前的session. 创建新的session,并把用户信息复制到新session中.
+                                    
+            invalid-session-url 会话失效时跳转的页面
+       
+        <session-management invalid-session-url="/sessionException?msg=SESSION.INVALID" session-fixation-protection="migrateSession">
+            
+            	配置同一用户多次登录的情况, 需要重写UserDetailsServiceImpl实现类loadUserByUsername方法返回的User重写equals和hashCode, 
+            	还需要在 web.xml中配置 org.springframework.security.web.session.HttpSessionEventPublisher 监听器
+            	 
+            	max-sessions=1  配置同一用户最多可以同时登录多少次,超出后根据 error-if-maximum-exceeded 来处理
+            	
+            	error-if-maximum-exceeded 值为true时，如果一个用户已经登录，然后又进行登录,则无法登陆，
+    									      值为false时，如果一个用户已经登录，然后又进行登录,则将踢掉上一个用户。
+    									      
+				expired-url 表示被提出的用户跳转到那个页面
+           
+            <concurrency-control max-sessions="1" error-if-maximum-exceeded="false" expired-url="/sessionException?msg=SESSION.MULTI"/>
+        </session-management>
+    </http>
+    
+    验证管理器
+    <authentication-manager alias="authenticationManager">  
+       <authentication-provider ref="daoAuthenticationProvider" />  
+    </authentication-manager>  
+      
+   	验证提供者
+    <beans:bean id="daoAuthenticationProvider"  class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">  
+        <beans:property name="passwordEncoder" ref="passwordEncoder" />  
+        <beans:property name="userDetailsService" ref="UserDetailsService" />  
+    </beans:bean>  
+    
+  	给提交过来的密码加密
+    <beans:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />  
+      
+   	登录验证处理类
+    <beans:bean id="UserDetailsService" class="com.FangBianMian.security.UserDetailsServiceImpl" />
+    
+   	登录成功业务处理
     <beans:bean id="authenticationSuccessHandler" class="com.FangBianMian.security.LoginAuthenticationSuccessHandler">
         <beans:property name="defaultTargetUrl" value="/index"></beans:property>  
         <beans:property name="forwardToDestination" value="false"></beans:property>
     </beans:bean>
-</beans:beans>
+</beans:beans> -->
 
 
 
