@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.FangBianMian.response.JsonResWrapper;
 import com.FangBianMian.response.ResponseStatus;
 import com.FangBianMian.utils.DataUtil;
+import com.FangBianMian.utils.FileUtils;
 import com.FangBianMian.utils.SettingUtil;
 
 /**
@@ -29,7 +30,7 @@ import com.FangBianMian.utils.SettingUtil;
 @Controller
 @RequestMapping("/upload")
 public class UploadController {
-
+	
 	private Log log = LogFactory.getLog(UploadController.class);
 
 	/**
@@ -46,9 +47,10 @@ public class UploadController {
 		JsonResWrapper jrw = new JsonResWrapper();
 		try {
 			String path = DataUtil.uploadImg(request, true, 0, 0).get(0);
+			String[] str = FileUtils.getFileNameAndExtension(path);
 			if (!StringUtils.isBlank(path)) {
 				Map<String, Object> map = new HashMap<String, Object>();
-				map.put("path", path);
+				map.put("path", str[0]+"_S"+str[1]);
 				map.put("tempName", path);
 				jrw.setData(map);
 			} else {

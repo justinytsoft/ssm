@@ -4,15 +4,8 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
-import org.patchca.filter.predefined.CurvesRippleFilterFactory;
-import org.patchca.filter.predefined.DiffuseRippleFilterFactory;
-import org.patchca.filter.predefined.DoubleRippleFilterFactory;
-import org.patchca.filter.predefined.MarbleRippleFilterFactory;
-import org.patchca.filter.predefined.WobbleRippleFilterFactory;
-import org.patchca.utils.encoder.EncoderHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
