@@ -2,6 +2,7 @@ package com.FangBianMian.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.joda.time.DateTime;
@@ -30,6 +31,40 @@ public class DateUtil {
 			return "昨天发布";
 		} else {
 			return new DateTime(date).toString("yyyy-MM-dd");
+		}
+	}
+	
+	/**
+	 * 计算d1 到 d2 相差多少天
+	 * @param d1
+	 * @param d2
+	 * @return
+	 */
+	public static int mistiming(Date d1, Date d2){
+		Calendar cal1 = Calendar.getInstance();
+		cal1.setTime(d1);
+
+		Calendar cal2 = Calendar.getInstance();
+		cal2.setTime(d2);
+		
+		int day1 = cal1.get(Calendar.DAY_OF_YEAR);
+		int day2 = cal2.get(Calendar.DAY_OF_YEAR);
+		
+		int year1 = cal1.get(Calendar.YEAR);
+		int year2 = cal2.get(Calendar.YEAR);
+		
+		if(year1!=year2){
+			int timeDistance = 0;
+			for(int i=year1; i < year2; i++){
+				if(i%4==0 && i%100!=0 || i%400==0){
+					timeDistance += 366;
+				}else{
+					timeDistance += 365;
+				}
+			}
+			return (timeDistance+(day2-day1));
+		}else{
+			return (day2-day1);
 		}
 	}
 	
