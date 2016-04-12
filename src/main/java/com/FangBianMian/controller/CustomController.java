@@ -7,6 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/custom")
 public class CustomController {
 
+	@RequestMapping("/bootstrap")
+	public String bs() {
+		return "pages/bootstrap/index";
+	}
+
 	@RequestMapping("/calender")
 	public String custom() {
 		return "pages/custom/calender";
