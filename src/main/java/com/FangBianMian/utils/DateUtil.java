@@ -35,6 +35,18 @@ public class DateUtil {
 	}
 	
 	/**
+	 * 获取指定分钟后的日期
+	 * @param date
+	 * @param minute
+	 * @return
+	 */
+	public static Date getMinute(Date date, int minute) {
+		long curren = date.getTime();
+		curren += minute * 60 * 1000;
+		return new Date(curren);
+	}
+	
+	/**
 	 * 计算d1 到 d2 相差多少天
 	 * @param d1
 	 * @param d2
