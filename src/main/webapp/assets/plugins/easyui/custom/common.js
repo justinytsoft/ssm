@@ -1,3 +1,14 @@
+//自定义校验规则
+$.extend($.fn.validatebox.defaults.rules, {
+    isNumber: {
+        validator: function(value){
+        	var reg=/^\d+$/;
+            return reg.test(value);
+        },
+        message: '只能输入整数'
+    }
+});
+
 $(function(){
 	var dialogs = $(".easyui-dialog");
 	/*格式化dialog的样式*/
