@@ -14,7 +14,7 @@
 						var id = $(this).parent().prev().find("input[type=file]").attr("id");
 						var content = $(this).parent().prev().find("input[type=file]").val();
 						if(content==""){
-							$.messager.alert('Warning',"请选择文件");
+							cAlert("请上传文件");
 							return false;
 						}
 						$.ajaxFileUpload({
@@ -42,20 +42,18 @@
 				});
 
 				$("#save").click(function(){
-					$.post([[@{/user/save_signup}]],$("#saveForm").serialize(),function(data){
-						if(data.status=="200"){
-							cAlert(data.message);
-						}else{
-							cAlert('save failed. cause:'+data.message)
-						}
-					});
+					var form = $("#saveForm");
+					if(form.form('validate')){
+						$.post([[@{/user/save_signup}]],form.serialize(),function(data){
+							if(data.status=="200"){
+								cAlert(data.message);
+							}else{
+								cAlert('save failed. cause:'+data.message);
+							}
+						});
+					}
 				});
 			});
-		
-		
-			function menuHandler(item){
-				alert(item.name)
-			}
 		/*]]>*/
 	</script>
 	
@@ -63,11 +61,11 @@
 		<div class="easyui-panel" title="Signup" style="width: 400px; padding: 30px 70px 50px 70px">
 			<div style="margin-bottom: 20px">
 				<div>Name:</div>
-				<input class="easyui-textbox" name="name" style="width: 100%"/>
+				<input class="easyui-textbox easyui-validatebox" data-options="validateOnCreate:false,required:true" name="name" style="width: 100%"/>
 			</div>
 			<div style="margin-bottom: 10px">
 				<div>Head Portrait:</div>
-				<input class="easyui-filebox" name="head" data-options="prompt:'Choose a file...'" style="width: 100%"/>
+				<input class="easyui-filebox easyui-validatebox" name="head" data-options="prompt:'Choose a file...',validateOnCreate:false,required:true" style="width: 100%"/>
 				<input type="hidden" name="headTempName"/>
 			</div>
 			<div style="margin-bottom: 20px">
