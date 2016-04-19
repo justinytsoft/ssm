@@ -1,7 +1,7 @@
-/**
- * jQuery EasyUI 1.4.4
+﻿/**
+ * jQuery EasyUI 1.4.5
  * 
- * Copyright (c) 2009-2015 www.jeasyui.com. All rights reserved.
+ * Copyright (c) 2009-2016 www.jeasyui.com. All rights reserved.
  *
  * Licensed under the freeware license: http://www.jeasyui.com/license_freeware.php
  * To use it on other terms please contact us: info@jeasyui.com
@@ -21,8 +21,25 @@
 		
 		var param = $.extend({}, opts.queryParams);
 		if (opts.onSubmit.call(target, param) == false){return;}
-		$(target).find('.textbox-text:focus').blur();
-		
+
+		// $(target).find('.textbox-text:focus').blur();
+		var input = $(target).find('.textbox-text:focus');
+		input.triggerHandler('blur');
+		input.focus();
+
+		if (opts.iframe){
+			submitIframe(target, param);
+		} else {
+			if (window.FormData !== undefined){
+				submitXhr(target, param);
+			} else {
+				submitIframe(target, param);
+			}
+		}		
+	}
+
+	function submitIframe(target, param){
+		var opts = $.data(target, 'form').options;
 		var frameId = 'easyui_frame_' + (new Date().getTime());
 		var frame = $('<iframe id='+frameId+' name='+frameId+'></iframe>').appendTo('body')
 		frame.attr('src', window.ActiveXObject ? 'javascript:false' : 'about:blank');
@@ -96,13 +113,48 @@
 				}
 			} catch(e){
 			}
-			opts.success(data);
+			opts.success.call(target, data);
 			setTimeout(function(){
 				f.unbind();
 				f.remove();
 			}, 100);
 		}
 	}
+
+	function submitXhr(target, param){
+		var opts = $.data(target, 'form').options;
+		var formData = new FormData($(target)[0]);
+		for(var name in param){
+			formData.append(name, param[name]);
+		}
+		$.ajax({
+			url: opts.url,
+			type: 'post',
+			xhr: function(){
+				var xhr = $.ajaxSettings.xhr();
+				if (xhr.upload) {
+					xhr.upload.addEventListener('progress', function(e){
+						if (e.lengthComputable) {
+							var total = e.total;
+							var position = e.loaded || e.position;
+							var percent = Math.ceil(position * 100 / total);
+							opts.onProgress.call(target, percent);
+						}
+					}, false);
+				}
+				return xhr;
+			},
+			data: formData,
+			dataType: 'html',
+			cache: false,
+			contentType: false,
+			processData: false,
+			complete: function(res){
+				opts.success.call(target, res.responseText);
+			}
+		});
+	}
+	
 	
 	/**
 	 * load form data
@@ -359,6 +411,11 @@
 			return jq.each(function(){
 				setValidation(this, false);
 			});
+		},
+		resetValidation: function(jq){
+			return jq.each(function(){
+				$(this).find('.validatebox-text:not(:disabled)').validatebox('resetValidation');
+			});
 		}
 	};
 	
@@ -375,9 +432,11 @@
 		        'slider','searchbox','numberbox','textbox','switchbutton'],
 		novalidate: false,
 		ajax: true,
+		iframe: true,
 		url: null,
 		queryParams: {},
 		onSubmit: function(param){return $(this).form('validate');},
+		onProgress: function(percent){},
 		success: function(data){},
 		onBeforeLoad: function(param){},
 		onLoadSuccess: function(data){},

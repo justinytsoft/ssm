@@ -1,7 +1,7 @@
-/**
- * jQuery EasyUI 1.4.4
+﻿/**
+ * jQuery EasyUI 1.4.5
  * 
- * Copyright (c) 2009-2015 www.jeasyui.com. All rights reserved.
+ * Copyright (c) 2009-2016 www.jeasyui.com. All rights reserved.
  *
  * Licensed under the freeware license: http://www.jeasyui.com/license_freeware.php
  * To use it on other terms please contact us: info@jeasyui.com
@@ -71,9 +71,9 @@
 			border: false,
 			doSize: true,	// size the panel, the property undefined in window component
 			closed: true,	// close the panel
-			cls: 'window',
-			headerCls: 'window-header',
-			bodyCls: 'window-body ' + (opts.noheader ? 'window-body-noheader' : ''),
+			cls: 'window ' + (!opts.border?'window-thinborder window-noborder ':(opts.border=='thin'?'window-thinborder ':'')) + (opts.cls || ''),
+			headerCls: 'window-header ' + (opts.headerCls || ''),
+			bodyCls: 'window-body ' + (opts.noheader ? 'window-body-noheader ' : ' ') + (opts.bodyCls||''),
 			
 			onBeforeDestroy: function(){
 				if (opts.onBeforeDestroy.call(target) == false){return false;}
@@ -171,11 +171,12 @@
 		state.window.draggable({
 			handle: '>div.panel-header>div.panel-title',
 			disabled: state.options.draggable == false,
-			onStartDrag: function(e){
+			onBeforeDrag: function(e){
 				if (state.mask) state.mask.css('z-index', $.fn.window.defaults.zIndex++);
 				if (state.shadow) state.shadow.css('z-index', $.fn.window.defaults.zIndex++);
 				state.window.css('z-index', $.fn.window.defaults.zIndex++);
-				
+			},
+			onStartDrag: function(e){
 				if (!state.proxy){
 					state.proxy = $('<div class="window-proxy"></div>').insertAfter(state.window);
 				}
@@ -361,6 +362,7 @@
 		resizable: true,
 		shadow: true,
 		modal: false,
+		border: true,	// possible values are: true,false,'thin','thick'
 		inline: false,	// true to stay inside its parent, false to go on top of all elements
 		
 		// window's property which difference from panel

@@ -1,7 +1,7 @@
-/**
- * jQuery EasyUI 1.4.4
+﻿/**
+ * jQuery EasyUI 1.4.5
  * 
- * Copyright (c) 2009-2015 www.jeasyui.com. All rights reserved.
+ * Copyright (c) 2009-2016 www.jeasyui.com. All rights reserved.
  *
  * Licensed under the freeware license: http://www.jeasyui.com/license_freeware.php
  * To use it on other terms please contact us: info@jeasyui.com
@@ -266,12 +266,12 @@
 	 * alignTo: the element object to align to
 	 */
 	function showMenu(target, param){
-		var left,top;
 		param = param || {};
+		var left,top;
+		var opts = $.data(target, 'menu').options;
 		var menu = $(param.menu || target);
 		$(target).menu('resize', menu[0]);
 		if (menu.hasClass('menu-top')){
-			var opts = $.data(target, 'menu').options;
 			$.extend(opts, param);
 			left = opts.left;
 			top = opts.top;
@@ -309,7 +309,7 @@
 			return top;
 		}
 		
-		menu.css({left:left,top:top});
+		menu.css(opts.position.call(target, menu[0], left, top));
 		menu.show(0, function(){
 			if (!menu[0].shadow){
 				menu[0].shadow = $('<div class="menu-shadow"></div>').insertAfter(menu);
@@ -324,7 +324,7 @@
 			});
 			menu.css('z-index', $.fn.menu.defaults.zIndex++);
 			if (menu.hasClass('menu-top')){
-				$.data(menu[0], 'menu').options.onShow.call(menu[0]);
+				opts.onShow.call(target);
 			}
 		});
 	}
@@ -630,6 +630,9 @@
 		inline: false,	// true to stay inside its parent, false to go on top of all elements
 		fit: false,
 		noline: false,
+		position: function(target, left, top){
+			return {left:left,top:top}
+		},
 		onShow: function(){},
 		onHide: function(){},
 		onClick: function(item){}

@@ -1,11 +1,37 @@
 //自定义校验规则
 $.extend($.fn.validatebox.defaults.rules, {
-    isNumber: {
+    isNumber: { 
         validator: function(value){
         	var reg=/^\d+$/;
             return reg.test(value);
         },
         message: '只能输入整数'
+    },
+    lengthRegion: {
+    	validator: function(value,param){
+    		var length = value.length;
+            return (length >= param[0] && length <= param[1]);
+        },
+        message: '输入长度必须在{0}~{1}之间'
+    },
+    length: {
+		validator: function(value,param){
+			var length = value.length;
+			return length == param[0];
+		},
+		message: '输入字符必须等于{0}'
+    },
+    minLength: {
+        validator: function(value, param){
+            return value.length >= param[0];
+        },
+        message: '输入的字符长度必须大于等于{0}'
+    },
+    maxLength: {
+        validator: function(value, param){
+            return value.length <= param[0];
+        },
+        message: '输入的字符长度必须小于等于{0}'
     }
 });
 

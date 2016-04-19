@@ -1,7 +1,7 @@
-/**
- * jQuery EasyUI 1.4.4
+﻿/**
+ * jQuery EasyUI 1.4.5
  * 
- * Copyright (c) 2009-2015 www.jeasyui.com. All rights reserved.
+ * Copyright (c) 2009-2016 www.jeasyui.com. All rights reserved.
  *
  * Licensed under the freeware license: http://www.jeasyui.com/license_freeware.php
  * To use it on other terms please contact us: info@jeasyui.com
@@ -465,6 +465,7 @@ $(this).attr("title","");
 _68=$.data(this,"panel",{options:_69,panel:_14(this),isLoaded:false});
 }
 _18(this);
+$(this).show();
 if(_69.doSize==true){
 _68.panel.css("display","block");
 _3(this);

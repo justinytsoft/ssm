@@ -40,7 +40,7 @@
 						return false;
 					});
 				});
-				
+
 				$("#save").click(function(){
 					$.post([[@{/user/save_signup}]],$("#saveForm").serialize(),function(data){
 						if(data.status=="200"){
@@ -80,5 +80,8 @@
 			</div>
 		</div>
 	</form>
+
+
+
 </body>
 </html>
