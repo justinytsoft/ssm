@@ -10,11 +10,14 @@ A:active{text-decoration:none;}
 
 /* µ¯³ö¿òÑùÊ½ */
 .messager-window{
-	background: rgb(247,247,247);
+	background: rgb(250, 250, 250);
 }
 .messager-window .dialog-button{
 	border: none;
 }
 .messager-window .window-body{
 	border: none;
+}
+.dialog-button{
+	background: rgb(250, 250, 250);
 }
