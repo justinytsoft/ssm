@@ -1,20 +1,114 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-  <head>
-     <title>Bootstrap 101 Template</title>
-     <script th:src="@{/assets/js/jquery-1.9.1.js}"></script>
- 	 <script th:src="@{/assets/plugins/easyui/jquery.easyui.min.js}"></script>
- 	 <script th:src="@{/assets/plugins/easyui/locale/easyui-lang-zh_CN.js}"></script>
- 	 <link rel="stylesheet" th:href="@{/assets/plugins/easyui/themes/gray/easyui.css}" />
- 	 <link rel="stylesheet" th:href="@{/assets/plugins/easyui/themes/icon.css}" />
- 	 
- 	 <script type="text/javascript">
- 	 </script>
-  </head>
+  	<head>
+	    <meta charset="UTF-8"/>  
+	    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	    <title>Pop Animation</title>  
+	    <link rel="stylesheet" type="text/css" th:href="@{/assets/plugins/easyui/themes/metro/easyui.css}"/>  
+	    <link rel="stylesheet" type="text/css" th:href="@{/assets/plugins/easyui/themes/mobile.css}"/>  
+	    <link rel="stylesheet" type="text/css" th:href="@{/assets/plugins/easyui/themes/icon.css}"/>  
+	    <script type="text/javascript" th:src="@{/assets/js/jquery-1.10.1.min.js}"></script>
+	    <script type="text/javascript" th:src="@{/assets/plugins/easyui/jquery.easyui.min.js}"></script> 
+	    <script type="text/javascript" th:src="@{/assets/plugins/easyui/jquery.easyui.mobile.js}"></script>
+		<style type="text/css">
+			.tt-inner{
+	            display:inline-block;
+	            line-height:12px;
+	            padding-top:5px;
+	            position: relative;
+	        }
+	        p{
+	            line-height:150%;
+	        }
+		</style>
+		<script type="text/javascript" th:inline="javascript">
+			/*<![CDATA[*/
+				$(function(){
+					var title = $("#p3").prev().find(".m-title");
+					$.each($("#p3 .tabs-inner"),function(){
+						$(this).click(function(){
+							title.text($(this).find("label").text());
+						});
+					});
+				});
+			/*]]>*/
+		</script>
+	</head>
   
-  <body>
-  
-  	
-  
-  </body>
+	<body>
+	    <div class="easyui-navpanel">
+	        <header>
+	            <div class="m-toolbar">
+	                <span class="m-title">Pop Animation</span>
+	            </div>
+	        </header>
+	        <ul class="m-list">
+	            <li><a href="#p2" data-options="animation:'pop',direction:''">Pop</a></li>
+	            <li><a href="#p3" data-options="animation:'pop',direction:''">Pop</a></li>
+	        </ul>
+	    </div>
+	    
+	    <!-- p3 -->
+	    <div id="p3" class="easyui-navpanel">
+	        <header>
+	            <div class="m-toolbar">
+	            	<div class="m-left">
+	                    <a href="#" class="easyui-linkbutton m-back" data-options="plain:true,outline:true,back:true">Back</a>
+	                </div>
+	                <div class="m-title">Model</div>
+	            </div>
+	        </header>
+	        <div class="easyui-tabs" data-options="tabHeight:60,fit:true,tabPosition:'bottom',border:false,pill:true,narrow:true,justified:true">
+	            <div style="padding:10px">
+	                <div class="panel-header tt-inner">
+	                    <img th:src="@{/assets/plugins/easyui/themes/icons/large_smartart.png}" /><br/><label>Modem</label><span class="m-badge">2</span>
+	                </div>
+	                <p>A modem (modulator-demodulator) is a device that modulates an analog carrier signal to encode digital information, and also demodulates such a carrier signal to decode the transmitted information.</p>
+	            </div>
+	            <div style="padding:10px">
+	                <div class="panel-header tt-inner">
+	                    <img th:src="@{/assets/plugins/easyui/themes/icons/large_shapes.png}"/><br/><label>Scanner</label>
+	                </div>
+	                <p>In computing, an image scanner—often abbreviated to just scanner—is a device that optically scans images, printed text, handwriting, or an object, and converts it to a digital image.</p>
+	            </div>
+	            <div style="padding:10px">
+	                <div class="panel-header tt-inner">
+	                    <img th:src="@{/assets/plugins/easyui/themes/icons/large_picture.png}"/><br/><label>Personal</label>
+	                </div>
+	                <p>A personal digital assistant (PDA), also known as a palmtop computer, or personal data assistant, is a mobile device that functions as a personal information manager. PDAs are largely considered obsolete with the widespread adoption of smartphones.</p>
+	            </div>
+	            <div style="padding:10px">
+	                <div class="panel-header tt-inner">
+	                    <img th:src="@{/assets/plugins/easyui/themes/icons/large_clipart.png}"/><br/><label>Tablet</label>
+	                </div>
+	                <p>A tablet computer, or simply tablet, is a one-piece mobile computer. Devices typically have a touchscreen, with finger or stylus gestures replacing the conventional computer mouse.</p>
+	            </div>
+	        </div>
+        </div>
+	    
+	    <!-- p2 -->
+	    <div id="p2" class="easyui-navpanel">
+	        <header>
+	            <div class="m-toolbar">
+	                <div class="m-left">
+	                    <a href="#" class="easyui-linkbutton m-back" data-options="plain:true,outline:true,back:true">Back</a>
+	                </div>
+	                <div class="m-title">Panel2</div>
+	            </div>
+	        </header>
+            <div class="easyui-tabs" data-options="fit:true,border:false,pill:true,justified:true,tabWidth:80,tabHeight:50">
+		        <div title="Java" style="padding:10px">
+		            <p>Java is a general-purpose, concurrent, class-based, object-oriented computer programming language that is specifically designed to have as few implementation dependencies as possible.</p>
+		            <p>Java applications are typically compiled to bytecode (class file) that can run on any Java virtual machine (JVM) regardless of computer architecture.</p>
+		        </div>
+		        <div title="Fortran" style="padding:10px">
+		            <p>Fortran (previously FORTRAN) is a general-purpose, imperative programming language that is especially suited to numeric computation and scientific computing. Originally developed by IBM at their campus in south San Jose, California[1] in the 1950s for scientific and engineering applications.</p>
+		        </div>
+		        <div title="Perl" style="padding:10px">
+		            <p>Perl is a family of high-level, general-purpose, interpreted, dynamic programming languages. The languages in this family include Perl 5 and Perl 6.</p>
+		            <p>Though Perl is not officially an acronym, there are various backronyms in use, such as: Practical Extraction and Reporting Language. Perl was originally developed by Larry Wall in 1987 as a general-purpose Unix scripting language to make report processing easier. Since then, it has undergone many changes and revisions.</p>
+		        </div>
+		    </div>
+        </div>
+	</body>  
 </html>
