@@ -1,6 +1,14 @@
-A:link{text-decoration:none;}
-A:visited{text-decoration:none;}
-A:active{text-decoration:none;}
+A:link {
+	text-decoration: none;
+}
+
+A:visited {
+	text-decoration: none;
+}
+
+A:active {
+	text-decoration: none;
+}
 
 /* 遮罩颜色和透明度 */
 .window-proxy-mask, .window-mask {
@@ -8,16 +16,24 @@ A:active{text-decoration:none;}
 	opacity: 0.6;
 }
 
+/* 隐藏点击linkbutton按钮时出现的边框 */
+.l-btn-focus {
+	outline: none;
+}
+
 /* 弹出框样式 */
-.messager-window{
+.messager-window {
 	background: rgb(250, 250, 250);
 }
-.messager-window .dialog-button{
+
+.messager-window .dialog-button {
 	border: none;
 }
-.messager-window .window-body{
+
+.messager-window .window-body {
 	border: none;
 }
-.dialog-button{
+
+.dialog-button {
 	background: rgb(250, 250, 250);
 }

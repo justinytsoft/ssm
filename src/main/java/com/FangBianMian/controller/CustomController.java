@@ -21,4 +21,10 @@ public class CustomController {
 	public String kindEditor() {
 		return "pages/editor/index";
 	}
+	
+	@RequestMapping("/euEditor")
+	public String euEditor() {
+		return "pages/editor/ribbon";
+	}
+	
 }
