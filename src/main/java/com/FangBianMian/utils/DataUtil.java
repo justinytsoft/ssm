@@ -91,6 +91,99 @@ public class DataUtil {
 			return null;
 		}
 	}
+	
+	/**
+	 * 上传文件
+	 * @param request
+	 * @param isTemp 判断文件存放位置, true 临时目录, false 正式目录
+	 * @return
+	 * @throws Exception
+	 */
+	public static List<String> uploadFile(HttpServletRequest request, boolean isTemp) throws Exception {
+		List<String> files = new ArrayList<String>(); //返回上传到服务器的路径
+		String sep = System.getProperty("file.separator"); //文件分隔符
+		String fileDir = null;// 存放图片的路径
+		String subDir = null;// 如果存放的是正式目录在增加子目录
+		File dirPath = null;
+		
+		//判断存放的目录
+		if(isTemp){
+			fileDir = SettingUtil.getCommonSetting("upload.file.temp.path");
+			dirPath = new File(fileDir);
+		}else{
+			fileDir = SettingUtil.getCommonSetting("upload.file.path");
+			subDir = buildDirName(2);
+			dirPath = new File(fileDir + sep + subDir);
+		}
+
+		//创建存放图片的目录
+		if (!dirPath.exists()) {
+			dirPath.mkdirs();
+		}
+		
+		// 创建一个通用的多部分解析器
+		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+		// 判断 request 是否有文件上传,即多部分请求
+		if (multipartResolver.isMultipart(request)) {
+			// 转换成多部分request
+			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
+			// 取得request中的所有文件名
+			Iterator<String> iter = multiRequest.getFileNames();
+			while (iter.hasNext()) {
+				//新生成的临时文件的文件名
+				StringBuffer newFileName = new StringBuffer();
+				// 取得上传文件
+				MultipartFile file = multiRequest.getFile(iter.next());
+				if (file != null && file.getBytes().length != 0) {
+					// 取得当前上传文件的文件名称
+					String fileTrueName = file.getOriginalFilename();
+					// 获取文件后缀
+					String ext = fileTrueName.substring(fileTrueName.lastIndexOf("."));
+					// 判断上传文件的后缀是否合法
+					/*if (!".jpg/.jpeg/.gif/.bmp/.png".contains(ext.toLowerCase())) {
+						throw new Exception("格式错误！");
+					}*/
+					// 如果名称不为“”,说明该文件存在，否则说明该文件不存在
+					if (fileTrueName.trim() != "") {
+						// 重命名上传后的文件名
+						newFileName.append(System.currentTimeMillis());
+						newFileName.append(ext);
+						// 定义上传路径
+						String fileName = null;
+						if(subDir!=null){
+							fileName = fileDir + sep + subDir + sep + newFileName.toString();
+							// 添加上传后的路径
+							files.add(subDir + sep + newFileName.toString());
+						}else{
+							fileName = fileDir + sep + newFileName.toString();
+							files.add(newFileName.toString());
+						}
+						File localFile = new File(fileName);
+						// 保存上传的文件
+						file.transferTo(localFile);
+					}else{
+						files.add("");
+					}
+				}else{
+					files.add("");
+				}
+			}
+		}
+		return files;
+	}
+
+	/**
+	 * 根据文件名删除正式文件夹下的图片和缩略图
+	 * @param fileName
+	 */
+	public static void deleteByUploadFile(String fileName) {
+		if (!StringUtils.isBlank(fileName)) {
+			String sep = System.getProperty("file.separator");
+			String fileDir = SettingUtil.getCommonSetting("upload.file.path");// 存放文件文件夹名称
+			String filePath = fileDir + sep + fileName;
+			FileUtils.deleteFile(filePath);
+		}
+	}
 
 	/**
 	 * 根据文件名删除正式文件夹下的图片和缩略图
@@ -102,7 +195,7 @@ public class DataUtil {
 			String fileDir = SettingUtil.getCommonSetting("upload.image.path");// 存放文件文件夹名称
 			String filePath = fileDir + sep + fileName;
 			FileUtils.deleteFile(filePath);
-			String[] parsedName = new FileUtils().getFullFileNameAndExtension(filePath);
+			String[] parsedName = FileUtils.getFullFileNameAndExtension(filePath);
 			String thumbPath = parsedName[0] + parsedName[1] + "_S" + parsedName[2];
 			FileUtils.deleteFile(thumbPath);
 		}
@@ -200,7 +293,6 @@ public class DataUtil {
 				}
 			}
 		}
-		
 		return files;
 	}
 

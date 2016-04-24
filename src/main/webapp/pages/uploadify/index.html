@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragment/import :: header"></head>
+
+<body>
+	<link rel="stylesheet" type="text/css" th:href="@{/assets/plugins/uploadify/uploadify.css}" />
+	<script type="text/javascript" th:src="@{/assets/plugins/uploadify/jquery.uploadify.min.js}"></script>
+
+	<style type="text/css">
+		.uploadButton{
+			color:white;
+			background: #337ab7;
+			border: none;
+		}
+	</style>
+	
+	<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+			$(function(){
+				$("#img").uploadify({
+		        	height : 25, //	设置上传按钮的高度。
+		            width : 120, //	设置上传按钮的宽度。
+		            buttonText : "选择图片",// 按钮显示名称  
+		            //buttonImage : [[@{/assets/plugins/easyui/themes/icons/search.png}]], // 浏览按钮的图片的路径 。
+		            buttonClass : "uploadButton", // 按钮样式
+		            checkExisting : false, // 文件上传重复性检查程序，检查即将上传的文件在服务器端是否已存在，存在返回1，不存在返回0
+		            swf : [[@{/assets/plugins/uploadify/uploadify.swf}]],//uploadify.swf 文件的相对路径。
+			        uploader : [[@{/upload/temp/img}]],//后端处理action
+			        //fileTypeExts : '*.jpg; *.png; *.jpeg; *.gif; *.zip', // 设置允许上传的文件类型
+		            fileObjName : 'file', //文件上传的name
+		            auto : true, //文件选中后是否自动提交
+	              	multi : false, //是否多选
+		            removeCompleted : true, //文件上传完毕后消息框是否自动消失，默认true 
+		            removeTimeout   : 0, //文件上传完毕后消息框消失延迟时间,默认3 仅removeCompleted=true生效
+		            progressData : "percentage", // 设置上传进度显示方式，percentage显示上传百分比，speed显示上传速度
+		            fileSizeLimit : "10MB", //	上传文件的大小限制 ，如果为整数型则表示以KB为单位的大小，如果是字符串，则可以使用(B, KB, MB, or GB)为单位，比如“2MB” 如果设置为0则表示无限制  
+		            //uploadLimit : 999, // 最大上传文件数量，如果达到或超出此限制将会触发onUploadError事件。
+		            //单文件传输成功           
+		            onUploadSuccess:function(file, data, response){ 
+		            	data = eval("(" + data + ")");
+		            	if(data.status=="200"){
+		            		$("#preview").attr("src",[[${application.baseTempUrl}]] + data.data.path).show();
+		            	}else{
+		            		cAlert(data.message);
+		            	}
+		            },
+		            //单文件传输失败
+		            onUploadError : function(file, errorCode, errorMsg, errorString) {  
+		            	alert("in");
+		               // cAlert('The file ' + file.name + ' errorCode ' + errorCode+ ' errorCode ' + errorCode+ ' errorMsg ' + errorMsg+ ' errorString ' + errorString);
+		            }
+				});
+				
+				$("#file").uploadify({
+		        	height : 25, //	设置上传按钮的高度。
+		            width : 120, //	设置上传按钮的宽度。
+		            buttonText : "选择文件",// 按钮显示名称  
+		            buttonClass : "uploadButton", // 按钮样式
+		            checkExisting : false, // 文件上传重复性检查程序，检查即将上传的文件在服务器端是否已存在，存在返回1，不存在返回0
+		            swf : [[@{/assets/plugins/uploadify/uploadify.swf}]],//uploadify.swf 文件的相对路径。
+			        uploader : [[@{/upload/temp/file}]],//后端处理action
+		            fileObjName : 'file', //文件上传的name
+		            auto : false, //文件选中后是否自动提交
+	              	multi : true, //是否多选
+		            removeCompleted : true, //文件上传完毕后消息框是否自动消失，默认true 
+		            removeTimeout   : 0, //文件上传完毕后消息框消失延迟时间,默认3 仅removeCompleted=true生效
+		            progressData : "percentage", // 设置上传进度显示方式，percentage显示上传百分比，speed显示上传速度
+		            fileSizeLimit : "1024MB", //	上传文件的大小限制 ，如果为整数型则表示以KB为单位的大小，如果是字符串，则可以使用(B, KB, MB, or GB)为单位，比如“2MB” 如果设置为0则表示无限制  
+		            //单文件传输成功           
+		            onUploadSuccess:function(file, data, response){ 
+		            	cAlert(file.name + "上传成功");
+		            },
+		            //单文件传输失败
+		            onUploadError : function(file, errorCode, errorMsg, errorString) {  
+		            	cAlert(file.name + "上传失败");
+		            }
+				});
+			});
+		/*]]>*/
+	</script>
+	
+	<input type="file" id="img" name="img"/>
+	<img alt="头像" style="display: none" id="preview" />
+	<input type="file" id="file" name="file"/>
+</body>
+</html>

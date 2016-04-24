@@ -16,9 +16,14 @@ A:active {
 	opacity: 0.6;
 }
 
-/* 隐藏点击linkbutton按钮时出现的边框 */
+/* 隐藏  点击linkbutton按钮时出现的边框 */
 .l-btn-focus {
 	outline: none;
+}
+
+/* 弹出框的行高 */
+.messager-window div {
+	line-height: 2;
 }
 
 /* 弹出框样式 */

@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/custom")
 public class CustomController {
 
-	@RequestMapping("/bootstrap")
+	@RequestMapping("/phone")
 	public String bs() {
-		return "pages/bootstrap/index";
+		return "pages/phone/index";
 	}
 
 	@RequestMapping("/calender")
@@ -27,4 +27,8 @@ public class CustomController {
 		return "pages/editor/ribbon";
 	}
 	
+	@RequestMapping("/uploadify")
+	public String uploadify() {
+		return "pages/uploadify/index";
+	}
 }

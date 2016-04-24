@@ -32,6 +32,36 @@ import com.FangBianMian.utils.SettingUtil;
 public class UploadController {
 	
 	private Log log = LogFactory.getLog(UploadController.class);
+	
+	/**
+	 * 将文件上传到临时文件夹中
+	 * 
+	 * @param request
+	 * @return
+	 * @throws IllegalStateException
+	 * @throws IOException
+	 */
+	@RequestMapping("/temp/file")
+	@ResponseBody
+	public JsonResWrapper uploadFile(HttpServletRequest request){
+		JsonResWrapper jrw = new JsonResWrapper();
+		try {
+			String path = DataUtil.uploadFile(request, true).get(0);
+			if (!StringUtils.isBlank(path)) {
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("tempName", path);
+				jrw.setData(map);
+			} else {
+				jrw.setStatus(ResponseStatus.FAILED_PARAM_LOST);
+				jrw.setMessage("请求参数为空");
+			}
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			jrw.setStatus(ResponseStatus.BACK_EXCEPTION);
+			jrw.setMessage("请求发生异常");
+		}
+		return jrw;
+	}
 
 	/**
 	 * 将图片上传到临时文件夹中
@@ -43,7 +73,7 @@ public class UploadController {
 	 */
 	@RequestMapping("/temp/img")
 	@ResponseBody
-	public JsonResWrapper tempUpload(HttpServletRequest request) {
+	public JsonResWrapper uploadImg(HttpServletRequest request) {
 		JsonResWrapper jrw = new JsonResWrapper();
 		try {
 			String path = DataUtil.uploadImg(request, true, 0, 0).get(0);

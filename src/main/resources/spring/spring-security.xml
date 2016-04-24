@@ -14,6 +14,7 @@
     <http pattern="/login" security="none"/>
     <http pattern="/sessionException" security="none"/>
     <http pattern="/captcha" security="none"/>
+    <http pattern="/upload/**" security="none"/>
     <http pattern="/custom/bootstrap" security="none"/>
 		
     <!--

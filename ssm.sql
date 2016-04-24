@@ -741,11 +741,11 @@ CREATE TABLE `resume` (
   `last_update` datetime DEFAULT NULL COMMENT '最后更新时间',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 /*Data for the table `resume` */
 
-insert  into `resume`(`id`,`userId`,`real_name`,`age`,`sex`,`birthday`,`area`,`work_area`,`work_year`,`status`,`work_exstate`,`work_trade`,`work_salary`,`work_job`,`ed_exstate`,`near_job`,`near_company`,`self_evaluation`,`work_nature`,`education`,`phone`,`last_update`,`create_time`) values (1,2,'李白',20,1,'2015-11-2','四川省乐山市\r','四川省成都市\r','毕业生',0,'[{\"start_time\":\"2015\\/1\\/30\",\"end_time\":\"2015\\/9\\/11\",\"name\":\"压缩后\",\"content\":\"不大好合适的话扭扭捏捏\",\"company_name\":\"公司\",\"work_type\":\"建筑\\/施工\"}]','计算机',6666,'司机','[{\"start_time\":\"2014\\/12\\/19\",\"end_time\":\"2015\\/12\\/31\",\"school_name\":\"哈哈哈哈1111\",\"content\":\"东借西借都觉得你的呢双流\",\"major_name\":\"好的回到家\"},{\"start_time\":\"2015\\/7\\/30\",\"end_time\":\"2016\\/1\\/15\",\"school_name\":\"呵呵哈哈哈\",\"content\":\"刚刚古古怪怪\",\"major_name\":\"刚刚滚滚滚\"}]','JAVA','腾讯','66666666666',0,'本科','18380426135','2016-03-16 12:30:32','2015-11-02 00:00:00'),(2,4,'Abel',20,0,'2015-11-27','四川省成都市\r','四川省成都市\r','一年',0,'[{\"start_time\":\"2015\\/1\\/30\",\"end_time\":\"2015\\/9\\/11\",\"name\":\"压缩后\",\"content\":\"不大好合适的话扭扭捏捏\",\"company_name\":\"公司\",\"work_type\":\"建筑\\/施工\"}]','计算机',8888,'普工/技工','[{\"start_time\":\"2014\\/12\\/19\",\"end_time\":\"2015\\/12\\/31\",\"school_name\":\"哈哈哈哈1111\",\"content\":\"东借西借都觉得你的呢双流\",\"major_name\":\"好的回到家\"},{\"start_time\":\"2015\\/7\\/30\",\"end_time\":\"2016\\/1\\/15\",\"school_name\":\"呵呵哈哈哈\",\"content\":\"刚刚古古怪怪\",\"major_name\":\"刚刚滚滚滚\"}]','C++','百度','666666666666',0,'博士',NULL,'2016-03-16 00:00:00','2015-11-02 00:00:00'),(3,19,'Eric',NULL,1,'1986-6-6','江苏省宿迁市\r','四川省成都市\r','三年以上',0,'[{\"start_time\":\"2015\\/1\\/30\",\"end_time\":\"2015\\/9\\/11\",\"name\":\"压缩后\",\"content\":\"不大好合适的话扭扭捏捏\",\"company_name\":\"公司\",\"work_type\":\"建筑\\/施工\"}]',NULL,NULL,'建筑/施工','[{\"start_time\":\"2014\\/12\\/19\",\"end_time\":\"2015\\/12\\/31\",\"school_name\":\"哈哈哈哈1111\",\"content\":\"东借西借都觉得你的呢双流\",\"major_name\":\"好的回到家\"},{\"start_time\":\"2015\\/7\\/30\",\"end_time\":\"2016\\/1\\/15\",\"school_name\":\"呵呵哈哈哈\",\"content\":\"刚刚古古怪怪\",\"major_name\":\"刚刚滚滚滚\"}]',NULL,NULL,NULL,0,NULL,NULL,'2015-11-02 00:00:00','2015-11-02 00:00:00'),(4,23,'Alina',NULL,0,'2015-12-3','河北省天津市\r','福建省泉州市\r','一年',0,'',NULL,NULL,'美容/美发/按摩',NULL,NULL,NULL,NULL,0,NULL,NULL,'2016-03-16 00:00:00','2015-11-02 00:00:00'),(5,25,'常中亮',NULL,1,'1985-2-2','四川省成都市\r','四川省成都市\r','三年以上',0,'',NULL,NULL,'普工/技工',NULL,NULL,NULL,NULL,0,NULL,NULL,'2015-11-02 00:00:00','2015-11-02 00:00:00'),(6,26,'海伦',NULL,0,'1985-9-25','四川省成都市\r','四川省成都市\r','三年以上',0,'',NULL,NULL,'电商/平台',NULL,NULL,NULL,NULL,0,NULL,NULL,'2015-11-02 00:00:00','2015-11-02 00:00:00'),(7,28,'谢小春',NULL,1,'1984-10-7','四川省成都市\r','四川省成都市\r','5年以上',0,'[{\"work_type\":\"人事\\/行政\",\"content\":\"主要负责公司人力资源各项工作，负责为公司决策层提供合理建议。\",\"start_time\":\"2007\\/12\",\"company_name\":\"成都倍特厨柜制造有限公司\",\"end_time\":\"2015\\/12\",\"name\":\"人力资源主管\"}]',NULL,NULL,'人事/行政','[]',NULL,NULL,NULL,0,NULL,NULL,'2015-11-02 00:00:00','2015-11-02 00:00:00'),(8,27,'常中亮',NULL,1,'1994-12-6','四川省成都市\r','四川省成都市\r','5年以上',0,'[]',NULL,NULL,'人事/行政',NULL,NULL,NULL,NULL,0,NULL,NULL,'2015-11-02 00:00:00','2015-11-02 00:00:00'),(9,24,'',NULL,1,'','','','',0,'',NULL,NULL,'',NULL,NULL,NULL,NULL,0,NULL,NULL,'2015-11-02 00:00:00','2015-11-02 00:00:00'),(10,32,'李国',NULL,1,'1996-5-22','四川省成都市\r','四川省成都市\r','两年',0,'大家就得交大家都解决',NULL,NULL,'汽车行业',NULL,NULL,NULL,NULL,0,NULL,NULL,'2015-11-02 00:00:00','2015-11-02 00:00:00'),(11,22,'',NULL,1,'','','','',0,'[]',NULL,NULL,'',NULL,NULL,NULL,NULL,0,NULL,NULL,'2015-11-02 00:00:00','2015-11-02 00:00:00'),(12,40,'chen',NULL,1,'','','','',0,'[]',NULL,NULL,'',NULL,NULL,NULL,NULL,0,NULL,NULL,'2015-11-02 00:00:00','2015-11-02 00:00:00'),(13,43,'Abel',NULL,1,'2015-12-17','辽宁省本溪市\r','浙江省舟山市\r','3~4年',0,'[]',NULL,NULL,'汽车行业',NULL,NULL,NULL,NULL,0,NULL,NULL,'2015-11-02 00:00:00','2015-11-02 00:00:00'),(14,55,'？',NULL,0,'1983-3-3','四川省成都市\r','四川省成都市\r','5年以上',0,'[]',NULL,NULL,'电商/平台',NULL,NULL,NULL,NULL,0,NULL,NULL,'2015-11-02 00:00:00','2015-11-02 00:00:00'),(15,88,'孙茂青',NULL,1,'1994-12-18','四川省成都市\r','四川省成都市\r','',0,'[]',NULL,NULL,'兼职/实习',NULL,NULL,NULL,NULL,0,NULL,NULL,'2015-11-02 00:00:00','2015-11-02 00:00:00'),(16,83,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,'2015-11-02 00:00:00','2015-11-02 00:00:00'),(17,100,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,'2015-11-02 00:00:00','2015-11-02 00:00:00'),(18,67,'赵海叶',NULL,0,'1998-10-24','四川省成都市\r','四川省成都市\r','实习生',0,'[{\"work_type\":\"其他\",\"content\":\"打电话邀请客户看家具，平时周末兼职\",\"start_time\":\"\",\"company_name\":\"掌上明珠家具\",\"end_time\":\"\",\"name\":\"话务员\"},{\"work_type\":\"餐饮\\/酒店\",\"content\":\"寒假曾在中餐饭店里做过服务员，能吃苦耐劳，服务意识强\",\"start_time\":\"\",\"company_name\":\"农夫菜\",\"end_time\":\"\",\"name\":\"服务员\"}]',NULL,NULL,'兼职/实习',NULL,NULL,NULL,NULL,0,NULL,NULL,'2015-11-02 00:00:00','2015-11-02 00:00:00'),(19,103,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,'2015-11-02 00:00:00','2015-11-02 00:00:00'),(20,123,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,'2015-11-02 00:00:00','2015-11-02 00:00:00'),(21,65,'马小旭',NULL,1,'1995-8-9','四川省成都市\r','四川省成都市\r','在读学生',0,'[{\"work_type\":\"销售\",\"content\":\"成都欧途欧网络科技有限公司是一家新型的创业公司，以020的模式开展市场行情，我在期间主要负责市场开拓，并在温江、郫县、双流、新都等各大片区进行市场开发，两个月超额完成公司任务，并取得很好的成绩！\",\"start_time\":\"2014\\/7\\/1\",\"company_name\":\"成都欧途欧网络科技有限公司\",\"end_time\":\"2015\\/8\\/31\",\"name\":\"市场开发\"}]',NULL,NULL,'销售','[{\"content\":\"在学生会学习部担任干事，\\n在青年志愿者协会外交部担任干事，\\n在班上担任组织委员\\n在学校实训公司担任运营总监\",\"start_time\":\"2014\\/9\\/9\",\"major_name\":\"市场营销\",\"school_name\":\"四川商务职业学院\",\"end_time\":\"2016\\/6\\/15\"}]',NULL,NULL,NULL,0,NULL,NULL,'2015-11-02 00:00:00','2015-11-02 00:00:00'),(22,64,'谢春',NULL,1,'','','','',0,'[]',NULL,NULL,'','[]',NULL,NULL,NULL,0,NULL,NULL,'2015-11-02 00:00:00','2016-03-08 00:00:00');
+insert  into `resume`(`id`,`userId`,`real_name`,`age`,`sex`,`birthday`,`area`,`work_area`,`work_year`,`status`,`work_exstate`,`work_trade`,`work_salary`,`work_job`,`ed_exstate`,`near_job`,`near_company`,`self_evaluation`,`work_nature`,`education`,`phone`,`last_update`,`create_time`) values (1,2,'李白',20,1,'2015-11-2','四川省乐山市\r','四川省成都市\r','毕业生',0,'[{\"start_time\":\"2015\\/1\\/30\",\"end_time\":\"2015\\/9\\/11\",\"name\":\"压缩后\",\"content\":\"不大好合适的话扭扭捏捏\",\"company_name\":\"公司\",\"work_type\":\"建筑\\/施工\"}]','计算机',6666,'司机','[{\"start_time\":\"2014\\/12\\/19\",\"end_time\":\"2015\\/12\\/31\",\"school_name\":\"哈哈哈哈1111\",\"content\":\"东借西借都觉得你的呢双流\",\"major_name\":\"好的回到家\"},{\"start_time\":\"2015\\/7\\/30\",\"end_time\":\"2016\\/1\\/15\",\"school_name\":\"呵呵哈哈哈\",\"content\":\"刚刚古古怪怪\",\"major_name\":\"刚刚滚滚滚\"}]','JAVA','腾讯','66666666666',0,'本科','18380426135','2016-03-16 12:30:32','2015-11-02 00:00:00'),(2,4,'Abel',20,0,'2015-11-27','四川省成都市\r','四川省成都市\r','一年',0,'[{\"start_time\":\"2015\\/1\\/30\",\"end_time\":\"2015\\/9\\/11\",\"name\":\"压缩后\",\"content\":\"不大好合适的话扭扭捏捏\",\"company_name\":\"公司\",\"work_type\":\"建筑\\/施工\"}]','计算机',8888,'普工/技工','[{\"start_time\":\"2014\\/12\\/19\",\"end_time\":\"2015\\/12\\/31\",\"school_name\":\"哈哈哈哈1111\",\"content\":\"东借西借都觉得你的呢双流\",\"major_name\":\"好的回到家\"},{\"start_time\":\"2015\\/7\\/30\",\"end_time\":\"2016\\/1\\/15\",\"school_name\":\"呵呵哈哈哈\",\"content\":\"刚刚古古怪怪\",\"major_name\":\"刚刚滚滚滚\"}]','C++','百度','666666666666',0,'博士','18380426135','2016-03-16 00:00:00','2015-11-02 00:00:00'),(3,19,'Eric',20,1,'1986-6-6','江苏省宿迁市\r','四川省成都市\r','三年以上',0,'[{\"start_time\":\"2015\\/1\\/30\",\"end_time\":\"2015\\/9\\/11\",\"name\":\"压缩后\",\"content\":\"不大好合适的话扭扭捏捏\",\"company_name\":\"公司\",\"work_type\":\"建筑\\/施工\"}]',NULL,NULL,'建筑/施工','[{\"start_time\":\"2014\\/12\\/19\",\"end_time\":\"2015\\/12\\/31\",\"school_name\":\"哈哈哈哈1111\",\"content\":\"东借西借都觉得你的呢双流\",\"major_name\":\"好的回到家\"},{\"start_time\":\"2015\\/7\\/30\",\"end_time\":\"2016\\/1\\/15\",\"school_name\":\"呵呵哈哈哈\",\"content\":\"刚刚古古怪怪\",\"major_name\":\"刚刚滚滚滚\"}]','JAVA','百度','666666666666',0,'博士','18380426135','2015-11-02 00:00:00','2015-11-02 00:00:00'),(4,23,'Alina',20,0,'2015-12-3','河北省天津市\r','福建省泉州市\r','一年',0,'[{\"start_time\":\"2015\\/1\\/30\",\"end_time\":\"2015\\/9\\/11\",\"name\":\"压缩后\",\"content\":\"不大好合适的话扭扭捏捏\",\"company_name\":\"公司\",\"work_type\":\"建筑\\/施工\"}]',NULL,NULL,'美容/美发/按摩',NULL,'JAVA','百度','666666666666',0,'博士','18380426135','2016-03-16 00:00:00','2015-11-02 00:00:00'),(5,25,'常中亮',42,1,'1985-2-2','四川省成都市\r','四川省成都市\r','三年以上',0,'[{\"start_time\":\"2015\\/1\\/30\",\"end_time\":\"2015\\/9\\/11\",\"name\":\"压缩后\",\"content\":\"不大好合适的话扭扭捏捏\",\"company_name\":\"公司\",\"work_type\":\"建筑\\/施工\"}]',NULL,NULL,'普工/技工',NULL,'JAVA','百度','666666666666',0,'博士','18380426135','2015-11-02 00:00:00','2015-11-02 00:00:00'),(6,26,'海伦',24,0,'1985-9-25','四川省成都市\r','四川省成都市\r','三年以上',0,'[{\"start_time\":\"2015\\/1\\/30\",\"end_time\":\"2015\\/9\\/11\",\"name\":\"压缩后\",\"content\":\"不大好合适的话扭扭捏捏\",\"company_name\":\"公司\",\"work_type\":\"建筑\\/施工\"}]',NULL,NULL,'电商/平台',NULL,'JAVA','百度','666666666666',0,'博士','18380426135','2015-11-02 00:00:00','2015-11-02 00:00:00'),(7,28,'谢小春',78,1,'1984-10-7','四川省成都市\r','四川省成都市\r','5年以上',0,'[{\"work_type\":\"人事\\/行政\",\"content\":\"主要负责公司人力资源各项工作，负责为公司决策层提供合理建议。\",\"start_time\":\"2007\\/12\",\"company_name\":\"成都倍特厨柜制造有限公司\",\"end_time\":\"2015\\/12\",\"name\":\"人力资源主管\"}]',NULL,NULL,'人事/行政','[]','JAVA','百度','666666666666',0,'博士','18380426135','2015-11-02 00:00:00','2015-11-02 00:00:00'),(8,27,'常中亮',57,1,'1994-12-6','四川省成都市\r','四川省成都市\r','5年以上',0,'[{\"start_time\":\"2015\\/1\\/30\",\"end_time\":\"2015\\/9\\/11\",\"name\":\"压缩后\",\"content\":\"不大好合适的话扭扭捏捏\",\"company_name\":\"公司\",\"work_type\":\"建筑\\/施工\"}]',NULL,NULL,'人事/行政',NULL,'JAVA','百度','666666666666',0,'博士','18380426135','2015-11-02 00:00:00','2015-11-02 00:00:00');
 
 /*Table structure for table `resume_exp` */
 
@@ -761,19 +761,6 @@ CREATE TABLE `resume_exp` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 /*Data for the table `resume_exp` */
-
-/*Table structure for table `role` */
-
-DROP TABLE IF EXISTS `role`;
-
-CREATE TABLE `role` (
-  `id` int(11) DEFAULT NULL,
-  `rolename` varchar(200) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/*Data for the table `role` */
-
-insert  into `role`(`id`,`rolename`) values (1,'admin'),(2,'saler');
 
 /*Table structure for table `salary` */
 
@@ -831,11 +818,11 @@ CREATE TABLE `sys_menus` (
   `icon` varchar(255) DEFAULT NULL COMMENT '图标',
   `level` int(1) DEFAULT NULL COMMENT '菜单级别',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC COMMENT='菜单表';
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC COMMENT='菜单表';
 
 /*Data for the table `sys_menus` */
 
-insert  into `sys_menus`(`id`,`name`,`parent_id`,`url`,`weight`,`icon`,`level`) values (11,'datagrid',0,'job/index',2,NULL,1),(12,'filebox',0,'user/signup',1,NULL,1),(13,'datalist-calendar',0,'custom/calender',3,NULL,1),(14,'none',0,'',100,NULL,1),(15,NULL,NULL,NULL,NULL,NULL,NULL);
+insert  into `sys_menus`(`id`,`name`,`parent_id`,`url`,`weight`,`icon`,`level`) values (11,'datagrid',0,'job/index',2,NULL,1),(12,'filebox',0,'user/signup',1,NULL,1),(13,'datalist-calendar',0,'custom/calender',3,NULL,1),(14,'phone',0,'custom/phone',100,NULL,1),(15,'ckEditor',0,'custom/editor',5,NULL,1),(16,'euEditor',0,'custom/euEditor',4,NULL,1),(17,'uploadify',0,'custom/uploadify',6,NULL,1);
 
 /*Table structure for table `sys_roles` */
 
@@ -864,11 +851,11 @@ CREATE TABLE `sys_roles_menus` (
   UNIQUE KEY `INDEX_SRM_rid_mid` (`role_id`,`menu_id`),
   KEY `FK_Reference_35` (`role_id`),
   KEY `FK_Reference_36` (`menu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='角色菜单表';
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='角色菜单表';
 
 /*Data for the table `sys_roles_menus` */
 
-insert  into `sys_roles_menus`(`id`,`role_id`,`menu_id`) values (1,1,1),(2,1,2),(3,1,3),(4,1,4),(5,1,5),(6,1,6),(7,1,7),(8,1,8),(9,1,9),(10,1,10),(11,1,11),(12,1,12),(13,1,13),(14,1,14);
+insert  into `sys_roles_menus`(`id`,`role_id`,`menu_id`) values (10,1,10),(11,1,11),(12,1,12),(13,1,13),(14,1,14),(15,1,15),(16,1,16),(17,1,17);
 
 /*Table structure for table `sys_roles_users` */
 
@@ -920,59 +907,20 @@ CREATE TABLE `sys_users` (
 
 insert  into `sys_users`(`id`,`username`,`name`,`password`,`create_time`,`last_login_time`,`last_login_ip`,`enabled`,`head`,`nick_name`,`type`,`delete`,`del_time`,`posts_num`,`praise`,`level`,`code`,`share_count`,`level_count`,`higher_code`,`verify_code`) values (1,'admin','超级管理员','$2a$10$TeKfUiYucql6FBOkAtqLDuGylsEXX1tCExHMi/T81htqHXS7Qg.dS','2016-03-25 19:01:29','2015-05-28 12:54:59','127.0.0.1',1,'C5/8B/1448357400328.jpg','哈哈哈哈',1,0,NULL,0,0,1,NULL,0,0,NULL,'7732'),(2,'test','普通用户','$2a$10$TeKfUiYucql6FBOkAtqLDuGylsEXX1tCExHMi/T81htqHXS7Qg.dS','2016-03-25 19:01:29','2016-04-06 14:11:32',NULL,1,'C5/8B/1448357400328.jpg','测试',0,0,NULL,204,12,4,'e1906',0,353,NULL,'7732'),(44,'18384129364',NULL,'$2a$10$hLsdXyRyjqnUgKY5KNTyg.vbso2GGFSBG/fk9zLy0W3Ic0d2vgM7K','2016-03-25 19:01:29','2015-12-17 15:24:00',NULL,1,'C5/8B/1448357400328.jpg','匿名用户',0,0,NULL,0,0,1,'O7580',0,0,'','7732'),(4,'15596835628',NULL,'$2a$10$eKIzb9jN.vCCV5QELZ0Q5O86ub0TyiFGPScCiujIjyeL5IQqunYDi','2016-03-25 19:01:29',NULL,NULL,1,'C5/8B/1448357400328.jpg','哈哈哈哈',0,0,NULL,0,1,1,NULL,0,2,NULL,'7732'),(5,'15500000000',NULL,'45454545','2016-03-25 19:01:29',NULL,NULL,1,'C5/8B/1448357400328.jpg','哈哈哈哈',2,0,NULL,0,0,1,NULL,0,0,NULL,'7732'),(242,'676133829@qq.com','鹿晗','$2a$10$TeKfUiYucql6FBOkAtqLDuGylsEXX1tCExHMi/T81htqHXS7Qg.dS','2016-03-25 19:01:29',NULL,NULL,1,NULL,NULL,2,0,NULL,0,0,1,NULL,0,0,NULL,'7732');
 
-/*Table structure for table `t_order` */
+/*Table structure for table `test_upload` */
 
-DROP TABLE IF EXISTS `t_order`;
+DROP TABLE IF EXISTS `test_upload`;
 
-CREATE TABLE `t_order` (
-  `o_id` varchar(32) NOT NULL,
-  `o_date` date DEFAULT NULL,
-  `o_pname` varchar(50) DEFAULT NULL,
-  `o_size` varchar(2) DEFAULT NULL,
-  `o_number` int(11) DEFAULT NULL,
-  `o_price` double DEFAULT NULL,
-  `o_uname` varchar(20) DEFAULT NULL,
-  `o_address` varchar(100) DEFAULT NULL,
-  `o_phone` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`o_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `test_upload` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
+  `head` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
-/*Data for the table `t_order` */
+/*Data for the table `test_upload` */
 
-insert  into `t_order`(`o_id`,`o_date`,`o_pname`,`o_size`,`o_number`,`o_price`,`o_uname`,`o_address`,`o_phone`) values ('4E5481BE7CD64DD7BC54B0E315AB5709','2015-12-28','芝华士蛋糕','小',1,50,'杨涛','软件园','18380426135'),('8CDF670EB7E0484290BD6171D7F6D665','2015-12-28','巧克力','中',1,60.8,'杨涛','软件园','18380426135'),('AF485F1E14014000AC6B5A116644660A','2015-12-28','巧克力','大',1,50,'杨涛','软件园','18380426135');
-
-/*Table structure for table `t_product_info` */
-
-DROP TABLE IF EXISTS `t_product_info`;
-
-CREATE TABLE `t_product_info` (
-  `s_id` int(11) NOT NULL AUTO_INCREMENT,
-  `s_size` varchar(10) DEFAULT NULL,
-  `s_price` double DEFAULT NULL,
-  `s_remark` varchar(100) DEFAULT NULL,
-  `s_p_name` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`s_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
-
-/*Data for the table `t_product_info` */
-
-insert  into `t_product_info`(`s_id`,`s_size`,`s_price`,`s_remark`,`s_p_name`) values (27,'中',60.8,'可供7-10人食用','巧克力'),(32,'大',50,'','巧克力'),(34,'小',50,'','芝华士蛋糕'),(35,'大',90,'可供7-10人食用','披萨'),(36,'中',50,'可供5-7人食用','披萨');
-
-/*Table structure for table `t_user` */
-
-DROP TABLE IF EXISTS `t_user`;
-
-CREATE TABLE `t_user` (
-  `u_id` int(11) NOT NULL AUTO_INCREMENT,
-  `u_name` varchar(20) DEFAULT NULL,
-  `u_pass` varchar(20) DEFAULT NULL,
-  `role_id` int(20) DEFAULT NULL,
-  PRIMARY KEY (`u_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
-/*Data for the table `t_user` */
-
-insert  into `t_user`(`u_id`,`u_name`,`u_pass`,`role_id`) values (1,'xcack','123456',1),(2,'aa','aaaaaa',2);
+insert  into `test_upload`(`id`,`name`,`head`) values (1,'6','eL\\Co\\1460126401764.jpg'),(2,'还特听话','Xm\\l8\\1460126553067.jpg'),(3,'fwqfqw','bv\\xi\\1460202333502.jpg'),(4,'tt','Fi\\E0\\1460287735011.jpg'),(5,'165','qO\\5S\\1460288162288.jpg');
 
 /*Table structure for table `upgrade` */
 

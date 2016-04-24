@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
+<!-- <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<title>Ribbon - jQuery EasyUI</title>
+
+</head> -->
+<body>
 	<link rel="stylesheet" type="text/css" th:href="@{/assets/plugins/easyui/themes/default/easyui.css}"/>
 	<link rel="stylesheet" type="text/css" th:href="@{/assets/plugins/easyui/themes/icon.css}"/>
 	<link rel="stylesheet" type="text/css" th:href="@{/assets/plugins/easyui/extensions/editor/ribbon.css}"/>
 	<link rel="stylesheet" type="text/css" th:href="@{/assets/plugins/easyui/extensions/editor/ribbon-icon.css}"/>
-	<script type="text/javascript" th:src="@{/assets/js/jquery-1.10.1.min.js}"></script>
-	<script type="text/javascript" th:src="@{/assets/plugins/easyui/jquery.easyui.min.js}"></script>
 	<script type="text/javascript" th:src="@{/assets/plugins/easyui/extensions/editor/jquery.ribbon.js}"></script>
+
+	<style type="text/css">
+		.l-btn-focus{
+			outline: none;
+		}
+	</style>
+
 	<script type="text/javascript" th:inline="javascript">
 		/*<![CDATA[*/
 		var data = {
@@ -60,7 +68,7 @@
 							valueField:'text',
 							textField:'text',
 							data:[{text:'Arial',selected:true},{text:'Century'},{text:'Tahoma'}],
-							width:116,
+							width:100,
 							panelHeight:'auto',
 							editable:false
 						},{
@@ -68,7 +76,7 @@
 							valueField:'text',
 							textField:'text',
 							data:[{text:'8'},{text:'12',selected:true},{text:'14'}],
-							width:40,
+							width:60,
 							panelHeight:'auto',
 							editable:false
 						}]
@@ -255,32 +263,8 @@
 		});
 		/*]]>*/
 	</script>
-</head>
-<body>
-	<h1>Ribbon</h1>
-	<div id="rr" style="width:700px;">
-	</div>
-	<h1>Ribbon Markup</h1>
-	<div class="easyui-ribbon" style="width:700px;">
-		<div title="Home">
-			<div class="ribbon-group">
-				<div class="ribbon-toolbar">
-					<a href="#" class="easyui-menubutton" data-options="name:'paste',iconCls:'icon-paste-large',iconAlign:'top',size:'large'">Paste</a>
-				</div>
-				<div class="ribbon-toolbar">
-					<a href="#" class="easyui-linkbutton" data-options="name:'cut',iconCls:'icon-cut',plain:true">Cut</a><br/>
-					<a href="#" class="easyui-linkbutton" data-options="name:'copy',iconCls:'icon-copy',plain:true">Copy</a><br/>
-					<a href="#" class="easyui-linkbutton" data-options="name:'format',iconCls:'icon-format',plain:true">Format</a>
-				</div>
-				<div class="ribbon-group-title">Clipboard</div>
-			</div>
-			<div class="ribbon-group-sep"></div>
-			<div class="ribbon-group">
-				<div class="ribbon-toolbar" style="width:200px"></div>
-				<div class="ribbon-group-title">other title</div>
-			</div>
-			<div class="ribbon-group-sep"></div>
-		</div>
-	</div>
+
+	<div id="rr" style="width:100%;"></div>
+	
 </body>
 </html>
