@@ -134,7 +134,8 @@ public class DataUtil {
 				StringBuffer newFileName = new StringBuffer();
 				// 取得上传文件
 				MultipartFile file = multiRequest.getFile(iter.next());
-				if (file != null && file.getBytes().length != 0) {
+				if (file != null) {
+					//if (file != null && file.getBytes().length != 0) {
 					// 取得当前上传文件的文件名称
 					String fileTrueName = file.getOriginalFilename();
 					// 获取文件后缀
