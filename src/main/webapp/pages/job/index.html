@@ -21,7 +21,7 @@
 				    var datagrid; //定义全局变量datagrid
 		            var editRow = null; //定义全局变量：当前编辑的行
 	   				datagrid = $("#jobList").datagrid({
-	   					url : rootPath + "job/list",
+	   					url : [[@{/job/index}]],
 					    fitColumns : true, //设置为 true, 则自动调整宽度 
 					    singleSelect : true, //设置为true, 则单选
 						nowrap : false, //设置为 true，则把数据显示在一行里。设置为 true 可提高加载性能。
