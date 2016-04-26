@@ -26,6 +26,25 @@ A:active {
 	line-height: 2;
 }
 
+/* panel样式 */
+.panel{
+	border-radius:6px;
+}
+
+.panel-header{
+	border-radius:6px 6px 0 0;
+	padding:10px;
+}
+
+.panel-body{
+	border-radius:0 0 6px 6px;
+}
+
+.panel-title{
+	font-weight: normal;
+	font-size: 14px;
+}
+
 /* 弹出框样式 */
 .messager-window {
 	background: rgb(250, 250, 250);

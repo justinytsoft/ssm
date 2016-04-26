@@ -30,6 +30,9 @@ public class DataValidation {
 	 * @return 验证通过返回true
 	 */
 	public static boolean isMobile(String str) { 
+		if(str==null){
+			return false;
+		}
 		Pattern p = null;
 		Matcher m = null;
 		boolean b = false; 
@@ -45,6 +48,9 @@ public class DataValidation {
 	 * @return 验证通过返回true
 	 */
 	public static boolean isPhone(String str) { 
+		if(str==null){
+			return false;
+		}
 		Pattern p1 = null,p2 = null;
 		Matcher m = null;
 		boolean b = false;  
