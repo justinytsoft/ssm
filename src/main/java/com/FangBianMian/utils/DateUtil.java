@@ -37,10 +37,10 @@ public class DateUtil {
 	/**
 	 * 获取指定分钟后的日期
 	 * @param date
-	 * @param minute
 	 * @return
 	 */
-	public static Date getMinute(Date date, int minute) {
+	public static Date getMinute(Date date, Long minute) {
+		minute = minute == null ? 0 : minute;
 		long curren = date.getTime();
 		curren += minute * 60 * 1000;
 		return new Date(curren);
@@ -126,7 +126,8 @@ public class DateUtil {
 	 * 1460088845588
 		1458299478292
 	 */
-	public static Date getLaterDay(Date date, long later){
+	public static Date getLaterDay(Date date, Long later){
+		later = later == null ? 0 : later;
 		long current = date.getTime();
 		return new Date(current + later * 24 * 60 * 60 * 1000);
 	}
@@ -137,18 +138,20 @@ public class DateUtil {
 	 * @param later 指定的天数
 	 * @return
 	 */
-	public static Date getPreviouslyDay(Date date, long later){
+	public static Date getPreviouslyDay(Date date, Long later){
+		later = later == null ? 0 : later;
 		long current = date.getTime();
 		return new Date(current - later * 24 * 60 * 60 * 1000);
 	}
-	
+
 	/**
 	 * 获取指定日期指定小时后的日期
 	 * @param date 指定的时间
 	 * @param later 指定的小时
 	 * @return
 	 */
-	public static Date getLaterHour(Date date, long later){
+	public static Date getLaterHour(Date date, Long later){
+		later = later == null ? 0 : later;
 		long current = date.getTime();
 		return new Date(current + later * 60 * 60 * 1000);
 	}
@@ -159,7 +162,8 @@ public class DateUtil {
 	 * @param later 指定的小时
 	 * @return
 	 */
-	public static Date getPreviouslyHour(Date date, long later){
+	public static Date getPreviouslyHour(Date date, Long later){
+		later = later == null ? 0 : later;
 		long current = date.getTime();
 		return new Date(current - later * 60 * 60 * 1000);
 	}
