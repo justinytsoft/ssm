@@ -62,10 +62,6 @@ public class DateUtil {
 		long hour = diff%nd/nh;//计算差多少小时
 		long min = diff%nd%nh/nm;//计算差多少分钟
 		long sec = diff%nd%nh%nm/ns;//计算差多少秒
-		//如果d1 小于 d2 返回空
-		if(day <= 0 || hour <= 0 || min <= 0 || sec <= 0){
-			return null;
-		}
 		return new long[]{day,hour,min,sec};
 	}
 	
