@@ -27,7 +27,7 @@ A:active {
 }
 
 /* panel样式 */
-.panel{
+/* .panel{
 	border-radius:6px;
 }
 
@@ -43,7 +43,7 @@ A:active {
 .panel-title{
 	font-weight: normal;
 	font-size: 14px;
-}
+} */
 
 /* 弹出框样式 */
 .messager-window {
