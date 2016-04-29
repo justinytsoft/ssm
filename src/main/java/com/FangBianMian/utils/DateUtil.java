@@ -2,7 +2,6 @@ package com.FangBianMian.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import org.joda.time.DateTime;
@@ -47,37 +46,27 @@ public class DateUtil {
 	}
 	
 	/**
-	 * 计算d1 到 d2 相差多少天
+	 * 计算d1 到 d2 相差多少时间
 	 * @param d1
 	 * @param d2
-	 * @return
+	 * @return 数组下标 0 天 1 时 2 分 3 秒
 	 */
-	public static int mistiming(Date d1, Date d2){
-		Calendar cal1 = Calendar.getInstance();
-		cal1.setTime(d1);
-
-		Calendar cal2 = Calendar.getInstance();
-		cal2.setTime(d2);
-		
-		int day1 = cal1.get(Calendar.DAY_OF_YEAR);
-		int day2 = cal2.get(Calendar.DAY_OF_YEAR);
-		
-		int year1 = cal1.get(Calendar.YEAR);
-		int year2 = cal2.get(Calendar.YEAR);
-		
-		if(year1!=year2){
-			int timeDistance = 0;
-			for(int i=year1; i < year2; i++){
-				if(i%4==0 && i%100!=0 || i%400==0){
-					timeDistance += 366;
-				}else{
-					timeDistance += 365;
-				}
-			}
-			return (timeDistance+(day2-day1));
-		}else{
-			return (day2-day1);
+	public static long[] dateDiff(Date d1, Date d2) throws ParseException {
+		long nd = 1000*24*60*60;//一天的毫秒数
+		long nh = 1000*60*60;//一小时的毫秒数
+		long nm = 1000*60;//一分钟的毫秒数
+		long ns = 1000;//一秒钟的毫秒数
+		//获得两个时间的毫秒时间差异
+		long diff = d1.getTime() - d2.getTime();
+		long day = diff/nd;//计算差多少天
+		long hour = diff%nd/nh;//计算差多少小时
+		long min = diff%nd%nh/nm;//计算差多少分钟
+		long sec = diff%nd%nh%nm/ns;//计算差多少秒
+		//如果d1 小于 d2 返回空
+		if(day <= 0 || hour <= 0 || min <= 0 || sec <= 0){
+			return null;
 		}
+		return new long[]{day,hour,min,sec};
 	}
 	
 	/**
