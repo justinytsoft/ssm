@@ -1,16 +1,21 @@
 var ueFile = null;
 
+/**
+ * 上传按钮事件
+ */
 function ueUpload(){
 	$.ajaxFileUpload({
-         url: rootPath + "services/upload/uploadImage", //用于文件上传的服务器端请求地址
+         url: rootPath + "services/upload/uploadImage?_="+Math.random(), //用于文件上传的服务器端请求地址
          secureuri: false, //是否需要安全协议，一般设置为false
          type : "post", //上传类型
          fileElementId: 'ueFile', //文件上传域的ID
          dataType: 'json', //返回值类型 一般设置为json
          success: function (data, status)  //服务器成功响应处理函数
          {
-        	 img = "<img style='width:98px;height:90px;display:inline;' src='"+data.data.path+"' />";
-        	 ue.setContent(img,true);
+        	 if(data.status == 200){
+        		 img = "<img style='width:98px;height:90px;display:inline;' src='"+data.data.path+"' />";
+        		 ue.execCommand('inserthtml', img);
+        	 }
         	 $("input").remove(".ueClass");
          },
          error: function (data, status, e)//服务器响应失败处理函数
@@ -21,7 +26,9 @@ function ueUpload(){
      });
 }
 
-
+/**
+ * 自定义一个上传按钮
+ */
 UE.registerUI('button',function(editor,uiName){
     //注册按钮执行时的command命令，使用命令默认就会带有回退操作
     editor.registerCommand(uiName,{
