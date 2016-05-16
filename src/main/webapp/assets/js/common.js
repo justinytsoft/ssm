@@ -22,6 +22,21 @@ Date.prototype.format = function(format){
 	return format; 
 } 
 
+//字符串转换为日期
+//格式 MM/dd/YYYY MM-dd-YYYY YYYY/MM/dd YYYY-MM-dd  
+function stringToDate(DateStr)  
+{   
+    var converted = Date.parse(DateStr);  
+    var myDate = new Date(converted);  
+    if (isNaN(myDate))  
+    {   
+        //var delimCahar = DateStr.indexOf('/')!=-1?'/':'-';  
+        var arys= DateStr.split('-');  
+        myDate = new Date(arys[0],--arys[1],arys[2]);  
+    }  
+    return myDate;  
+}  
+
 //校验邮箱是否合格
 function isEmail(email) {
 	var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
