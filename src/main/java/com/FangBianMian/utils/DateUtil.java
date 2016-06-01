@@ -34,21 +34,9 @@ public class DateUtil {
 	}
 	
 	/**
-	 * 获取指定分钟后的日期
-	 * @param date
-	 * @return
-	 */
-	public static Date getMinute(Date date, Long minute) {
-		minute = minute == null ? 0 : minute;
-		long curren = date.getTime();
-		curren += minute * 60 * 1000;
-		return new Date(curren);
-	}
-	
-	/**
 	 * 计算d1 到 d2 相差多少时间
-	 * @param d1
-	 * @param d2
+	 * @param d1 未来的时间
+	 * @param d2 现在的时间
 	 * @return 数组下标 0 天 1 时 2 分 3 秒
 	 */
 	public static long[] dateDiff(Date d1, Date d2) throws ParseException {
@@ -63,6 +51,55 @@ public class DateUtil {
 		long min = diff%nd%nh/nm;//计算差多少分钟
 		long sec = diff%nd%nh%nm/ns;//计算差多少秒
 		return new long[]{day,hour,min,sec};
+	}
+	
+	/**
+	 * 判断 start 是否大于 end
+	 * @param start
+	 * @param end
+	 * @return
+	 * @throws ParseException 
+	 */
+	public static boolean startThanEnd(Date start, Date end) throws ParseException{
+		long[] result = dateDiff(start, end);
+		if(result[0]>0 || result[1]>0 || result[2]>0 || result[3]>0){
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * 获取指定分钟后的日期
+	 * @param date
+	 * @return
+	 */
+	public static long getMinute(Date date, Long minute) {
+		minute = minute == null ? 0 : minute;
+		long curren = date.getTime();
+		curren += minute * 60 * 1000;
+		return curren;
+	}
+	
+	/**
+	 * 通过传入的日期格式  解析 字符串
+	 * @param date
+	 * @param format
+	 * @return
+	 * @throws ParseException
+	 */
+	public static Date parseByStr(String date, String format) throws ParseException{
+		return new SimpleDateFormat(format).parse(date);
+	}
+	
+	/**
+	 * 通过传入的日期格式  格式化 日期
+	 * @param date
+	 * @param format
+	 * @return
+	 * @throws ParseException
+	 */
+	public static String formatByStr(Date date, String format){
+		return new SimpleDateFormat(format).format(date);
 	}
 	
 	/**
@@ -108,8 +145,6 @@ public class DateUtil {
 	 * @param date 指定的时间
 	 * @param later 指定的天数
 	 * @return
-	 * 1460088845588
-		1458299478292
 	 */
 	public static Date getLaterDay(Date date, Long later){
 		later = later == null ? 0 : later;
@@ -117,6 +152,7 @@ public class DateUtil {
 		return new Date(current + later * 24 * 60 * 60 * 1000);
 	}
 
+	
 	/**
 	 * 获取指定日期指定天数前的日期
 	 * @param date 指定的时间
@@ -152,4 +188,5 @@ public class DateUtil {
 		long current = date.getTime();
 		return new Date(current - later * 60 * 60 * 1000);
 	}
+
 }
