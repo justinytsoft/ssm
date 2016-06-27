@@ -24,6 +24,13 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter{
       
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {  
           
+    	//设置拦截表单提交方式, 默认(true)只能处理POST, false不限
+    	//setPostOnly(false);
+    	
+    	//获取登录帐号的类型, 是否是后台
+    	String type = (String) request.getParameter("type");
+    	request.getSession().setAttribute("type", type);
+    	
         String genCode = this.obtainGeneratedCaptcha(request);  
         String inputCode = this.obtainCaptcha(request);  
         Authentication auth = null;
@@ -44,7 +51,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter{
         	throw e;
         }
         
-        return auth;  
+        return auth;
     }  
       
     protected String obtainCaptcha(HttpServletRequest request){  

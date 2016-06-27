@@ -12,14 +12,26 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 public class LoginFailureHandler implements AuthenticationFailureHandler{
 
 	private String defaultFailureUrl;
-	private boolean forwardToDestination = true;
+	private boolean forwardToDestination = false;
 	
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+		
+		String targetUrl = null;
+		//如果是后台登录，应该在多传一个type参数过来，值为admin
+        String type = (String) request.getSession().getAttribute("type");
+        request.getSession().invalidate();
+        
+        if ("admin".equals(type)) {
+        	targetUrl = "/login";
+        } else {
+        	targetUrl = "/merchant/login";
+        }
+        targetUrl = request.getContextPath() + targetUrl + "?error=error";
 		if(forwardToDestination){
-			request.getRequestDispatcher(defaultFailureUrl).forward(request, response);
+			request.getRequestDispatcher(targetUrl).forward(request, response);
 		}else{
-			response.sendRedirect(defaultFailureUrl);
+			response.sendRedirect(targetUrl);
 		}
 	}
 
