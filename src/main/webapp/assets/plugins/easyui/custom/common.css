@@ -1,13 +1,10 @@
-A:link {
-	text-decoration: none;
-}
+A:link{text-decoration:none;}
+A:visited{text-decoration:none;}
+A:active{text-decoration:none;}
 
-A:visited {
-	text-decoration: none;
-}
-
-A:active {
-	text-decoration: none;
+/* 让按钮没有背影 */
+.l-btn{
+	box-shadow:none	
 }
 
 /* 遮罩颜色和透明度 */
@@ -16,48 +13,50 @@ A:active {
 	opacity: 0.6;
 }
 
-/* 隐藏  点击linkbutton按钮时出现的边框 */
-.l-btn-focus {
-	outline: none;
+/* 弹出框样式 */
+.messager-window{
+	background: rgb(250, 250, 250);
+	word-break:break-all;
+}
+.messager-window .dialog-button{
+	border: none;
+}
+.messager-window .window-body{
+	border: none;
+}
+.dialog-button{
+	background: rgb(250, 250, 250);
 }
 
-/* 弹出框的行高 */
-.messager-window div {
-	line-height: 2;
+/* datagrid样式 */
+.datagrid-header-row td {
+	background-color: rgb(250, 250, 250);
+	height: 50px;
+}
+.datagrid-btable td div{
+	color:#918B80;
+	font-size: 14px;
+}
+.datagrid-header .datagrid-cell span {
+	font-size: 20px;
+	color: #BA791E;
+	font-weight: normal;
+}
+.datagrid-row-selected{
+	background: #DEF7FF;
 }
 
 /* panel样式 */
-/* .panel{
-	border-radius:6px;
-}
-
-.panel-header{
-	border-radius:6px 6px 0 0;
-	padding:10px;
+/* .panel-header{
+	border-radius:10px 10px 0 0;
+	padding:15px;
 }
 
 .panel-body{
-	border-radius:0 0 6px 6px;
+	border-radius:0 0 10px 10px;
 }
 
 .panel-title{
 	font-weight: normal;
 	font-size: 14px;
 } */
-
-/* 弹出框样式 */
-.messager-window {
-	background: rgb(250, 250, 250);
-}
-
-.messager-window .dialog-button {
-	border: none;
-}
-
-.messager-window .window-body {
-	border: none;
-}
-
-.dialog-button {
-	background: rgb(250, 250, 250);
-}

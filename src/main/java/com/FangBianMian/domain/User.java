@@ -162,7 +162,7 @@ public class User {
 	}
 	
 	/**
-	 * ×èÖ¹Í¬Ò»¸öÓÃ»§µÚ¶ş´ÎµÇÂ¼Ê±ĞèÒªÊ¹ÓÃ
+	 *  é˜»æ­¢åŒä¸€ä¸ªç”¨æˆ·ç¬¬äºŒæ¬¡ç™»å½•æ—¶éœ€è¦ä½¿ç”¨
 	 */
 	@Override
 	public boolean equals(Object obj) {

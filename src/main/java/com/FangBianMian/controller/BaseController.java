@@ -41,7 +41,8 @@ public class BaseController {
 
 	
 	@RequestMapping("/login")
-	public String login(HttpServletRequest request, Model model, @RequestParam(required=false) String msg) {
+	public String login(HttpServletRequest request, Model model, 
+						@RequestParam(required=false) String msg) {
 		
 		if(msg == null){
 			msg = (String) request.getAttribute("msg");

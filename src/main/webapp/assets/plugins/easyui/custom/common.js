@@ -1,4 +1,26 @@
-//自定义校验规则
+$(function(){
+	var dialogs = $(".easyui-dialog");
+	/*格式化dialog的样式*/
+	$.each(dialogs,function(){
+		var obj = $(this);
+		obj.dialog("dialog").css({
+			borderWidth:0,
+			padding:0
+		});
+	});
+});
+
+//日期控件的重置按钮
+var dateboxReset = $.extend([], $.fn.datebox.defaults.buttons);
+dateboxReset.splice(1, 0, {
+    text: '重置',
+    handler: function(target){
+    	$(target).datebox("clear");
+    	$(target).datebox("hidePanel");
+    }
+});
+
+//自定义校验规则  validType:'isNumber'   validType:['isNumber','numberRegion[0,100]']
 $.extend($.fn.validatebox.defaults.rules, {
     isNumber: { 
         validator: function(value){
@@ -6,6 +28,30 @@ $.extend($.fn.validatebox.defaults.rules, {
             return reg.test(value);
         },
         message: '只能输入整数'
+    },
+    numberRegion: { 
+        validator: function(value,param){
+        	return (value >= param[0] && value <= param[1]);
+        },
+        message: '输入数值必须在{0}~{1}之间'
+    },
+    minNum: {
+        validator: function(value, param){
+            return parseInt(value) >= param[0];
+        },
+        message: '输入的数值必须大于等于{0}'
+    },
+    maxNum: {
+        validator: function(value, param){
+            return parseInt(value) <= param[0];
+        },
+        message: '输入的数值必须小于等于{0}'
+    },
+    numMult: {
+        validator: function(value, param){
+            return value % param[0] == 0;
+        },
+        message: '输入的数值必须是{0}的倍数'
     },
     lengthRegion: {
     	validator: function(value,param){
@@ -32,19 +78,29 @@ $.extend($.fn.validatebox.defaults.rules, {
             return value.length <= param[0];
         },
         message: '输入的字符长度必须小于等于{0}'
-    }
-});
-
-$(function(){
-	var dialogs = $(".easyui-dialog");
-	/*格式化dialog的样式*/
-	$.each(dialogs,function(){
-		var obj = $(this);
-		obj.dialog("dialog").css({
-			borderWidth:0,
-			padding:0
-		});
-	});
+    },
+    isPhone: { //手机
+    	validator: function(value, param){
+    		var reg = /^1[3-9][0-9]{9}$/;
+            return reg.test(value);
+        },
+        message: '手机号格式错误'
+	},
+	isTel: { //座机
+		validator: function(value, param){
+			var reg = "^(0[0-9]{2,3}\-)?([2-9][0-9]{6,7})+(\-[0-9]{1,4})?$"
+			return reg.test(value);
+		},
+		message: '座机号格式错误'
+	},
+	isTP: { //手机座机
+		validator: function(value, param){
+			var p = /^1[3-9][0-9]{9}$/;
+			var t = /^(0[0-9]{2,3}\-)?([2-9][0-9]{6,7})+(\-[0-9]{1,4})?$/;
+			return (p.test(value)||t.test(value));
+		},
+		message: '电话格式错误'
+	}
 });
 
 /*打开dialog*/
@@ -57,28 +113,44 @@ function closeDialog(id){
 	$("#"+id).dialog("close",true);
 }
 
+/*图片查看*/
+function alertImg(msg){
+	$.messager.alert("",msg);
+	messagerCommon();
+	var left = (parseInt($(".messager-window").css("width"))+200) + "px";
+	$(".messager-window").css({"width":"600px","left":left});
+	$(".messager-body").css("width","600px");
+	$(".messager-button").css("width","600px");
+}
+
 /*alert*/
 function cAlert(msg){
 	$.messager.alert("",msg);
-	messagerCommon()
+	messagerCommon();
 }
 
 /*confirm*/
 function cConfirm(msg,fun){
 	$.messager.confirm('',msg,fun);
-	messagerCommon()
+	messagerCommon();
+}
+
+/*prompt*/
+function cPrompt(msg,fun){
+	$.messager.prompt('',msg,fun);
+	messagerCommon();
 }
 
 /*弹出框通用样式*/
 function messagerCommon(){
 	$(".window-shadow").css("height","0px");
 	$(".messager-button *").trigger("blur");
-	$(".messager-body").css({"text-align":"center","line-height":"7","background":"#fafafa"});
+	$(".messager-body").css({"text-align":"center","line-height":"3","background":"#fafafa"});
 	$(".messager-icon").remove();
+	$(".l-btn-text").css({"color":"black"});
 }
 
 /*文本框清除功能*/
-/* $('#tt').textbox().textbox('addClearBtn', 'icon-clear');*/
 $.extend($.fn.textbox.methods, {
     addClearBtn: function(jq, iconCls){
         return jq.each(function(){
@@ -107,34 +179,6 @@ $.extend($.fn.textbox.methods, {
         });
     }
 });
-
-//格式化日期框显示。 只显示年月， 参数 obj 必须是jquery对象
-function yearAndMonth(obj){
-	obj.datebox({
-        onShowPanel: function () {//显示日趋选择对象后再触发弹出月份层的事件，初始化时没有生成月份层
-            span.trigger('click'); //触发click事件弹出月份层
-            if (!tds) setTimeout(function () {//延时触发获取月份对象，因为上面的事件触发和对象生成有时间间隔
-                tds = p.find('div.calendar-menu-month-inner td');
-                tds.click(function (e) {
-                    e.stopPropagation(); //禁止冒泡执行easyui给月份绑定的事件
-                    var year = /\d{4}/.exec(span.html())[0]//得到年份
-                    , month = parseInt($(this).attr('abbr'), 10); //月份，这里不需要+1
-                    obj.datebox('hidePanel')//隐藏日期对象
-                    .datebox('setValue', year + '-' + month); //设置日期的值
-                });
-            }, 0)
-        },
-        parser: function (s) {
-            if (!s) return new Date();
-            var arr = s.split('-');
-            return new Date(parseInt(arr[0], 10), parseInt(arr[1], 10) - 1, 1);
-        },
-        formatter: function (d) { return d.getFullYear() + '-' + (d.getMonth()+1);/*getMonth返回的是0开始的，忘记了。。已修正*/ }
-    });
-    var p = obj.datebox('panel'), //日期选择对象
-    tds = false, //日期选择对象中月份
-    span = p.find('span.calendar-text'); //显示月份层的触发控件
-}
 
 /*转换树节点*/
 function convert(rows){

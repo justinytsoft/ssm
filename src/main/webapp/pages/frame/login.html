@@ -1,38 +1,47 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-	<body>
-		<script type="text/javascript" th:inline="javascript">
+	<head th:include="fragment/import :: header"></head>
+	<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
 			function update(obj){
 				console.info(obj.src);
 				obj.src = [[@{/captcha}]] + "?" + Math.random();
 			}
-		</script>
+		/*]]>*/
+	</script>
+	<body>
 		<form th:action="@{/authentication}" method="post">
 			<input type="hidden" name="type" value="admin" />
 			<table>
 				<tr>
 					<td>用户名:</td>
-					<td><input name="j_username" value="admin"/></td>
+					<td>
+						<input type="text" class="easyui-textbox" name="j_username" value="admin" data-options="width:200,height:35"/>
+					</td>
 				</tr>
 				<tr>
 					<td>密码:</td>
-					<td><input type="password" name="j_password" value="111111"/></td>
+					<td><input type="password" class="easyui-textbox" name="j_password" value="111111" data-options="width:200,height:35"/></td>
 				</tr>
 				<tr>
 					<td>验证码:</td>
 					<td>
-						<input type="text" name="captcha" style="vertical-align:middle" />
+						<input type="text" class="easyui-textbox" name="captcha" style="vertical-align:middle" data-options="width:200,height:35"/>
 						<img onclick="update(this)" style="vertical-align:middle;width: 150px; height: 50px" alt="captcha" title="点击更换" th:src="@{/captcha}"/>
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2"><input type="checkbox" name="remember_me" /> 免登录 </td>
+					<td colspan="2"><input type="checkbox" name="remember-me" /> 免登录 </td>
 				</tr>
 				<tr>
-					<td colspan="2"><input type="submit" value="submit"/></td>
+					<td colspan="2">
+						<!-- <input type="submit" value="submit"/> -->
+						<a class="easyui-linkbutton c8">登 录</a>
+					</td>
 				</tr>
 			</table>
 		</form>
 		<span style="color: red" th:text="${msg}"></span>
 	</body>
 </html>
+

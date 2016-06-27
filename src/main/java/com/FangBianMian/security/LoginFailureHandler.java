@@ -20,6 +20,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler{
 		String targetUrl = null;
 		//如果是后台登录，应该在多传一个type参数过来，值为admin
         String type = (String) request.getSession().getAttribute("type");
+        String msg = (String) request.getAttribute("msg");
         request.getSession().invalidate();
         
         if ("admin".equals(type)) {
@@ -27,7 +28,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler{
         } else {
         	targetUrl = "/merchant/login";
         }
-        targetUrl = request.getContextPath() + targetUrl + "?error=error";
+        targetUrl = request.getContextPath() + targetUrl + "?msg=" + msg;
 		if(forwardToDestination){
 			request.getRequestDispatcher(targetUrl).forward(request, response);
 		}else{
