@@ -7,6 +7,15 @@
 				console.info(obj.src);
 				obj.src = [[@{/captcha}]] + "?" + Math.random();
 			}
+		
+			$(function(){
+				$("#login").click(function(){
+					var fm = $("form");
+					if(fm.form("validate")){
+						fm.submit();
+					}
+				});
+			});
 		/*]]>*/
 	</script>
 	<body>
@@ -16,17 +25,17 @@
 				<tr>
 					<td>用户名:</td>
 					<td>
-						<input type="text" class="easyui-textbox" name="j_username" value="admin" data-options="width:200,height:35"/>
+						<input type="text" class="easyui-textbox" name="j_username" value="admin" data-options="width:200,height:35,required:true,validateOnCreate:false"/>
 					</td>
 				</tr>
 				<tr>
 					<td>密码:</td>
-					<td><input type="password" class="easyui-textbox" name="j_password" value="111111" data-options="width:200,height:35"/></td>
+					<td><input type="password" class="easyui-textbox" name="j_password" value="111111" data-options="width:200,height:35,required:true,validateOnCreate:false"/></td>
 				</tr>
 				<tr>
 					<td>验证码:</td>
 					<td>
-						<input type="text" class="easyui-textbox" name="captcha" style="vertical-align:middle" data-options="width:200,height:35"/>
+						<input type="text" class="easyui-textbox" name="captcha" style="vertical-align:middle" data-options="width:200,height:35,required:true,validateOnCreate:false"/>
 						<img onclick="update(this)" style="vertical-align:middle;width: 150px; height: 50px" alt="captcha" title="点击更换" th:src="@{/captcha}"/>
 					</td>
 				</tr>
@@ -35,8 +44,7 @@
 				</tr>
 				<tr>
 					<td colspan="2">
-						<!-- <input type="submit" value="submit"/> -->
-						<a class="easyui-linkbutton c8">登 录</a>
+						<a id="login" class="easyui-linkbutton c8">登 录</a>
 					</td>
 				</tr>
 			</table>
