@@ -85,7 +85,12 @@
 
 	<error-page>
 		<error-code>500</error-code>
-		<location>/pages/error/500.html</location>
+		<location>/error</location>
 	</error-page>
+	
+	<error-page>  
+	    <error-code>404</error-code>  
+	    <location>/notFound</location>  
+	</error-page> 
 
 </web-app>

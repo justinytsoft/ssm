@@ -118,7 +118,7 @@ public class BaseController {
 	}
 	
 	/**
-	 * 拒绝访问页面
+	 * 403
 	 * @return
 	 */
 	@RequestMapping("/denied")
@@ -127,7 +127,16 @@ public class BaseController {
 	}
 	
 	/**
-	 * 服务器报错页面
+	 * 404
+	 * @return
+	 */
+	@RequestMapping("/notFound")
+	public String notFound(){
+		return "pages/error/404";
+	}
+	
+	/**
+	 * 500
 	 * @return
 	 */
 	@RequestMapping("/error")

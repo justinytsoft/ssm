@@ -18,9 +18,10 @@
     <http pattern="/assets/**" security="none"/>
     <http pattern="/error" security="none"/>
     <http pattern="/denied" security="none"/>
+    <http pattern="/notFound" security="none"/>
     
     
-    <http access-denied-page="/error" auto-config="false" use-expressions="false" entry-point-ref="authenticationProcessingFilterEntryPoint">
+    <http access-denied-page="/denied" auto-config="false" use-expressions="false" entry-point-ref="authenticationProcessingFilterEntryPoint">
     
         <intercept-url pattern="/merchant/**" access="ROLE_MERCHANT" />
         <intercept-url pattern="/**" access="ROLE_ADMIN" />
