@@ -39,7 +39,13 @@ public class BaseController {
 		}
 	}
 
-	
+	/**
+	 * 登录页面
+	 * @param request
+	 * @param model
+	 * @param msg
+	 * @return
+	 */
 	@RequestMapping("/login")
 	public String login(HttpServletRequest request, Model model, 
 						@RequestParam(required=false) String msg) {
@@ -76,6 +82,11 @@ public class BaseController {
 		return "pages/frame/sessionException";
 	}
 	
+	/**
+	 * 首页
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/index")
 	public String index(Model model){
 		SecurityUser user = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -104,5 +115,23 @@ public class BaseController {
 	@RequestMapping("/right")
 	public String right(){
 		return "pages/frame/right";
+	}
+	
+	/**
+	 * 拒绝访问页面
+	 * @return
+	 */
+	@RequestMapping("/denied")
+	public String denied(){
+		return "pages/error/403";
+	}
+	
+	/**
+	 * 服务器报错页面
+	 * @return
+	 */
+	@RequestMapping("/error")
+	public String error(){
+		return "pages/error/500";
 	}
 }

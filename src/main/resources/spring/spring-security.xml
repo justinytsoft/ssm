@@ -16,10 +16,11 @@
     <http pattern="/captcha" security="none"/>
     <http pattern="/upload/**" security="none"/>
     <http pattern="/assets/**" security="none"/>
-    <http pattern="/custom/bootstrap" security="none"/>
+    <http pattern="/error" security="none"/>
+    <http pattern="/denied" security="none"/>
     
     
-    <http auto-config="false" use-expressions="false" entry-point-ref="authenticationProcessingFilterEntryPoint">
+    <http access-denied-page="/error" auto-config="false" use-expressions="false" entry-point-ref="authenticationProcessingFilterEntryPoint">
     
         <intercept-url pattern="/merchant/**" access="ROLE_MERCHANT" />
         <intercept-url pattern="/**" access="ROLE_ADMIN" />

@@ -232,8 +232,8 @@ public class QRCodeUtil {
 	}
 
 	public static void main(String[] args) throws Exception {
-		String text = "http://weibo.cn/qr/userinfo?uid=2795119924";
-		QRCodeUtil.encode(text,  "d:/s.jpg", "d:/test/s.jpg", true);
+		String text = "http://www.ccveyes.com";
+		QRCodeUtil.encode(text,  "d:/s.jpg");
 	}
 
 }

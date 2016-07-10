@@ -9,7 +9,6 @@
 	</settings>
     
     <mappers>
-    	<mapper resource="mybatis/mapper/JobDaoMapper.xml" />
     	<mapper resource="mybatis/mapper/BaseDaoMapper.xml" />
     	<mapper resource="mybatis/mapper/UserDaoMapper.xml" />
     </mappers>
