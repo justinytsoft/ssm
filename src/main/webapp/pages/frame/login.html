@@ -3,6 +3,55 @@
 	<head th:include="fragment/import :: header"></head>
 	<title>登录</title>
 	
+	<style>
+		.cube {
+		    -webkit-transform-style: preserve-3d;
+		    transform-style: preserve-3d;
+		    -webkit-animation: rotate 2s infinite;
+		    animation: rotate 2s infinite;
+		}
+		/* @-webkit-keyframes rotate {
+		    from {
+		        -moz-transform:rotate(0);
+				-webkit-transform:rotate(0);
+				-o-transform:rotate(0);
+				transform:rotate(0); 
+				filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+		    }
+		    to {
+		        -moz-transform:rotate(90deg);
+				-webkit-transform:rotate(90deg);
+				-o-transform:rotate(90deg);
+				transform:rotate(90deg); 
+				filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+		    }
+		}
+		@-moz-keyframes rotate {
+		    from {
+		        -moz-transform:rotate(0);
+				-webkit-transform:rotate(0);
+				-o-transform:rotate(0);
+				transform:rotate(0); 
+				filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+		    }
+		    to {
+		        -moz-transform:rotate(90deg);
+				-webkit-transform:rotate(90deg);
+				-o-transform:rotate(90deg);
+				transform:rotate(90deg); 
+				filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+		    }
+		} */
+		@keyframes rotate {
+		    0% {
+			    -webkit-transform: rotateY(0deg);
+			    }
+			100% {
+			    -webkit-transform: rotateY(360deg);
+			    }
+		}
+	</style>
+	
 	<script type="text/javascript" th:src="@{/assets/js/jquery.cookie.js}"></script>
 	<script type="text/javascript" th:inline="javascript">
 		/*<![CDATA[*/
@@ -12,7 +61,7 @@
 			}
 		
 			$(function(){
-				//回显cookie中的值export PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
+				//回显cookie中的值
 				if ($.cookie("rember") == "true") {
 					$("#rember").attr("checked", true);
 					$("#j_username").textbox("setValue",$.cookie("userName"));
@@ -38,11 +87,67 @@
 						fm.submit();
 					}
 				});
+				
+				draw11("can");
 			});
+			
+			
+			
+			
+			function create5Star(context) {
+	            var n = 0;
+	            var dx = 100;
+	            var dy = 0;
+
+	            //星星的大小
+	            var s = 20;
+	            
+	            //创建路径
+	            context.beginPath();
+	            
+	            //填充颜色
+	            var my_gradient=context.createLinearGradient(0,0,170,0);
+	            my_gradient.addColorStop(1,"rgba(255, 255, 255, 0.51)");
+	            context.fillStyle = my_gradient;
+	            
+	            //绘制路径
+	            var x = Math.sin(0);
+	            var y = Math.cos(0);
+	            var dig = Math.PI / 5 * 4;
+	            for (var i = 0; i < 5; i++) {
+	                var x = Math.sin(i * dig);
+	                var y = Math.cos(i * dig);
+	                context.lineTo(dx + x * s, dy + y * s);
+
+	            }
+	            
+	            context.closePath();
+	        }
+
+	        function draw11(id) {
+	            var canvas = document.getElementById(id);
+	            if (canvas == null){
+	                return false;
+	            }
+	            
+	            var context = canvas.getContext("2d");
+
+	            //设置阴影
+	            context.shadowOffsetX = 3;
+	            context.shadowOffsetY = 3;
+	            context.shadowColor = '#FFFFFF';
+	            context.shadowBlur =5;
+	            
+	            //图形绘制
+	            context.translate(0, 50);
+                create5Star(context);
+                context.fill();
+	        }
 		/*]]>*/
 	</script>
 	
 	<body class="lrfBody">
+		<canvas id="can" class="cube"></canvas>
 		<div class="lrfDiv">
 			<div class="container">
 				<form th:action="@{/authentication}" method="post">
