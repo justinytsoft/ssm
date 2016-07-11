@@ -12,7 +12,7 @@
 			}
 		
 			$(function(){
-				//回显cookie中的值
+				//回显cookie中的值export PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
 				if ($.cookie("rember") == "true") {
 					$("#rember").attr("checked", true);
 					$("#j_username").textbox("setValue",$.cookie("userName"));
