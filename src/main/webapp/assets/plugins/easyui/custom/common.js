@@ -22,6 +22,16 @@ dateboxReset.splice(1, 0, {
 
 //自定义校验规则  validType:'isNumber'   validType:['isNumber','numberRegion[0,100]']
 $.extend($.fn.validatebox.defaults.rules, {
+	startThanEnd: {
+		validator: function(value, param){
+			var s = $("#" + param[0]);
+			var e = $("#" + param[1]);
+			var sdate = stringToDate(s.datetimebox("getValue")).valueOf();
+			var edate = stringToDate(e.datetimebox("getValue")).valueOf();
+			return edate >= sdate;
+		},
+		message: '开始时间不能大于结束时间'
+	},
     isNumber: { 
         validator: function(value){
         	var reg=/^\d+$/;
@@ -147,7 +157,7 @@ function messagerCommon(){
 	$(".messager-button *").trigger("blur");
 	$(".messager-body").css({"text-align":"center","line-height":"3","background":"#fafafa"});
 	$(".messager-icon").remove();
-	$(".l-btn-text").css({"color":"black"});
+	//$(".l-btn-text").css({"color":"black"});
 }
 
 /*文本框清除功能*/
@@ -229,3 +239,5 @@ function convert(rows){
 	}
 	return nodes;
 }
+
+

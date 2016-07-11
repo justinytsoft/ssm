@@ -19,37 +19,38 @@
 		/*]]>*/
 	</script>
 	<body>
-		<form th:action="@{/authentication}" method="post">
-			<input type="hidden" name="type" value="admin" />
-			<table>
-				<tr>
-					<td>用户名:</td>
-					<td>
-						<input type="text" class="easyui-textbox" name="j_username" value="admin" data-options="width:200,height:35,required:true,validateOnCreate:false"/>
-					</td>
-				</tr>
-				<tr>
-					<td>密码:</td>
-					<td><input type="password" class="easyui-textbox" name="j_password" value="111111" data-options="width:200,height:35,required:true,validateOnCreate:false"/></td>
-				</tr>
-				<tr>
-					<td>验证码:</td>
-					<td>
-						<input type="text" class="easyui-textbox" name="captcha" style="vertical-align:middle" data-options="width:200,height:35,required:true,validateOnCreate:false"/>
-						<img onclick="update(this)" style="vertical-align:middle;width: 150px; height: 50px" alt="captcha" title="点击更换" th:src="@{/captcha}"/>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2"><input type="checkbox" name="remember-me" /> 免登录 </td>
-				</tr>
-				<tr>
-					<td colspan="2">
-						<a id="login" class="easyui-linkbutton c8">登 录</a>
-					</td>
-				</tr>
-			</table>
-		</form>
-		<span style="color: red" th:text="${msg}"></span>
+		<div >
+			<form th:action="@{/authentication}" method="post">
+				<input type="hidden" name="type" value="admin" />
+				<table>
+					<tr>
+						<td>用户名:</td>
+						<td>
+							<input type="text" class="easyui-textbox" name="j_username" value="admin" data-options="width:200,height:35,required:true,validateOnCreate:false"/>
+						</td>
+					</tr>
+					<tr>
+						<td>密码:</td>
+						<td><input type="password" class="easyui-textbox" name="j_password" value="111111" data-options="width:200,height:35,required:true,validateOnCreate:false"/></td>
+					</tr>
+					<tr>
+						<td>验证码:</td>
+						<td>
+							<input type="text" class="easyui-textbox" name="captcha" style="vertical-align:middle" data-options="width:200,height:35,required:true,validateOnCreate:false"/>
+							<img onclick="update(this)" style="vertical-align:middle;width: 150px; height: 50px" alt="captcha" title="点击更换" th:src="@{/captcha}"/>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2"><input type="checkbox" name="remember-me" /> 免登录 </td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<a id="login" class="easyui-linkbutton c8">登 录</a>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
 	</body>
 </html>
 

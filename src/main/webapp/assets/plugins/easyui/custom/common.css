@@ -46,6 +46,26 @@ A:active{text-decoration:none;}
 	background: #DEF7FF;
 }
 
+/* filebox */
+/* .filebox{
+	border: none;
+	border-radius: 0;
+	width: 75px;
+}
+.filebox .textbox-prompt{
+	display: none;
+}
+.filebox a{
+	background-color: #00A0EA;
+	border-radius: 5px;
+	color:white;
+}
+.filebox .textbox-button:hover{
+	background: #00A0EA;
+	color:white;
+} */
+
+
 /* panelÑùÊ½ */
 /* .panel-header{
 	border-radius:10px 10px 0 0;

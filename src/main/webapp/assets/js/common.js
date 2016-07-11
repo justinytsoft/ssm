@@ -1,3 +1,34 @@
+//日期计算
+Date.prototype.DateAdd = function(strInterval, Number) {   
+    var dtTmp = this;  
+    switch (strInterval) {   
+        case 's' :return new Date(Date.parse(dtTmp) + (1000 * Number));  
+        case 'n' :return new Date(Date.parse(dtTmp) + (60000 * Number));  
+        case 'h' :return new Date(Date.parse(dtTmp) + (3600000 * Number));  
+        case 'd' :return new Date(Date.parse(dtTmp) + (86400000 * Number));  
+        case 'w' :return new Date(Date.parse(dtTmp) + ((86400000 * 7) * Number));  
+        case 'q' :return new Date(dtTmp.getFullYear(), (dtTmp.getMonth()) + Number*3, dtTmp.getDate(), dtTmp.getHours(), dtTmp.getMinutes(), dtTmp.getSeconds());  
+        case 'm' :return new Date(dtTmp.getFullYear(), (dtTmp.getMonth()) + Number, dtTmp.getDate(), dtTmp.getHours(), dtTmp.getMinutes(), dtTmp.getSeconds());  
+        case 'y' :return new Date((dtTmp.getFullYear() + Number), dtTmp.getMonth(), dtTmp.getDate(), dtTmp.getHours(), dtTmp.getMinutes(), dtTmp.getSeconds());  
+    }  
+}  
+
+//| 求两个时间的天数差 日期格式为 YYYY-MM-dd   
+//+---------------------------------------------------  
+function daysBetween(DateOne,DateTwo)  
+{   
+  var OneMonth = DateOne.substring(5,DateOne.lastIndexOf ('-'));  
+  var OneDay = DateOne.substring(DateOne.length,DateOne.lastIndexOf ('-')+1);  
+  var OneYear = DateOne.substring(0,DateOne.indexOf ('-'));  
+
+  var TwoMonth = DateTwo.substring(5,DateTwo.lastIndexOf ('-'));  
+  var TwoDay = DateTwo.substring(DateTwo.length,DateTwo.lastIndexOf ('-')+1);  
+  var TwoYear = DateTwo.substring(0,DateTwo.indexOf ('-'));  
+
+  var cha=((Date.parse(OneMonth+'/'+OneDay+'/'+OneYear)- Date.parse(TwoMonth+'/'+TwoDay+'/'+TwoYear))/86400000);   
+  return Math.abs(cha);  
+}  
+
 //日期格式化 new Date().format("yyyy年MM月dd日 hh:mm");
 Date.prototype.format = function(format){ 
 	var o = { 
@@ -26,15 +57,25 @@ Date.prototype.format = function(format){
 //格式 MM/dd/YYYY MM-dd-YYYY YYYY/MM/dd YYYY-MM-dd  
 function stringToDate(DateStr)  
 {   
-    var converted = Date.parse(DateStr);  
-    var myDate = new Date(converted);  
-    if (isNaN(myDate))  
-    {   
-        //var delimCahar = DateStr.indexOf('/')!=-1?'/':'-';  
-        var arys= DateStr.split('-');  
-        myDate = new Date(arys[0],--arys[1],arys[2]);  
-    }  
-    return myDate;  
+	var converted = Date.parse(DateStr);  
+	var myDate = new Date(converted);  
+	if (isNaN(myDate))  
+	{   
+		  //| 格式 YYYY-MM-dd HH:mm:ss
+	    var arys = DateStr.split('-');  //年、月、日、小时、分钟、秒
+	    var day = arys[2].split(" "); //日、小时、分钟、秒
+	    if(day.length==2){
+	  	  var hms = day[1].split(":"); //小时、分钟、秒
+	  	  if(hms.length==3){
+	  		  myDate = new Date(arys[0],--arys[1],day[0],hms[0],hms[1],hms[2]);  
+	  	  }else{
+	  		  myDate = new Date(arys[0],--arys[1],day[0],hms[0],hms[1]);  
+	  	  }
+	    }else{
+	  	  myDate = new Date(arys[0],--arys[1],arys[2]);  
+	    }
+	}  
+	return myDate; 
 }  
 
 //校验邮箱是否合格
