@@ -2,6 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 	<head th:include="fragment/import :: header"></head>
 	<title>登录</title>
+	
+	<script type="text/javascript" th:src="@{/assets/js/jquery.cookie.js}"></script>
 	<script type="text/javascript" th:inline="javascript">
 		/*<![CDATA[*/
 			function update(obj){
@@ -10,9 +12,29 @@
 			}
 		
 			$(function(){
+				//回显cookie中的值
+				if ($.cookie("rember") == "true") {
+					$("#rember").attr("checked", true);
+					$("#j_username").textbox("setValue",$.cookie("userName"));
+					$("#j_password").textbox("setValue",$.cookie("passWord"));
+				}
+				
 				$("#login").click(function(){
 					var fm = $("form");
 					if(fm.form("validate")){
+						//将用户信息保存到cookie中
+						if (document.getElementById("rember").checked == true) {
+							var userName = $("#j_username").textbox("getText");
+							var passWord = $("#j_password").textbox("getText");
+							$.cookie("rember", "true", {expires : 7}); // 存储一个带7天期限的 cookie
+							$.cookie("userName", userName, {expires : 7}); // 存储一个带7天期限的 cookie
+							$.cookie("passWord", passWord, {expires : 7}); // 存储一个带7天期限的 cookie
+						} else {
+							$.cookie("rember", "false", {expires : -1});
+							$.cookie("userName", '', {expires : -1});
+							$.cookie("passWord", '', {expires : -1});
+						}
+
 						fm.submit();
 					}
 				});
@@ -27,22 +49,24 @@
 					<input type="hidden" name="type" value="admin" />
 					<div style="padding:5px 10px">
 						<div>用户名:</div>
-						<input type="text" class="easyui-textbox" name="j_username" data-options="fit:true,height:30,required:true,validateOnCreate:false,iconCls:'icon-man',iconAlign:'left',iconWidth:40"/>
+						<input type="text" class="easyui-textbox" id="j_username" name="j_username" style="width:100%" data-options="height:45,required:true,validateOnCreate:false,iconCls:'icon-man',iconAlign:'left',iconWidth:40"/>
 					</div>
 					<div style="padding:5px 10px">
 						<div>密码:</div>
-						<input type="password" class="easyui-textbox" name="j_password" data-options="fit:true,height:30,required:true,validateOnCreate:false,iconCls:'icon-lock',iconAlign:'left',iconWidth:40"/>
+						<input type="password" class="easyui-textbox" id="j_password" name="j_password" style="width:100%" data-options="height:45,required:true,validateOnCreate:false,iconCls:'icon-lock',iconAlign:'left',iconWidth:40"/>
 					</div>
 					<div style="padding:5px 10px">
 						<div>验证码:</div>
 						<input type="text" class="easyui-textbox" name="captcha" data-options="width:150,height:40,required:true,validateOnCreate:false"/>
 						<img onclick="update(this)" class="captcha" alt="captcha" title="点击更换" th:src="@{/captcha}"/>
 					</div>
-					<div style="padding:5px 12px">
-						<input type="checkbox" /> 记住账号
+					<div style="padding:5px 12px;">
+						<input id="rember" type="checkbox" style="vertical-align: middle;" /> 
+						<span>记住我</span>
 					</div>
 					<div style="padding:5px 10px;text-align:center">
 						<a id="login" class="easyui-linkbutton c8" data-options="fit:true">登 录</a>
+						<span class="errorMsg" th:text="${msg}"></span>
 					</div>
 				</form>
 			</div>

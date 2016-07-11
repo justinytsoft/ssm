@@ -16,13 +16,13 @@ text-align:center; 解决不同浏览器居中问题
  */
 body{ color:#000; background:#FFF; font:12px/22px Verdana,Arial,sans-serif,"Times New Roman",宋体; text-align:center;}
 body,ul,ol,li,p,h1,h2,h3,h4,h5,h6,form,fieldset,table,td,img,div,tr{ margin:0; padding:0;}
-input,select{ font-size:12px; vertical-align:middle;}
+/* input,select{ font-size:12px; vertical-align:middle;} */
 
 /* 设置内容左对齐，恢复因BODY设置剧中产生的继承 */
 body div{ text-align:left;}
 
 /* 标签属性，textarea,input 强制输入时内容超出时换行 */
-textarea,input{ word-wrap:break-word; word-break:break-all; padding:0px;}
+/* textarea,input{ word-wrap:break-word; word-break:break-all; padding:0px;} */
 
 /* 清除ul列表标记的样式，ul列表更多的用在不需要列表前置符号的样式里 */
 li{ list-style-type:none;}
@@ -246,4 +246,9 @@ li{ list-style-type:disc;}
 	border-radius:5px;
 	vertical-align:middle;
 	border: 1px solid #ddd;
+}
+
+/* 错误信息 */
+.errorMsg{
+	color:red
 }
