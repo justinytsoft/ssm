@@ -219,6 +219,31 @@ li{ list-style-type:disc;}
 
 /* 登录、注册、忘记密码 的外部DIV样式 */
 .lrfDiv{
-	border: none;
-	
+   width:340px;  
+   height:350px;  
+   position:absolute;  
+   left:50%;  
+   top:40%;  
+   text-align:center;
+   border-radius:10px;
+   margin:-100px 0 0 -150px;
+   background: rgba(255, 255, 255, 0.51);
+   box-shadow:0px 0px 20px 0px #FFFFFF inset;
+}
+.container{
+	width:80%;
+	margin: 10%; 
+	text-align: center;
+}
+.container input{color:#C7C7C7;}
+.container div{color:#A7A8AB;}
+
+/* 验证码 */
+.captcha{
+	width: 90px; 
+	height: 39px;
+	cursor:pointer;
+	border-radius:5px;
+	vertical-align:middle;
+	border: 1px solid #ddd;
 }
