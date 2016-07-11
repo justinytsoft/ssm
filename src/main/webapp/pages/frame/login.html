@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 	<head th:include="fragment/import :: header"></head>
+	<title>登录</title>
 	<script type="text/javascript" th:inline="javascript">
 		/*<![CDATA[*/
 			function update(obj){
@@ -18,8 +19,9 @@
 			});
 		/*]]>*/
 	</script>
-	<body>
-		<div >
+	
+	<body class="lrfBody">
+		<div class="lrfDiv">
 			<form th:action="@{/authentication}" method="post">
 				<input type="hidden" name="type" value="admin" />
 				<table>
