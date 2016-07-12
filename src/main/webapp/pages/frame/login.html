@@ -3,11 +3,14 @@
 	<head th:include="fragment/import :: header"></head>
 	<title>登录</title>
 	
+	<link rel="stylesheet" th:href="@{/assets/css/canvas-star.css}" />
+	
 	<script type="text/javascript" th:src="@{/assets/js/jquery.cookie.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/js/canvas.js}"></script>
 	<script type="text/javascript" th:inline="javascript">
 		/*<![CDATA[*/
+		    //更新验证码
 			function update(obj){
-				console.info(obj.src);
 				obj.src = [[@{/captcha}]] + "?" + Math.random();
 			}
 		
@@ -39,93 +42,47 @@
 					}
 				});
 				
-				draw11("can");
+				//循环创建星星
+				var body = $("body");
+				for(var i = 0; i < 1; i++){
+					
+					setTimeout(function(){
+						var id =
+						var canv = $("<canvas id='star"+i+"' class='star'></canvas>");
+						var left = i * 50;
+						canv.css("left",left);
+						body.prepend(canv);
+						draw("star"+i);
+					},(i * 1000));
+				} 
 			});
 			
-			
-			
-			
-			function create5Star(context) {
-				var n = 0;
-	            var dx = 150;
-	            var dy = 70;
+			/**
+			 * 绘图
+			 * @param context
+			 */
+			function draw(id) {
+			    var canvas = document.getElementById(id);
+			    if (canvas == null){
+			        return false;
+			    }
+			    
+			    var context = canvas.getContext("2d");
 
-	            //星星的大小
-	            var s = 100;
-	            
-	            //创建路径
-	            context.beginPath();
-	            
-	            //填充颜色
-	            var my_gradient=context.createLinearGradient(0,0,170,0);
-	            my_gradient.addColorStop(1,"rgba(255, 255, 255, 0.51)");
-	            context.fillStyle = my_gradient;
-	            
-	            //绘制路径
-	            var x = Math.sin(0);
-	            var y = Math.cos(0);
-	            var dig = Math.PI / 5 * 4;
-	            for (var i = 0; i < 5; i++) {
-	                var x = Math.sin(i * dig);
-	                var y = Math.cos(i * dig);
-	                context.lineTo(dx + x * s, dy + y * s);
-
-	            } 
-	            
-	            context.closePath();
-	        }
-
-	        function draw11(id) {
-	            var canvas = document.getElementById(id);
-	            if (canvas == null){
-	                return false;
-	            }
-	            
-	            var context = canvas.getContext("2d");
-
-	            //设置阴影
-	            context.shadowOffsetX = 5;
-	            context.shadowOffsetY = 5;
-	            context.shadowColor = '#FFFFFF';
-	            context.shadowBlur =5;
-	            
-	            //图形绘制
-                create5Star(context);
-                context.fill();
-	        }
+				//设置阴影
+				context.shadowOffsetX = 5;
+				context.shadowOffsetY = 5;
+				context.shadowColor = '#FFFFFF';
+				context.shadowBlur =5;
+				
+				//图形绘制
+			    create5Star(context);
+			    context.fill();
+			}
 		/*]]>*/
 	</script>
 	
-	<style>
-		.rotate {
-		    -webkit-transform-style: preserve-3d;
-		    transform-style: preserve-3d;
-		    -webkit-animation: rotate 8s infinite;
-		    animation: rotate 8s infinite;  
-		    width:25px;
-		    height:25px;
-		}
-		@keyframes rotate {
-		    0% {
-		     	-webkit-transform:rotate(0);
-			    -moz-transform:rotate(0);
-			    -o-transform:rotate(0);
-			    -ms-transform:rotate(0);
-			    transform:rotate(0);
-			}
-			100% {
-			    margin-top:80%;
-			    -webkit-transform:rotate(360deg);
-			    -moz-transform:rotate(360deg);
-			    -o-transform:rotate(360deg);
-			    -ms-transform:rotate(360deg);
-			    transform:rotate(360deg);  
-			}
-		}
-	</style>
-	
 	<body class="lrfBody">
-		<canvas id="can" class="rotate" style="margin-left: 200px;"></canvas>
 		<div class="lrfDiv">
 			<div class="container">
 				<form th:action="@{/authentication}" method="post">
