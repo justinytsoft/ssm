@@ -3,55 +3,6 @@
 	<head th:include="fragment/import :: header"></head>
 	<title>登录</title>
 	
-	<style>
-		.cube {
-		    -webkit-transform-style: preserve-3d;
-		    transform-style: preserve-3d;
-		    -webkit-animation: rotate 2s infinite;
-		    animation: rotate 2s infinite;
-		}
-		/* @-webkit-keyframes rotate {
-		    from {
-		        -moz-transform:rotate(0);
-				-webkit-transform:rotate(0);
-				-o-transform:rotate(0);
-				transform:rotate(0); 
-				filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
-		    }
-		    to {
-		        -moz-transform:rotate(90deg);
-				-webkit-transform:rotate(90deg);
-				-o-transform:rotate(90deg);
-				transform:rotate(90deg); 
-				filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
-		    }
-		}
-		@-moz-keyframes rotate {
-		    from {
-		        -moz-transform:rotate(0);
-				-webkit-transform:rotate(0);
-				-o-transform:rotate(0);
-				transform:rotate(0); 
-				filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
-		    }
-		    to {
-		        -moz-transform:rotate(90deg);
-				-webkit-transform:rotate(90deg);
-				-o-transform:rotate(90deg);
-				transform:rotate(90deg); 
-				filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
-		    }
-		} */
-		@keyframes rotate {
-		    0% {
-			    -webkit-transform: rotateY(0deg);
-			    }
-			100% {
-			    -webkit-transform: rotateY(360deg);
-			    }
-		}
-	</style>
-	
 	<script type="text/javascript" th:src="@{/assets/js/jquery.cookie.js}"></script>
 	<script type="text/javascript" th:inline="javascript">
 		/*<![CDATA[*/
@@ -95,12 +46,12 @@
 			
 			
 			function create5Star(context) {
-	            var n = 0;
-	            var dx = 100;
-	            var dy = 0;
+				var n = 0;
+	            var dx = 150;
+	            var dy = 70;
 
 	            //星星的大小
-	            var s = 20;
+	            var s = 100;
 	            
 	            //创建路径
 	            context.beginPath();
@@ -119,7 +70,7 @@
 	                var y = Math.cos(i * dig);
 	                context.lineTo(dx + x * s, dy + y * s);
 
-	            }
+	            } 
 	            
 	            context.closePath();
 	        }
@@ -133,21 +84,48 @@
 	            var context = canvas.getContext("2d");
 
 	            //设置阴影
-	            context.shadowOffsetX = 3;
-	            context.shadowOffsetY = 3;
+	            context.shadowOffsetX = 5;
+	            context.shadowOffsetY = 5;
 	            context.shadowColor = '#FFFFFF';
 	            context.shadowBlur =5;
 	            
 	            //图形绘制
-	            context.translate(0, 50);
                 create5Star(context);
                 context.fill();
 	        }
 		/*]]>*/
 	</script>
 	
+	<style>
+		.rotate {
+		    -webkit-transform-style: preserve-3d;
+		    transform-style: preserve-3d;
+		    -webkit-animation: rotate 8s infinite;
+		    animation: rotate 8s infinite;  
+		    width:25px;
+		    height:25px;
+		}
+		@keyframes rotate {
+		    0% {
+		     	-webkit-transform:rotate(0);
+			    -moz-transform:rotate(0);
+			    -o-transform:rotate(0);
+			    -ms-transform:rotate(0);
+			    transform:rotate(0);
+			}
+			100% {
+			    margin-top:80%;
+			    -webkit-transform:rotate(360deg);
+			    -moz-transform:rotate(360deg);
+			    -o-transform:rotate(360deg);
+			    -ms-transform:rotate(360deg);
+			    transform:rotate(360deg);  
+			}
+		}
+	</style>
+	
 	<body class="lrfBody">
-		<canvas id="can" class="cube"></canvas>
+		<canvas id="can" class="rotate" style="margin-left: 200px;"></canvas>
 		<div class="lrfDiv">
 			<div class="container">
 				<form th:action="@{/authentication}" method="post">

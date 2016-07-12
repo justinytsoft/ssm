@@ -215,6 +215,7 @@ li{ list-style-type:disc;}
 	background-size:cover;
 	-moz-background-size:cover;
 	-webkit-background-size:cover;
+	overflow: hidden;
 }
 
 /* 登录、注册、忘记密码 的外部DIV样式 */
