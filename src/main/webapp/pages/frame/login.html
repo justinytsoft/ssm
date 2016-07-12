@@ -3,7 +3,7 @@
 	<head th:include="fragment/import :: header"></head>
 	<title>登录</title>
 	
-	<link rel="stylesheet" th:href="@{/assets/css/canvas-star.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/canvas.css}" />
 	
 	<script type="text/javascript" th:src="@{/assets/js/jquery.cookie.js}"></script>
 	<script type="text/javascript" th:src="@{/assets/js/canvas.js}"></script>
@@ -44,41 +44,16 @@
 				
 				//循环创建星星
 				var body = $("body");
-				for(var i = 0; i < 1; i++){
-					
+				for(var i = 0; i < 20; i++){
 					setTimeout(function(){
-						var id =
-						var canv = $("<canvas id='star"+i+"' class='star'></canvas>");
-						var left = i * 50;
-						canv.css("left",left);
+						var num = getRandomNum(10,document.body.clientWidth);
+						var canv = $("<canvas id='"+num+"' class='starFreeDown'></canvas>");
+						canv.css("left",num);
 						body.prepend(canv);
-						draw("star"+i);
-					},(i * 1000));
+						drawStar(""+num);
+					},(i * 1000)); 
 				} 
 			});
-			
-			/**
-			 * 绘图
-			 * @param context
-			 */
-			function draw(id) {
-			    var canvas = document.getElementById(id);
-			    if (canvas == null){
-			        return false;
-			    }
-			    
-			    var context = canvas.getContext("2d");
-
-				//设置阴影
-				context.shadowOffsetX = 5;
-				context.shadowOffsetY = 5;
-				context.shadowColor = '#FFFFFF';
-				context.shadowBlur =5;
-				
-				//图形绘制
-			    create5Star(context);
-			    context.fill();
-			}
 		/*]]>*/
 	</script>
 	

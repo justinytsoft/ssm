@@ -1,3 +1,16 @@
+/**
+ * 根据指定范围生成随机整数
+ * @param Min
+ * @param Max
+ * @returns
+ */
+function getRandomNum(Min,Max)
+{   
+	var Range = Max - Min;   
+	var Rand = Math.random();   
+	return(Min + Math.round(Rand * Range));   
+}   
+
 //日期计算
 Date.prototype.DateAdd = function(strInterval, Number) {   
     var dtTmp = this;  

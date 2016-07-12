@@ -1,0 +1,268 @@
+@charset "utf-8";
+
+/*---------------------五角星 s---------------------*/
+
+/*-----------------------左斜落体 s------------------------*/
+.starLeftDown {
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-animation: starLeftDown 15s infinite;
+    -moz-animation: starLeftDown 15s infinite;
+    animation: starLeftDown 15s infinite;  
+    width:25px;
+    height:25px;
+    position: absolute;
+}
+
+@-webkit-keyframes starLeftDown {
+    0% {
+     	-webkit-transform:rotate(0);
+	    -moz-transform:rotate(0);
+	    -o-transform:rotate(0);
+	    -ms-transform:rotate(0);
+	    transform:rotate(0);
+	    margin-left:50%;
+	}
+	100% {
+	    margin-top:80%;
+	    margin-right:100%;
+	    -webkit-transform:rotate(360deg);
+	    -moz-transform:rotate(360deg);
+	    -o-transform:rotate(360deg);
+	    -ms-transform:rotate(360deg);
+	    transform:rotate(360deg);  
+	}
+}
+@-moz-keyframes starLeftDown {
+    0% {
+     	-webkit-transform:rotate(0);
+	    -moz-transform:rotate(0);
+	    -o-transform:rotate(0);
+	    -ms-transform:rotate(0);
+	    transform:rotate(0);
+	    margin-left:50%;
+	}
+	100% {
+	    margin-top:80%;
+	    margin-right:100%;
+	    -webkit-transform:rotate(360deg);
+	    -moz-transform:rotate(360deg);
+	    -o-transform:rotate(360deg);
+	    -ms-transform:rotate(360deg);
+	    transform:rotate(360deg);  
+	}
+}
+@-ms-keyframes starLeftDown {
+    0% {
+     	-webkit-transform:rotate(0);
+	    -moz-transform:rotate(0);
+	    -o-transform:rotate(0);
+	    -ms-transform:rotate(0);
+	    transform:rotate(0);
+	    margin-left:50%;
+	}
+	100% {
+	    margin-top:80%;
+	    margin-right:100%;
+	    -webkit-transform:rotate(360deg);
+	    -moz-transform:rotate(360deg);
+	    -o-transform:rotate(360deg);
+	    -ms-transform:rotate(360deg);
+	    transform:rotate(360deg);  
+	}
+} 
+
+@keyframes starLeftDown {
+    0% {
+     	-webkit-transform:rotate(0);
+	    -moz-transform:rotate(0);
+	    -o-transform:rotate(0);
+	    -ms-transform:rotate(0);
+	    transform:rotate(0);
+	    margin-left:50%;
+	}
+	100% {
+	    margin-top:80%;
+	    margin-right:100%;
+	    -webkit-transform:rotate(360deg);
+	    -moz-transform:rotate(360deg);
+	    -o-transform:rotate(360deg);
+	    -ms-transform:rotate(360deg);
+	    transform:rotate(360deg);  
+	}
+}
+/*-----------------------左斜落体 e------------------------*/
+
+/*-----------------------右斜落体 s------------------------*/
+.starRightDown {
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-animation: starRightDown 15s infinite;
+    -moz-animation: starRightDown 15s infinite;
+    animation: starRightDown 15s infinite;  
+    width:25px;
+    height:25px;
+    position: absolute;
+}
+
+@-webkit-keyframes starRightDown {
+    0% {
+     	-webkit-transform:rotate(0);
+	    -moz-transform:rotate(0);
+	    -o-transform:rotate(0);
+	    -ms-transform:rotate(0);
+	    transform:rotate(0);
+	}
+	100% {
+	    margin-top:110%;
+	    margin-left:50%;
+	    -webkit-transform:rotate(360deg);
+	    -moz-transform:rotate(360deg);
+	    -o-transform:rotate(360deg);
+	    -ms-transform:rotate(360deg);
+	    transform:rotate(360deg);  
+	}
+}
+@-moz-keyframes starRightDown {
+    0% {
+     	-webkit-transform:rotate(0);
+	    -moz-transform:rotate(0);
+	    -o-transform:rotate(0);
+	    -ms-transform:rotate(0);
+	    transform:rotate(0);
+	}
+	100% {
+	    margin-top:110%;
+	    margin-left:50%;
+	    -webkit-transform:rotate(360deg);
+	    -moz-transform:rotate(360deg);
+	    -o-transform:rotate(360deg);
+	    -ms-transform:rotate(360deg);
+	    transform:rotate(360deg);  
+	}
+}
+@-ms-keyframes starRightDown {
+    0% {
+     	-webkit-transform:rotate(0);
+	    -moz-transform:rotate(0);
+	    -o-transform:rotate(0);
+	    -ms-transform:rotate(0);
+	    transform:rotate(0);
+	}
+	100% {
+	    margin-top:110%;
+	    margin-left:50%;
+	    -webkit-transform:rotate(360deg);
+	    -moz-transform:rotate(360deg);
+	    -o-transform:rotate(360deg);
+	    -ms-transform:rotate(360deg);
+	    transform:rotate(360deg);  
+	}
+}
+
+@keyframes starRightDown {
+    0% {
+     	-webkit-transform:rotate(0);
+	    -moz-transform:rotate(0);
+	    -o-transform:rotate(0);
+	    -ms-transform:rotate(0);
+	    transform:rotate(0);
+	}
+	100% {
+	    margin-top:110%;
+	    margin-left:50%;
+	    -webkit-transform:rotate(360deg);
+	    -moz-transform:rotate(360deg);
+	    -o-transform:rotate(360deg);
+	    -ms-transform:rotate(360deg);
+	    transform:rotate(360deg);  
+	}
+}
+/*-----------------------右斜落体 e------------------------*/
+
+/*-----------------------自由落体 s------------------------*/
+.starFreeDown {
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-animation: starFreeDown 15s infinite;
+    -moz-animation: starFreeDown 15s infinite;
+    animation: starFreeDown 15s infinite;  
+    width:25px;
+    height:25px;
+    position: absolute;
+}
+
+@-webkit-keyframes starFreeDown {
+    0% {
+     	-webkit-transform:rotate(0);
+	    -moz-transform:rotate(0);
+	    -o-transform:rotate(0);
+	    -ms-transform:rotate(0);
+	    transform:rotate(0);
+	}
+	100% {
+	    margin-top:110%;
+	    -webkit-transform:rotate(360deg);
+	    -moz-transform:rotate(360deg);
+	    -o-transform:rotate(360deg);
+	    -ms-transform:rotate(360deg);
+	    transform:rotate(360deg);  
+	}
+}
+@-moz-keyframes starFreeDown {
+    0% {
+     	-webkit-transform:rotate(0);
+	    -moz-transform:rotate(0);
+	    -o-transform:rotate(0);
+	    -ms-transform:rotate(0);
+	    transform:rotate(0);
+	}
+	100% {
+	    margin-top:110%;
+	    -webkit-transform:rotate(360deg);
+	    -moz-transform:rotate(360deg);
+	    -o-transform:rotate(360deg);
+	    -ms-transform:rotate(360deg);
+	    transform:rotate(360deg);  
+	}
+}
+@-ms-keyframes starFreeDown {
+    0% {
+     	-webkit-transform:rotate(0);
+	    -moz-transform:rotate(0);
+	    -o-transform:rotate(0);
+	    -ms-transform:rotate(0);
+	    transform:rotate(0);
+	}
+	100% {
+	    margin-top:110%;
+	    -webkit-transform:rotate(360deg);
+	    -moz-transform:rotate(360deg);
+	    -o-transform:rotate(360deg);
+	    -ms-transform:rotate(360deg);
+	    transform:rotate(360deg);  
+	}
+}
+@keyframes starFreeDown {
+    0% {
+     	-webkit-transform:rotate(0);
+	    -moz-transform:rotate(0);
+	    -o-transform:rotate(0);
+	    -ms-transform:rotate(0);
+	    transform:rotate(0);
+	}
+	100% {
+	    margin-top:110%;
+	    -webkit-transform:rotate(360deg);
+	    -moz-transform:rotate(360deg);
+	    -o-transform:rotate(360deg);
+	    -ms-transform:rotate(360deg);
+	    transform:rotate(360deg);  
+	}
+}
+/*-----------------------自由落体e------------------------*/
+
+/*---------------------五角星 e---------------------*/
