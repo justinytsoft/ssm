@@ -58,6 +58,7 @@
 	</script>
 	
 	<body class="lrfBody">
+		<div class="errorMsg" th:text="${msg}"></div>
 		<div class="lrfDiv">
 			<div class="container">
 				<form th:action="@{/authentication}" method="post">
@@ -81,7 +82,6 @@
 					</div>
 					<div style="padding:5px 10px;text-align:center">
 						<a id="login" class="easyui-linkbutton c8" data-options="fit:true">登 录</a>
-						<span class="errorMsg" th:text="${msg}"></span>
 					</div>
 				</form>
 			</div>
