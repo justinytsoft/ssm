@@ -4,36 +4,15 @@
 	<body>
 		<script type="text/javascript" th:inline="javascript">
 			/*<![CDATA[*/
-			    $('#navigate').tree({
-				    url:[[@{/user/getMenus}]],
-				    animate:true,
-				    onClick: function(node){
-						var url = node.attributes;
-				    	if(url != null && url != ""){
-							$("#right").panel("refresh",rootPath + url);
-						}else{
-							cConfirm("该功能还未开通,请耐心等待。",function(flag){alert(flag)});
-						}
-					},
-				    loadFilter: function(rows){
-				    	/* 转换树节点 */
-						return convert(rows);
-					},
-					onLoadSuccess: function(node, data){
-						/* 树节点的样式 */
-						$.each($("#navigate div"),function(){
-							var obj = $(this);
-							obj.css("font-size","50px");
-							obj.css("padding","10px 0px");
-						});
-					}
-				}); 
 			/*]]>*/
 		</script>
 		
 		<!-- 导航菜单 -->
-		<div style="margin: 10px 30px;">
-			<ul id="navigate"></ul> 
-		</div>
+		<div class="easyui-accordion" data-options="fit:true">
+	        <div title="About" data-options="iconCls:'icon-ok'" style="overflow:auto;padding:10px;">
+	            <h3 style="color:#0099FF;">Accordion for jQuery</h3>
+	            <p>Accordion is a part of easyui framework for jQuery. It lets you define your accordion component on web page more easily.</p>
+	        </div>
+	    </div>
 	</body>
 </html>

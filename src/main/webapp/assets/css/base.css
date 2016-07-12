@@ -242,7 +242,7 @@ li{ list-style-type:disc;}
 /* 验证码 */
 .captcha{
 	width: 90px; 
-	height: 39px;
+	height: 37px;
 	cursor:pointer;
 	border-radius:5px;
 	vertical-align:middle;
