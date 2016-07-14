@@ -4,14 +4,27 @@
 	<body>
 		<script type="text/javascript" th:inline="javascript">
 			/*<![CDATA[*/
+				$(function(){
+					$("#a").keydown(function(){
+						var option;
+						var list = $('#list');
+						
+						list.html("");
+						
+						for(var i = 0; i < 10; i++){
+							option = "<option>"+i+"</option>";
+							list.append(option);
+						}
+					});
+				});
 			/*]]>*/
 		</script>
 		
 		<!-- 导航菜单 -->
 		<div class="easyui-accordion" data-options="fit:true">
 	        <div title="About" data-options="iconCls:'icon-ok'" style="overflow:auto;padding:10px;">
-	            <h3 style="color:#0099FF;">Accordion for jQuery</h3>
-	            <p>Accordion is a part of easyui framework for jQuery. It lets you define your accordion component on web page more easily.</p>
+	        	<input id="a" type="text" list="list"/>
+	        	<datalist id="list"></datalist>
 	        </div>
 	    </div>
 	</body>

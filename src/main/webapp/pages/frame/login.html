@@ -45,15 +45,29 @@
 				//循环创建星星
 				var body = $("body");
 				for(var i = 0; i < 20; i++){
+					//自由下落
 					setTimeout(function(){
 						var num = getRandomNum(10,document.body.clientWidth);
-						var canv = $("<canvas id='"+num+"' class='starFreeDown'></canvas>");
+						var canv = $("<canvas id='"+num+"' onclick='move(this)' class='starFreeDown'>您的浏览器不支持canvas</canvas>");
 						canv.css("left",num);
 						body.prepend(canv);
 						drawStar(""+num);
+						/* setInterval(function(){
+							canv.trigger("click");
+						}, 1000); */
 					},(i * 1000)); 
 				} 
 			});
+			
+			/* function move(obj){
+				var position = obj.offsetTop;
+				console.info(position + " > " + $(obj).attr("id"));
+				if(position >= 100){
+					if(obj.className.indexOf("starLeft") == -1){
+						obj.className = ' starLeft';
+					}
+				}
+			} */
 		/*]]>*/
 	</script>
 	

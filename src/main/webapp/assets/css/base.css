@@ -302,7 +302,7 @@ li{ list-style-type:disc;}
     }
 }  
 @keyframes errorMsg{
-  from{
+   from{
       text-shadow:0px 0px 10px #7B96B8,
       0px 0px 10px #7B96B8, 
       0px 0px 15px #7B96B8,
@@ -312,7 +312,7 @@ li{ list-style-type:disc;}
       0px 0px 10px #fff,
       0px 0px 7px #fff,
       0px 0px 7px #fff;
-    }
+    } 
 } 
 
 
