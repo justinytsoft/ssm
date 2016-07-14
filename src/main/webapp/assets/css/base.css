@@ -45,6 +45,38 @@ h4{ font-size:16px;}
 h5{ font-size:14px;}
 h6{ font-size:12px;}
 
+.pink{
+	text-align: center;
+	font-size: 50px;
+	font-family: "Roboto";
+	color: #fff;
+	text-shadow: 0 0 5px #fff, 
+	0 0 10px #fff, 
+	0 0 20px #ff0080, 
+	0 0 30px #ff0080, 
+	0 0 40px #ff0080, 
+	0 0 55px #ff0080, 
+	0 0 75px #ff0080;
+}
+
+.button{
+	color: white;
+	cursor: pointer;
+	text-align: center;
+	background: rgb(235,241,246);
+	background: -moz-linear-gradient(top,  rgb(235,241,246) 0%, rgb(171,211,238) 50%, rgb(137,195,235) 51%, rgb(213,235,251) 100%);
+	background: -webkit-linear-gradient(top,  rgb(235,241,246) 0%,rgb(171,211,238) 50%,rgb(137,195,235) 51%,rgb(213,235,251) 100%);
+	background: linear-gradient(to bottom,  rgb(235,241,246) 0%,rgb(171,211,238) 50%,rgb(137,195,235) 51%,rgb(213,235,251) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebf1f6', endColorstr='#d5ebfb',GradientType=0 );
+}
+.button:HOVER{
+	background: rgb(235,241,246);
+	background: -moz-linear-gradient(top,  rgb(235,241,246) 0%, rgb(171,211,238) 50%, rgb(137,195,235) 51%, rgb(238,247,253) 100%);
+	background: -webkit-linear-gradient(top,  rgb(235,241,246) 0%,rgb(171,211,238) 50%,rgb(137,195,235) 51%, rgb(238,247,253) 100%);
+	background: linear-gradient(to bottom,  rgb(235,241,246) 0%,rgb(171,211,238) 50%,rgb(137,195,235) 51%, rgb(238,247,253) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebf1f6', endColorstr='#d5ebfb',GradientType=0 );
+} 
+
 /* ------------------------------------全局定义 e---------------------------------------- */
 
 
@@ -221,7 +253,7 @@ li{ list-style-type:disc;}
 /* 登录、注册、忘记密码 的外部DIV样式 */
 .lrfDiv{
    width:340px;  
-   height:350px;  
+   height:365px;  
    position:absolute;  
    left:50%;  
    top:40%;  
