@@ -45,6 +45,10 @@ h4{ font-size:16px;}
 h5{ font-size:14px;}
 h6{ font-size:12px;}
 
+/* ------------------------------------全局定义 e---------------------------------------- */
+
+
+/* ------------------------------------通用属性定义 s------------------------------------- */
 .pink{
 	text-align: center;
 	font-size: 50px;
@@ -59,6 +63,40 @@ h6{ font-size:12px;}
 	0 0 75px #ff0080;
 }
 
+/* 404 */
+.fzf{
+	background-image:url('../imgs/404.jpg');
+	background-attachment:fixed;
+	background-repeat:no-repeat;
+	background-size:cover;
+	-moz-background-size:cover;
+	-webkit-background-size:cover;
+	overflow: hidden;
+}
+
+/* 403 */
+.fzt{
+	background-image:url('../imgs/403.jpg');
+	background-attachment:fixed;
+	background-repeat:no-repeat;
+	background-size:cover;
+	-moz-background-size:cover;
+	-webkit-background-size:cover;
+	overflow: hidden;
+}
+
+/* 500 */
+.fzz{
+	background-image:url('../imgs/500.jpg');
+	background-attachment:fixed;
+	background-repeat:no-repeat;
+	background-size:cover;
+	-moz-background-size:cover;
+	-webkit-background-size:cover;
+	overflow: hidden;
+}
+
+/* 按钮样式 */
 .button{
 	color: white;
 	cursor: pointer;
@@ -77,10 +115,6 @@ h6{ font-size:12px;}
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebf1f6', endColorstr='#d5ebfb',GradientType=0 );
 } 
 
-/* ------------------------------------全局定义 e---------------------------------------- */
-
-
-/* ------------------------------------通用属性定义 s------------------------------------- */
 
 /* 鼠标样式 */
 .pointer{ cursor:pointer;}
