@@ -12,10 +12,9 @@ import java.util.List;
  * 
  */
 public class SysMenus implements Serializable{
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
+	
 	private Integer id;
 	private String name;
 	private String url;
@@ -96,5 +95,4 @@ public class SysMenus implements Serializable{
 	public void setUrl(String url) {
 		this.url = url;
 	}
-
 }

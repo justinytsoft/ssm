@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import com.FangBianMian.constant.UserType;
 import com.FangBianMian.dao.IUserDao;
 import com.FangBianMian.domain.SecurityUser;
 
@@ -31,19 +32,18 @@ public class UserDetailsServiceImpl implements UserDetailsService{
      */
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     	
-        log.info("登录账号：{}",username);
-        
         //登录验证类, 该对象用于和前台传入的值进行比较
         SecurityUser userDetails = userDao.selectUserByUsername(username);
-        //设置权限
+        
         Collection<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
         
-        if(userDetails.getType().intValue() == 0){
-        	auths.add(new SimpleGrantedAuthority("ROLE_APP"));
-		}else if(userDetails.getType().intValue() == 1){
-			auths.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-		}else if(userDetails.getType().intValue() == 2){
-			auths.add(new SimpleGrantedAuthority("ROLE_ENTERPRISE"));
+        //设置登录用户的类型
+        if(userDetails.getType().intValue() == UserType.APP){
+        	auths.add(new SimpleGrantedAuthority(UserType.APP_NAME));
+		}else if(userDetails.getType().intValue() == UserType.ADMIN){
+			auths.add(new SimpleGrantedAuthority(UserType.ADMIN_NAME));
+		}else if(userDetails.getType().intValue() == UserType.ENTERPRISE){
+			auths.add(new SimpleGrantedAuthority(UserType.ENTERPRISE_NAME));
 		}
         
         userDetails.setAuthorities(auths);

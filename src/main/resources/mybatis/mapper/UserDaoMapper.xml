@@ -2,10 +2,62 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.FangBianMian.dao.IUserDao">
 
-	<select id="selectUserByUsername" resultType="com.FangBianMian.domain.SecurityUser">
-		SELECT * FROM
-		sys_users WHERE username = #{username}
+	<!-- 角色映射 -->
+	<resultMap type="com.FangBianMian.domain.SecurityUser" id="roleMap">
+		<id property="id" column="id"/>
+		<collection property="roles" column="id" javaType="List" ofType="com.FangBianMian.domain.SysRoles" select="selectRoleByUid"></collection>
+	</resultMap>
+	
+	<!-- 权限(菜单)映射 -->
+	<resultMap type="com.FangBianMian.domain.SysRoles" id="menuMap">
+		<id property="id" column="id"/>
+		<collection property="menus" column="id" javaType="List" ofType="com.FangBianMian.domain.SysMenus" select="selectMenuByRid"></collection>
+	</resultMap>
+	
+	<!-- 子权限(子菜单)映射 -->
+	<resultMap type="com.FangBianMian.domain.SysMenus" id="subMenuMap">
+		<id property="id" column="id"/>
+		<collection property="subMenus" column="id" javaType="List" ofType="com.FangBianMian.domain.SysMenus" select="selectMenuByPid"></collection>
+	</resultMap>
+	
+	<!-- =================================================================================== -->
+	
+	<!-- 通过角色ID查询对应权限(菜单) -->
+	<select id="selectMenuByPid" resultMap="subMenuMap">
+		SELECT * FROM sys_menus WHERE parent_id = #{id}
+	</select> 
+	
+	<!-- 通过角色ID查询对应权限(菜单) -->
+	<select id="selectMenuByRid" resultMap="subMenuMap">
+		SELECT sm.* FROM sys_roles_menus srm
+		LEFT JOIN sys_menus sm ON sm.id = srm.menu_id
+		WHERE srm.role_id = #{id}
+	</select> 
+	
+	<!-- 通过用户ID查询对应角色 -->
+	<select id="selectRoleByUid" resultMap="menuMap">
+		SELECT sr.* FROM sys_roles_users sru
+		LEFT JOIN sys_roles sr ON sr.id = sru.role_id
+		WHERE sru.user_id = #{id}
 	</select>
+
+	<!-- 通过用户名查找用户 -->
+	<select id="selectUserByUsername" resultMap="roleMap">
+		SELECT * FROM sys_users WHERE username = #{username}
+	</select>
+	
+	
+
+
+
+
+
+
+
+
+
+
+
 
 	<select id="getMenus" resultType="com.FangBianMian.utils.EasyUiTree">
 		SELECT sm.id AS id, sm.name AS text, sm.parent_id AS parentId, sm.url AS attributes

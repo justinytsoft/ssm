@@ -3,24 +3,19 @@
  */
 package com.FangBianMian.domain;
 
+import java.util.List;
+
 /**
  * @author randy
  * 
  */
 public class SysRoles {
 	
-	/**
-	 * 超级管理员
-	 */
-	public static final Integer ADMIN = 1;
-	/**
-	 * 技术干部
-	 */
-	public static final Integer USER = 2;
-	
 	private Integer id;
 	private String name;
 	private String code;
+	
+	private List<SysMenus> menus;
 
 	/**
 	 * @return the id
@@ -67,4 +62,11 @@ public class SysRoles {
 		this.code = code;
 	}
 
+	public List<SysMenus> getMenus() {
+		return menus;
+	}
+
+	public void setMenus(List<SysMenus> menus) {
+		this.menus = menus;
+	}
 }
