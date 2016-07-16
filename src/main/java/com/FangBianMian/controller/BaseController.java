@@ -1,6 +1,10 @@
 package com.FangBianMian.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,8 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.FangBianMian.dao.IBaseDao;
 import com.FangBianMian.domain.SecurityUser;
+import com.FangBianMian.domain.SysMenus;
+import com.FangBianMian.domain.SysRoles;
 import com.FangBianMian.utils.Captcha;
 import com.FangBianMian.utils.Constant;
+import com.FangBianMian.utils.DataUtil;
 
 @Controller
 public class BaseController {
@@ -108,7 +115,18 @@ public class BaseController {
 	}
 	
 	@RequestMapping("/left")
-	public String left(){
+	public String left(Model model){
+		SecurityUser user = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if(user == null){
+			return "redirect: sessionException?msg=SEESION.INVALID";
+		}
+		
+		List<SysRoles> srs = DataUtil.isEmpty(user.getRoles());
+		/*for(SysRoles sr : srs){
+			List<SysMenus> sms = DataUtil.isEmpty(sr.getMenus());
+		}*/
+		
+		model.addAttribute("menus", DataUtil.isEmpty(srs.get(0).getMenus()));
 		return "pages/frame/left";
 	}
 	

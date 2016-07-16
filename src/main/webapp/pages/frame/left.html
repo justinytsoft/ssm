@@ -5,30 +5,15 @@
 		<script type="text/javascript" th:inline="javascript">
 			/*<![CDATA[*/
 				$(function(){
-					$("#a").keydown(function(){
-						var option;
-						var list = $('#list');
-						
-						list.html("");
-						
-						for(var i = 0; i < 10; i++){
-							option = "<option>"+i+"</option>";
-							list.append(option);
-						}
-					});
+
 				});
 			/*]]>*/
 		</script>
 		
 		<!-- 导航菜单 -->
 		<div class="easyui-accordion" data-options="fit:true">
-	        <div title="About" data-options="border:false,height:100" style="padding:10px;">
-	        	<input id="a" type="text" list="list"/>
-	        	<datalist id="list"></datalist>
-	        </div>
-	        <div title="About" data-options="border:false" style="overflow:auto;padding:10px;">
-	        	<input id="a" type="text" list="list"/>
-	        	<datalist id="list"></datalist>
+	        <div th:each="m:${menus}" th:title="${m.name}" data-options="border:false">
+	        	<div th:each="sub:${m.subMenus}" th:text="${sub.name}"></div>
 	        </div>
 	    </div>
 	</body>

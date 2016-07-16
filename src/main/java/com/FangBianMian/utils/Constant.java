@@ -1,5 +1,10 @@
 package com.FangBianMian.utils;
 
+/**
+ * 通用常量
+ * @author justi
+ *
+ */
 public class Constant {
 
 	/**

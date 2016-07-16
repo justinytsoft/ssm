@@ -27,6 +27,8 @@ import javax.imageio.stream.MemoryCacheImageInputStream;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.hssf.record.formula.functions.T;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -36,7 +38,17 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
  * 
  */
 public class DataUtil {
-
+	
+	/**
+	 * 判断集合是否为 null
+	 * @param param
+	 * @return 如果不为 null 直接返回，否则创建一个新的 ArrayList 返回
+	 */
+	@SuppressWarnings("hiding")
+	public static <T> List<T> isEmpty(List<T> list){
+		return CollectionUtils.isEmpty(list) ? new ArrayList<T>() : list;
+	}
+	
 	/**
 	 * 每位允许的字符
 	 */
