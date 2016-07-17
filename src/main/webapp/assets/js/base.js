@@ -1,3 +1,17 @@
+//计数， 只需要在输入框class属性上加  tally 类
+$(".tally").keyup(function(){
+	var obj = $(this);
+	var count = 15; //允许输入的总数
+	var val = obj.val(); 
+	var newNum = count - val.length;
+	if(newNum < 0){
+		obj.val(val.substring(0,count));
+		obj.next().find("span").text(0); //设置新的剩余可输入字符长度
+		return false;
+	}
+	obj.next().find("span").text(newNum); //设置新的剩余可输入字符长度
+});
+
 /**
  * 根据指定范围生成随机整数
  * @param Min
