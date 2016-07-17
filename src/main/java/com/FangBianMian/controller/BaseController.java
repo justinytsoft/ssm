@@ -1,9 +1,6 @@
 package com.FangBianMian.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.FangBianMian.dao.IBaseDao;
 import com.FangBianMian.domain.SecurityUser;
-import com.FangBianMian.domain.SysMenus;
 import com.FangBianMian.domain.SysRoles;
 import com.FangBianMian.utils.Captcha;
 import com.FangBianMian.utils.Constant;
@@ -122,9 +118,6 @@ public class BaseController {
 		}
 		
 		List<SysRoles> srs = DataUtil.isEmpty(user.getRoles());
-		/*for(SysRoles sr : srs){
-			List<SysMenus> sms = DataUtil.isEmpty(sr.getMenus());
-		}*/
 		
 		model.addAttribute("menus", DataUtil.isEmpty(srs.get(0).getMenus()));
 		return "pages/frame/left";
@@ -141,7 +134,7 @@ public class BaseController {
 	 */
 	@RequestMapping("/denied")
 	public String denied(){
-		return "pages/error/403";
+		return "error/403";
 	}
 	
 	/**
@@ -150,7 +143,7 @@ public class BaseController {
 	 */
 	@RequestMapping("/notFound")
 	public String notFound(){
-		return "pages/error/404";
+		return "error/404";
 	}
 	
 	/**
@@ -159,6 +152,6 @@ public class BaseController {
 	 */
 	@RequestMapping("/error")
 	public String error(){
-		return "pages/error/500";
+		return "error/500";
 	}
 }

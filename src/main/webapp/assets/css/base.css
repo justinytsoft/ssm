@@ -65,7 +65,7 @@ h6{ font-size:12px;}
 
 /* 404 */
 .fzf{
-	background-image:url('../imgs/404.jpg');
+	background-image:url('../imgs/error/404.jpg');
 	background-attachment:fixed;
 	background-repeat:no-repeat;
 	background-size:cover;
@@ -76,7 +76,7 @@ h6{ font-size:12px;}
 
 /* 403 */
 .fzt{
-	background-image:url('../imgs/403.jpg');
+	background-image:url('../imgs/error/403.jpg');
 	background-attachment:fixed;
 	background-repeat:no-repeat;
 	background-size:cover;
@@ -87,7 +87,7 @@ h6{ font-size:12px;}
 
 /* 500 */
 .fzz{
-	background-image:url('../imgs/500.jpg');
+	background-image:url('../imgs/error/500.jpg');
 	background-attachment:fixed;
 	background-repeat:no-repeat;
 	background-size:cover;
