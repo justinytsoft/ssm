@@ -278,9 +278,10 @@ li{ list-style-type:disc;}
 	background-image:url('../imgs/bg.jpg');
 	background-attachment:fixed;
 	background-repeat:no-repeat;
-	background-size:cover;
-	-moz-background-size:cover;
-	-webkit-background-size:cover;
+	filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";  
+	-webkit-background-size:100% 100%;
+	-moz-background-size:100% 100%;  
+    background-size:100% 100%;  
 	overflow: hidden;
 }
 
