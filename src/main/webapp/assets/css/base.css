@@ -3,7 +3,7 @@
 /* ------------------------------------全局定义 s---------------------------------------- */
 
 /* 将具有默认margin和padding的标记置零，所有标记的margin、padding都在使用时具体定义 */
-*{ margin:0;padding:0;}
+*{ margin:0;padding:0;outline:none;}
 
 /* 修正IE5.x和IE6的斜体溢出bug */
 * html body{ overflow:visible;}
@@ -117,7 +117,9 @@ h6{ font-size:12px;}
 
 
 /* 鼠标样式 */
-.pointer{ cursor:pointer;}
+.mousePointer{ cursor:pointer;}
+.mouseDefault{ cursor:default;}
+.mouseMove{ cursor:move;}
 
 /* 取消边框 */
 .NoBorder{ border:0 none;}
@@ -278,10 +280,9 @@ li{ list-style-type:disc;}
 	background-image:url('../imgs/bg.jpg');
 	background-attachment:fixed;
 	background-repeat:no-repeat;
-	filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";  
-	-webkit-background-size:100% 100%;
-	-moz-background-size:100% 100%;  
-    background-size:100% 100%;  
+	-webkit-background-size:cover;
+	-moz-background-size:cover;
+    background-size:cover;
 	overflow: hidden;
 }
 
