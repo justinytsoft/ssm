@@ -1,0 +1,14 @@
+@charset "utf-8";
+
+//圆角  
+.border_radius(@radius:5px){  
+    -wekit-border-radius: @radius;  
+    -max-border-radius: @radius;  
+    border-radius: @radius;  
+}  
+
+.test{
+	border:1px solid red;
+	.border_radius(50px);
+}
+

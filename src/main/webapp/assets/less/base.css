@@ -1,0 +1,46 @@
+@charset "utf-8";
+
+/* 
+	当你引入多个.less样式表时，它们都是独立编译的。所以，在每个文件中定义的变量、混合、命名空间都不会被其它的文件共享。
+	这个页面定义一些常用的模版来复制使用
+ */
+ 
+/*圆角*/
+.border_radius(@radius:5px){  
+    -wekit-border-radius: @radius;  
+    -max-border-radius: @radius;  
+    border-radius: @radius;  
+}  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
