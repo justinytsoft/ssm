@@ -1,7 +1,5 @@
 @charset "utf-8";
 
-/* ------------------------------------全局定义 s---------------------------------------- */
-
 /* 将具有默认margin和padding的标记置零，所有标记的margin、padding都在使用时具体定义 */
 *{ margin:0;padding:0;outline:none;}
 
@@ -16,16 +14,8 @@ text-align:center; 解决不同浏览器居中问题
  */
 body{ color:#000; background:#FFF; font:12px/22px Verdana,Arial,sans-serif,"Times New Roman",宋体; text-align:center;}
 body,ul,ol,li,p,h1,h2,h3,h4,h5,h6,form,fieldset,table,td,img,div,tr{ margin:0; padding:0;}
-/* input,select{ font-size:12px; vertical-align:middle;} */
-
 /* 设置内容左对齐，恢复因BODY设置剧中产生的继承 */
 body div{ text-align:left;}
-
-/* 标签属性，textarea,input 强制输入时内容超出时换行 */
-/* textarea,input{ word-wrap:break-word; word-break:break-all; padding:0px;} */
-
-/* 清除ul列表标记的样式，ul列表更多的用在不需要列表前置符号的样式里 */
-li{ list-style-type:none;}
 
 /* 定义图片边框，当图片作为链接内容被填充时，会有默认边框出现，重定义掉 */
 img{ border:0 none;}
@@ -33,7 +23,6 @@ img{ border:0 none;}
 /* 定义默认的链接样式，仅仅是作为默认样式提供，可以在各自的实例中覆盖掉 */
 a:link, a:visited{ color:#04C; text-decoration:none;}
 a:hover{ color:#F60; text-decoration:underline;}
-
 /* 去掉链接的虚线框 */
 a { outline:none; star:expression(this.onFocus=this.blur());}
 
@@ -45,89 +34,19 @@ h4{ font-size:16px;}
 h5{ font-size:14px;}
 h6{ font-size:12px;}
 
-/* ------------------------------------全局定义 e---------------------------------------- */
-
-
-/* ------------------------------------通用属性定义 s------------------------------------- */
-.pink{
-	text-align: center;
-	font-size: 50px;
-	font-family: "Roboto";
-	color: #fff;
-	text-shadow: 0 0 5px #fff, 
-	0 0 10px #fff, 
-	0 0 20px #ff0080, 
-	0 0 30px #ff0080, 
-	0 0 40px #ff0080, 
-	0 0 55px #ff0080, 
-	0 0 75px #ff0080;
-}
-
-/* 404 */
-.fzf{
-	background-image:url('../imgs/error/404.jpg');
-	background-attachment:fixed;
-	background-repeat:no-repeat;
-	background-size:cover;
-	-moz-background-size:cover;
-	-webkit-background-size:cover;
-	overflow: hidden;
-}
-
-/* 403 */
-.fzt{
-	background-image:url('../imgs/error/403.jpg');
-	background-attachment:fixed;
-	background-repeat:no-repeat;
-	background-size:cover;
-	-moz-background-size:cover;
-	-webkit-background-size:cover;
-	overflow: hidden;
-}
-
-/* 500 */
-.fzz{
-	background-image:url('../imgs/error/500.jpg');
-	background-attachment:fixed;
-	background-repeat:no-repeat;
-	background-size:cover;
-	-moz-background-size:cover;
-	-webkit-background-size:cover;
-	overflow: hidden;
-}
-
-/* 按钮样式 */
-.button{
-	color: white;
-	cursor: pointer;
-	text-align: center;
-	background: rgb(235,241,246);
-	background: -moz-linear-gradient(top,  rgb(235,241,246) 0%, rgb(171,211,238) 50%, rgb(137,195,235) 51%, rgb(213,235,251) 100%);
-	background: -webkit-linear-gradient(top,  rgb(235,241,246) 0%,rgb(171,211,238) 50%,rgb(137,195,235) 51%,rgb(213,235,251) 100%);
-	background: linear-gradient(to bottom,  rgb(235,241,246) 0%,rgb(171,211,238) 50%,rgb(137,195,235) 51%,rgb(213,235,251) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebf1f6', endColorstr='#d5ebfb',GradientType=0 );
-}
-.button:HOVER{
-	background: rgb(235,241,246);
-	background: -moz-linear-gradient(top,  rgb(235,241,246) 0%, rgb(171,211,238) 50%, rgb(137,195,235) 51%, rgb(238,247,253) 100%);
-	background: -webkit-linear-gradient(top,  rgb(235,241,246) 0%,rgb(171,211,238) 50%,rgb(137,195,235) 51%, rgb(238,247,253) 100%);
-	background: linear-gradient(to bottom,  rgb(235,241,246) 0%,rgb(171,211,238) 50%,rgb(137,195,235) 51%, rgb(238,247,253) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebf1f6', endColorstr='#d5ebfb',GradientType=0 );
-} 
-
-
 /* 鼠标样式 */
 .mousePointer{ cursor:pointer;}
 .mouseDefault{ cursor:default;}
 .mouseMove{ cursor:move;}
 
-/* 取消边框 */
-.NoBorder{ border:0 none;}
-
 /* 文本对齐方式 */
 .t_l{ text-align:left;}
 .t_c{ text-align:center;}
 .t_r{ text-align:right;}
+
+/* 定义文本下划线 */
+.UnLine{ text-decoration:underline;}
+.DisunLine{ text-decoration:none;}
 
 /* 字母和单词换行设置，强制内容换行，强制内容不换行 */
 .Break{ word-break:break-all; word-wrap:break-word;}
@@ -136,11 +55,7 @@ h6{ font-size:12px;}
 /* 浮动定义 */
 .FL{ float:left;}
 .FR{ float:right;}
-.FC{ clear:both; height:0px; width:100%; font-size:1px; line-height:0px; visibility:hidden; overflow:hidden;}
-
-/* 定义文本下划线 */
-.UnLine{ text-decoration:underline;}
-.DisunLine{ text-decoration:none;}
+.FC{ clear:both;}
 
 /* 定位关系 */
 .absolute{ position:absolute;}
@@ -148,18 +63,25 @@ h6{ font-size:12px;}
 
 /* ul列表 */
 .ul-fl li{
-float:left; height:23px; line-height:23px; padding-left:20px;
+	float:left; height:23px; line-height:23px; padding-left:20px;
 }
 .ul-fl-d li{
-float:left; height:23px; line-height:23px; padding-left:20px;
+	float:left; height:23px; line-height:23px; padding-left:20px;
 }
 .ul-no-f li{
-height:23px; width:100%; overflow:hidden; line-height:23px; padding-left:20px;
+	height:23px; width:100%; overflow:hidden; line-height:23px; padding-left:20px;
 }
 
-/* ------------------------------------通用属性定义 e------------------------------------- */
+/* 清除ul列表标记的样式，ul列表更多的用在不需要列表前置符号的样式里 */
+li{ list-style-type:none;}
 
-/* ------------------------------------常用样式定义 s------------------------------------- */
+/* 普通列表样式定义，文章列表样，一般列表使用,ul li列表 */
+.ArtList,.ArtList25,.ArtList22,.ArtList24{ width:100%; overflow:hidden; margin:0 auto;}
+.ArtList li{ width:100%; height:20px; line-height:20px; overflow:hidden;}
+.ArtList25 li{ width:100%; height:25px; line-height:25px; overflow:hidden;}
+.ArtList24 li{ width:100%; height:24px; line-height:24px; overflow:hidden;}
+.ArtList22 li{ width:100%; height:22px; line-height:22px; overflow:hidden;}
+
 
 /* 边框定义，由大写B开头,表示系统公用边框样式 */
 .BTW{ border:0px; border-top-width:1px;}
@@ -168,6 +90,9 @@ height:23px; width:100%; overflow:hidden; line-height:23px; padding-left:20px;
 .BBW{ border:0px; border-bottom-width:1px;}
 .Bord1{ border:1px solid #999;}
 .Bord2{ border:2px solid #999;}
+
+/*取消边框 */
+.NoBorder{ border:0 none;}
 
 /* 边框宽度 (BW开头) */
 .BW1{ border-width:1px;}
@@ -209,21 +134,6 @@ height:23px; width:100%; overflow:hidden; line-height:23px; padding-left:20px;
 .F16{ font-size:16px;}
 .F18{ font-size:18px;}
 
-/* 
-定义间距,上下2个DIV间距，用DIVH开头。上下DIV有间距时使用,尽量不使用margin/padding值,防止不同浏览器出现BUG。
-使用下面属性可兼容大多浏览器。
-*/
-.DivH5,.DivH10,.DivH15,.DivH20,.DivH25,.DivH30,DivH1,.DivH40{ width:100%; overflow:hidden;}
-.DivH1{ height:1px;}
-.DivH5{ height:5px;}
-.DivH8{ height:8px;}
-.DivH10{ height:10px;}
-.DivH15{ height:15px;}
-.DivH20{ height:20px;}
-.DivH25{ height:25px;}
-.DivH30{ height:30px;}
-.DivH40{ height:40px;}
-
 /* 定义行高，LH 使用较少,主要定义line-height属性 */
 .LH1{ line-height:1px;}
 .LH10{ line-height:10px;}
@@ -244,13 +154,6 @@ height:23px; width:100%; overflow:hidden; line-height:23px; padding-left:20px;
 .PTit15{ line-height:15px; height:15px;}
 .PTit10{ line-height:10px; height:10px;}
 .PTit1{ line-height:1px; height:1px;}
-
-/* 普通列表样式定义，文章列表样，一般列表使用,ul li列表 */
-.ArtList,.ArtList25,.ArtList22,.ArtList24{ width:100%; overflow:hidden; margin:0 auto;}
-.ArtList li{ width:100%; height:20px; line-height:20px; overflow:hidden;}
-.ArtList25 li{ width:100%; height:25px; line-height:25px; overflow:hidden;}
-.ArtList24 li{ width:100%; height:24px; line-height:24px; overflow:hidden;}
-.ArtList22 li{ width:100%; height:22px; line-height:22px; overflow:hidden;}
 
 /* ------------------------------------常用样式定义 e------------------------------------- */
 
@@ -363,3 +266,48 @@ li{ list-style-type:disc;}
 } 
 
 
+
+
+
+
+
+
+
+
+
+
+
+/*---------------- 异常页面 ------------------*/
+
+/* 404 */
+.fzf{
+	background-image:url('../imgs/error/404.jpg');
+	background-attachment:fixed;
+	background-repeat:no-repeat;
+	background-size:cover;
+	-moz-background-size:cover;
+	-webkit-background-size:cover;
+	overflow: hidden;
+}
+
+/* 403 */
+.fzt{
+	background-image:url('../imgs/error/403.jpg');
+	background-attachment:fixed;
+	background-repeat:no-repeat;
+	background-size:cover;
+	-moz-background-size:cover;
+	-webkit-background-size:cover;
+	overflow: hidden;
+}
+
+/* 500 */
+.fzz{
+	background-image:url('../imgs/error/500.jpg');
+	background-attachment:fixed;
+	background-repeat:no-repeat;
+	background-size:cover;
+	-moz-background-size:cover;
+	-webkit-background-size:cover;
+	overflow: hidden;
+}
