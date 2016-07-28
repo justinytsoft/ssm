@@ -5,14 +5,22 @@
 	
 	<script type="text/javascript" th:inline="javascript">
 		/*<![CDATA[*/
+		           
+		    //项目根路径
 			var rootPath = [[@{/}]];
+		
+			//刷新内容页
+			function refresh(path){
+				$("#right").panel("refresh",path);
+			}
+			
 		/*]]>*/
 	</script>
 	
 	<body class="easyui-layout">
-	    <div id="top" data-options="region:'north', href:'top',border:false" style="height:50px;"></div>
+	    <div id="top" data-options="region:'north', href:'top'" style="height:50px;"></div>
 	    <!-- <div id="bottom" data-options="region:'south', href:'bottom',border:false" style="height:30px;background: gray"></div> -->
 	    <div id="left" data-options="region:'west', href:'left',split:false,border:false" style="width:250px;"></div>
-	    <div id="right" data-options="region:'center', href:'right'" style="background:#eee;overflow: hidden;"></div>
+	    <div id="right" data-options="region:'center', href:'right',border:false" style="overflow: hidden;"></div>
 	</body>
 </html>
