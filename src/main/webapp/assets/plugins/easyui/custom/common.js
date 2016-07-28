@@ -160,7 +160,10 @@ function messagerCommon(){
 	//$(".l-btn-text").css({"color":"black"});
 }
 
-/*文本框清除功能*/
+/*
+ * 文本框清除功能
+ * $('#j_username').textbox().textbox('addClearBtn', 'icon-clear');
+ */
 $.extend($.fn.textbox.methods, {
     addClearBtn: function(jq, iconCls){
         return jq.each(function(){
