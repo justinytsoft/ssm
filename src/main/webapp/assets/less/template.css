@@ -1,0 +1,214 @@
+@charset "utf-8";
+
+/* 
+	当你引入多个.less样式表时，它们都是独立编译的。所以，在每个文件中定义的变量、混合、命名空间都不会被其它的文件共享。
+	这个页面定义一些常用的模版来复制使用
+ */
+ 
+/*
+定义圆角
+@radius 圆角大小，默认 5px
+*/
+.border_radius(@radius:5px){  
+    -webkit-border-radius: @radius;  
+    -moz-border-radius: @radius;  
+    border-radius: @radius;  
+}  
+
+/*
+透明度 或渐变 1为不透明 0透明
+css3 rgba(110, 142, 185, .4)!important;前三个是颜色值 后一个是透明值
+用来兼容所有浏览器
+*/
+.rgba(@rgba_a:.4,@rgb_b:40){
+    filter: alpha(opacity=@rgb_b); 
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=@{rgb_b})"; 
+    opacity:@rgb_a;    
+}
+
+/*背景渐变
+@start  渐变开始颜色
+@end  结束颜色
+*/
+.bg(@start :#00ffff,@end :#9fffff){
+    background:-webkit-gradient(linear,0 0, 0 100%,from(@start),to(@end));
+    background:-moz-linear-gradient(top,@start ,@end);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=@start ,
+                endColorstr=@end ,grandientType=0);
+}
+
+/*
+旋转角度
+@ro定义度数 
+IE不支持 滤镜支持0，1，2，3
+*/
+.rotate(@ro :30deg){
+      -webkit-transform: rotate(@ro);
+      -moz-transform: rotate(@ro);
+      -o-transform: rotate(@ro);
+      transform: rotate(@ro);
+      filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+
+/*
+菱形旋转角度
+@x横向缩放比例
+@y纵向缩放比例
+*/
+.skew(@roX :30deg,@roY :30deg){
+      -webkit-transform: skew(@roX,@roY);
+      -moz-transform: skew(@roX,@roY);
+      -o-transform: skew(@roX,@roY);
+      -ms-transform: skew(@roX,@roY) ;
+      transform: skew(@roX,@roY);
+}
+
+/*
+放大缩小
+@x横向缩放比例
+@y纵向缩放比例
+*/
+.scale(@x :1.2,@y :1.2){
+      -webkit-transform: scale(@x,@y);
+      -moz-transform: scale(@x,@y);
+      -o-transform: scale(@x,@y);
+      -ms-transform: scale(@x,@y);
+      transform: scale(@x,@y);
+}
+
+/*
+移动距离
+@x横向移动距离
+@y纵向移动距离
+*/
+.translate(@x :80px,@y :80px){
+      -webkit-transform: translate(@x,@y);
+      -moz-transform: translate(@x,@y);
+      -o-transform: translate(@x,@y);
+      -ms-transform: translate(@x,@y);
+      transform: translate(@x,@y);
+}
+
+/*
+综合上面4种变化,效果看下面的过度动画
+@rotate
+@scale
+@skew
+@translate
+*/
+.transform(@rotate :360deg,@scaleX :1,@scaleY :1,@skewX :0deg,@skewY :0deg,@translateX :100px,@translateY :0px){
+   -webkit-transform: rotate(@rotate) scale(@scaleX,@scaleY) skew(@skewX,@skewY) translate(@translateX,@translateY);
+   -moz-transform: rotate(@rotate) scale(@scaleX,@scaleY) skew(@skewX,@skewY) translate(@translateX,@translateY);
+   -o-transform: rotate(@rotate) scale(@scaleX,@scaleY) skew(@skewX,@skewY) translate(@translateX,@translateY);
+   -ms-transform: rotate(@rotate) scale(@scaleX,@scaleY) skew(@skewX,@skewY) translate(@translateX,@translateY);
+   transform: rotate(@rotate) scale(@scaleX,@scaleY) skew(@skewX,@skewY) translate(@translateX,@translateY);
+   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+
+/*
+过度动画 
+2s过度时间 0s是开始时间
+ease-in进入
+*/
+.tran(@t :all 2s ease-in 0s){
+    -moz-transition:@t ;
+    -o-transition:@t ;
+    -webkit-transition:@t ;
+    transition:@t ;
+}
+
+/*
+动画
+*/
+.animation(@animation-name,@animation-duration,@animation-timing-function,
+                @animation-delay,@animation-iteration-count,@animation-direction){
+    /* Firefox: */
+    -moz-animation: @arguments;
+    /* Safari 和 Chrome: */
+    -webkit-animation: @arguments;
+    /* Opera: */
+    -o-animation: @arguments;
+    animation: @arguments;
+}
+
+/*
+盒子阴影
+@right_left 右边阴影为正数 左边负数
+@bottom_top 下边阴影为正数 上边负数
+@box  阴影大小
+@box_color 阴影颜色
+*/
+.boxshadow(@right_left:5px,@bottom_top:5px,@box:5px,@box_color:#000000){
+   -moz-box-shadow:@arguments;
+   -webkit-box-shadow:@arguments;
+    box-shadow:@arguments;
+}
+
+/*
+文字阴影,可以指定多组阴影
+@right_left1 右边阴影为正数 左边负数
+@bottom_top1 下边阴影为正数 上边负数
+@text  阴影大小
+@text_color 阴影颜色
+*/
+.textshadow(@right_left1:5px,@bottom_top1:5px,@text :5px,@tetx_color:#b6ebf7){
+    text-shadow:@arguments;
+}
+
+/*
+列布局
+@c1 列数
+@c2 列宽
+@c3 列间距
+@c4 边框样式
+*/
+.column(@c1:3,@c2:310px,@c3:10px,@c4:1px solid #ccc){
+    column-count:@c1;
+    column-width:@c2;
+    column-gap:@c3;
+    column-rule:@c4;
+    -webkit-column-count:@c1;
+    -webkit-column-width:@c2;
+    -webkit-column-gap:@c3;
+    -webkit-column-rule:@c4;
+    -moz-column-count:@c1;
+    -moz-column-width:@c2;
+    -moz-column-gap:@c3;
+    -moz-column-rule:@c4;
+}
+
+/*
+画轮廓 就是内部框
+@outline 样式
+@outline1 间距 负数在内部
+*/
+.outline(@outline:1px solid #699,@outline1:-10px){
+    outline:@outline;
+    outline-offset:@outline1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
