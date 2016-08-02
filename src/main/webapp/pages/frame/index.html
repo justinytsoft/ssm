@@ -3,6 +3,13 @@
 	<head th:include="fragment/import :: header"></head>
 	<title>首页</title>
 	
+	<link rel="stylesheet/less" type="text/css" th:href="@{/assets/less/base/index.less}"/>
+	
+	<!-- less -->
+    <script>less = { env: 'development'};</script>
+    <script th:src="@{/assets/js/less_2.5.3.js}" type="text/javascript"></script>
+    <script>less.watch();</script>
+	
 	<script type="text/javascript" th:inline="javascript">
 		/*<![CDATA[*/
 		           
@@ -18,8 +25,8 @@
 	</script>
 	
 	<body class="easyui-layout">
-	    <div id="top" data-options="region:'north', href:'top'" style="height:50px;"></div>
-	    <!-- <div id="bottom" data-options="region:'south', href:'bottom',border:false" style="height:30px;background: gray"></div> -->
+	    <div id="top" data-options="region:'north', href:'top',border:false" class=".BBW"></div>
+	    <div id="bottom" data-options="region:'south', href:'bottom',border:false" style="height:30px;background: gray"></div>
 	    <div id="left" data-options="region:'west', href:'left',split:false,border:false" style="width:250px;"></div>
 	    <div id="right" data-options="region:'center', href:'right',border:false" style="overflow: hidden;"></div>
 	</body>

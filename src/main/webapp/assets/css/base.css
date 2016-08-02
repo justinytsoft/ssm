@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 /* 将具有默认margin和padding的标记置零，所有标记的margin、padding都在使用时具体定义 */
-*{ margin:0;padding:0;outline:none;}
+*{ margin:0;padding:0;}
 
 /* 修正IE5.x和IE6的斜体溢出bug */
 * html body{ overflow:visible;}
@@ -15,7 +15,7 @@ text-align:center; 解决不同浏览器居中问题
 body{ color:#000; background:#FFF; font:12px/22px Verdana,Arial,sans-serif,"Times New Roman",宋体; text-align:center;}
 body,ul,ol,li,p,h1,h2,h3,h4,h5,h6,form,fieldset,table,td,img,div,tr{ margin:0; padding:0;}
 /* 设置内容左对齐，恢复因BODY设置剧中产生的继承 */
-body div{ text-align:left;}
+/* body div{ text-align:left;} */
 
 /* 定义图片边框，当图片作为链接内容被填充时，会有默认边框出现，重定义掉 */
 img{ border:0 none;}

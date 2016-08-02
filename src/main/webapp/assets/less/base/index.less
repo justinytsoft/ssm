@@ -1,0 +1,88 @@
+/*
+变量
+*/
+@base_color:white;
+
+/*
+背景渐变
+@start  渐变开始颜色
+@end  结束颜色
+*/
+.bg(@start :#00ffff,@end :#9fffff){
+    background:-webkit-gradient(linear,0 0, 0 100%,from(@start),to(@end));
+    background:-moz-linear-gradient(top,@start ,@end);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=@start ,
+                endColorstr=@end ,grandientType=0);
+}
+
+/*
+felx布局, 默认垂直居中
+*/
+.box{
+	display:-webkit-flex;
+	display:flex;
+	
+	-webkit-justify-content: space-between;
+	-moz-justify-content: space-between;
+	justify-content: space-between;
+	
+	-webkit-align-items: center;
+	-moz-align-items: center;
+	align-items: center;
+}
+
+
+
+
+
+
+
+
+
+#top{
+	color:@base_color;
+	height:80px;
+	
+	.bg(#8abbd7 ,#066dab);
+	
+	.content{
+		
+		width:100%;
+		height:100%;
+		.box;
+		
+		.logo, .user_info{
+			display:inline;
+		}
+		
+		.logo{
+			img{
+				width:50px;
+				height:50px;
+			}
+		}
+		
+		.user_info{
+
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

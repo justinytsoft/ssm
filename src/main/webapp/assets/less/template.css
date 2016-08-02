@@ -6,6 +6,19 @@
  */
  
 /*
+变量
+*/
+@white:white;
+
+/*
+felx布局
+*/
+.box{
+	display:-webkit-flex;
+	display:flex;
+}
+ 
+/*
 定义圆角
 @radius 圆角大小，默认 5px
 */

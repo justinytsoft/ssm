@@ -3,8 +3,13 @@
 	<head th:include="fragment/import :: header"></head>
 	
 	<body>
-		<div style="text-align: center;line-height: 45px">
-			欢迎您登录: <span>管理员</span><a style="margin-left: 20px" th:href="@{/logout}">安全退出</a>
+		<div class="content">
+			<div class="logo">
+				<img alt="LOGO" th:src="@{/assets/imgs/logo.jpg}" />
+			</div>
+			<div class="user_info">
+				欢迎您登录: <span>管理员</span><a style="margin-left: 20px" th:href="@{/logout}">安全退出</a>
+			</div>
 		</div>
 	</body>
 </html>
