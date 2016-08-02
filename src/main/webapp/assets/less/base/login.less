@@ -1,3 +1,15 @@
+/*
+定义圆角
+@radius 圆角大小，默认 5px
+*/
+.border_radius(@radius:5px){  
+    -webkit-border-radius: @radius;  
+    -moz-border-radius: @radius;  
+    border-radius: @radius;  
+}  
+
+
+
 /* 登录、注册、忘记密码 的body样式 */
 .lrfBody{
 	background-image:url('../../imgs/bg.jpg');
@@ -17,27 +29,37 @@
    left:50%;  
    top:40%;  
    text-align:center;
-   border-radius:10px;
    margin:-100px 0 0 -150px;
    background: rgba(255, 255, 255, 0.51);
    box-shadow:0px 0px 20px 0px #FFFFFF inset;
+   
+   .border_radius(10px);
+   .container{
+		width:80%;
+		margin: 10%; 
+		text-align: center;
+		input{
+			color:#C7C7C7;
+		}
+		div{
+			color:#A7A8AB;
+			font-size:13px;
+		}
+	}
 }
-
-.container{
-	width:80%;
-	margin: 10%; 
-	text-align: center;
-}
-.container input{color:#C7C7C7;}
-.container div{color:#A7A8AB;}
 
 form>div{
 	padding : 3px 10px;
 }
 
-//验证码宽度
-#ca{
-	width:150px;
+/* 验证码 */
+.captcha{
+	width: 25%; 
+	height: 38px;
+	cursor:pointer;
+	border-radius:5px;
+	vertical-align:middle;
+	border: 1px solid #ddd;
 }
 
 @media all and (min-width:500px) and (max-width:1000px){
@@ -48,8 +70,5 @@ form>div{
 	}
 	form>div{
 		padding : 20px 10px;
-	}
-	#ca{
-		width:280px;
 	}
 }

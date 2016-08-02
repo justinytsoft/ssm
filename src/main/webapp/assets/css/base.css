@@ -178,16 +178,6 @@ li{ list-style-type:disc;}
 .r-footer span{display:inline-block;text-align:center;height:28px;padding:5px 20px;background-color:#20afe5;border-radius:2px;color:#ffffff;margin:10px 4px 10px 4px;cursor:pointer}
 .r-footer span:hover{background-color:#20afe5}
 
-/* 验证码 */
-.captcha{
-	width: 90px; 
-	height: 38px;
-	cursor:pointer;
-	border-radius:5px;
-	vertical-align:middle;
-	border: 1px solid #ddd;
-}
-
 /* 错误信息 */
 .errorMsg{
   text-align:center;
