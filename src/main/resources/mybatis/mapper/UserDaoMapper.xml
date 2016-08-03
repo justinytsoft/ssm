@@ -31,7 +31,7 @@
 	<select id="selectMenuByRid" resultMap="subMenuMap">
 		SELECT sm.* FROM sys_roles_menus srm
 		LEFT JOIN sys_menus sm ON sm.id = srm.menu_id
-		WHERE srm.role_id = #{id}
+		WHERE srm.role_id = #{id} AND sm.parent_id = 0
 	</select> 
 	
 	<!-- 通过用户ID查询对应角色 -->

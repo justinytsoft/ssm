@@ -25,9 +25,18 @@
 	</script>
 	
 	<body class="easyui-layout">
-	    <div id="top" data-options="region:'north', href:'top',border:false" class=".BBW"></div>
+	    <!-- <div id="top" data-options="region:'north', href:'top',border:false" class=".BBW"></div>
 	    <div id="bottom" data-options="region:'south', href:'bottom',border:false" style="height:30px;background: gray"></div>
 	    <div id="left" data-options="region:'west', href:'left',split:false,border:false" style="width:250px;"></div>
-	    <div id="right" data-options="region:'center', href:'right',border:false" style="overflow: hidden;"></div>
+	    <div id="right" data-options="region:'center', href:'right',border:false" style="overflow: hidden;"></div> -->
+		
+		<div id="left" data-options="region:'west',border:false,href:'left',loadingMessage:'数据加载中....'" style="width:267px;background-color: #EEE"></div>
+	    <div data-options="region:'center',border:false">
+	       <div class="easyui-layout" data-options="fit:true,border:false">
+	            <div id="top" data-options="region:'north',border:false,href:'top',loadingMessage:'数据加载中....'" style="height:75px;overflow-y: hidden"></div>
+	            <div id="right" data-options="region:'center',border:false,href:'right',loadingMessage:'数据加载中....'"></div>
+	        </div>
+	    </div>
+	    <!-- <div id="bottom" data-options="region:'south', href:'bottom',border:false" style="height:30px;background: gray"></div> -->
 	</body>
 </html>
