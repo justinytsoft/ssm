@@ -46,26 +46,9 @@
 		SELECT * FROM sys_users WHERE username = #{username}
 	</select>
 	
-	
-
-
-
-
-
-
-
-
-
-
-
-
-	<select id="getMenus" resultType="com.FangBianMian.utils.EasyUiTree">
-		SELECT sm.id AS id, sm.name AS text, sm.parent_id AS parentId, sm.url AS attributes
-		FROM sys_roles_users sru
-		LEFT JOIN sys_roles_menus srm ON sru.role_id = srm.role_id
-		LEFT JOIN sys_menus sm ON sm.id = srm.menu_id
-		WHERE sru.user_id = #{param.uid} <!-- AND sm.parent_id = #{param.pid} -->
-		ORDER BY sm.weight
+	<!-- 通过用户ID查找用户 -->
+	<select id="selectUserByUid" resultMap="roleMap">
+		SELECT * FROM sys_users WHERE id = #{id}
 	</select>
 
 </mapper>

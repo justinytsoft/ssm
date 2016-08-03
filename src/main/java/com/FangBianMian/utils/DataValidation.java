@@ -1,13 +1,28 @@
 package com.FangBianMian.utils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.poi.hssf.record.formula.functions.T;
+import org.springframework.util.CollectionUtils;
 
 /**
  * 校验传入数据
  *
  */
 public class DataValidation {
+	
+	/**
+	 * 判断集合是否为空
+	 * @param list
+	 * @return 为空则创建一个新的ArrayList返回, 否则, 直接返回
+	 */
+	@SuppressWarnings("hiding")
+	public static <T> List<T> isEmpty(List<T> list){
+		return CollectionUtils.isEmpty(list) ? new ArrayList<T>() : list;
+	}
 
 	/** 
      * 检测邮箱地址是否合法 
