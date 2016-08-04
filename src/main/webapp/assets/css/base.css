@@ -21,8 +21,8 @@ body,ul,ol,li,p,h1,h2,h3,h4,h5,h6,form,fieldset,table,td,img,div,tr{ margin:0; p
 img{ border:0 none;}
 
 /* 定义默认的链接样式，仅仅是作为默认样式提供，可以在各自的实例中覆盖掉 */
-a:link, a:visited{ color:#04C; text-decoration:none;}
-a:hover{ color:#F60; text-decoration:underline;}
+a:link, a:visited{ color:white; text-decoration:none;}
+a:hover{ color:white; text-decoration:underline;}
 /* 去掉链接的虚线框 */
 a { outline:none; star:expression(this.onFocus=this.blur());}
 
