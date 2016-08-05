@@ -31,9 +31,9 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter{
     	String type = (String) request.getParameter("type");
     	request.getSession().setAttribute("type", type);
     	
-        String genCode = this.obtainGeneratedCaptcha(request);  
+    	//验证码校验
+       /* String genCode = this.obtainGeneratedCaptcha(request);  
         String inputCode = this.obtainCaptcha(request);  
-        Authentication auth = null;
         
         if(genCode == null){  
         	request.setAttribute("msg", "CAPTCHA.GENERATED.FAILD");
@@ -42,8 +42,9 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter{
         if(!genCode.equalsIgnoreCase(inputCode)){  
         	request.setAttribute("msg", "CAPTCHA.FAILD");
             throw new CaptchaException("LoginAuthentication.captchaNotEquals");  
-        }  
+        }  */
         
+        Authentication auth = null;
         try{
         	auth = super.attemptAuthentication(request, response);
         }catch(AuthenticationException e){
