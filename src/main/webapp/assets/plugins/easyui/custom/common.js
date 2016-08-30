@@ -10,6 +10,36 @@ $(function(){
 	});
 });
 
+//文件上传
+function fileUpload(n, o){
+	var obj = $(this);
+	//设置文件dom 的name 为 file
+	$(obj.next().find("input[type=file]")[0]).attr("name","file");
+	//获取文件dom 的id
+	var fileId = $(obj.next().find("input[type=file]")[0]).attr("id");
+	
+	//上传文件
+	$.ajaxFileUpload({
+        url: "${request.getContextPath()}/upload/uploadImage.jhtml",
+        secureuri: true,
+        fileElementId: fileId,
+        type: 'POST',
+        dataType: 'json',
+        success: function (result) {
+        	var id = obj.attr("id");
+            $("#"+id+"Val").val(result.data.fileName);
+            $("#"+id+"Pre").attr("src",result.data.path).show();
+    	},
+    	error:function(){
+    		cAlert("上传失败");
+    	}
+	   }); 
+   //清空文件dom，不清空则不能再次选择文件
+	   obj.filebox("reset");
+   //取消校验
+   obj.filebox("disableValidation");
+}
+
 //日期控件的重置按钮
 var dateboxReset = $.extend([], $.fn.datebox.defaults.buttons);
 dateboxReset.splice(1, 0, {
