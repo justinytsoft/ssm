@@ -38,31 +38,5 @@
 			});
 		</script>
 		<div id="main" style="width: 600px;height:400px;"></div>
-		
-	  <div id="messages"></div>
-	  <script type="text/javascript">
-		    var webSocket = new WebSocket('ws://localhost/fang-bian-mian/websocket');
-		 
-		    webSocket.onerror = function(event) {
-		    	alert(event.data);
-		    };
-		 
-		    webSocket.onopen = function(event) {
-		    	document.getElementById('messages').innerHTML = 'Connection established';
-		    };
-		 
-		    webSocket.onmessage = function(event) {
-		    	document.getElementById('messages').innerHTML += '<br />' + event.data;
-		    };
-		 
-		 
-		    function start() {
-		      webSocket.send('hello');
-		      return false;
-		    }
-	  </script>
-	  <div>
-	    	<input type="submit" value="Start" onclick="start()" />
-  	  </div>
 	</body>
 </html>
