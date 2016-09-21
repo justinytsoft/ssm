@@ -9,7 +9,7 @@ A:active{text-decoration:none;}
 
 /* 遮罩颜色和透明度 */
 .window-proxy-mask, .window-mask {
-	background: black;
+	background: #080808;
 	opacity: 0.6;
 }
 
@@ -47,17 +47,23 @@ A:active{text-decoration:none;}
 }
 
 /* filebox */
+/* .filebox{
+	border: none;
+	border-radius: 0;
+	width: 75px;
+}
+.filebox .textbox-prompt{
+	display: none;
+}
 .filebox a{
-	width:100px;
+	background-color: #00A0EA;
+	border-radius: 5px;
+	color:white;
 }
-.filebox .l-btn{
-	color : white;
-	background-color : #00A0EA;
-	border : 1px solid #00A0EA;
-}
-.filebox .l-btn:HOVER{
-	background-color : #21AFF1;
-}
+.filebox .textbox-button:hover{
+	background: #00A0EA;
+	color:white;
+} */
 
 
 /* panel样式 */

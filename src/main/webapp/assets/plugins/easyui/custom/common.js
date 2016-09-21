@@ -10,36 +10,6 @@ $(function(){
 	});
 });
 
-//文件上传
-function fileUpload(n, o){
-	var obj = $(this);
-	//设置文件dom 的name 为 file
-	$(obj.next().find("input[type=file]")[0]).attr("name","file");
-	//获取文件dom 的id
-	var fileId = $(obj.next().find("input[type=file]")[0]).attr("id");
-	
-	//上传文件
-	$.ajaxFileUpload({
-        url: "${request.getContextPath()}/upload/uploadImage.jhtml",
-        secureuri: true,
-        fileElementId: fileId,
-        type: 'POST',
-        dataType: 'json',
-        success: function (result) {
-        	var id = obj.attr("id");
-            $("#"+id+"Val").val(result.data.fileName);
-            $("#"+id+"Pre").attr("src",result.data.path).show();
-    	},
-    	error:function(){
-    		cAlert("上传失败");
-    	}
-	   }); 
-   //清空文件dom，不清空则不能再次选择文件
-	   obj.filebox("reset");
-   //取消校验
-   obj.filebox("disableValidation");
-}
-
 //日期控件的重置按钮
 var dateboxReset = $.extend([], $.fn.datebox.defaults.buttons);
 dateboxReset.splice(1, 0, {
@@ -52,22 +22,26 @@ dateboxReset.splice(1, 0, {
 
 //自定义校验规则  validType:'isNumber'   validType:['isNumber','numberRegion[0,100]']
 $.extend($.fn.validatebox.defaults.rules, {
-	startThanEnd: {
-		validator: function(value, param){
-			var s = $("#" + param[0]);
-			var e = $("#" + param[1]);
-			var sdate = stringToDate(s.datetimebox("getValue")).valueOf();
-			var edate = stringToDate(e.datetimebox("getValue")).valueOf();
-			return edate >= sdate;
-		},
-		message: '开始时间不能大于结束时间'
-	},
     isNumber: { 
         validator: function(value){
         	var reg=/^\d+$/;
             return reg.test(value);
         },
         message: '只能输入整数'
+    },
+    isFloat: {     
+        validator: function(value){
+        	var reg = /^\d+$|^\d+\.\d+$/;
+			return reg.test(value);    
+        },     
+        message: '请输入整数或者浮点数.'    
+    },
+    isMoney: {     
+        validator: function(value){
+        	var reg = /^\d+$|^\d+\.\d{1,2}$/;
+			return reg.test(value);    
+        },     
+        message: '请输入金额值.'    
     },
     numberRegion: { 
         validator: function(value,param){
@@ -140,6 +114,23 @@ $.extend($.fn.validatebox.defaults.rules, {
 			return (p.test(value)||t.test(value));
 		},
 		message: '电话格式错误'
+	},
+	isSame: { //校验两次输入是否一致
+		validator: function(value, param){
+			var pwd = $(param[0]).val();
+			return pwd==value;
+		},
+		message: '两次密码不一致'
+	},
+	startThanEnd: {
+		validator: function(value, param){
+			var s = $("#" + param[0]);
+			var e = $("#" + param[1]);
+			var sdate = stringToDate(s.datetimebox("getValue")).valueOf();
+			var edate = stringToDate(e.datetimebox("getValue")).valueOf();
+			return edate >= sdate;
+		},
+		message: '开始时间不能大于结束时间'
 	}
 });
 
@@ -169,6 +160,12 @@ function cAlert(msg){
 	messagerCommon();
 }
 
+/*alert*/
+function cAlertFun(msg, fun){
+	$.messager.alert("",msg, "info", fun);
+	messagerCommon();
+}
+
 /*confirm*/
 function cConfirm(msg,fun){
 	$.messager.confirm('',msg,fun);
@@ -190,10 +187,7 @@ function messagerCommon(){
 	//$(".l-btn-text").css({"color":"black"});
 }
 
-/*
- * 文本框清除功能
- * $('#j_username').textbox().textbox('addClearBtn', 'icon-clear');
- */
+/*文本框清除功能*/
 $.extend($.fn.textbox.methods, {
     addClearBtn: function(jq, iconCls){
         return jq.each(function(){
@@ -272,5 +266,3 @@ function convert(rows){
 	}
 	return nodes;
 }
-
-
