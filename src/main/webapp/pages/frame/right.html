@@ -11,6 +11,8 @@
 	    -->
 	    
 	    <script type="text/javascript" th:src="@{/assets/js/echarts.js}"></script>
+	    <script type="text/javascript" th:src="@{/assets/plugins/websocket/sockjs-0.3.4.js}"></script>
+	    <script type="text/javascript" th:src="@{/assets/plugins/websocket/stomp.js}"></script>
 		<script type="text/javascript" th:inline="javascript">
 			$(function(){
 				// 基于准备好的dom，初始化echarts实例
@@ -37,6 +39,77 @@
 		        myChart.setOption(option);
 			});
 		</script>
+		
+		<script type="text/javascript" th:inline="javascript">
+			/*<![CDATA[*/
+		    var stompClient = null;    
+		    function setConnected(connected) {        
+		        document.getElementById('connect').disabled = connected;        
+		        document.getElementById('disconnect').disabled = !connected;        
+		        document.getElementById('conversationDiv').style.visibility = connected ? 'visible' : 'hidden';        
+		        document.getElementById('response').innerHTML = '';    
+		    }    
+		    // 开启socket连接
+		    function connect() {        
+		        var socket = new SockJS([[@{/}]]+'socket');        
+		        stompClient = Stomp.over(socket);        
+		        stompClient.connect({}, function () {    
+		             setConnected(true);            
+		        });    
+		    }    
+		    // 断开socket连接
+		    function disconnect() {        
+		        if (stompClient != null) {            
+		            stompClient.disconnect();        
+		        }        
+		        setConnected(false);        
+		        console.log("Disconnected");    
+		    }    
+		    // 向‘/app/change-notice’服务端发送消息
+		    function sendName() {   
+		        var value = document.getElementById('name').value;            
+		        stompClient.send([[@{/}]]+"app/change-notice", {}, value);    
+		        	noticeSocket();
+		    }    
+		    
+	        var noticeSocket = function () {    
+	        	  var socket = new SockJS([[@{/}]]+'socket');      
+	        	  var stompClient = Stomp.over(s);    
+	        	  stompClient.connect({}, function () {         
+	        	    console.log('notice socket connected!');
+	        	    stompClient.subscribe([[@{/}]]+'topic/notice', function (data) {            
+	        	      $('#msg').html(data.body);        
+	        	    });    
+	        	 });
+        	}; 
+        	
+		    /*]]>*/
+		</script>	
+		
+		
+		
+		
+		
 		<div id="main" style="width: 600px;height:400px;"></div>
+		
+		<div>    
+		    <div>        
+		        <button id="connect" onclick="connect();">Connect</button> 
+		       <button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>    
+		    </div>    
+		    <div id="conversationDiv">        
+		        <p>            
+		            <label>notice content?</label>        
+		        </p>        
+		        <p>            
+		              <textarea id="name" rows="5"></textarea>        
+		        </p>        
+		        <button id="sendName" onclick="sendName();">Send</button>        
+		        <p id="response"></p>   
+		        <p>            
+		              <textarea id="msg" rows="5"></textarea>        
+		        </p> 
+		    </div>
+		</div>
 	</body>
 </html>

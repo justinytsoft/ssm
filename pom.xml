@@ -15,20 +15,8 @@
 		<spring.version>4.0.9.RELEASE</spring.version>
 		<spring.security.version>3.2.2.RELEASE</spring.security.version>
 	</properties>
-
+	
 	<dependencies>
-		<!-- spring websocket -->
-	 	<!-- <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-websocket</artifactId>
-            <version>4.0.0.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-messaging</artifactId>
-            <version>4.0.0.RELEASE</version>
-        </dependency> -->
-        
         <!-- spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>

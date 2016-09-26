@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/main/java=UTF-8
 encoding//src/main/java/com/FangBianMian/json/JsonResWrapper.java=UTF-8
 encoding//src/main/java/com/FangBianMian/json/ResponseStatus.java=UTF-8
 encoding//src/main/java/com/FangBianMian/security/UserDetailsServiceImpl.java=UTF-8
@@ -8,5 +9,7 @@ encoding//src/main/java/com/FangBianMian/utils/FileUtils.java=UTF-8
 encoding//src/main/java/com/FangBianMian/utils/ImageResizer.java=UTF-8
 encoding//src/main/java/com/FangBianMian/utils/ImageUtil.java=UTF-8
 encoding//src/main/java/com/FangBianMian/utils/SettingUtil.java=UTF-8
+encoding//src/main/resources=UTF-8
 encoding//src/main/resources/common.properties=UTF-8
+encoding//src/test/java=UTF-8
 encoding/<project>=UTF-8

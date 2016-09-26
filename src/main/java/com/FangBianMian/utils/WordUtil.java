@@ -27,7 +27,7 @@ public class WordUtil {
         configuration = new Configuration();  
         configuration.setDefaultEncoding("utf-8");  
         configuration.setClassForTemplateLoading(WordUtil.class, "/word-template");  
-        allTemplates = new HashMap<>();   // Java 7 钻石语法  
+        allTemplates = new HashMap<String, Template>();   // Java 7 钻石语法  
         try {  
             allTemplates.put("resume", configuration.getTemplate("resume.ftl")); //生成模版
         } catch (IOException e) {  
