@@ -18,7 +18,7 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {        
     	//表示添加了一个/socket端点，客户端就可以通过这个端点来进行连接。
     	//withSockJS()的作用是开启SockJS支持, 浏览器不支持websocket时降级为轮询。
-        registry.addEndpoint("/socket").withSockJS();       
+        registry.addEndpoint("/notice").withSockJS();       
     }    
     
     /**
