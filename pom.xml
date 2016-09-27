@@ -61,7 +61,6 @@
 			<version>${spring.security.version}</version>
 		</dependency>
 		
-		
 		<!-- thymeleaf -->
 		<dependency>
 			<groupId>org.thymeleaf</groupId>
