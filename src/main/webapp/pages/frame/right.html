@@ -48,21 +48,46 @@
 		    /*]]>*/
 		</script>	
 		
-		<div>    
-		    <div>        
-		        <button id="connect">Connect</button> 
-		       <button id="disconnect" disabled="disabled">Disconnect</button>    
-		    </div>    
-		    <div>        
-		        <p>            
-		            <label>notice content?</label>        
-		        </p>        
-		        <p>            
-		              <textarea id="name" rows="5"></textarea>        
-		        </p>        
-		        <button id="ws">Send</button>        
-		        <p id="response"></p>   
-		    </div>
+		<script type="text/javascript">
+	        $(function(){
+	            var websocket;
+	            if ('WebSocket' in window) {
+	                alert("WebSocket");
+	                websocket = new WebSocket("ws://localhost:8081/veg");
+	            } else if ('MozWebSocket' in window) {
+	                alert("MozWebSocket");
+	                websocket = new MozWebSocket("ws://veg");
+	            } else {
+	                alert("SockJS");
+	                websocket = new SockJS("http://localhost:8081/com/veg");
+	            }
+	            websocket.onopen = function (evnt) {
+	                $("#head").html("连接服务器成功!")
+	                send();
+	            };
+	            websocket.onmessage = function (evnt) {
+	                $("#msg").html($("#msg").html() + "<br/>" + evnt.data);
+	            };
+	            websocket.onerror = function (evnt) {
+	            };
+	            websocket.onclose = function (evnt) {
+	                $("#head").html("与服务器断开了链接!")
+	            }
+	            function send(){
+	                if (websocket != null) {
+	
+	                    websocket.send("客户端请求");
+	                } else {
+	                    alert('未与服务器链接.');
+	                }
+	            }
+	        });
+	    </script>
+		
+		<div id="head">
+		    webSocket消息推送
+		</div>
+		<div id="msg">
 		</div>
 
 
