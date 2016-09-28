@@ -13,7 +13,78 @@
 	    <script type="text/javascript" th:src="@{/assets/js/echarts.js}"></script>
 	    <script type="text/javascript" th:src="@{/assets/plugins/websocket/sockjs-0.3.4.js}"></script>
 	    <script type="text/javascript" th:src="@{/assets/plugins/websocket/stomp.js}"></script>
+		
 		<script type="text/javascript" th:inline="javascript">
+			/*<![CDATA[*/
+		    var stompClient = null;    
+			var rt = [[@{/}]];
+			
+			var socket = new SockJS(rt+'portfolio-stomp');
+
+			var stompClient = Stomp.over(socket);
+			//和服务器建立连接"SEND destination:http://localhost:8081/fang-bian-mian/app/handle content-length:14 {"name":"efw"}"
+			stompClient.connect("", "", function(frame) {
+				console.log(frame);
+				//订阅消息
+			    stompClient.subscribe(rt+'topic/greetings', function(data) { 
+			    	 alert(data);
+			         $("#response").text(data);
+			    });  
+			}); 
+
+			$("#ws").click(function(){
+				var name = $("#name").val();
+				console.info(name);
+				//发送消息
+				stompClient.send(rt+"app/handler", {}, JSON.stringify({
+							          'name' : name
+							      }));
+/* 				//发送消息
+				stompClient.send("http://localhost:8081/fang-bian-mian/app/handler", {}, JSON.stringify({
+							          'name' : name
+							      })); */
+			});
+		    
+		    /*]]>*/
+		</script>	
+		
+		<div>    
+		    <div>        
+		        <button id="connect">Connect</button> 
+		       <button id="disconnect" disabled="disabled">Disconnect</button>    
+		    </div>    
+		    <div>        
+		        <p>            
+		            <label>notice content?</label>        
+		        </p>        
+		        <p>            
+		              <textarea id="name" rows="5"></textarea>        
+		        </p>        
+		        <button id="ws">Send</button>        
+		        <p id="response"></p>   
+		    </div>
+		</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		<!-- <script type="text/javascript" th:inline="javascript">
 			$(function(){
 				// 基于准备好的dom，初始化echarts实例
 		        var myChart = echarts.init(document.getElementById('main'));
@@ -38,75 +109,8 @@
 		        // 使用刚指定的配置项和数据显示图表。
 		        myChart.setOption(option);
 			});
-		</script>
-		
-		<script type="text/javascript" th:inline="javascript">
-			/*<![CDATA[*/
-		    var stompClient = null;    
-			var pre = "http://localhost:8081/fang-bian-mian";
-			var pre1 = "http://localhost:8081";
-			var ws = "ws://localhost:8081/fang-bian-mian";
-			var ws1 = "ws://localhost:8081";
-			
-		    function setConnected(connected) {        
-		        document.getElementById('connect').disabled = connected;        
-		        document.getElementById('disconnect').disabled = !connected;        
-		        document.getElementById('conversationDiv').style.visibility = connected ? 'visible' : 'hidden';        
-		        document.getElementById('response').innerHTML = '';    
-		    }    
-		    
-		    // 开启socket连接
-		    function connect() {        
-		        var socket = new SockJS(pre+'/notice');        
-		        stompClient = Stomp.over(socket);        
-		        stompClient.connect("","",function (frame) {    
-		             setConnected(true);  
-		             console.log(frame);
-		             stompClient.send(pre+"websocket",{},{'value': "sdfsd"});
-		             /* stompClient.subscribe(pre+'/topic/notice',  function(data) { //订阅消息
-		                 $("#response").text(data);
-		             }); */
-		        });    
-		    }    
-		    // 断开socket连接
-		    function disconnect() {        
-		        if (stompClient != null) {            
-		            stompClient.disconnect();        
-		        }        
-		        setConnected(false);        
-		        console.log("Disconnected");    
-		    }    
-		    
-	      	//发送聊天信息  
-	        function sendName() {  
-	        	var value = document.getElementById('name').value;  
-	        }  
-		    
-	        connect();
-		    /*]]>*/
-		</script>	
-		
-		
-		
-		
-		
-		<div id="main" style="width: 600px;height:400px;"></div>
-		
-		<div>    
-		    <div>        
-		        <button id="connect" onclick="connect();">Connect</button> 
-		       <button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>    
-		    </div>    
-		    <div id="conversationDiv">        
-		        <p>            
-		            <label>notice content?</label>        
-		        </p>        
-		        <p>            
-		              <textarea id="name" rows="5"></textarea>        
-		        </p>        
-		        <button id="sendName" onclick="sendName()">Send</button>        
-		        <p id="response"></p>   
-		    </div>
-		</div>
+		</script> -->
+
+		<!-- <div id="main" style="width: 600px;height:400px;"></div> -->
 	</body>
 </html>

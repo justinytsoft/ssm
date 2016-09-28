@@ -1,34 +1,56 @@
 package com.FangBianMian.websocket;
 
+import java.util.List;
+
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.converter.MessageConverter;
+import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
-import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
+import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketTransportRegistration;
 
 
 @Configuration
 @EnableWebSocketMessageBroker
-public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {    
+public class WebSocketConfig implements WebSocketMessageBrokerConfigurer  {
+
+	@Override
+	public void registerStompEndpoints(StompEndpointRegistry registry) {
+		System.out.println("注册");
+		//portfolio-stomp就是websocket的端点，客户端需要注册这个端点进行链接，withSockJS允许客户端利用sockjs进行浏览器兼容性处理
+		registry.addEndpoint("/portfolio-stomp").withSockJS();
+	}   
+
+	@Override
+	public void configureMessageBroker(MessageBrokerRegistry registry) {
+		System.out.println("启动");
+		registry.enableSimpleBroker("/topic");               //设置服务器广播消息的基础路径
+		registry.setApplicationDestinationPrefixes("/app");  //设置客户端发送消息的基础路径
+	}
 	
-	/**
-	 * 这个方法的作用是添加一个服务端点，来接收客户端的连接。
-	 */
-    @Override    
-    public void registerStompEndpoints(StompEndpointRegistry registry) {        
-    	//表示添加了一个/socket端点，客户端就可以通过这个端点来进行连接。
-    	//withSockJS()的作用是开启SockJS支持, 浏览器不支持websocket时降级为轮询。
-        registry.addEndpoint("/notice").withSockJS();       
-    }    
-    
-    /**
-     * 这个方法的作用是定义消息代理，通俗一点讲就是设置消息连接请求的各种规范信息。
-     */
-    @Override    
-    public void configureMessageBroker(MessageBrokerRegistry registry) {  
-    	//表示客户端订阅地址的前缀信息，也就是客户端接收服务端消息的地址的前缀信息
-        registry.enableSimpleBroker("/topic");  
-        //指服务端接收地址的前缀，意思就是说客户端给服务端发消息的地址的前缀
-        registry.setApplicationDestinationPrefixes("/app"); 
-    }
+	@Override
+	public void configureClientInboundChannel(ChannelRegistration arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void configureClientOutboundChannel(ChannelRegistration arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean configureMessageConverters(List<MessageConverter> arg0) {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public void configureWebSocketTransport(WebSocketTransportRegistration arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 }

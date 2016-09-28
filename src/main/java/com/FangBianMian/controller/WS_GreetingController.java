@@ -7,16 +7,11 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class WS_GreetingController {    
     
-   /* @MessageMapping("/websocket")    
-    public void greeting(String value){
+    @MessageMapping("/handler")
+    @SendTo("/topic/greetings")
+    public String greeting(String value) throws InterruptedException {  
     	System.out.println(value);
-        this.simpMessagingTemplate.convertAndSend("/topic/notice", value);    
-    }*/
-    
-    @MessageMapping("/websocket")
-    @SendTo("/topic/notice")
-    public String greeting(String value) {  
-    	System.out.println(value);
-        return value;
+    	Thread.sleep(3000); // simulated delay
+        return "handle";
     }
 }

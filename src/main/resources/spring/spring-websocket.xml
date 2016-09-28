@@ -15,6 +15,6 @@
     
     <websocket:handlers>
         <websocket:mapping path="/myHandler" handler="myHandler" />
-    </websocket:handlers>
+    </websocket:handlers> 
 
 </beans>
