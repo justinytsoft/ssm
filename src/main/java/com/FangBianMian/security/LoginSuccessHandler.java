@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.util.StringUtils;
 
+import com.FangBianMian.constant.Common;
 import com.FangBianMian.dao.IUserDao;
 import com.FangBianMian.domain.SecurityUser;
 
@@ -61,6 +62,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler, Initia
         }
 
         request.getSession().setAttribute("sessionUser", ud);
+        request.getSession().setAttribute(Common.WEBSOCKET_USERNAME, ud.getUsername());
 
 		if (this.forwardToDestination) {
 			logger.info("Login success,Forwarding to " + targetUrl);

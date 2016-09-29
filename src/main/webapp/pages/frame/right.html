@@ -2,93 +2,50 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 	
 	<body>
-	
-		<!-- less
-			<link rel="stylesheet/less" type="text/css" th:href="@{/assets/less/test.less}"/>
-	    	<script>less = { env: 'development'};</script>
-	    	<script th:src="@{/assets/js/less_2.5.3.js}" type="text/javascript"></script>
-	    	<script>less.watch();</script> 
-	    -->
-	    
 	    <script type="text/javascript" th:src="@{/assets/js/echarts.js}"></script>
 	    <script type="text/javascript" th:src="@{/assets/plugins/websocket/sockjs-0.3.4.js}"></script>
 	    <script type="text/javascript" th:src="@{/assets/plugins/websocket/stomp.js}"></script>
 		
 		<script type="text/javascript" th:inline="javascript">
-			/*<![CDATA[*/
-		    var stompClient = null;    
-			var rt = [[@{/}]];
-			
-			var socket = new SockJS(rt+'portfolio-stomp');
-
-			var stompClient = Stomp.over(socket);
-			//和服务器建立连接"SEND destination:http://localhost:8081/fang-bian-mian/app/handle content-length:14 {"name":"efw"}"
-			stompClient.connect("", "", function(frame) {
-				console.log(frame);
-				//订阅消息
-			    stompClient.subscribe(rt+'topic/greetings', function(data) { 
-			    	 alert(data);
-			         $("#response").text(data);
-			    });  
-			}); 
-
-			$("#ws").click(function(){
-				var name = $("#name").val();
-				console.info(name);
-				//发送消息
-				stompClient.send(rt+"app/handler", {}, JSON.stringify({
-							          'name' : name
-							      }));
-/* 				//发送消息
-				stompClient.send("http://localhost:8081/fang-bian-mian/app/handler", {}, JSON.stringify({
-							          'name' : name
-							      })); */
-			});
-		    
-		    /*]]>*/
-		</script>	
-		
-		<script type="text/javascript">
+		/*<![CDATA[*/
 	        $(function(){
+	        	
 	            var websocket;
 	            if ('WebSocket' in window) {
-	                alert("WebSocket");
-	                websocket = new WebSocket("ws://localhost:8081/veg");
+	                websocket = new WebSocket("ws://localhost:8081/fang-bian-mian/veg");
 	            } else if ('MozWebSocket' in window) {
-	                alert("MozWebSocket");
 	                websocket = new MozWebSocket("ws://veg");
 	            } else {
-	                alert("SockJS");
 	                websocket = new SockJS("http://localhost:8081/com/veg");
 	            }
+	            
 	            websocket.onopen = function (evnt) {
 	                $("#head").html("连接服务器成功!")
-	                send();
+	                websocket.send("dfdf");
 	            };
 	            websocket.onmessage = function (evnt) {
 	                $("#msg").html($("#msg").html() + "<br/>" + evnt.data);
 	            };
 	            websocket.onerror = function (evnt) {
+	                $("#head").html("链接异常!")
 	            };
 	            websocket.onclose = function (evnt) {
 	                $("#head").html("与服务器断开了链接!")
 	            }
+	            
+	            //给服务器发送消息
 	            function send(){
 	                if (websocket != null) {
-	
 	                    websocket.send("客户端请求");
 	                } else {
-	                    alert('未与服务器链接.');
+	                    cAlert('未与服务器链接.');
 	                }
 	            }
 	        });
+		/*]]>*/
 	    </script>
 		
-		<div id="head">
-		    webSocket消息推送
-		</div>
-		<div id="msg">
-		</div>
+		<div id="msg"></div>
 
 
 
