@@ -9,16 +9,6 @@
 		<script type="text/javascript" th:inline="javascript">
 		/*<![CDATA[*/
 	        $(function(){
-	        	
-	            var websocket;
-	            if ('WebSocket' in window) {
-	                websocket = new WebSocket("ws://localhost:8081/fang-bian-mian/veg");
-	            } else if ('MozWebSocket' in window) {
-	                websocket = new MozWebSocket("ws://veg");
-	            } else {
-	                websocket = new SockJS("http://localhost:8081/com/veg");
-	            }
-	            
 	            websocket.onopen = function (evnt) {
 	                $("#head").html("连接服务器成功!")
 	                websocket.send("dfdf");
