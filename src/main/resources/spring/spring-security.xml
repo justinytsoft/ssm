@@ -19,6 +19,7 @@
     <http pattern="/error" security="none"/>
     <http pattern="/denied" security="none"/>
     <http pattern="/notFound" security="none"/>
+    <http pattern="/ws/**" security="none"/>
     
     
     <http access-denied-page="/denied" auto-config="false" use-expressions="false" entry-point-ref="authenticationProcessingFilterEntryPoint">

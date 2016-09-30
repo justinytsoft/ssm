@@ -32,7 +32,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter{
     	request.getSession().setAttribute("type", type);
     	
     	//验证码校验
-       /* String genCode = this.obtainGeneratedCaptcha(request);  
+        String genCode = this.obtainGeneratedCaptcha(request);  
         String inputCode = this.obtainCaptcha(request);  
         
         if(genCode == null){  
@@ -42,7 +42,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter{
         if(!genCode.equalsIgnoreCase(inputCode)){  
         	request.setAttribute("msg", "CAPTCHA.FAILD");
             throw new CaptchaException("LoginAuthentication.captchaNotEquals");  
-        }  */
+        }  
         
         Authentication auth = null;
         try{

@@ -55,7 +55,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler, Initia
 		SecurityUser ud = (SecurityUser) authentication.getPrincipal();
 		String targetUrl = null;
 
-        if (ud.getType() == 3) {
+        if (ud.getType() == 2) {
             targetUrl = "/merchant/index";
         } else {
             targetUrl = "/index";

@@ -37,7 +37,7 @@ public class WebSocketHander implements WebSocketHandler {
     public void handleMessage(WebSocketSession webSocketSession, WebSocketMessage<?> webSocketMessage) throws Exception {
     	StringBuffer sb = new StringBuffer();
     	sb.append("<p style='margin-bottom:5px;color:darkgrey;font-size:14px;'>");
-    	sb.append(webSocketSession.getPrincipal().getName());
+    	sb.append(webSocketSession.getAttributes().get(Common.WEBSOCKET_USERNAME));
     	sb.append("(");
     	sb.append(DateUtil.formatDateTime(new Date()));
     	sb.append(")");
@@ -54,7 +54,7 @@ public class WebSocketHander implements WebSocketHandler {
         if(webSocketSession.isOpen()){
             webSocketSession.close();
         }
-        sendMessageToUsers(new TextMessage(webSocketSession.getPrincipal().getName() + " 断开了链接"));
+        sendMessageToUsers(new TextMessage(webSocketSession.getAttributes().get(Common.WEBSOCKET_USERNAME) + " 断开了链接"));
         users.remove(webSocketSession);
     }
 
@@ -63,7 +63,7 @@ public class WebSocketHander implements WebSocketHandler {
      */
     @Override
     public void afterConnectionClosed(WebSocketSession webSocketSession, CloseStatus closeStatus) throws Exception {
-    	sendMessageToUsers(new TextMessage(webSocketSession.getPrincipal().getName() + " 断开了链接"));
+    	sendMessageToUsers(new TextMessage(webSocketSession.getAttributes().get(Common.WEBSOCKET_USERNAME) + " 断开了链接"));
         users.remove(webSocketSession);
     }
     
