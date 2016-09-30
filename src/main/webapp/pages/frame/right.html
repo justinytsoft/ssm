@@ -108,8 +108,6 @@
 	                $("#head").html("<p>连接服务器成功!</p>")
 	            };
 	            websocket.onmessage = function (evnt) {
-	            	console.info(evnt);
-	            	console.info(evnt.data);
 	                $("#msg").html($("#msg").html() + "<p style='margin-top:10px'>" + evnt.data + "</p>");
 	            };
 	            websocket.onerror = function (evnt) {
