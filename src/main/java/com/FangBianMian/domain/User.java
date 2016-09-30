@@ -10,7 +10,7 @@ public class User {
 	private String password;
 	private String head;
 	private Integer type;
-	private String nick_name;
+	private String name;
 	private boolean enabled;
 	private Date last_login_time;
 	private String last_login_ip;
@@ -75,14 +75,6 @@ public class User {
 		this.type = type;
 	}
 
-	public String getNick_name() {
-		return nick_name;
-	}
-
-	public void setNick_name(String nick_name) {
-		this.nick_name = nick_name;
-	}
-
 	public boolean isEnabled() {
 		return enabled;
 	}
@@ -121,5 +113,13 @@ public class User {
 
 	public void setRoles(List<SysRoles> roles) {
 		this.roles = roles;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

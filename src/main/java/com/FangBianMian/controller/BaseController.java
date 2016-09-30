@@ -128,13 +128,12 @@ public class BaseController {
 	@RequestMapping("/left")
 	public String left(Model model){
 		SecurityUser user = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if(user == null){
+		if(user == null || user.getId()==null){
 			return "redirect: sessionException?msg=SEESION.INVALID";
 		}
-		
 		List<SysRoles> srs = DataUtil.isEmpty(user.getRoles());
-		
-		model.addAttribute("menus", DataUtil.isEmpty(srs.get(0).getMenus()));
+		SysRoles sr = srs.size()==0?new SysRoles():srs.get(0);
+		model.addAttribute("menus", DataUtil.isEmpty(sr.getMenus()));
 		return "pages/frame/left";
 	}
 

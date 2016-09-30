@@ -12,6 +12,7 @@ import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import com.FangBianMian.constant.Common;
+import com.FangBianMian.utils.DateUtil;
 
 public class WebSocketHander implements WebSocketHandler {
 
@@ -25,7 +26,7 @@ public class WebSocketHander implements WebSocketHandler {
         users.add(session);
         String userName = (String) session.getAttributes().get(Common.WEBSOCKET_USERNAME);
         if(userName!= null){
-            session.sendMessage(new TextMessage("服务器链接成功"));
+        	sendMessageToUsers(new TextMessage(userName + " 加入了讨论"));
         }
     }
     
@@ -34,7 +35,15 @@ public class WebSocketHander implements WebSocketHandler {
      */
     @Override
     public void handleMessage(WebSocketSession webSocketSession, WebSocketMessage<?> webSocketMessage) throws Exception {
-        sendMessageToUsers(new TextMessage(webSocketMessage.getPayload() + ""));
+    	StringBuffer sb = new StringBuffer();
+    	sb.append("<p style='margin-bottom:5px;color:darkgrey;font-size:14px;'>");
+    	sb.append(webSocketSession.getPrincipal().getName());
+    	sb.append("(");
+    	sb.append(DateUtil.formatDateTime(new Date()));
+    	sb.append(")");
+    	sb.append("</p>");
+    	sb.append(webSocketMessage.getPayload());
+    	sendMessageToUsers(new TextMessage(sb.toString()));
     }
 
     /**
@@ -45,6 +54,7 @@ public class WebSocketHander implements WebSocketHandler {
         if(webSocketSession.isOpen()){
             webSocketSession.close();
         }
+        sendMessageToUsers(new TextMessage(webSocketSession.getPrincipal().getName() + " 断开了链接"));
         users.remove(webSocketSession);
     }
 
@@ -53,6 +63,7 @@ public class WebSocketHander implements WebSocketHandler {
      */
     @Override
     public void afterConnectionClosed(WebSocketSession webSocketSession, CloseStatus closeStatus) throws Exception {
+    	sendMessageToUsers(new TextMessage(webSocketSession.getPrincipal().getName() + " 断开了链接"));
         users.remove(webSocketSession);
     }
     
@@ -98,17 +109,4 @@ public class WebSocketHander implements WebSocketHandler {
             }
         }
     }
-    
-    /**
-     * 获取系统当前时间并转换为TextMessage
-     * @return
-     */
-	public TextMessage getTime(){
-	    Date date = new Date();
-	    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	    String time =  format.format(date);
-	     CharBuffer temp=CharBuffer.wrap("系统当前时间："+time);
-	     TextMessage msg = new TextMessage(temp);
-	    return msg;
-	}
 }

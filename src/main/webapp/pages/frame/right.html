@@ -108,7 +108,9 @@
 	                $("#head").html("<p>连接服务器成功!</p>")
 	            };
 	            websocket.onmessage = function (evnt) {
-	                $("#msg").html($("#msg").html() + "<br/>" + evnt.data);
+	            	console.info(evnt);
+	            	console.info(evnt.data);
+	                $("#msg").html($("#msg").html() + "<p style='margin-top:10px'>" + evnt.data + "</p>");
 	            };
 	            websocket.onerror = function (evnt) {
 	                $("#head").html("链接异常!")
@@ -144,21 +146,39 @@
 		<!-- 必须放在body最后，否则可能会出现问题 -->
 		<script type="text/javascript" th:inline="javascript">
 		/*<![CDATA[*/
+		    // 图片加载错误时触发
+			function imgError(obj){
+				obj = $(obj);
+				var oldPath = obj.attr("src");
+				var oldPathData = oldPath.split("_S");
+				var newPath = oldPathData[0] + oldPathData[1];
+				obj.attr("src", newPath);
+			} 
+		    
+			//编辑器对象
 		    var editor = new wangEditor('editor');
 		
 		 	// 上传图片路径
 	        editor.config.uploadImgUrl = [[@{/upload/uploadImage}]];
+	     	// 配置自定义参数
+	        editor.config.uploadParams = {
+				thumb : true, //是否压缩图片 true 压缩 false 不压缩
+				temp : true //存放位置 true 临时目录 false 正式目录
+	     	};
 	        // 自定义上传事件
+            // resultText 服务器端返回的text
+            // xhr 是 xmlHttpRequest 对象，IE8、9中不支持
 	        editor.config.uploadImgFns.onload = function (resultText, xhr) {
-	            // resultText 服务器端返回的text
-	            // xhr 是 xmlHttpRequest 对象，IE8、9中不支持
-
-	            // 上传图片时，已经将图片的名字存在 editor.uploadImgOriginalName
-	            var originalName = editor.uploadImgOriginalName || '';
 	            // change the JSON string to javascript object
 	            var result = eval('(' + resultText + ')');
+	            var imgUrl = result.data.prefix + result.data.paths[0];
+				var imgData = imgUrl.split(".");
+				imgUrl = imgData[0] + "_S." + imgData[1];
+	            
+	            // 上传图片时，已经将图片的名字存在 editor.uploadImgOriginalName
+	            var originalName = editor.uploadImgOriginalName || '';
 	            // 如果 resultText 是图片的url地址，可以这样插入图片：
-	            editor.command(null, 'insertHtml', '<img src="' + result.data.prefix + result.data.paths[0] + '" alt="' + originalName + '" style="width:200px;height:200px;"/>');
+	            editor.command(null, 'insertHtml', '<img src="' + imgUrl + '" alt="' + originalName + '" onerror="imgError(this);"/>');
 	        };
 	        
 		    //初始化文本编辑器
@@ -167,12 +187,17 @@
 		    //给服务器发送消息
             function send(msg){
                 if (websocket != null) {
-                    //发送消息
-                	websocket.send(editor.$txt.html());
-                	//清空回复内容
-                	editor.$txt.html('<p><br></p>');
+                	var text = $.trim(editor.$txt.html());
+                	if(text==="<p><br></p>"){
+						cAlert("发送内容不能为空");                		
+                	}else{
+	                    //发送消息
+	                	websocket.send(text);
+	                	//清空回复内容
+	                	editor.$txt.html('<p><br></p>');
+                	}
                 } else {
-                    cAlert('未与服务器链接.');
+                    cAlert('未与服务器链接');
                 }
             }
 		    
