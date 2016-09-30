@@ -4,7 +4,8 @@ A:active{text-decoration:none;}
 
 /* 让按钮没有背影 */
 .l-btn{
-	box-shadow:none	
+	box-shadow:none;
+	outline: none;
 }
 
 /* 遮罩颜色和透明度 */
@@ -46,37 +47,3 @@ A:active{text-decoration:none;}
 	background: #DEF7FF;
 }
 
-/* filebox */
-/* .filebox{
-	border: none;
-	border-radius: 0;
-	width: 75px;
-}
-.filebox .textbox-prompt{
-	display: none;
-}
-.filebox a{
-	background-color: #00A0EA;
-	border-radius: 5px;
-	color:white;
-}
-.filebox .textbox-button:hover{
-	background: #00A0EA;
-	color:white;
-} */
-
-
-/* panel样式 */
-/* .panel-header{
-	border-radius:10px 10px 0 0;
-	padding:15px;
-}
-
-.panel-body{
-	border-radius:0 0 10px 10px;
-}
-
-.panel-title{
-	font-weight: normal;
-	font-size: 14px;
-} */

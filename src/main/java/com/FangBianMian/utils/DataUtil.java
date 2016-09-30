@@ -98,7 +98,6 @@ public class DataUtil {
 	 * @param param
 	 * @return 如果不为 null 直接返回，否则创建一个新的 ArrayList 返回
 	 */
-	@SuppressWarnings("hiding")
 	public static <T> List<T> isEmpty(List<T> list){
 		return CollectionUtils.isEmpty(list) ? new ArrayList<T>() : list;
 	}

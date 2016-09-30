@@ -100,16 +100,31 @@ public class BaseController {
 		return "pages/frame/index";
 	}
 	
+	/**
+	 * 上
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/top")
 	public String top(){
 		return "pages/frame/top";
 	}
 
+	/**
+	 * 下
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/bottom")
 	public String bottom(){
 		return "pages/frame/bottom";
 	}
-	
+
+	/**
+	 * 左
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/left")
 	public String left(Model model){
 		SecurityUser user = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -122,7 +137,12 @@ public class BaseController {
 		model.addAttribute("menus", DataUtil.isEmpty(srs.get(0).getMenus()));
 		return "pages/frame/left";
 	}
-	
+
+	/**
+	 * 右
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/right")
 	public String right(){
 		return "pages/frame/right";

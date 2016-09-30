@@ -2,16 +2,110 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 	
 	<body>
-	    <script type="text/javascript" th:src="@{/assets/js/echarts.js}"></script>
-	    <script type="text/javascript" th:src="@{/assets/plugins/websocket/sockjs-0.3.4.js}"></script>
-	    <script type="text/javascript" th:src="@{/assets/plugins/websocket/stomp.js}"></script>
+		<!-- 图表 -->
+		<script type="text/javascript" th:src="@{/assets/js/echarts.js}"></script>
 		
+		<!--引入wangEditor.css-->
+		<link rel="stylesheet" type="text/css" th:href="@{/assets/plugins/wangEditor-2.1.20/dist/css/wangEditor.css}"/>
+		<!-- wangEditor.js -->
+		<script type="text/javascript" th:src="@{/assets/plugins/wangEditor-2.1.20/dist/js/wangEditor.js}"></script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		<!-- 统计图 -->
+		<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+			$(function(){
+				// 基于准备好的dom，初始化echarts实例
+		        var myChart = echarts.init(document.getElementById('main'));
+		
+		        // 指定图表的配置项和数据
+		        option = {
+				    title: {
+				        text: '用户统计'
+				    },
+				    tooltip: {
+				        trigger: 'axis'
+				    },
+				    legend: {
+				        data:['总注册人数','今日注册人数','在线人数']
+				    },
+				    grid: {
+				        left: '3%',
+				        right: '4%',
+				        bottom: '3%',
+				        containLabel: true
+				    },
+				    toolbox: {
+				        feature: {
+				            saveAsImage: {}
+				        }
+				    },
+				    xAxis: {
+				        type: 'category',
+				        boundaryGap: false,
+				        data: ['周一','周二','周三','周四','周五','周六','周日']
+				    },
+				    yAxis: {
+				        type: 'value'
+				    },
+				    series: [
+				        {
+				            name:'总注册人数',
+				            type:'line',
+				            stack: '总量',
+				            data:[120, 132, 1201, 134, 90, 230, 210]
+				        },
+				        {
+				            name:'今日注册人数',
+				            type:'line',
+				            stack: '总量',
+				            data:[220, 182, 191, 234, 290, 330, 310]
+				        },
+				        {
+				            name:'在线人数',
+				            type:'line',
+				            stack: '总量',
+				            data:[150, 232, 201, 154, 190, 330, 410]
+				        }
+				    ]
+				};
+
+		
+		        // 使用刚指定的配置项和数据显示图表。
+		        myChart.setOption(option);
+			});	
+		/*]]>*/
+		</script> 
+		
+		<div id="main" style="width: 100%;height:400px;"></div> 
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<!-- 聊天室 -->
+		<!-- 使用websocket与服务器建立连接 -->
 		<script type="text/javascript" th:inline="javascript">
 		/*<![CDATA[*/
 	        $(function(){
 	            websocket.onopen = function (evnt) {
-	                $("#head").html("连接服务器成功!")
-	                websocket.send("dfdf");
+	                $("#head").html("<p>连接服务器成功!</p>")
 	            };
 	            websocket.onmessage = function (evnt) {
 	                $("#msg").html($("#msg").html() + "<br/>" + evnt.data);
@@ -22,67 +116,71 @@
 	            websocket.onclose = function (evnt) {
 	                $("#head").html("与服务器断开了链接!")
 	            }
-	            
-	            //给服务器发送消息
-	            function send(){
-	                if (websocket != null) {
-	                    websocket.send("客户端请求");
-	                } else {
-	                    cAlert('未与服务器链接.');
-	                }
-	            }
 	        });
 		/*]]>*/
 	    </script>
+	    
+	    <!-- 消息框显示 -->
+		<div style="padding:10px;">
+			<div style="text-align: center;">
+				<span style="font-size: 22px;font-weight: bold;">讨论区</span>
+			</div>
+			
+			<!-- 消息框 -->
+			<div id="msg" style="border: 1px solid #cccccc;height:300px;padding:10px;overflow-y:auto;"></div>
+			
+			<!-- 回复框 -->
+			<div id="editor-container">
+				<textarea id="editor" style="height:150px"></textarea>
+			</div>
+			
+			<!-- 回复按钮 -->
+			<a href="#" class="easyui-linkbutton c8" data-options="width:50,height:30,onClick:send" style="margin:10px;float: right">回 复</a>
+			<!-- 清空按钮 -->
+			<a href="#" class="easyui-linkbutton c8" data-options="width:50,height:30,onClick:clear" style="margin:10px;float: right">清 空</a>
+		</div>
 		
-		<div id="msg"></div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		<!-- <script type="text/javascript" th:inline="javascript">
-			$(function(){
-				// 基于准备好的dom，初始化echarts实例
-		        var myChart = echarts.init(document.getElementById('main'));
+		<!-- 消息操作 -->
+		<!-- 必须放在body最后，否则可能会出现问题 -->
+		<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+		    var editor = new wangEditor('editor');
 		
-		        // 指定图表的配置项和数据
-		        var option = {
-		            tooltip: {},
-		            legend: {
-		                data:['销量']
-		            },
-		            xAxis: {
-		                data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
-		            },
-		            yAxis: {},
-		            series: [{
-		                name: '销量',
-		                type: 'bar',
-		                data: [5, 20, 36, 10, 10, 20]
-		            }]
-		        };
-		
-		        // 使用刚指定的配置项和数据显示图表。
-		        myChart.setOption(option);
-			});
-		</script> -->
+		 	// 上传图片路径
+	        editor.config.uploadImgUrl = [[@{/upload/uploadImage}]];
+	        // 自定义上传事件
+	        editor.config.uploadImgFns.onload = function (resultText, xhr) {
+	            // resultText 服务器端返回的text
+	            // xhr 是 xmlHttpRequest 对象，IE8、9中不支持
 
-		<!-- <div id="main" style="width: 600px;height:400px;"></div> -->
+	            // 上传图片时，已经将图片的名字存在 editor.uploadImgOriginalName
+	            var originalName = editor.uploadImgOriginalName || '';
+	            // change the JSON string to javascript object
+	            var result = eval('(' + resultText + ')');
+	            // 如果 resultText 是图片的url地址，可以这样插入图片：
+	            editor.command(null, 'insertHtml', '<img src="' + result.data.prefix + result.data.paths[0] + '" alt="' + originalName + '" style="width:200px;height:200px;"/>');
+	        };
+	        
+		    //初始化文本编辑器
+		    editor.create();
+		    
+		    //给服务器发送消息
+            function send(msg){
+                if (websocket != null) {
+                    //发送消息
+                	websocket.send(editor.$txt.html());
+                	//清空回复内容
+                	editor.$txt.html('<p><br></p>');
+                } else {
+                    cAlert('未与服务器链接.');
+                }
+            }
+		    
+		    //清空消息
+		    function clear(){
+		    	$("#msg").html("");
+		    }
+		/*]]>*/
+		</script>
 	</body>
 </html>
