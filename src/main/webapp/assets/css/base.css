@@ -21,10 +21,10 @@ body,ul,ol,li,p,h1,h2,h3,h4,h5,h6,form,fieldset,table,td,img,div,tr{ margin:0; p
 img{ border:0 none;}
 
 /* 定义默认的链接样式，仅仅是作为默认样式提供，可以在各自的实例中覆盖掉 */
-/* a:link, a:visited{ color:black; text-decoration:none;}
-a:hover{ color:black; text-decoration:underline;} */
+a:link, a:visited{ color:black; text-decoration:none;}
+a:hover{ color:black; text-decoration:underline;} 
 /* 去掉链接的虚线框 */
-a { outline:none; star:expression(this.onFocus=this.blur());}
+a { outline:none; star:expression(this.onFocus=this.blur());text-decoration:none;}
 
 /* 定义H系列标签，覆盖H系列标签默认属性 */
 h1{ font-size:24px;}

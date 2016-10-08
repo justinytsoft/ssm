@@ -10,13 +10,24 @@
 			/*]]>*/
 		</script>
 		
-		
-		<div style="background: url(assets/imgs/leftLogo.gif) repeat-x; height: 75px"></div>
 		<!-- 导航菜单 -->
-		<div class="easyui-accordion" data-options="fit:true">
-	        <div th:each="m:${menus}" th:title="${m.name}" data-options="border:false">
-	        	<div th:each="sub:${m.subMenus}" th:text="${sub.name}"></div>
-	        </div>
+		<div>
+			<ul>
+				<li th:each="m:${menus}">
+					<div>
+						<i class="icon iconfont">&#xe62a;</i>
+						<span th:text="${m.name}"></span>
+						<span></span>
+					</div>
+					<!-- <ul style="overflow: hidden;display: none">
+						<li th:each="sub:${m.subMenus}">
+							<a href="javascript:">
+								<span th:text="${sub.name}"></span>
+							</a>
+						</li>
+					</ul> -->
+				</li>
+			</ul>
 	    </div>
 	</body>
 </html>

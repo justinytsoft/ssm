@@ -107,10 +107,12 @@ public class BaseController {
 	 * @return
 	 */
 	@RequestMapping("/top")
-	public String top(){
-		if(!DataValidation.isLogin()){
+	public String top(Model model){
+		SecurityUser user = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if(user == null){
 			return "redirect: sessionException?msg=SEESION.INVALID";
 		}
+		model.addAttribute("user", user);
 		return "pages/frame/top";
 	}
 

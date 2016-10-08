@@ -4,9 +4,16 @@
 	
 	<body>
 		<div class="content">
+			<div class="notice">
+				后台管理系统	
+			</div>
+			
 			<div class="user_info">
-				欢迎您登录: <span>管理员</span><a style="margin-left: 20px" th:href="@{/logout}">退 出</a>
-				<i class="icon iconfont">&#xe62a;</i> 
+				<div class="info">
+					<img alt="头像" th:src="${application.baseImageUrl + user.head}" style="width:30px;height:30px;margin-right: 10px"/>
+					<span th:text="${user.name}"></span>
+					<a style="margin-left: 20px" th:href="@{/logout}">退 出</a>
+				</div>
 			</div>
 		</div>
 	</body>
