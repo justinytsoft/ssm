@@ -20,6 +20,7 @@ import com.FangBianMian.domain.SysRoles;
 import com.FangBianMian.utils.Captcha;
 import com.FangBianMian.utils.Constant;
 import com.FangBianMian.utils.DataUtil;
+import com.FangBianMian.utils.DataValidation;
 
 @Controller
 public class BaseController {
@@ -107,6 +108,9 @@ public class BaseController {
 	 */
 	@RequestMapping("/top")
 	public String top(){
+		if(!DataValidation.isLogin()){
+			return "redirect: sessionException?msg=SEESION.INVALID";
+		}
 		return "pages/frame/top";
 	}
 
@@ -117,6 +121,9 @@ public class BaseController {
 	 */
 	@RequestMapping("/bottom")
 	public String bottom(){
+		if(!DataValidation.isLogin()){
+			return "redirect: sessionException?msg=SEESION.INVALID";
+		}
 		return "pages/frame/bottom";
 	}
 
@@ -144,6 +151,9 @@ public class BaseController {
 	 */
 	@RequestMapping("/right")
 	public String right(){
+		if(!DataValidation.isLogin()){
+			return "redirect: sessionException?msg=SEESION.INVALID";
+		}
 		return "pages/frame/right";
 	}
 	

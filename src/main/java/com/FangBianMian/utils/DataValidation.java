@@ -6,13 +6,28 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.poi.hssf.record.formula.functions.T;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.CollectionUtils;
+
+import com.FangBianMian.domain.SecurityUser;
 
 /**
  * 校验传入数据
  *
  */
 public class DataValidation {
+	
+	/**
+	 * 检查是否登录
+	 * @return 是返回true， 否则返回false
+	 */
+	public static boolean isLogin(){
+		SecurityUser user = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if(user == null || user.getId()==null){
+			return false;
+		}
+		return true;
+	}
 	
 	/**
 	 * 判断集合是否为空
@@ -23,7 +38,7 @@ public class DataValidation {
 	public static <T> List<T> isEmpty(List<T> list){
 		return CollectionUtils.isEmpty(list) ? new ArrayList<T>() : list;
 	}
-
+	
 	/** 
      * 检测邮箱地址是否合法 
      * @param email 
