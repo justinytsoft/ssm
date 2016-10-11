@@ -62,7 +62,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler, Initia
         }
 
         request.getSession().setAttribute("sessionUser", ud);
-        request.getSession().setAttribute(Common.WEBSOCKET_USERNAME, ud.getName());
+        request.getSession().setAttribute(Common.WEBSOCKET_USERNAME, ud.getUsername());
 
 		if (this.forwardToDestination) {
 			logger.info("Login success,Forwarding to " + targetUrl);
