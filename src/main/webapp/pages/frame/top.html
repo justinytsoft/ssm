@@ -3,17 +3,15 @@
 	<head th:include="fragment/import :: header"></head>
 	
 	<body>
-		<div class="content">
-			<div class="notice">
+		<div>
+			<div style="float:left;line-height:55px;margin-left: 20px;color:#17A9FF;font-size:16px">
 				后台管理系统	
 			</div>
 			
-			<div class="user_info">
-				<div class="info">
-					<img alt="头像" th:src="${application.baseImageUrl + user.head}" style="width:30px;height:30px;margin-right: 10px"/>
-					<span th:text="${user.name}"></span>
-					<a style="margin-left: 20px" th:href="@{/logout}">退 出</a>
-				</div>
+			<div style="float:right;line-height:55px;margin-right: 20px">
+				<img alt="头像" th:src="${application.baseImageUrl + user.head}" style="vertical-align:middle;width:30px;height:30px;margin-right: 10px"/>
+				<span th:text="${user.name}"></span>
+				<a style="margin-left: 20px" th:href="@{/logout}">退 出</a>
 			</div>
 		</div>
 	</body>

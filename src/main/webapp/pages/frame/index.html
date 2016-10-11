@@ -3,17 +3,6 @@
 	<head th:include="fragment/import :: header"></head>
 	<title>首页</title>
 	
-	<!-- <link rel="stylesheet/less" type="text/css" th:href="@{/assets/less/base/index.less}"/> -->
-	
-	<!-- WebSocket -->
-    <script type="text/javascript" th:src="@{/assets/plugins/websocket/sockjs-0.3.4.js}"></script>
-    <script type="text/javascript" th:src="@{/assets/plugins/websocket/stomp.js}"></script>
-
-	<!-- less -->
-    <!-- <script>less = { env: 'development'};</script>
-    <script th:src="@{/assets/js/less_2.5.3.js}" type="text/javascript"></script>
-    <script>less.watch();</script> -->
-    
 	<script type="text/javascript" th:inline="javascript">
 		/*<![CDATA[*/
 		    //项目根路径
@@ -52,13 +41,5 @@
 	    <!-- <div id="bottom" data-options="region:'south', href:'bottom',border:false" style="height:30px;background: gray"></div> -->
 	    <div id="left" data-options="region:'west', href:'left',split:false,border:false" style="width:200px;"></div>
 	    <div id="right" data-options="region:'center', href:'right',border:false" style="overflow: auto;"></div> 
-		
-		<!-- <div id="left" data-options="region:'west',border:false,href:'left',loadingMessage:'数据加载中....'" style="width:267px;background-color: #EEE"></div>
-	    <div data-options="region:'center',border:false">
-	       <div class="easyui-layout" data-options="fit:true,border:false">
-	            <div id="top" data-options="region:'north',border:false,href:'top',loadingMessage:'数据加载中....'" style="height:72px;overflow-y: hidden"></div>
-	            <div id="right" data-options="region:'center',border:false,href:'right',loadingMessage:'数据加载中....'"></div>
-	        </div>
-	    </div> -->
 	</body>
 </html>
