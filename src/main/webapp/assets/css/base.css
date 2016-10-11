@@ -223,18 +223,6 @@ li{ list-style-type:disc;}
     }
 } 
 
-
-
-
-
-
-
-
-
-
-
-
-
 /*---------------- 异常页面 ------------------*/
 
 /* 404 */
@@ -269,3 +257,141 @@ li{ list-style-type:disc;}
 	-webkit-background-size:cover;
 	overflow: hidden;
 }
+
+
+
+
+/*----------------------------------------------------------------------*/
+/*---------------------------   页面CSS  --------------------------------*/
+/*----------------------------------------------------------------------*/
+
+/*****************left mune******************/
+.menuA {padding-left: 10px;margin-right: 10px;display: inline-block;background: #f3f3f3;height:100%}
+.active {background: #FFFFFF;border-bottom-left-radius: 6px;border-top-left-radius: 6px;border-bottom: 1px solid #d2d2d2;}
+.secMenu {display: none;}
+.secMenu a:hover {color: #17A9FF;}/*鼠标经过的颜色变化*/
+.secMenu li {width: 160px;margin:10px auto;border-radius: 6px; color: #dcdcdc;padding-top: 15px;padding-bottom: 15px;text-align: center;cursor:pointer;}
+.firMenu label{font-size: 15px;display:inline-block;width: 200px;line-height: 53px;cursor:pointer;}
+.firMenu label a:hover {color: #17A9FF;}
+.firMenu label img {float: left; margin-left: 15px;margin-right:15px ;padding-top: 15px;padding-bottom: 15px;}
+
+
+/*
+felx布局, 默认垂直居中
+*/
+.box {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: space-between;
+  -moz-justify-content: space-between;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  align-items: center;
+}
+#top {
+  height: 80px;
+}
+#top .content {
+  width: 100%;
+  height: 100%;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: space-between;
+  -moz-justify-content: space-between;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  align-items: center;
+}
+#top .content .notice {
+  margin-left: 50px;
+}
+#top .content .user_info .info {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: space-between;
+  -moz-justify-content: space-between;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  align-items: center;
+  margin-right: 50px;
+}
+#right {
+  padding: 20px;
+}
+textarea {
+  width: 400px;
+  height: 300px;
+  font-size: 12px;
+}
+
+
+/*
+定义圆角
+@radius 圆角大小，默认 5px
+*/
+/* 登录、注册、忘记密码 的body样式 */
+.lrfBody {
+  background-image: url('../../imgs/bg.jpg');
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  overflow: hidden;
+}
+/* 登录、注册、忘记密码 的外部DIV样式 */
+.lrfDiv {
+  width: 340px;
+  height: 365px;
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  text-align: center;
+  margin: -100px 0 0 -150px;
+  background: rgba(255, 255, 255, 0.51);
+  box-shadow: 0px 0px 20px 0px #FFFFFF inset;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+.lrfDiv .container {
+  width: 80%;
+  margin: 10%;
+  text-align: center;
+}
+.lrfDiv .container input {
+  color: #C7C7C7;
+}
+.lrfDiv .container div {
+  color: #A7A8AB;
+  font-size: 13px;
+  text-align: left;
+}
+form > div {
+  padding: 3px 10px;
+}
+/* 验证码 */
+.captcha {
+  width: 25%;
+  height: 38px;
+  cursor: pointer;
+  border-radius: 5px;
+  vertical-align: middle;
+  border: 1px solid #ddd;
+}
+@media all and (min-width: 500px) and (max-width: 1000px) {
+  .lrfDiv {
+  width: 500px;
+  height: 500px;
+  left: 40%;
+}
+form > div {
+  padding: 20px 10px;
+}
+
+}
+
+

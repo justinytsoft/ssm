@@ -1,5 +1,119 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	
+	<body style="background:#f3f3f3">
+	
+		<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+			$(function() {
+				//导航切换
+				$(".menuA li label").click(function() {
+					$('.secMenu').slideUp();
+					$('.secMenu li.bgc-color').removeClass('bgc-color');
+					$(".menuA li label.active").removeClass("active");
+					$(this).addClass("active");
+					var $ul = $(this).next('ul');
+					if($ul.is(':visible')) {
+						$(this).next('ul').slideUp();
+					} else {
+						$(this).next('ul').slideDown();
+					}
+				});
+				
+				$('.secMenu li').click(function(){
+					$('.secMenu li.bgc-color').removeClass('bgc-color');
+					$(this).addClass('bgc-color');
+					
+					var url = $($(this).find("a")[0]).attr("href");
+					var rframe = parent.document.getElementById("rightFrame") ;  
+			   		rframe.src = url;  
+				});
+				
+				//menu height
+				function resizeP(){
+					$('.menuA').css('height',$(window).height()-66+'px');
+				};
+				
+				$(window).on('resize',function(){
+					resizeP();
+				});
+				
+				resizeP();
+			});
+		/*]]>*/
+		</script>
+	
+	
+		<div class="menuA" style="position: fixed;overflow:scroll;overflow-x:hidden">
+			<ul class="firMenu">
+				<!-- 一级菜单 -->
+				<li th:each="m:${menus}">
+					<label>
+						<a th:href="@{${m.url!=null?m.url:'javascript:'}}">
+							<label>
+								<img th:src="@{${m.icon}}" />
+								<span th:text="${m.name}"></span>
+							</label>
+						</a>
+					</label>
+					
+					<!-- 二级菜单 -->
+					<ul class="secMenu" th:if="${m.subMenus!=null and not #lists.isEmpty(m.subMenus)}">
+	       				<li th:each="sub:${m.subMenus}">
+	       					<div>
+	       						<cite></cite>
+	     						<a th:href="@{${sub.url}}" th:text="${sub.name}"></a>
+	       					</div>
+	       				</li>
+	   				</ul>
+				</li>
+			</ul> 
+		</div>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 	<head th:include="fragment/import :: header"></head>
 	<body>
 		<script type="text/javascript" th:inline="javascript">
@@ -10,7 +124,6 @@
 			/*]]>*/
 		</script>
 		
-		<!-- 导航菜单 -->
 		<div>
 			<ul>
 				<li th:each="m:${menus}">
@@ -19,15 +132,15 @@
 						<span th:text="${m.name}"></span>
 						<span></span>
 					</div>
-					<!-- <ul style="overflow: hidden;display: none">
+					<ul style="overflow: hidden;display: none">
 						<li th:each="sub:${m.subMenus}">
 							<a href="javascript:">
 								<span th:text="${sub.name}"></span>
 							</a>
 						</li>
-					</ul> -->
+					</ul>
 				</li>
 			</ul>
 	    </div>
 	</body>
-</html>
+</html> -->
