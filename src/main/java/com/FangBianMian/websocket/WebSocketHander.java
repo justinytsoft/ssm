@@ -36,7 +36,7 @@ public class WebSocketHander implements WebSocketHandler {
     	StringBuffer sb = new StringBuffer();
     	sb.append("<p style='margin-bottom:5px;color:darkgrey;font-size:14px;'>");
     	sb.append(webSocketSession.getAttributes().get(Common.WEBSOCKET_USERNAME));
-    	sb.append("(");
+    	sb.append(" (");
     	sb.append(DateUtil.formatDateTime(new Date()));
     	sb.append(")");
     	sb.append("</p>");
