@@ -31,7 +31,7 @@ public class ProductController {
 	 */
 	@RequestMapping("/list")
 	public String list(){
-		return "pages/product/add";
+		return "pages/product/list";
 	}
 	
 	/**

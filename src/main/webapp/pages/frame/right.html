@@ -2,6 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 	
 	<body>
+		<!-- 图表 -->
+  		<script type="text/javascript" th:src="@{/assets/plugins/echarts/echarts.js}"></script>
+  		<script type="text/javascript" th:src="@{/assets/plugins/echarts/map/china.js}"></script> 
+
+		<!-- wangEditor -->
+  		<link rel="stylesheet" type="text/css" th:href="@{/assets/plugins/wangEditor-2.1.20/dist/css/wangEditor.css}"/>
+  		<script type="text/javascript" th:src="@{/assets/plugins/wangEditor-2.1.20/dist/js/wangEditor.js}"></script> 
+	
 		<!-- 弹出qq对话框 -->
 		<div style="height:100px">
 			<a th:href="@{tencent://message(uin=641154961,Site=在线客服,Menu=yes)}" style="padding:30px">QQ客服</a>
