@@ -9,6 +9,9 @@
 	
 	<script type="text/javascript" th:inline="javascript">
 		/*<![CDATA[*/
+		    //设置ueditor访问的根路径
+		    window.UEDITOR_HOME_URL = [[@{/assets/plugins/ueditor/}]];
+		           
 		    //项目根路径
 			var rootPath = [[@{/}]];
 		    //websocket请求前缀

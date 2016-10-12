@@ -6,6 +6,8 @@
 		<script type="text/javascript" th:src="@{/assets/js/ajaxfileupload.js}"></script>
 		<script type="text/javascript" th:inline="javascript">
 		/*<![CDATA[*/
+		    var URL = [[@{/assets}]];
+		           
 			//文件上传
 	 	    function fileUpload(n, o){
 	   		 	var obj = $(this);
@@ -98,16 +100,16 @@
 						<!-- 加载编辑器的容器 -->
 					    <script id="container" name="content" type="text/plain"></script>
 					    <!-- 配置文件 -->
-					    <script type="text/javascript" th:inline="javascript" th:src="@{/assets/plugins/ueditor/ueditor.config.js}"></script>
+					    <script type="text/javascript" src="assets/plugins/ueditor/ueditor.config.js"></script>
 					    <!-- 编辑器源码文件 -->
-					    <script type="text/javascript" th:inline="javascript" th:src="@{/assets/plugins/ueditor/ueditor.all.js}"></script>
+					    <script type="text/javascript" src="assets/plugins/ueditor/ueditor.all.js"></script>
 					    <!-- 实例化编辑器 -->
 					    <script type="text/javascript" th:inline="javascript">
 						/*<![CDATA[*/
 				            UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
 							UE.Editor.prototype.getActionUrl = function(action) {
 							    if (action == 'uploadimage' || action == 'uploadscrawl' || action == 'uploadimage') {
-							        return [[@{/}]] + '/services/upload/uploadImageOrigin';
+							        return '';
 							    } else {
 							        return this._bkGetActionUrl.call(this, action);
 							    }
