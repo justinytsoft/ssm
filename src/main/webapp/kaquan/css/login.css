@@ -1,0 +1,62 @@
+@charset "utf-8";
+/* CSS Common */
+.banner{width:1000px;margin:5px auto 0 auto;overflow:hidden;}
+.defaultMain{width:998px;margin:5px auto 0 auto;overflow:hidden;clear:both;position:relative;z-index:999;}
+/* ---------------------defaultMainLeft--------------------------- */
+.defaultMain .defaultMainLogo{width:996px;overflow:hidden; border:#e9cac8 1px solid; padding:10px 0; }
+.defaultMain .defaultMainLogo dl{width:100%; overflow:hidden; float:left;}
+.defaultMain .defaultMainLogo dl dt{line-height:30px; height:30px; text-indent:30px; font-size:14px; font-weight:bold;color:#930;}
+.defaultMain .defaultMainLogo dl dd{}
+.defaultMain .defaultMainLogo dl dd ul{width:80%; margin:0 auto; overflow:hidden;}
+.defaultMain .defaultMainLogo dl dd ul li{ line-height:20px; height:40px;}
+.defaultMain .defaultMainLogo dl dd ul li input{ border:#e1e1e1 1px solid; height:20px;line-height:20px;text-indent:5px;}
+.defaultMain .defaultMainLogo dl dd ul li.cdkey input{width:50px; border:#e1e1e1 1px solid; height:20px;line-height:20px;text-indent:5px;margin-right:5px;}
+.defaultMain .defaultMainLogo dl dd ul li.cdkey img{height:30px;line-height:30px; margin-top:-8px; cursor:pointer}
+.defaultMain .defaultMainLogo dl dd ul li.cdkey1 input{border:none;}
+
+/* 底部帮助文档 */
+.help{width:998px;margin:10px auto 0 auto;overflow:hidden;clear:both;border:1px solid #e9e9e9;padding-bottom:10px;}
+.help dl{width:19%;float:left;}
+.help dl dt{line-height:70px;font-size:17px;font-family:'Microsoft Yahei';}
+.help dl dd{padding-left:40px;line-height:22px;color:#ccc;}
+
+.help .file-01 dt{background:url(../images/icon-028.gif) no-repeat 10px 10px;text-indent:85px;}
+
+.help .file-02 dt{background:url(../images/icon-028.gif) no-repeat 10px -50px;text-indent:85px;}
+
+.help .file-03 dt{background:url(../images/icon-028.gif) no-repeat 10px -120px;text-indent:85px;}
+
+.help .file-04 dt{background:url(../images/icon-028.gif) no-repeat 10px -190px;text-indent:75px;}
+
+.help .file-05 dt{background:url(../images/icon-028.gif) no-repeat 10px -250px;text-indent:75px;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

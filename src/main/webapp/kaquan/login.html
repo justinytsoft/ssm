@@ -1,0 +1,462 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+		<title>登录 - 【卡券村官网】</title>
+		<link href="css/common.css" rel="stylesheet" type="text/css">
+		<link href="css/login.css" rel="stylesheet" type="text/css">
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/layer..js"></script>
+		<link rel="stylesheet" href="css/layer.css" id="layui_layer_skinlayercss">
+		<script type="text/javascript" src="js/hdcd..js"></script>
+		<script type="text/javascript" src="js/indexhome.js"></script>
+		<script src="js/validata.field..js" type="text/javascript"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+
+				var si;
+
+				var wait = 60;
+
+				function time() {
+					if(wait == 0) {
+						$("#btnSendCode").attr("disabled", false);
+						$("#btnSendCode").val("免费获取验证码");
+						wait = 60;
+					} else {
+						$("#btnSendCode").attr("disabled", true);
+						$("#btnSendCode").val("重新发送(" + wait + ")");
+						wait--;
+						setTimeout(function() {
+								time();
+							},
+							1000)
+					}
+				}
+
+				$("#btnSendCode").bind("click", function() {
+					var phone = $.trim($('#userName').val());
+
+					if(phone == "") {
+						alert("请输入手机号码！");
+						$('#userName').focus();
+						return false;
+					}
+
+					if(!(/^1[3|4|5|7|8]\d{9}$/.test(phone))) {
+						alert("手机号码有误，请重填！");
+						$('#userName').focus();
+						return false;
+					} else {
+						time();
+						$.ajax({
+							type: "post",
+							url: "send_code.aspx/add",
+							data: "{'phone':'" + phone + "'}",
+							contentType: "application/json; charset=utf-8",
+							dataType: "json",
+							success: function(data) {
+								si = setInterval(validating, 1000);
+							},
+							error: function(err) {
+								alert(err);
+							}
+						});
+					}
+					return false;
+				});
+
+				$('#loginForm').bind('submit', function() {
+
+					clearInterval(si);
+
+					var username = $.trim($('#userName').val());
+					var password = $.trim($('#password').val());
+
+					var msg = validataField.validataUserName(username);
+					if(msg != validataField.OK) {
+						alert(msg);
+						return false;
+					}
+
+					if(password.length != 6) {
+						alert("抱歉，您输入验证码有误，验证码为6位，请打开短信开清楚再输入验证码！");
+						return false;
+					}
+
+					$.ajax({
+						url: 'login.aspx',
+						type: 'post',
+						data: 'userName=' + username + '&password=' + password + '&type=login',
+						success: function(msg) {
+
+							if(msg == '-1') {
+								alert('手机号码与之前发送验证码手机号码不一致！');
+							}
+							if(msg == '-2') {
+								alert('手机号码或验证码有误');
+							}
+							if(msg == '1') {
+								layer.msg('验证码验证中，请耐心等待...', {
+									icon: 16,
+									time: 600000
+								});
+								si = setInterval(validating, 1000);
+							}
+						},
+						error: function(msg) {
+							alert(msg.responseText);
+						}
+					});
+					return false;
+				});
+
+				function validating() {
+					var username = $.trim($('#userName').val());
+					$.ajax({
+						url: 'login.aspx',
+						type: 'post',
+						data: 'userName=' + username + '&type=validate',
+						success: function(msg) {
+
+							if(msg == '-1') {
+								alert("验证码错误，请重新发送验证码！");
+								$('#password').val("");
+								$('#password').focus();
+								layer.closeAll();
+								clearInterval(si);
+								return;
+							}
+							if(msg == '2' || msg == '4') {
+
+								layer.closeAll('loading');
+								clearInterval(si);
+								window.location.href = 'default.aspx';
+
+							}
+
+							if(msg == '-2') {
+
+								layer.closeAll();
+								clearInterval(si);
+
+								//继续弹出
+
+								/*if (!confirm("确认把您的积分兑换成电子券吗？")) {
+								return false;
+								}*/
+
+								layer.open({
+									type: 2,
+									area: ['410px', '220px'],
+									fix: true, //不固定
+									maxmin: false,
+									content: 's2.html',
+									btn: '确认',
+									yes: function(index, layero) {
+
+										var body = layer.getChildFrame('body', index);
+
+										$.ajax({
+											url: 'login.aspx',
+											type: 'post',
+											data: 'userName=' + username + '&password=' + body.find('#code').val() + '&type=login1',
+											success: function(msg) {
+												if(msg == '-1') {
+													alert('手机号码与之前发送验证码手机号码不一致！');
+												}
+												if(msg == '-2') {
+													alert('手机号码或验证码有误');
+												}
+												if(msg == '1') {
+													layer.msg('验证码验证中，请耐心等待...', {
+														icon: 16,
+														time: 600000
+													});
+													si = setInterval(validating, 1000);
+												}
+												layer.close(index);
+											},
+											error: function(msg) {
+												alert(msg.responseText);
+											}
+										});
+									}
+								});
+
+								/*layer.prompt({ title: '首次购买需要先设置支付密码，请输入收到的验证码！' }, function(val) {
+								$.ajax({
+								url: 'login.aspx',
+								type: 'post',
+								data: 'userName=' + username + '&password=' + val + '&type=login1',
+								success: function(msg) {
+
+								            if (msg == '-1') {
+								alert('手机号码与之前发送验证码手机号码不一致！');
+								}
+								if (msg == '-2') {
+								alert('手机号码或验证码有误');
+								}
+								if (msg == '1') {
+								layer.msg('验证码验证中，请耐心等待...', { icon: 16, time: 600000 });
+								si = setInterval(validating, 1000);
+								}
+								},
+								error: function(msg) {
+								alert(msg.responseText);
+								}
+								});
+								});*/
+
+							}
+						},
+						error: function(msg) {
+							alert(msg.responseText);
+						}
+					});
+				}
+
+				$('#btnReg').bind('click', function() {
+					var username = $.trim($('#regUserName').val());
+					var password = $.trim($('#regPassword').val());
+					var email = $.trim($('#email').val());
+					var confirmPass = $.trim($('#regConfirmPass').val());
+					var mobile = $.trim($('#mobile').val());
+					var isRemember = $('#regRemember').attr('checked');
+					var msg = validataField.validataUserName(username);
+					if(msg != validataField.OK) {
+						alert(msg);
+						return false;
+					}
+					msg = validataField.validataPassword(password);
+					if(msg != validataField.OK) {
+						alert(msg);
+						return false;
+					}
+					msg = validataField.validataConfirmPassword(password, confirmPass);
+					if(msg != validataField.OK) {
+						alert(msg);
+						return false;
+					}
+					msg = validataField.validataMobile(mobile, true);
+					if(msg != validataField.OK) {
+						alert(msg);
+						return false;
+					}
+					msg = validataField.validataEmail(email);
+					if(msg != validataField.OK) {
+						alert(msg);
+						return false;
+					}
+					var remember = isRemember ? 1 : 0;
+
+					$.ajax({
+						url: 'login.aspx',
+						type: 'post',
+						data: 'userName=' + username + '&password=' + password + '&mobile=' + mobile + '&email=' + email + '&remember=' + remember + '&type=reg',
+						success: function(msg) {
+							if(msg == "ok") {
+								alert('恭喜注册成功，点击确定完成。');
+								var page = getCookie('tmjcshop_page');
+								delCookie('tmjcshop_page');
+								if(page == null)
+									window.location.href = 'member_center.aspx';
+								else
+									window.location.href = page;
+							}
+							if(msg == "sameName") {
+								alert("该用户名已经存在，请换另外一个用户名");
+							}
+							if(msg == "sameEmail")
+								alert("该电子邮件已经存在，请输入另外一个电子邮件地址");
+						},
+						error: function(msg) {
+							alert(msg.responseText);
+						}
+					});
+					return false;
+				});
+			});
+		</script>
+	</head>
+
+	<body>
+
+		<ul class="mininav">
+			<li class="of-ot-oznt-01">欢迎来到卡券村，我们是国内最专业的积分兑换礼品平台！ &nbsp;
+				<a style="display:none" id="member_username" href="local-adrmember_center.aspx" target="_blank"></a>&nbsp;<span id="head1_lblPrice" style="font-size: 12px; font-weight: bold; color: red; display: none;"></span>&nbsp;
+				<a id="login" href="local-adrlogin.aspx" class="LineR">登录</a> &nbsp;
+				<a id="logout" style="display:none; cursor:pointer">退出</a>
+			</li>
+			<li class="of-ot-oznt-02">
+				<a href="local-adrmember_center.aspx" class="LineR">会员中心</a>
+				<a href="local-adrmember_center.aspx" class="LineR" style="display:none;">超级积分俱乐部</a></li>
+				<!--<a href="local-adrshoppingCart.aspx" class="LineR">购物车</a>
+				<a href="local-adrfavorite.aspx" class="LineR" style="display:none;">收藏夹</a>
+				<a href="local-adrhelp.aspx" class="LineR">帮助中心</a> &nbsp;<img style="display:none;" src="img/icon-003.gif" alt="400-678-1128"></li>-->
+		</ul>
+		<!-- /end mininav -->
+		<div class="header">
+			<h1 class="logo"><a href="local-adr"><img src="img/icon-000.gif"></a></h1>
+			<!-- /end logo -->
+			<ul class="SearchForm" style="display:none">
+				<li class="pf-th-otz">关键字：</li>
+				<li class="textarea1"><input name="txtKeyword" id="txtKeyword" class="textarea" type="text"></li>
+				<li class="pf-th-otz">价格从</li>
+				<li class="textarea2"><input name="txtMaxPrice" id="txtMaxPrice" class="textarea" type="text"></li>
+				<li class="pf-th-otz">到</li>
+				<li class="textarea2"><input name="txtMinPrice" id="txtMinPrice" class="textarea" type="text"></li>
+				<li class="textarea3"><input name="btnSearch" id="btnSearch" class="butarea" type="button" value="搜索"></li>
+				<li class="pf-th-otz">
+					<a href="local-adrlogin.aspx#"></a>
+				</li>
+			</ul>
+			<!-- /end SearchForm -->
+			<ul class="navigation">
+				<li>
+					<a href="index.html"><span>首页</span></a>
+				</li>
+				<!--<li>
+					<a href="local-adrp_list.aspx?isNew=1"><span>热门商品</span></a>
+				</li>
+				<li>
+					<a href="local-adrp_list.aspx?categoryId=538"><span>电子产品</span></a>
+				</li>
+				<li>
+					<a href="local-adrp_list.aspx?categoryId=537"><span>生活用品</span></a>
+				</li>
+				<li>
+					<a href="local-adrp_list.aspx?categoryId=536"><span>家用小电器</span></a>
+				</li>-->
+			</ul>
+			<!-- /end navigation -->
+			<ul class="navigationde">
+				<li>
+					<a href="local-adrp_show.aspx?productId=3148" target="_blank">电竞机械游戏鼠标</a>
+				</li>
+				<li>
+					<a href="local-adrp_show.aspx?productId=3155" target="_blank">飞科剃须刀</a>
+				</li>
+				<li>
+					<a href="local-adrp_show.aspx?productId=3142" target="_blank">七匹狼男士皮包</a>
+				</li>
+				<li>
+					<a href="local-adrp_show.aspx?productId=3136" target="_blank">九阳榨汁机</a>
+				</li>
+			</ul>
+			<!-- /end navigationde -->
+		</div>
+		<!-- /end header -->
+		<script src="img/common..js" type="text/javascript"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+
+				var username = getCookie('eshop_userName');
+
+				if(username != null) {
+					$('#member_username').html(username);
+					$('#member_username').show();
+					$('#head1_lblPrice').show();
+				} else {
+					$('#member_username').hide();
+					$('#head1_lblPrice').hide();
+				}
+				var isLogin = getCookie('eshop_isLogin');
+				if(isLogin != null && isLogin == "yes") {
+					//$('#logout').show();
+					$('#login').hide();
+					$('#logout').hide();
+					/*$('#logout').bind('click', function() {
+					    delCookie('eshop_isLogin');
+					    delCookie('eshop_userName');
+					    $(this).hide();
+					    window.location.href = 'login.aspx';
+					});*/
+				} else {
+					$('#logout').hide();
+					$('#login').show();
+
+				}
+			});
+		</script>
+		<!-- /end header -->
+		<div class="banner"><img src="img/adfile001.jpg" alt=""></div>
+		<!-- /end banner -->
+		<div class="defaultMain">
+			<div class="defaultMainLogo">
+				<dl>
+					<dt>用户登录</dt>
+					<dd>
+						<form id="loginForm" action="local-adrlogin.aspx">
+							<ul>
+								<li>手机号：<input id="userName" type="text">
+									<input type="button" id="btnSendCode" style="width:100px;height:24px;" value="发送验证码"> * 请填写您的移动手机号码</li>
+								<li>验证码：<input id="password" type="text"> * 请填写您收到的验证码</li>
+								<li class="cdkey" style="display:none">验证码：<input type="text" id="validataText"><img alt="看不清，点击更改验证码" src="img/validata_code.aspx" id="validataImage">*验证码不能为空</li>
+								<li class="cdkey1" style="display:none">记住用户名：<input id="remember" type="checkbox" value="" checked=""></li>
+								<li>
+									<input type="image" src="img/icon-042.gif" id="login" style=" cursor:pointer; width:93px; height:38px; border:0">
+								</li>
+							</ul>
+						</form>
+					</dd>
+				</dl>
+				<dl style="display:none">
+					<dt>用户注册</dt>
+					<dd>
+						<form id="regForm" action="local-adrlogin.aspx">
+							<ul>
+								<li>用&nbsp;户&nbsp;名：<input id="regUserName">*请填写您的用户名</li>
+								<li>密&nbsp;&nbsp;&nbsp;&nbsp;码：<input id="regPassword" type="password">*请填写您的密码</li>
+								<li>确认密码：<input id="regConfirmPass" type="password">*请确认您的密码</li>
+								<li>手机号码：<input id="mobile" type="text" maxlength="15">*请填写您的手机号码</li>
+								<li>电子邮件：<input id="email" type="text">*请填写您的电子邮件</li>
+								<li class="cdkey1">记住用户名：<input name="" id="regRemember" type="checkbox" value=""></li>
+								<li>
+									<input type="image" src="img/icon-043.gif" id="btnReg" style="cursor:pointer;width:93px; height:38px; border:0"></li>
+							</ul>
+						</form>
+					</dd>
+				</dl>
+			</div>
+			<!-- /end defaultMainLeft -->
+		</div>
+		<!-- /end defaultMain -->
+		<!-- /end banner -->
+
+		<!-- /end help -->
+
+		<!--<div class="bottominfo">
+			<p class="slht">
+				<a href="local-adr">网站首页</a>|
+				<a href="local-adrhelp.aspx?Id=23">关于我们</a>|
+				<a href="local-adrnews_list.aspx?categoryId=2">新闻动态</a>|
+				<a href="local-adrnews_list.aspx?categoryId=4">网站公告</a>|
+				<a href="local-adrnews.aspx?Id=34">诚聘英才</a>|
+				<a href="local-adrnews.aspx?Id=31">隐私保护</a>|
+				<a href="local-adrnews.aspx?Id=32">政策法律声明</a>
+			</p>
+			<p class="copy">©
+				<a href="local-adr">卡券村</a> 2013-2017 All Rights Reserved. 未经许可 不得抄袭本站图片和内容<br></p>
+			<p class="site">
+				<a href="local-adrlogin.aspx#"><img src="img/icon-029.gif" alt=""></a>
+				<a href="local-adrlogin.aspx#"><img src="img/icon-030.gif" alt=""></a>
+				<a href="local-adrlogin.aspx#"><img src="img/icon-031.gif" alt=""></a>
+			</p>
+		</div>-->
+		<script src="js/service.js" type="text/javascript"></script>
+		<script language="javascript" src="js/getonline.js">
+		</script>
+		<div id="contactContanier">
+			<div id="full" style="right:3px; top:180px; width:93px;position:absolute;z-index:1000;text-align:center;">
+				<img border="0" align="absmiddle" src="img/fdqq.gif">
+				<a href="tencent://message/?uin=792066176&amp;Site=www.jifencun.com&amp;Menu=yes" class="qq"><img border="0" align="absmiddle" src="img/qq1.gif"></a>
+				<a href="tencent://message/?uin=792066176&amp;Site=www.jifencun.com&amp;Menu=yes" class="qq"><img border="0" align="absmiddle" src="img/qq2.gif"></a>
+			</div>
+		</div>
+
+	</body>
+
+</html>

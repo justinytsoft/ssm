@@ -1,0 +1,78 @@
+@charset "utf-8";
+/* CSS Common */
+*{margin:0;padding:0;}
+body{margin:0;padding:0;background:#fff;font-size:12px;font-family:'宋体',Arial, Helvetica, sans-serif;background:#fff url(../img/icon-002.gif) repeat-x;}
+ul,li{list-style-type:none;}
+img{border:none;vertical-align:middle;}
+a{color:#5b5b5b;text-decoration:none;}
+a:hover{color:#fe6c00;text-decoration:none;}
+
+.fontb{font-weight:bold;}
+.colorred{color:#f00;}
+.colorora{color:#f60;}
+.colorbla{color:#000;}
+.fonts14{font-size:14px;color:#9e0c0d;}
+
+/* ---------mininav--------- */
+.mininav{width:1000px;margin:0 auto;overflow:hidden;line-height:28px;height:28px;}
+.mininav a.LineR{background:url(../img/icon-004.gif) no-repeat right center;padding:0 10px;}
+.mininav .of-ot-oznt-01{float:left;}
+.mininav .of-ot-oznt-02{float:right;}
+/*------------------------header----------------------*/
+.header{width:1000px;overflow:hidden;margin:0 auto;position:relative;height:190px;}
+/* logo */
+.header .logo{overflow:hidden;width:100%;height:117px;}
+.header .logo img{margin-top:30px;}
+/* SearchForm */
+.header .SearchForm{position:absolute;right:0;top:39px;height:33px;}
+.header .SearchForm li{float:left;color:#fff;}
+.header .SearchForm li.pf-th-otz{line-height:33px;padding:0 6px;}
+.header .SearchForm li.pf-th-otz a{color:#fff;font-weight:normal;}
+.header .SearchForm li.pf-th-otz a:hover{color:#fff;font-weight:normal;text-decoration:underline;}
+.header .SearchForm li.textarea1{background:url(../img/icon-005.gif) no-repeat;width:200px;height:33px;}
+.header .SearchForm li.textarea1 .textarea{background:none;border:none;width:180px;padding:0;margin:0;margin-top:8px;margin-left:10px;cursor:text;}
+.header .SearchForm li.textarea2{background:url(../img/icon-006.gif) no-repeat;width:56px;height:33px;}
+.header .SearchForm li.textarea2 .textarea{background:none;border:none;padding:0;margin:0;cursor:text;width:36px;margin-top:8px;margin-left:10px;}
+.header .SearchForm a{font-weight:bold;}
+.header .SearchForm li.textarea3{background:url(../img/icon-007.gif) no-repeat;width:59px;height:33px;margin-left:10px;display:inline;}
+.header .SearchForm li.textarea3 .butarea{background:none;border:none;cursor:pointer;font-size:14px;font-weight:bold;color:#fff;margin-top:6px;margin-left:9px;}
+/*------------navigation-------------*/
+.navigation{text-align:center;width:1000px;margin:0 auto;overflow:hidden;background:url(../img/icon-001.gif) repeat-x;height:73px;font-family:'Microsoft Yahei','宋体',Arial, Helvetica, sans-serif;}
+.navigation li{float:left;line-height:35px;height:35px;overflow:hidden;background:url(../img/icon-023.gif) no-repeat center right;margin:0 5px;display:inline;}
+.navigation li a{color:#fff;display:block;padding-left:14px;}
+.navigation li a:hover{color:#eaff00;display:block;}
+.navigation li .hover{float:left;background:url(../img/icon-009.gif) no-repeat left 6px;line-height:35px;padding-left:4px;}
+.navigation li .hover span{display:block;float:left;line-height:35px;padding:0px 10px 0 4px;background:url(../img/icon-008.gif) no-repeat right 6px;color:#333;font-size:14px;}
+.navigation li a span{padding:0px 28px 0 0px;}
+
+/*  广告  */
+
+
+#ifocus {MARGIN: 0px; WIDTH:520px; HEIGHT:226px; border:#eeeeee solid 1px;}
+#ifocus_pic {Z-INDEX: 6; POSITION: relative; MARGIN: 0px; WIDTH:520px; DISPLAY: inline; FLOAT: left; HEIGHT:226px; OVERFLOW: hidden}
+#ifocus_piclist {Z-INDEX: 7; POSITION: absolute;}
+#ifocus_piclist LI {WIDTH:520px; HEIGHT:226px; OVERFLOW: hidden;}
+#ifocus_piclist IMG {WIDTH:520px; HEIGHT:226px;}
+#ifocus_btn {Z-INDEX: 10; POSITION: absolute; TEXT-ALIGN: right; BOTTOM: 0px;left: 0px; width:520px;}
+#ifocus_btn LI {TEXT-ALIGN: center; LINE-HEIGHT: 25px; WIDTH:/* 103px;*/ 103px; FLOAT: left; HEIGHT: 25px; MARGIN-right: 1px; CURSOR: pointer; _width: /*103px;*/ 103px;}
+#ifocus_btn IMG {MARGIN: 7px 0px 0px 11px; WIDTH: 75px; HEIGHT: 45px;}
+#ifocus_btn .current {FILTER: alpha(opacity=90); BACKGROUND-COLOR: #A81818; COLOR: #ffffff; opacity: 1; -moz-opacity:1;}
+#ifocus_opdiv {POSITION: absolute; FILTER: alpha(opacity=50); WIDTH: 410px; BOTTOM: 0px; BACKGROUND: #000; HEIGHT: 25px; LEFT: 0px; opacity: 0.5; -moz-opacity: 0.5;}
+#ifocus_btn .normal {FILTER: alpha(opacity=80);BACKGROUND-COLOR: #000; COLOR: #ffffff; -moz-opacity: 0.6;}
+#ifocus_tx {Z-INDEX: 10; POSITION: absolute; PADDING-BOTTOM: 0px; PADDING-LEFT: 10px; BOTTOM: 0px; PADDING-RIGHT: 10px; COLOR: #ffffff; PADDING-TOP: 0px; LEFT: -10px;}
+#ifocus_tx .normal {DISPLAY: none; color:#FFFFFF;}
+#ifocus_tx a{DISPLAY: none; color:#FFFFFF;}
+#ifocus_tx a:hover{color:#ff6600;}
+
+/* navigationde */
+.navigationde{text-align:center;width:1000px;margin:0 auto;overflow:hidden;height:33px;line-height:33px;clear:both;position:absolute;right:0;bottom:0;}
+.navigationde li{float:left;overflow:hidden;padding-left:15px;}
+
+/* bottominfo */
+.bottominfo{width:1000px;margin:10px auto 0 auto;overflow:hidden;position:relative;}
+.bottominfo p{margin-bottom:5px;overflow:hidden;}
+.bottominfo p.slht{line-height:30px;color:#ccc;}
+.bottominfo p.slht a{margin:0 10px;}
+.bottominfo p.copy{font-family:Arial, Helvetica, sans-serif;line-height:20px;padding-left:10px;color:#767676;}
+.bottominfo .site{position:absolute;right:20px;top:15px;text-align:center;overflow:hidden;}
+.bottominfo .site img{margin-top:5px;margin-right:10px;}
