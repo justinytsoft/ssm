@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	
+	<body>
+	
+		<!-- 加载编辑器的容器 -->
+	    <script id="container" name="content" type="text/plain"></script>
+	    <!-- 配置文件 -->
+	    <script type="text/javascript" th:src="@{/assets/plugins/ueditor/ueditor.config.js}"></script>
+	    <!-- 编辑器源码文件 -->
+	    <script type="text/javascript" th:src="@{/assets/plugins/ueditor/ueditor.all.js}"></script>
+	    <!-- 实例化编辑器 -->
+	    <script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+            UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
+			UE.Editor.prototype.getActionUrl = function(action) {
+			    if (action == 'uploadimage' || action == 'uploadscrawl' || action == 'uploadimage') {
+			        return [[@{/}]] + '/services/upload/uploadImageOrigin';
+			    } else {
+			        return this._bkGetActionUrl.call(this, action);
+			    }
+			}
+		    ue = UE.getEditor('container',{
+	        	wordCount:false
+	        });
+			ue.ready(function(){
+				ue.setContent([[${p!=null?p.content:''}]]);
+			});
+		/*]]>*/
+	    </script>
+	
+	</body>
+</html>

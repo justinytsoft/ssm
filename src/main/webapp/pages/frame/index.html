@@ -3,6 +3,10 @@
 	<head th:include="fragment/import :: header"></head>
 	<title>首页</title>
 	
+	<!-- WebSocket -->
+  	<script type="text/javascript" th:src="@{/assets/plugins/websocket/sockjs-0.3.4.js}"></script>
+  	<script type="text/javascript" th:src="@{/assets/plugins/websocket/stomp.js}"></script> 
+	
 	<script type="text/javascript" th:inline="javascript">
 		/*<![CDATA[*/
 		    //项目根路径
@@ -38,8 +42,8 @@
 	
 	<body class="easyui-layout">
 	    <div id="top" data-options="region:'north', href:'top',height:60"></div>
+	    <div id="left" data-options="region:'west', href:'left',split:false,border:false" style="width:220px;"></div>
+	    <div id="right" data-options="region:'center',border:false" style="overflow: auto;"></div> 
 	    <!-- <div id="bottom" data-options="region:'south', href:'bottom',border:false" style="height:30px;background: gray"></div> -->
-	    <div id="left" data-options="region:'west', href:'left',split:false,border:false" style="width:200px;"></div>
-	    <div id="right" data-options="region:'center', href:'right',border:false" style="overflow: auto;"></div> 
 	</body>
 </html>

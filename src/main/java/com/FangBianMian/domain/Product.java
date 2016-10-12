@@ -21,9 +21,20 @@ public class Product {
 	private String detail;
 	private Boolean status;
 	private Boolean hot;
+	private Boolean invisible;
 	private Date create_time;
-	
 	private List<ProductImg> imgs;
+	
+	/**
+	 * 已出售数量
+	 * @return
+	 */
+	private Integer saled_num;
+	/**
+	 * 评分的平均分数
+	 * @return
+	 */
+	private Float score;
 	
 	public Integer getId() {
 		return id;
@@ -102,5 +113,23 @@ public class Product {
 	}
 	public void setImgs(List<ProductImg> imgs) {
 		this.imgs = imgs;
+	}
+	public Boolean getInvisible() {
+		return invisible;
+	}
+	public void setInvisible(Boolean invisible) {
+		this.invisible = invisible;
+	}
+	public Integer getSaled_num() {
+		return saled_num;
+	}
+	public void setSaled_num(Integer saled_num) {
+		this.saled_num = saled_num;
+	}
+	public Float getScore() {
+		return score;
+	}
+	public void setScore(Float score) {
+		this.score = score;
 	}
 }

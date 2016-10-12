@@ -37,7 +37,7 @@
 				
 				//menu height
 				function resizeP(){
-					$('.menuA').css('height',$(window).height()-66+'px');
+					$('.menuA').css('height',$(window).height()-56+'px');
 				};
 				$(window).on('resize',function(){
 					resizeP();
@@ -49,7 +49,7 @@
 		</script>
 	
 	
-		<div class="menuA" style="position: fixed;overflow:scroll;overflow-x:hidden;">
+		<div class="menuA" style="position: fixed;overflow-x:hidden;">
 			<ul class="firMenu">
 				<!-- 一级菜单 -->
 				<li th:each="m:${menus}">

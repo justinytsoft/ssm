@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head th:include="fragment/import :: header"></head>
+
+	<body>
+		<script type="text/javascript" th:src="@{/assets/js/ajaxfileupload.js}"></script>
+		<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+			//文件上传
+	 	    function fileUpload(n, o){
+	   		 	var obj = $(this);
+				//设置文件dom 的name 为 file
+	    		$(obj.next().find("input[type=file]")[0]).attr("name","file");
+				//获取文件dom 的id
+				var fileId = $(obj.next().find("input[type=file]")[0]).attr("id");
+			
+				//上传文件
+	    		$.ajaxFileUpload({
+		     	   url: [[@{/upload/uploadImage}]],
+		     	   secureuri: false,
+		     	   fileElementId: fileId,
+		     	   type: 'POST',
+		     	   dataType: 'json',
+		     	   success: function (result) {
+		    	    	var id = obj.attr("id");
+	        	        $("#"+id+"Val").val(result.data.fileName);
+	        	        $("#"+id+"Pre").attr("src",result.data.path).show();
+	        		},
+	        		error:function(){
+	        			cAlert("上传失败");
+	        		}
+	   	   		}); 
+	      	 	//清空文件dom，不清空则不能再次选择文件
+	   	  	 	obj.filebox("reset");
+	       		//取消校验
+	       		obj.filebox({required:false});
+			}
+		
+	 	   $(function() {
+				
+	 		   	//表单对象
+	 			var form = $("#saveForm");
+	 			
+	 			//保存
+	 			$("#saveButton").click(function() {
+	 				if(form.form("validate")){
+	 					var content = $.trim(ue.getContent());
+	 					if(content==""){
+	 						cAlert("请填写商品详情");
+	 					}else{
+	 						form.submit();
+	 					}			
+	 				}
+	 			});
+	 		});
+		/*]]>*/
+		</script>
+	
+		<form id="saveForm" th:action="@{/admin/product/save}" method="post">
+			<!--container-->
+			<div class="r_container commonAdd">
+				<div class="header">
+					<img th:src="@{/assets/imgs/home.png}" />
+					<span>商品管理>>商品编辑</span>
+				</div>
+				
+				<div class="bg-1 mg-top-20">
+					<label>商品名称：</label>
+					<input name="name" th:value="${product!=null?product.name:''}" type="text" class="easyui-textbox" data-options="width:80,height:30,prompt:'规格值',required:true,validateOnCreate:false"/>
+					<label>库存：</label>
+					<input name="quantity" th:value="${product!=null?product.quantity:''}" type="text" class="easyui-textbox" data-options="width:80,height:30,prompt:'数量',required:true,validateOnCreate:false,validType:['isNumber','minNum[1]']"/>
+					<label>规格列表图：</label>
+				</div>
+				
+				<div class="bg-1 bg-12" style="background: #FFFFFF;">
+					<label>简介：</label>
+				</div>
+				
+				<div class="bg-1 bg-13">
+					<label>单价</label>
+					<!-- <input name="oprice" th:value="${ps.oprice}" type="text" class="easyui-numberbox" data-options="width:120,height:30,prompt:'请输入澳门元单价',required:true,validateOnCreate:false,min:1,precision:2"/>
+					<input name="price" th:value="${ps.price}" type="text" class="easyui-numberbox" data-options="width:120,height:30,prompt:'请输入人民币单价',required:true,validateOnCreate:false,min:1,precision:2"/>￥ -->
+		
+					<label>是否上架</label>
+					<!-- <select class="easyui-combobox" name="status" data-options="editable:false,width:70,panelHeight:100">
+							<option value="1">上架</option>
+							<option selected="selected" value="0">下架</option>
+					</select> -->
+				</div>
+				
+				<div class="bg-1" style="background: #FFFFFF;">
+					<label>商品图片</label>
+				</div>
+				
+				<div class="bg-1 bg-14">
+					<label>商品详情</label>
+					<div style="margin-top:10px">
+						<!-- 加载编辑器的容器 -->
+					    <script id="container" name="content" type="text/plain"></script>
+					    <!-- 配置文件 -->
+					    <script type="text/javascript" th:src="@{/assets/plugins/ueditor/ueditor.config.js}"></script>
+					    <!-- 编辑器源码文件 -->
+					    <script type="text/javascript" th:src="@{/assets/plugins/ueditor/ueditor.all.js}"></script>
+					    <!-- 实例化编辑器 -->
+					    <script type="text/javascript" th:inline="javascript">
+						/*<![CDATA[*/
+				            UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
+							UE.Editor.prototype.getActionUrl = function(action) {
+							    if (action == 'uploadimage' || action == 'uploadscrawl' || action == 'uploadimage') {
+							        return [[@{/}]] + '/services/upload/uploadImageOrigin';
+							    } else {
+							        return this._bkGetActionUrl.call(this, action);
+							    }
+							}
+						    ue = UE.getEditor('container',{
+					        	wordCount:false
+					        });
+							ue.ready(function(){
+								ue.setContent([[${p!=null?p.content:''}]]);
+							});
+						/*]]>*/
+					    </script>
+					</div>
+				</div>
+				
+				<p>
+					<span class="btn-1" id="saveButton">确 认</span>
+				</p>
+			</div>
+		</form>
+	</body>
+</html>

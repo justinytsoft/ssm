@@ -13,7 +13,7 @@ public class ProductComment {
 	private Integer pid;
 	private Integer mid;
 	private String comment;
-	private Integer core;
+	private Integer score;
 	/**
 	 * 评论用户的名称
 	 */
@@ -44,12 +44,6 @@ public class ProductComment {
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-	public Integer getCore() {
-		return core;
-	}
-	public void setCore(Integer core) {
-		this.core = core;
-	}
 	public String getName() {
 		return name;
 	}
@@ -61,5 +55,11 @@ public class ProductComment {
 	}
 	public void setCreate_time(Date create_time) {
 		this.create_time = create_time;
+	}
+	public Integer getScore() {
+		return score;
+	}
+	public void setScore(Integer score) {
+		this.score = score;
 	}
 }
