@@ -13,8 +13,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.FangBianMian.dao.IBaseDao;
+import com.FangBianMian.domain.City;
+import com.FangBianMian.domain.Position;
+import com.FangBianMian.domain.ProductCategory;
+import com.FangBianMian.domain.Province;
 import com.FangBianMian.domain.SecurityUser;
 import com.FangBianMian.domain.SysRoles;
 import com.FangBianMian.utils.Captcha;
@@ -23,10 +28,59 @@ import com.FangBianMian.utils.DataUtil;
 import com.FangBianMian.utils.DataValidation;
 
 @Controller
+@RequestMapping("/base")
 public class BaseController {
 
 	@Autowired
 	private IBaseDao baseDao;
+	
+	/**
+	 * 获取省份
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/province")
+	@ResponseBody
+	public List<Province> province(){
+		List<Province> ps = DataUtil.isEmpty(baseDao.queryProvince());
+		return ps;
+	}
+	
+	/**
+	 * 获取城市
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/city")
+	@ResponseBody
+	public List<City> city(@RequestParam(required=false) Integer pid){
+		List<City> cs = DataUtil.isEmpty(baseDao.queryCityByPid(pid));
+		return cs;
+	}
+	
+	/**
+	 * 获取区县
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/position")
+	@ResponseBody
+	public List<Position> position(@RequestParam(required=false) Integer cid){
+		List<Position> ps = DataUtil.isEmpty(baseDao.queryPositionByCid(cid));
+		return ps;
+	}
+	
+	/**
+	 * 获取商品一级分类
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/product_category")
+	@ResponseBody
+	public List<ProductCategory> product_category(){
+		List<ProductCategory> pcs = DataUtil.isEmpty(baseDao.queryProductCategory());
+		return pcs;
+	}
 	
 	/**
 	 * 获取验证码

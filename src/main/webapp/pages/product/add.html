@@ -68,10 +68,13 @@
 				
 				<div class="bg-1 mg-top-20">
 					<label>商品名称：</label>
-					<input name="name" th:value="${product!=null?product.name:''}" type="text" class="easyui-textbox" data-options="width:80,height:30,prompt:'规格值',required:true,validateOnCreate:false"/>
-					<label>库存：</label>
-					<input name="quantity" th:value="${product!=null?product.quantity:''}" type="text" class="easyui-textbox" data-options="width:80,height:30,prompt:'数量',required:true,validateOnCreate:false,validType:['isNumber','minNum[1]']"/>
-					<label>规格列表图：</label>
+					<input name="name" th:value="${product!=null?product.name:''}" type="text" class="easyui-textbox" data-options="width:120,height:30,required:true,validateOnCreate:false"/>
+					<label class="mg-left-20">库存：</label>
+					<input name="quantity" th:value="${product!=null?product.quantity:''}" type="text" class="easyui-textbox" data-options="width:120,height:30,required:true,validateOnCreate:false,validType:['isNumber','minNum[1]']"/>
+					<label class="mg-left-20">商品分类：</label>
+					<select>
+						<option>1</option>
+					</select>
 				</div>
 				
 				<div class="bg-1 bg-12" style="background: #FFFFFF;">

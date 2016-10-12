@@ -2,4 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.FangBianMian.dao.IBaseDao">
 
+	<!-- 查询所有省份 -->
+	<select id="queryProvince" resultType="com.FangBianMian.domain.Province">
+		SELECT * FROM province
+	</select>
+
+	<!-- 根据省份ID查询城市 -->
+	<select id="queryCityByPid" resultType="com.FangBianMian.domain.City">
+		SELECT * FROM city WHERE provinceId = #{pid}
+	</select>
+
+	<!-- 根据城市ID查询区县 -->
+	<select id="queryPositionByCid" resultType="com.FangBianMian.domain.Position">
+		SELECT * FROM position WHERE c_id = #{cid}
+	</select>
+
+	<!-- 查询商品一级分类 -->
+	<select id="queryProductCategory" resultType="com.FangBianMian.domain.ProductCategory">
+		SELECT * FROM prodcut_category
+	</select>
+
 </mapper>

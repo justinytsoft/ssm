@@ -5,7 +5,7 @@ package com.FangBianMian.domain;
  * @author Administrator
  *
  */
-public class ProdcutCategory {
+public class ProductCategory {
 
 	private Integer id;
 	private String name;
