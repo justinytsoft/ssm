@@ -24466,8 +24466,10 @@ UE.plugin.register('simpleupload', function (){
                             body = (iframe.contentDocument || iframe.contentWindow.document).body,
                             result = body.innerText || body.textContent || '';
                         json = (new Function("return " + result))();
-                        link = me.options.imageUrlPrefix + json.url;
-                        if(json.state == 'SUCCESS' && json.url) {
+                        //link = me.options.imageUrlPrefix + json.url;
+                        var _myImg = json.data.paths[0].split(".");
+                        link = json.data.prefix + _myImg[0] + "_S." + _myImg[1];
+                        if(json.status == '200') {
                             loader = me.document.getElementById(loadingId);
                             loader.setAttribute('src', link);
                             loader.setAttribute('_src', link);

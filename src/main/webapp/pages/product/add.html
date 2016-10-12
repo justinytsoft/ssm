@@ -108,8 +108,8 @@
 						/*<![CDATA[*/
 				            UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
 							UE.Editor.prototype.getActionUrl = function(action) {
-							    if (action == 'uploadimage' || action == 'uploadscrawl' || action == 'uploadimage') {
-							        return '';
+							    if (action == 'uploadimage' || action == 'uploadscrawl') {
+							        return [[@{/upload/uploadImage}]] + "?thumb=true&temp=true";
 							    } else {
 							        return this._bkGetActionUrl.call(this, action);
 							    }
