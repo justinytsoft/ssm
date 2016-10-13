@@ -2,6 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.FangBianMian.dao.IBaseDao">
 
+	<!-- 获取支付方式 -->
+	<select id="queryPaymentType" resultType="com.FangBianMian.domain.PaymentType">
+		SELECT * FROM payment_type
+	</select>
+
 	<!-- 查询所有省份 -->
 	<select id="queryProvince" resultType="com.FangBianMian.domain.Province">
 		SELECT * FROM province
@@ -19,7 +24,7 @@
 
 	<!-- 查询商品一级分类 -->
 	<select id="queryProductCategory" resultType="com.FangBianMian.domain.ProductCategory">
-		SELECT * FROM prodcut_category
+		SELECT * FROM product_category
 	</select>
 
 </mapper>

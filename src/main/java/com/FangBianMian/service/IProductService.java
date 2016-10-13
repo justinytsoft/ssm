@@ -29,4 +29,11 @@ public interface IProductService {
 	 */
 	int queryProductsByParamTotal(Map<String, Object> param);
 
+	/**
+	 * 保存商品
+	 * @param p
+	 * @param productImgs
+	 */
+	void saveProduct(Product p, String[] productImgs);
+
 }

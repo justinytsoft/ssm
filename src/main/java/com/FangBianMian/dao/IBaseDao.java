@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.FangBianMian.domain.City;
+import com.FangBianMian.domain.PaymentType;
 import com.FangBianMian.domain.Position;
 import com.FangBianMian.domain.ProductCategory;
 import com.FangBianMian.domain.Province;
@@ -35,4 +36,10 @@ public interface IBaseDao {
 	 * @return
 	 */
 	List<Position> queryPositionByCid(@Param("cid") Integer cid);
+
+	/**
+	 * 获取支付方式
+	 * @return
+	 */
+	List<PaymentType> queryPaymentType();
 }

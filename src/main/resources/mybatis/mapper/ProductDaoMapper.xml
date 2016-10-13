@@ -23,6 +23,58 @@
 		<collection property="imgs" column="id" javaType="List" ofType="com.FangBianMian.domain.ProductImg" select="selectProductImgByPid"></collection>
 	</resultMap>
 	
+	<!-- 删除商品图片 -->
+	<delete id="deleteProductImgs">
+		DELETE FROM product_img WHERE pid = #{pid}
+	</delete>
+	
+	<!-- 保存商品图片 -->
+	<insert id="insertProductImgs">
+		INSERT INTO product_img(pid,img) VALUES
+		<foreach collection="imgs" item="img" separator=",">
+			<if test="img!=''">(#{pid}, #{img})</if>
+		</foreach>
+	</insert>
+	
+	<!-- 更新商品 -->
+	<update id="updateProduct" parameterType="com.FangBianMian.domain.Product">
+		UPDATE product
+		<set>
+			<if test="name!=null">name = #{name},</if>
+			<if test="category_id!=null">category_id = #{category_id},</if>
+			<if test="price!=null">price = #{price},</if>
+			<if test="discount_price!=null">discount_price = #{discount_price},</if>
+			<if test="freight_price!=null">freight_price = #{freight_price},</if>
+			<if test="payment_type!=null">payment_type = #{payment_type},</if>
+			<if test="quantity!=null">quantity = #{quantity},</if>
+			<if test="detail!=null">detail = #{detail},</if>
+			<if test="status!=null">status = #{status},</if>
+			<if test="hot!=null">hot = #{hot}</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 保存商品 -->
+	<insert id="insertProduct" parameterType="com.FangBianMian.domain.Product">
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+    		select LAST_INSERT_ID()
+    	</selectKey>
+		INSERT INTO product
+		<set>
+			name = #{name},
+			category_id = #{category_id},
+			price = #{price},
+			discount_price = #{discount_price},
+			freight_price = #{freight_price},
+			payment_type = #{payment_type},
+			quantity = #{quantity},
+			detail = #{detail},
+			status = #{status},
+			hot = #{hot},
+			create_time = now()
+		</set>
+	</insert>
+	
 	<!-- 查询所有商品 -->
 	<select id="queryProductsByParam" resultMap="productResultMap">
 		SELECT 

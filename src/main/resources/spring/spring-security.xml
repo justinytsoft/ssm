@@ -14,13 +14,12 @@
     <http pattern="/login" security="none"/>
     <http pattern="/sessionException" security="none"/>
     <http pattern="/captcha" security="none"/>
+    <http pattern="/upload/**" security="none"/>
+    <http pattern="/assets/**" security="none"/>
     <http pattern="/error" security="none"/>
     <http pattern="/denied" security="none"/>
     <http pattern="/notFound" security="none"/>
     <http pattern="/ws/**" security="none"/>
-    <http pattern="/base/**" security="none"/>
-    <http pattern="/upload/**" security="none"/>
-    <http pattern="/assets/**" security="none"/>
     
     
     <http access-denied-page="/denied" auto-config="false" use-expressions="false" entry-point-ref="authenticationProcessingFilterEntryPoint">

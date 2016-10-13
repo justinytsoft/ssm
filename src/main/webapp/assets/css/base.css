@@ -284,7 +284,7 @@ a {cursor: pointer;}
 .commonAdd .info label:FIRST-CHILD{display: inline-block;width: 70px;}
 .commonAdd .classify label:FIRST-CHILD{display: inline-block;width: 100px;}
 .commonAdd .bg-12 textarea{vertical-align: top;}
-.commonAdd .bg-13 label:FIRST-CHILD {display: inline-block;width: 70px;}
+.commonAdd .bg-13 label:FIRST-CHILD {display: inline-block;}
 .commonAdd .bg-13 label.long {width: 200px;text-align: right;margin-right: 20px;}
 .commonAdd p {text-align: right;margin-top: 20px;margin-bottom: 20px;}
 

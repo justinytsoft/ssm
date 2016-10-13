@@ -6,7 +6,11 @@
 		<script type="text/javascript" th:src="@{/assets/js/ajaxfileupload.js}"></script>
 		<script type="text/javascript" th:inline="javascript">
 		/*<![CDATA[*/
-		    var URL = [[@{/assets}]];
+		    //回显提示信息
+		    var msg = [[${msg}]];
+			if(msg!=null){
+				cAlert(msg);
+			}
 		           
 			//文件上传
 	 	    function fileUpload(n, o){
@@ -18,15 +22,15 @@
 			
 				//上传文件
 	    		$.ajaxFileUpload({
-		     	   url: [[@{/upload/uploadImage}]],
+		     	   url: [[@{/upload/uploadImage}]] + "?temp=true",
 		     	   secureuri: false,
 		     	   fileElementId: fileId,
 		     	   type: 'POST',
 		     	   dataType: 'json',
 		     	   success: function (result) {
 		    	    	var id = obj.attr("id");
-	        	        $("#"+id+"Val").val(result.data.fileName);
-	        	        $("#"+id+"Pre").attr("src",result.data.path).show();
+	        	        $("#"+id+"Val").val(result.data.paths[0]);
+	        	        $("#"+id+"Pre").attr("src",result.data.prefix + result.data.paths[0]).show();
 	        		},
 	        		error:function(){
 	        			cAlert("上传失败");
@@ -50,8 +54,36 @@
 	 					if(content==""){
 	 						cAlert("请填写商品详情");
 	 					}else{
-	 						form.submit();
+	 						form.form("submit");
 	 					}			
+	 				}
+	 			});
+	 			
+	 			//加载商品分类
+	 			$("#category").combobox({
+	 				url : [[@{/product_category}]],
+	 				method : "get",
+	 				valueField : 'id',
+ 				    textField : 'name',
+ 				    onLoadSuccess:function(){ //默认选中第一条数据
+ 				    	var data= $(this).combobox("getData");
+ 				        if (data.length > 0) {
+ 				        	$(this).combobox('select', data[0].id);
+ 				        }
+	 				}
+	 			});
+	 			
+	 			//加载支付方式
+	 			$("#payment_type").combobox({
+	 				url : [[@{/payment_type}]],
+	 				method : "get",
+	 				valueField : 'id',
+ 				    textField : 'type',
+ 				    onLoadSuccess:function(){ //默认选中第一条数据
+ 				    	var data= $(this).combobox("getData");
+ 				        if (data.length > 0) {
+ 				        	$(this).combobox('select', data[0].id);
+ 				        }
 	 				}
 	 			});
 	 		});
@@ -69,39 +101,65 @@
 				<div class="bg-1 mg-top-20">
 					<label>商品名称：</label>
 					<input name="name" th:value="${product!=null?product.name:''}" type="text" class="easyui-textbox" data-options="width:120,height:30,required:true,validateOnCreate:false"/>
-					<label class="mg-left-20">库存：</label>
-					<input name="quantity" th:value="${product!=null?product.quantity:''}" type="text" class="easyui-textbox" data-options="width:120,height:30,required:true,validateOnCreate:false,validType:['isNumber','minNum[1]']"/>
-					<label class="mg-left-20">商品分类：</label>
-					<select>
-						<option>1</option>
-					</select>
+					<label class="mg-left-20">商品库存：</label>
+					<input name="quantity" th:value="${product!=null?product.quantity:''}" type="text" class="easyui-numberbox" data-options="precision:0,width:120,height:30,required:true,validateOnCreate:false,validType:['minNum[1]']"/>
 				</div>
 				
 				<div class="bg-1 bg-12" style="background: #FFFFFF;">
-					<label>简介：</label>
+					<label>商品单价：</label>
+					<input name="price" th:value="${product!=null?product.price:''}" type="text" class="easyui-numberbox" data-options="precision:2,width:120,height:30,required:true,validateOnCreate:false,validType:['minNum[1]']"/>
+					<label class="mg-left-20">优惠价格：</label>
+					<input name="discount_price" th:value="${product!=null?product.discount_price:''}" type="text" class="easyui-numberbox" data-options="precision:2,width:120,height:30,prompt:'不填写则无优惠价格',validType:['minNum[1]']"/>
+					<label class="mg-left-20">商品运费：</label>
+					<input name="freight_price" th:value="${product!=null?product.freight_price:''}" type="text" class="easyui-numberbox" data-options="precision:2,width:120,height:30,prompt:'不填写则无运费',validType:['minNum[1]']"/>
 				</div>
 				
 				<div class="bg-1 bg-13">
-					<label>单价</label>
-					<!-- <input name="oprice" th:value="${ps.oprice}" type="text" class="easyui-numberbox" data-options="width:120,height:30,prompt:'请输入澳门元单价',required:true,validateOnCreate:false,min:1,precision:2"/>
-					<input name="price" th:value="${ps.price}" type="text" class="easyui-numberbox" data-options="width:120,height:30,prompt:'请输入人民币单价',required:true,validateOnCreate:false,min:1,precision:2"/>￥ -->
-		
-					<label>是否上架</label>
-					<!-- <select class="easyui-combobox" name="status" data-options="editable:false,width:70,panelHeight:100">
-							<option value="1">上架</option>
-							<option selected="selected" value="0">下架</option>
-					</select> -->
+					<label>商品分类：</label>
+					<input id="category" name="category" class="easyui-combobox" data-options="width:120,editable:false,required:true,validateOnCreate:false"/>
+					<label class="mg-left-20">支付方式：</label>
+					<input id="payment_type" name="payment_type" class="easyui-combobox" data-options="width:120,editable:false,required:true,validateOnCreate:false"/>
+					<label class="mg-left-20">是否上架：</label>
+					<select name="status" class="easyui-combobox" data-options="width:120,editable:false,required:true,validateOnCreate:false">
+						<option value="1">是</option>
+						<option value="0">否</option>
+					</select>
+					<label class="mg-left-20">热门商品：</label>
+					<select name="hot" class="easyui-combobox" data-options="width:120,editable:false,required:true,validateOnCreate:false">
+						<option value="0">否</option>
+						<option value="1">是</option>
+					</select>
 				</div>
 				
 				<div class="bg-1" style="background: #FFFFFF;">
-					<label>商品图片</label>
+					<label>商品图片：</label>
+					
+					<img id="cvoer1Pre" style="display:none;width:100px;height:100px;vertical-align: middle;border: 1px solid #F3F3F3"/>
+					<input id="cvoer1Val" name="productImgs" type="hidden" /> 
+					<input id="cvoer1" class="easyui-filebox" data-options="width:86,height:30,buttonText:'上传列表图(1)',accept:'image/jpeg,image/png',onChange:fileUpload,required:true,validateOnCreate:false"/>
+					
+					<img id="cvoer2Pre" style="display:none;width:100px;height:100px;vertical-align: middle;border: 1px solid #F3F3F3"/>
+					<input id="cvoer2Val" name="productImgs" type="hidden" /> 
+					<input id="cvoer2" class="easyui-filebox" data-options="width:85,height:30,buttonText:'上传列表图(2)',accept:'image/jpeg,image/png',onChange:fileUpload"/>
+					
+					<img id="cvoer3Pre" style="display:none;width:100px;height:100px;vertical-align: middle;border: 1px solid #F3F3F3"/>
+					<input id="cvoer3Val" name="productImgs" type="hidden" /> 
+					<input id="cvoer3" class="easyui-filebox" data-options="width:85,height:30,buttonText:'上传列表图(3)',accept:'image/jpeg,image/png',onChange:fileUpload"/>
+					
+					<img id="cvoer4Pre" style="display:none;width:100px;height:100px;vertical-align: middle;border: 1px solid #F3F3F3"/>
+					<input id="cvoer4Val" name="productImgs" type="hidden" /> 
+					<input id="cvoer4" class="easyui-filebox" data-options="width:85,height:30,buttonText:'上传列表图(4)',accept:'image/jpeg,image/png',onChange:fileUpload"/>
+					
+					<img id="cvoer5Pre" style="display:none;width:100px;height:100px;vertical-align: middle;border: 1px solid #F3F3F3"/>
+					<input id="cvoer5Val" name="productImgs" type="hidden" /> 
+					<input id="cvoer5" class="easyui-filebox" data-options="width:85,height:30,buttonText:'上传列表图(5)',accept:'image/jpeg,image/png',onChange:fileUpload"/>
 				</div>
 				
 				<div class="bg-1 bg-14">
-					<label>商品详情</label>
+					<label>商品详情：</label>
 					<div style="margin-top:10px">
 						<!-- 加载编辑器的容器 -->
-					    <script id="container" name="content" type="text/plain"></script>
+					    <script id="container" name="detail" type="text/plain"></script>
 					    <!-- 配置文件 -->
 					    <script type="text/javascript" src="assets/plugins/ueditor/ueditor.config.js"></script>
 					    <!-- 编辑器源码文件 -->

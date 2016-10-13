@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 import com.FangBianMian.domain.Product;
+import com.FangBianMian.domain.ProductImg;
 
 public interface IProductDao {
 
@@ -14,5 +15,15 @@ public interface IProductDao {
 	List<Product> queryProductsByParam(@Param("param") Map<String, Object> param);
 
 	int queryProductsByParamTotal(@Param("param") Map<String, Object> param);
+
+	void updateProduct(Product p);
+
+	void insertProduct(Product p);
+
+	void deleteProductImgs(@Param("pid") Integer id);
+
+	void insertProductImgs(@Param("pid") Integer id, @Param("imgs") String[] productImgs);
+
+	List<ProductImg> selectProductImgByPid(@Param("id") Integer id);
 
 }

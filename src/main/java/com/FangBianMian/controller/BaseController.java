@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.FangBianMian.dao.IBaseDao;
 import com.FangBianMian.domain.City;
+import com.FangBianMian.domain.PaymentType;
 import com.FangBianMian.domain.Position;
 import com.FangBianMian.domain.ProductCategory;
 import com.FangBianMian.domain.Province;
@@ -28,11 +29,22 @@ import com.FangBianMian.utils.DataUtil;
 import com.FangBianMian.utils.DataValidation;
 
 @Controller
-@RequestMapping("/base")
 public class BaseController {
 
 	@Autowired
 	private IBaseDao baseDao;
+	
+	/**
+	 * 获取支付方式
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/payment_type")
+	@ResponseBody
+	public List<PaymentType> payment_type(){
+		List<PaymentType> pts = DataUtil.isEmpty(baseDao.queryPaymentType());
+		return pts;
+	}
 	
 	/**
 	 * 获取省份
