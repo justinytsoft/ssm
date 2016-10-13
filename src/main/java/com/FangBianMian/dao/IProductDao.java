@@ -26,4 +26,6 @@ public interface IProductDao {
 
 	List<ProductImg> selectProductImgByPid(@Param("id") Integer id);
 
+	void deleteProductById(@Param("id") Integer id);
+
 }

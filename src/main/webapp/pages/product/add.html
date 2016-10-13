@@ -1,18 +1,12 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-	<head th:include="fragment/import :: header"></head>
 
 	<body>
 		<script type="text/javascript" th:src="@{/assets/js/ajaxfileupload.js}"></script>
 		<script type="text/javascript" th:inline="javascript">
 		/*<![CDATA[*/
-		    //回显提示信息
-		    var msg = [[${msg}]];
-			if(msg!=null){
-				cAlert(msg);
-			}
-		           
-			//文件上传
+
+            //文件上传
 	 	    function fileUpload(n, o){
 	   		 	var obj = $(this);
 				//设置文件dom 的name 为 file
@@ -54,7 +48,16 @@
 	 					if(content==""){
 	 						cAlert("请填写商品详情");
 	 					}else{
-	 						form.form("submit");
+	 						form.form("submit",{
+	 							success:function(data){
+	 								data = eval('(' + data + ')');  // change the JSON string to javascript object
+	 						        cAlertFun(data.msg,function(){
+	 						        	if(data.flag){
+	 						        		refresh([[@{/admin/product/add}]]);
+	 						        	}
+	 						        })
+	 						    }
+	 						});
 	 					}			
 	 				}
 	 			});
@@ -65,10 +68,10 @@
 	 				method : "get",
 	 				valueField : 'id',
  				    textField : 'name',
- 				    onLoadSuccess:function(){ //默认选中第一条数据
+ 				    onLoadSuccess:function(){ //回显数据
  				    	var data= $(this).combobox("getData");
- 				        if (data.length > 0) {
- 				        	$(this).combobox('select', data[0].id);
+ 				        if ([[${product!=null}]]) {
+ 				        	$(this).combobox('select', [[${product!=null?product.category_id:''}]]);
  				        }
 	 				}
 	 			});
@@ -79,10 +82,10 @@
 	 				method : "get",
 	 				valueField : 'id',
  				    textField : 'type',
- 				    onLoadSuccess:function(){ //默认选中第一条数据
+ 				    onLoadSuccess:function(){ //回显数据
  				    	var data= $(this).combobox("getData");
- 				        if (data.length > 0) {
- 				        	$(this).combobox('select', data[0].id);
+ 				    	if ([[${product!=null}]]) {
+ 				        	$(this).combobox('select', [[${product!=null?product.payment_type:''}]]);
  				        }
 	 				}
 	 			});
@@ -91,6 +94,8 @@
 		</script>
 	
 		<form id="saveForm" th:action="@{/admin/product/save}" method="post">
+			<input type="hidden" th:value="${product!=null?product.id:''}" name="id"/>
+		
 			<!--container-->
 			<div class="r_container commonAdd">
 				<div class="header">
@@ -122,37 +127,57 @@
 					<label class="mg-left-20">是否上架：</label>
 					<select name="status" class="easyui-combobox" data-options="width:120,editable:false,required:true,validateOnCreate:false">
 						<option value="1">是</option>
-						<option value="0">否</option>
+						<option th:selected="${product!=null and not product.status}" value="0">否</option>
 					</select>
 					<label class="mg-left-20">热门商品：</label>
 					<select name="hot" class="easyui-combobox" data-options="width:120,editable:false,required:true,validateOnCreate:false">
 						<option value="0">否</option>
-						<option value="1">是</option>
+						<option th:selected="${product!=null and product.hot}" value="1">是</option>
 					</select>
 				</div>
 				
-				<div class="bg-1" style="background: #FFFFFF;">
+				<div th:if="${product==null}" class="bg-1" style="background: #FFFFFF;">
 					<label>商品图片：</label>
 					
-					<img id="cvoer1Pre" style="display:none;width:100px;height:100px;vertical-align: middle;border: 1px solid #F3F3F3"/>
-					<input id="cvoer1Val" name="productImgs" type="hidden" /> 
-					<input id="cvoer1" class="easyui-filebox" data-options="width:86,height:30,buttonText:'上传列表图(1)',accept:'image/jpeg,image/png',onChange:fileUpload,required:true,validateOnCreate:false"/>
+					<div style="display: inline-block;">
+						<img id="cvoer1Pre" style="display:none;width:100px;height:100px;vertical-align: middle;border: 1px solid #F3F3F3"/>
+						<input id="cvoer1Val" name="productImgs" type="hidden" /> 
+						<input id="cvoer1" class="easyui-filebox" data-options="width:70,height:30,buttonText:'上传列表图',accept:'image/jpeg,image/png',onChange:fileUpload,required:true,validateOnCreate:false"/>
+					</div>
 					
-					<img id="cvoer2Pre" style="display:none;width:100px;height:100px;vertical-align: middle;border: 1px solid #F3F3F3"/>
-					<input id="cvoer2Val" name="productImgs" type="hidden" /> 
-					<input id="cvoer2" class="easyui-filebox" data-options="width:85,height:30,buttonText:'上传列表图(2)',accept:'image/jpeg,image/png',onChange:fileUpload"/>
+					<div style="display: inline-block;">
+						<img id="cvoer2Pre" style="display:none;width:100px;height:100px;vertical-align: middle;border: 1px solid #F3F3F3"/>
+						<input id="cvoer2Val" name="productImgs" type="hidden" /> 
+						<input id="cvoer2" class="easyui-filebox" data-options="width:70,height:30,buttonText:'上传列表图',accept:'image/jpeg,image/png',onChange:fileUpload"/>
+					</div>
 					
-					<img id="cvoer3Pre" style="display:none;width:100px;height:100px;vertical-align: middle;border: 1px solid #F3F3F3"/>
-					<input id="cvoer3Val" name="productImgs" type="hidden" /> 
-					<input id="cvoer3" class="easyui-filebox" data-options="width:85,height:30,buttonText:'上传列表图(3)',accept:'image/jpeg,image/png',onChange:fileUpload"/>
+					<div style="display: inline-block;">
+						<img id="cvoer3Pre" style="display:none;width:100px;height:100px;vertical-align: middle;border: 1px solid #F3F3F3"/>
+						<input id="cvoer3Val" name="productImgs" type="hidden" /> 
+						<input id="cvoer3" class="easyui-filebox" data-options="width:70,height:30,buttonText:'上传列表图',accept:'image/jpeg,image/png',onChange:fileUpload"/>
+					</div>
 					
-					<img id="cvoer4Pre" style="display:none;width:100px;height:100px;vertical-align: middle;border: 1px solid #F3F3F3"/>
-					<input id="cvoer4Val" name="productImgs" type="hidden" /> 
-					<input id="cvoer4" class="easyui-filebox" data-options="width:85,height:30,buttonText:'上传列表图(4)',accept:'image/jpeg,image/png',onChange:fileUpload"/>
+					<div style="display: inline-block;">
+						<img id="cvoer4Pre" style="display:none;width:100px;height:100px;vertical-align: middle;border: 1px solid #F3F3F3"/>
+						<input id="cvoer4Val" name="productImgs" type="hidden" /> 
+						<input id="cvoer4" class="easyui-filebox" data-options="width:70,height:30,buttonText:'上传列表图',accept:'image/jpeg,image/png',onChange:fileUpload"/>
+					</div>
 					
-					<img id="cvoer5Pre" style="display:none;width:100px;height:100px;vertical-align: middle;border: 1px solid #F3F3F3"/>
-					<input id="cvoer5Val" name="productImgs" type="hidden" /> 
-					<input id="cvoer5" class="easyui-filebox" data-options="width:85,height:30,buttonText:'上传列表图(5)',accept:'image/jpeg,image/png',onChange:fileUpload"/>
+					<div style="display: inline-block;">
+						<img id="cvoer5Pre" style="display:none;width:100px;height:100px;vertical-align: middle;border: 1px solid #F3F3F3"/>
+						<input id="cvoer5Val" name="productImgs" type="hidden" /> 
+						<input id="cvoer5" class="easyui-filebox" data-options="width:70,height:30,buttonText:'上传列表图',accept:'image/jpeg,image/png',onChange:fileUpload"/>
+					</div>
+				</div>
+				
+				<div th:if="${product!=null}" class="bg-1" style="background: #FFFFFF;">
+					<label>商品图片：</label>
+					
+					<div style="display: inline-block;" th:each="img,cur:${product.imgs}">
+						<img th:id="${'cvoer'+cur.count+'Pre'}" th:src="${application.baseImageUrl + img.img}" th:style="${'width:100px;height:100px;vertical-align: middle;border: 1px solid #F3F3F3;' + (img.img==null?'display:none':'')}"/>
+						<input th:id="${'cvoer'+cur.count+'Val'}" name="productImgs" th:value="${img.img}" type="hidden" /> 
+						<input th:id="${'cvoer'+cur.count}" th:value="${img.img}" class="easyui-filebox" data-options="width:70,height:30,buttonText:'上传列表图',accept:'image/jpeg,image/png',onChange:fileUpload"/>
+					</div>
 				</div>
 				
 				<div class="bg-1 bg-14">
@@ -179,7 +204,7 @@
 					        	wordCount:false
 					        });
 							ue.ready(function(){
-								ue.setContent([[${p!=null?p.content:''}]]);
+								ue.setContent([[${product!=null?product.detail:''}]]);
 							});
 						/*]]>*/
 					    </script>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.FangBianMian.domain.Product;
+import com.FangBianMian.domain.ProductImg;
 import com.FangBianMian.service.IProductService;
 import com.FangBianMian.utils.DataUtil;
 import com.FangBianMian.utils.EasyuiDatagrid;
@@ -23,6 +24,22 @@ public class ProductController {
 	
 	@Autowired
 	private IProductService productService;
+	
+	public Map<String, Object> del(@RequestParam(required=false) Integer id){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		if(id==null){
+			map.put("flag",false);
+			map.put("msg","删除失败");
+			return map;
+		}
+		
+		productService.deleteProductById(id);
+		
+		map.put("flag", true);
+		map.put("msg", "删除成功");
+		return map;
+	}
 	
 	/**
 	 * 商品列表页面
@@ -44,11 +61,31 @@ public class ProductController {
 	 */
 	@RequestMapping("/listData")
 	@ResponseBody
-	public EasyuiDatagrid<Product> listData(@RequestParam(required=false) String name,
-			   								@RequestParam(required=false) Boolean status,
+	public EasyuiDatagrid<Product> listData(@RequestParam(required=false) Integer page,
+											@RequestParam(required=false) Integer rows,
+											@RequestParam(required=false) String name,
+			   								@RequestParam(required=false) Integer status,
+			   								@RequestParam(required=false) Integer hot,
 			   								@RequestParam(required=false) Integer category){
 		EasyuiDatagrid<Product> ed = new EasyuiDatagrid<Product>();
 		Map<String,Object> param = new HashMap<String,Object>();
+		
+		if(page!=null && rows!=null){
+			param.put("rows", rows);
+			param.put("page", ((page-1)*rows));
+		}
+		if(!StringUtils.isBlank(name)){
+			param.put("name", name);
+		}
+		if(status!=null && status.intValue()!=-1){
+			param.put("status", status);
+		}
+		if(category!=null && category.intValue()!=-1){
+			param.put("category_id", category);
+		}
+		if(hot!=null && hot.intValue()!=-1){
+			param.put("hot", hot);
+		}
 		
 		List<Product> ps = DataUtil.isEmpty(productService.queryProductsByParam(param));
 		int psTotal = productService.queryProductsByParamTotal(param);
@@ -65,24 +102,21 @@ public class ProductController {
 	 * @return
 	 */
 	@RequestMapping("/add")
-	public String add(Model model, 
-					  @RequestParam(required=false) Integer id,
-					  @RequestParam(required=false) Integer flag){
+	public String add(Model model, @RequestParam(required=false) Integer id){
 		
 		if(id!=null){
 			Product p = productService.queryProductById(id);
 			if(p==null){
 				model.addAttribute("msg", "未查询到商品记录");
 			}else{
+				//凑够5张图给thymeleaf遍历，让新增和编辑页面的图片保持一致
+				List<ProductImg> pis = DataUtil.isEmpty(p.getImgs());
+				int max = 5 - pis.size();
+				for(int i = 0; i < max; i++){
+					ProductImg pi = new ProductImg();
+					pis.add(pi);
+				}
 				model.addAttribute("product", p);
-			}
-		}
-		
-		if(flag!=null){
-			if(flag.intValue()==0){
-				model.addAttribute("msg", "保存失败");
-			}else{
-				model.addAttribute("msg", "保存成功");
 			}
 		}
 		
@@ -96,7 +130,8 @@ public class ProductController {
 	 * @return
 	 */
 	@RequestMapping("/save")
-	public String save(@RequestParam(required=false) Integer id,
+	@ResponseBody
+	public Map<String, Object> save(@RequestParam(required=false) Integer id,
 					   @RequestParam(required=false) String name,
 					   @RequestParam(required=false) Integer quantity,
 					   @RequestParam(required=false) Float price,
@@ -109,9 +144,13 @@ public class ProductController {
 					   @RequestParam(required=false) String detail,
 					   @RequestParam(required=false) String[] productImgs){
 		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
 		if(StringUtils.isBlank(name) || StringUtils.isBlank(detail) || quantity==null || price==null || category==null
 		   || payment_type==null || status==null || hot==null || productImgs==null){
-			return "redirect: add?flag=0";
+			map.put("flag", false);
+			map.put("msg", "保存失败");
+			return map;
 		}
 		
 		Product p = new Product();
@@ -129,6 +168,8 @@ public class ProductController {
 		
 		productService.saveProduct(p, productImgs);
 		
-		return "redirect: add?flag=1";
+		map.put("flag", true);
+		map.put("msg", "保存成功");
+		return map;
 	}
 }

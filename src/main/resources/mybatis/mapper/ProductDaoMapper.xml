@@ -23,6 +23,11 @@
 		<collection property="imgs" column="id" javaType="List" ofType="com.FangBianMian.domain.ProductImg" select="selectProductImgByPid"></collection>
 	</resultMap>
 	
+	<!-- 删除商品 -->
+	<update id="deleteProductById">
+		UPDATE product SET invisible = 1 WHERE id = #{id}
+	</update>
+	
 	<!-- 删除商品图片 -->
 	<delete id="deleteProductImgs">
 		DELETE FROM product_img WHERE pid = #{pid}
@@ -87,8 +92,11 @@
 			<if test="param.name!=null">AND p.name LIKE '%${param.name}%'</if>
 			<if test="param.status!=null">AND p.status = #{param.status}</if>
 			<if test="param.category_id!=null">AND p.category_id = #{param.category_id}</if>
+			<if test="param.hot!=null">AND p.hot = #{param.hot}</if>
 		</where>
-		LIMIT #{limit} OFFSET #{offset}
+		<if test="param.page!=null">
+			LIMIT #{param.page},#{param.rows}
+		</if>
 	</select>
 	
 	<!-- 查询所有商品的总数 -->
@@ -99,6 +107,7 @@
 			<if test="param.name!=null">AND p.name LIKE '%${param.name}%'</if>
 			<if test="param.status!=null">AND p.status = #{param.status}</if>
 			<if test="param.category_id!=null">AND p.category_id = #{param.category_id}</if>
+			<if test="param.hot!=null">AND p.hot = #{param.hot}</if>
 		</where>
 	</select>
 

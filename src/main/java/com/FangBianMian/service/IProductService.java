@@ -36,4 +36,10 @@ public interface IProductService {
 	 */
 	void saveProduct(Product p, String[] productImgs);
 
+	/**
+	 * 删除商品
+	 * @param id
+	 */
+	void deleteProductById(Integer id);
+
 }

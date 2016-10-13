@@ -21,6 +21,11 @@ public class ProductServiceImpl implements IProductService {
 	private IProductDao productDao;
 
 	@Override
+	public void deleteProductById(Integer id) {
+		productDao.deleteProductById(id);
+	}
+	
+	@Override
 	public Product queryProductById(Integer id) {
 		return productDao.queryProductById(id);
 	}
@@ -39,27 +44,6 @@ public class ProductServiceImpl implements IProductService {
 	public void saveProduct(Product p, String[] productImgs) {
 		
 		try{
-			if(p.getId()!=null){
-				//更新商品信息
-				productDao.updateProduct(p); 
-				//查询商品的图片
-				List<ProductImg> pis = productDao.selectProductImgByPid(p.getId());
-				//删除商品图片
-				productDao.deleteProductImgs(p.getId());
-				
-				//删除正式目录下的图片
-				for(ProductImg pi : pis){
-					String path = SettingUtil.getCommonSetting("upload.image.path") + File.separator + pi.getImg(); //正式文件夹
-					File file = new File(path);
-					if(file.exists() && file.isFile()){
-						file.delete();
-					}
-				}
-			}else{
-				//保存商品信息
-				productDao.insertProduct(p);
-			}
-			
 			//将图片移到正式目录
 			for(int i = 0; i < productImgs.length; i++){
 				String img = productImgs[i];
@@ -69,7 +53,28 @@ public class ProductServiceImpl implements IProductService {
 					productImgs[i] = DataUtil.moveToDir(img, true);
 				}
 			}
-		
+			
+			if(p.getId()!=null){
+				//更新商品信息
+				productDao.updateProduct(p); 
+				//查询商品的图片
+				List<ProductImg> pis = productDao.selectProductImgByPid(p.getId());
+				//删除商品图片
+				productDao.deleteProductImgs(p.getId());
+				
+				//删除正式目录下的图片
+				for(int i = 0; i < pis.size(); i++){
+					ProductImg pi = pis.get(i); //旧图片
+					String newPath = productImgs[i]; //新图片
+					if(!pi.getImg().equals(newPath)){ //如果旧图和新图不一样表示修改了图片，这时就需要删除旧图
+						DataUtil.deleteByUploadImg(pi.getImg());
+					}
+				}
+			}else{
+				//保存商品信息
+				productDao.insertProduct(p);
+			}
+			
 			//保存商品图片
 			productDao.insertProductImgs(p.getId(), productImgs);
 		}catch(Exception e){

@@ -53,8 +53,15 @@ public class BaseController {
 	 */
 	@RequestMapping("/province")
 	@ResponseBody
-	public List<Province> province(){
+	public List<Province> province(@RequestParam(required=false) String extend){
 		List<Province> ps = DataUtil.isEmpty(baseDao.queryProvince());
+		//给返回的数据添加一个查询的逻辑元素
+		if(!StringUtils.isBlank(extend)){
+			Province p = new Province();
+			p.setId(-1);
+			p.setName("不限");
+			ps.add(0, p);
+		}
 		return ps;
 	}
 	
@@ -65,8 +72,15 @@ public class BaseController {
 	 */
 	@RequestMapping("/city")
 	@ResponseBody
-	public List<City> city(@RequestParam(required=false) Integer pid){
+	public List<City> city(@RequestParam(required=false) Integer pid,@RequestParam(required=false) String extend){
 		List<City> cs = DataUtil.isEmpty(baseDao.queryCityByPid(pid));
+		//给返回的数据添加一个查询的逻辑元素
+		if(!StringUtils.isBlank(extend)){
+			City c = new City();
+			c.setId(-1);
+			c.setName("不限");
+			cs.add(0, c);
+		}
 		return cs;
 	}
 	
@@ -77,8 +91,15 @@ public class BaseController {
 	 */
 	@RequestMapping("/position")
 	@ResponseBody
-	public List<Position> position(@RequestParam(required=false) Integer cid){
+	public List<Position> position(@RequestParam(required=false) Integer cid,@RequestParam(required=false) String extend){
 		List<Position> ps = DataUtil.isEmpty(baseDao.queryPositionByCid(cid));
+		//给返回的数据添加一个查询的逻辑元素
+		if(!StringUtils.isBlank(extend)){
+			Position p = new Position();
+			p.setId(-1);
+			p.setName("不限");
+			ps.add(0, p);
+		}
 		return ps;
 	}
 	
@@ -89,8 +110,15 @@ public class BaseController {
 	 */
 	@RequestMapping("/product_category")
 	@ResponseBody
-	public List<ProductCategory> product_category(){
+	public List<ProductCategory> product_category(@RequestParam(required=false) String extend){
 		List<ProductCategory> pcs = DataUtil.isEmpty(baseDao.queryProductCategory());
+		//给返回的数据添加一个查询的逻辑元素
+		if(!StringUtils.isBlank(extend)){
+			ProductCategory pc = new ProductCategory();
+			pc.setId(-1);
+			pc.setName("不限");
+			pcs.add(0, pc);
+		}
 		return pcs;
 	}
 	

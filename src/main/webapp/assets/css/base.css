@@ -228,7 +228,6 @@ a {cursor: pointer;}
 /**********************活动商品管理*******************/
 
 .activeAmin .bg-1 {margin-top: 20px;margin-bottom: 20px;}
-.activeAmin .bg-1 div:nth-of-type(1) {margin-bottom: 10px;}
 .activeAmin .bg-1 div label {display: inline-block; width: 55px;text-align: left;}
 .activeAmin .bg-1 div input,.activeAmin .bg-1 div select {margin-right: 40px;}
 .activeAmin .bg-1 div input[type="submit"]{margin-right:0px;margin-left:5px;}
