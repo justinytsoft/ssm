@@ -3,6 +3,8 @@ package com.FangBianMian.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,38 @@ public class ProductController {
 	@Autowired
 	private IProductService productService;
 	
+	/**
+	 * 替换ueditor编辑器里的图片路径为正式路径
+	 * @param content
+	 * @return
+	 */
+	public static String replaceImgSrc(String content){
+		String imagePatternStr = "<img[\\w\\W]*?src=[\"|\']?([\\w\\W]*?)(jpg|png)[\\w\\W]*?/>";
+		Pattern imagePattern = Pattern.compile(imagePatternStr, Pattern.CASE_INSENSITIVE);
+		Matcher matcher = imagePattern.matcher(content);
+		
+		while (matcher.find()) {
+			// img src中图片的url前缀
+			String imageFragmentURL = matcher.group(1);
+			// img src中图片的url后缀
+			String imageFragmentSuffix = matcher.group(2);
+		}
+		
+		return content;
+	}
+	
+	public static void main(String[] args) {
+		String content = "<p>黑人牙膏，谁用谁知道<img src=\"http://localhost:8099/ssm/temp/1476339719819_S.png\" title=\"\" alt=\"\"/></p>";
+		System.out.println(replaceImgSrc(content));
+	}
+	
+	/**
+	 * 删除商品
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("/del")
+	@ResponseBody
 	public Map<String, Object> del(@RequestParam(required=false) Integer id){
 		Map<String, Object> map = new HashMap<String, Object>();
 		
