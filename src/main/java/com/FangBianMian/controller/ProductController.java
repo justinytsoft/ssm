@@ -82,9 +82,12 @@ public class ProductController {
 	 * @return
 	 */
 	@RequestMapping("/list")
-	public String list(Model model, @RequestParam(required=false) Integer curr){
+	public String list(Model model, 
+					   @RequestParam(required=false) Integer curr,
+					   @RequestParam(required=false) Integer size){
 		if (curr!=null) {
 			model.addAttribute("curr", curr);
+			model.addAttribute("size", size);
 		}
 		return "pages/product/list";
 	}
@@ -100,6 +103,8 @@ public class ProductController {
 	@ResponseBody
 	public EasyuiDatagrid<Product> listData(@RequestParam(required=false) Integer page,
 											@RequestParam(required=false) Integer rows,
+											@RequestParam(required=false) Integer e_page,
+											@RequestParam(required=false) Integer e_rows,
 											@RequestParam(required=false) String name,
 			   								@RequestParam(required=false) Integer status,
 			   								@RequestParam(required=false) Integer hot,
@@ -110,6 +115,11 @@ public class ProductController {
 		if(page!=null && rows!=null){
 			param.put("rows", rows);
 			param.put("page", ((page-1)*rows));
+		}
+		//从编辑页面获取的数据
+		if(e_page!=null && e_rows!=null){
+			param.put("rows", e_rows);
+			param.put("page", ((e_page-1)*e_rows));
 		}
 		if(!StringUtils.isBlank(name)){
 			param.put("name", name);
@@ -137,16 +147,18 @@ public class ProductController {
 	 * @param model
 	 * @param id 商品id
 	 * @param page 在列表页面修改商品时传入
-	 * @param rows 在列表页面修改商品时传入
+	 * @param size 在列表页面修改商品时传入
 	 * @return
 	 */
 	@RequestMapping("/add")
 	public String add(Model model, 
 					  @RequestParam(required=false) Integer page,
+					  @RequestParam(required=false) Integer size,
 					  @RequestParam(required=false) Integer id){
 		
-		if(page!=null){
+		if(page!=null && size!=null){
 			model.addAttribute("page", page);
+			model.addAttribute("size", size);
 		}
 		
 		if(id!=null){
@@ -178,6 +190,7 @@ public class ProductController {
 	@ResponseBody
 	public Map<String, Object> save(@RequestParam(required=false) Integer id,
 									@RequestParam(required=false) Integer page,
+									@RequestParam(required=false) Integer size,
 									@RequestParam(required=false) String name,
 									@RequestParam(required=false) Integer quantity,
 									@RequestParam(required=false) Float price,
@@ -217,6 +230,7 @@ public class ProductController {
 		map.put("flag", true);
 		map.put("msg", "保存成功");
 		map.put("page", page);
+		map.put("size", size);
 		return map;
 	}
 }

@@ -118,8 +118,10 @@
 						//设置当前页
 						if(curr!=null){
 							$(this).datagrid('getPager').pagination("refresh",{
-								pageNumber:curr
-							});
+								pageNumber:curr,
+								pageSize:[[${size}]]
+							}); 
+							$("#productList").datagrid("reload",{e_page:curr,e_rows:[[${size}]]});
 							curr=null;
 						}
 						
@@ -167,7 +169,7 @@
 			//编辑方法
 			function editProduct(id){
 				var options = $('#productList').datagrid('getPager').data("pagination").options;  
-				refresh([[@{/admin/product/add}]] + "?id=" +id + "&page=" + options.pageNumber);
+				refresh([[@{/admin/product/add}]] + "?id=" +id + "&page=" + options.pageNumber + "&size=" + options.pageSize);
 			}
 
 			//删除方法

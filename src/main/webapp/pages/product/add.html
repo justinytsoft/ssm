@@ -55,7 +55,7 @@
 	 						        	if(data.flag){
 	 						        		var url = null;
 	 						        		if([[${page!=null}]]){//如果是从列表页面进入
-	 						        			url = [[@{/admin/product/list}]] + "?curr=" + [[${page}]];	
+	 						        			url = [[@{/admin/product/list}]] + "?curr=" + [[${page}]] + "&size=" + [[${size}]];	
 	 						        		}else{
 	 						        			url = [[@{/admin/product/add}]];
 	 						        		}
@@ -102,6 +102,7 @@
 		<form id="saveForm" th:action="@{/admin/product/save}" method="post">
 			<input type="hidden" th:value="${product!=null?product.id:''}" name="id"/>
 			<input type="hidden" th:value="${page}" name="page"/>
+			<input type="hidden" th:value="${size}" name="size"/>
 		
 			<!--container-->
 			<div class="r_container commonAdd">
