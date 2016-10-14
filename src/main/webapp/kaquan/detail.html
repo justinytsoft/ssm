@@ -52,31 +52,21 @@
 					preload: 1,
 					lens: 1
 				});
-				var curvalue = $("#hiddenScore").val();
-				$("#xing").rater(null, {
-					maxvalue: 5,
-					curvalue: curvalue,
-					enabled: false
-				});
-				$('li.li8 input[type=image]').bind('click', function() {
-					var reg = /^\d+$/;
-					var number = $.trim($('#txtNumber').val());
-					if(!reg.test(number)) {
-						alert('在购买数量处请输入大于0的数字');
-						return false;
-					} else {
-						if(parseInt(number) <= 0) {
-							alert('在购买数量处请输入大于0的数字');
-							return false;
-						}
-					}
-				});
 				var tabIndex = getQueryString('tab');
 				if(tabIndex != null) {
 					SetTab('tab1', tabIndex, 5);
 				}
-
 			});
+			
+			//购买商品
+			function nowBuy(){
+				alert(1)
+				$.get([[@{/web/index/logged}]],{},function(data){
+					if(data){
+						cAlert("请登录后再进行购买");
+					}
+				});
+			}
 		/*]]>*/
 		</script>
 		<meta name="keywords" />
@@ -84,406 +74,374 @@
 	</head>
 
 	<body>
-		<form name="form1" method="post" action="local-adrp_show.aspx?productId=5171" id="form1">
-			<div>
-				<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value=""/>
-				<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value=""/>
-				<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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"/>
-			</div>
-
-			<script type="text/javascript" th:inline="javascript">
-			/*<![CDATA[*/
-				var theForm = document.forms['form1'];
-				if(!theForm) {
-					theForm = document.form1;
-				}
-
-				function __doPostBack(eventTarget, eventArgument) {
-					if(!theForm.onsubmit || (theForm.onsubmit() != false)) {
-						theForm.__EVENTTARGET.value = eventTarget;
-						theForm.__EVENTARGUMENT.value = eventArgument;
-						theForm.submit();
-					}
-				}
-			/*]]>*/
-			</script>
-
-			<div>
-
-				<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="D3E78166"/>
-				<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEWBgLAkPCUDQKcwNPhCgKvhL6CCwKZ/LKDDQLpmfv5BQKit836AX+IRQXqN8K9/h3bWRAsXVZoJ3yf"/>
-			</div>
-
-			<ul class="mininav">
-				<li class="of-ot-oznt-01">欢迎来到卡券村，我们是国内最专业的积分兑换礼品平台！ &nbsp;
-					<a style="display:none" id="member_username" href="local-adrmember_center.aspx" target="_blank"></a>&nbsp;
-					<span id="head1_lblPrice" style="font-size:12px;font-weight:bold; color:Red;"></span>&nbsp;
-					<a id="login" href="local-adrlogin.aspx" class="LineR">登录</a> &nbsp;
-					<a id="logout" style="display:none; cursor:pointer">退出</a>
+		<ul class="mininav">
+			<li class="of-ot-oznt-01">欢迎来到卡券村，我们是国内最专业的积分兑换礼品平台！ &nbsp;
+				<a style="display:none" id="member_username" href="local-adrmember_center.aspx" target="_blank"></a>&nbsp;
+				<span id="head1_lblPrice" style="font-size:12px;font-weight:bold; color:Red;"></span>&nbsp;
+				<a id="login" href="local-adrlogin.aspx" class="LineR">登录</a> &nbsp;
+				<a id="logout" style="display:none; cursor:pointer">退出</a>
+			</li>
+			<li class="of-ot-oznt-02">
+				<a href="local-adrmember_center.aspx" class="LineR">会员中心</a>
+				<a href="local-adrmember_center.aspx" class="LineR" style="display:none;">超级积分俱乐部</a>
+				<!--<a href="local-adrshoppingCart.aspx" class="LineR">购物车</a>
+				<a href="local-adrfavorite.aspx" class="LineR" style="display:none;">收藏夹</a>
+				<a href="local-adrhelp.aspx" class="LineR">帮助中心</a> &nbsp;<img style="display:none;" src="img/icon-003.gif" alt="400-678-1128"></li>-->
+			</li>
+		</ul>
+		<!-- /end mininav -->
+		<div class="header">
+			<h1 class="logo">
+				<a href="local-adr">
+					<img th:src="@{/kaquan/assets/img/icon-000.gif}"/>
+				</a>
+			</h1>
+			<!-- /end logo -->
+			<ul class="SearchForm" style="display:none">
+				<li class="pf-th-otz">关键字：</li>
+				<li class="textarea1">
+					<input name="txtKeyword" id="txtKeyword" class="textarea" type="text"/>
 				</li>
-				<li class="of-ot-oznt-02">
-					<a href="local-adrmember_center.aspx" class="LineR">会员中心</a>
-					<a href="local-adrmember_center.aspx" class="LineR" style="display:none;">超级积分俱乐部</a>
-					<!--<a href="local-adrshoppingCart.aspx" class="LineR">购物车</a>
-					<a href="local-adrfavorite.aspx" class="LineR" style="display:none;">收藏夹</a>
-					<a href="local-adrhelp.aspx" class="LineR">帮助中心</a> &nbsp;<img style="display:none;" src="img/icon-003.gif" alt="400-678-1128"></li>-->
+				<li class="pf-th-otz">价格从</li>
+				<li class="textarea2">
+					<input name="txtMaxPrice" id="txtMaxPrice" class="textarea" type="text"/>
+				</li>
+				<li class="pf-th-otz">到</li>
+				<li class="textarea2">
+					<input name="txtMinPrice" id="txtMinPrice" class="textarea" type="text"/>
+				</li>
+				<li class="textarea3">
+					<input name="btnSearch" id="btnSearch" class="butarea" type="button" value="搜索"/>
+				</li>
+				<li class="pf-th-otz">
+					<a href="local-adrp_show.aspx?productId=5171#"></a>
 				</li>
 			</ul>
-			<!-- /end mininav -->
-			<div class="header">
-				<h1 class="logo">
-					<a href="local-adr">
-						<img th:src="@{/kaquan/assets/img/icon-000.gif}"/>
+			<!-- /end SearchForm -->
+			<ul class="navigation">
+				<li>
+					<a th:href="@{/web/index/index}" th:class="${category_id==null and hot==null?'hover':''}">
+						<span>首页</span>
 					</a>
-				</h1>
-				<!-- /end logo -->
-				<ul class="SearchForm" style="display:none">
-					<li class="pf-th-otz">关键字：</li>
-					<li class="textarea1">
-						<input name="txtKeyword" id="txtKeyword" class="textarea" type="text"/>
-					</li>
-					<li class="pf-th-otz">价格从</li>
-					<li class="textarea2">
-						<input name="txtMaxPrice" id="txtMaxPrice" class="textarea" type="text"/>
-					</li>
-					<li class="pf-th-otz">到</li>
-					<li class="textarea2">
-						<input name="txtMinPrice" id="txtMinPrice" class="textarea" type="text"/>
-					</li>
-					<li class="textarea3">
-						<input name="btnSearch" id="btnSearch" class="butarea" type="button" value="搜索"/>
-					</li>
-					<li class="pf-th-otz">
-						<a href="local-adrp_show.aspx?productId=5171#"></a>
-					</li>
-				</ul>
-				<!-- /end SearchForm -->
-				<ul class="navigation">
-					<li>
-						<a th:href="@{/web/index/index}" th:class="${category_id==null and hot==null?'hover':''}">
-							<span>首页</span>
-						</a>
-					</li>
-					<li>
-						<a th:href="@{/web/index/index(hot=true)}" th:class="${hot!=null?'hover':''}">
-							<span>热门商品</span>
-						</a>
-					</li>
-					<li th:each="pc:${pcs}">
-						<a th:href="@{/web/index/index(category_id=${pc.id})}" th:class="${category_id==pc.id?'hover':''}">
-							<span th:text="${pc.name}">电子产品</span>
-						</a>
-					</li>
-				</ul>
-				<!-- /end navigation -->
+				</li>
+				<li>
+					<a th:href="@{/web/index/index(hot=true)}" th:class="${hot!=null?'hover':''}">
+						<span>热门商品</span>
+					</a>
+				</li>
+				<li th:each="pc:${pcs}">
+					<a th:href="@{/web/index/index(category_id=${pc.id})}" th:class="${category_id==pc.id?'hover':''}">
+						<span th:text="${pc.name}">电子产品</span>
+					</a>
+				</li>
+			</ul>
+			<!-- /end navigation -->
+		</div>
+		<!-- /end header -->
+		<script th:src="@{/kaquan/assets/js/common.js}" type="text/javascript"></script>
+		<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+			$(document).ready(function() {
+
+				var username = getCookie('eshop_userName');
+
+				if(username != null) {
+					$('#member_username').html(username);
+					$('#member_username').show();
+					$('#head1_lblPrice').show();
+				} else {
+					$('#member_username').hide();
+					$('#head1_lblPrice').hide();
+				}
+				var isLogin = getCookie('eshop_isLogin');
+				if(isLogin != null && isLogin == "yes") {
+					//$('#logout').show();
+					$('#login').hide();
+					$('#logout').hide();
+					/*$('#logout').bind('click', function() {
+					    delCookie('eshop_isLogin');
+					    delCookie('eshop_userName');
+					    $(this).hide();
+					    window.location.href = 'login.aspx';
+					});*/
+				} else {
+					$('#logout').hide();
+					$('#login').show();
+
+				}
+			});
+		/*]]>*/
+		</script>
+		<div class="banner"><img th:src="@{/kaquan/assets/img/adfile001.jpg}" alt=""/></div>
+		<!-- /end banner -->
+		<div class="defaultMain" id="defaultMain">
+			<div class="defaultMainLeft" onmousemove="document.getElementById(&quot;defaultMain&quot;).style.position=&quot;relative&quot;;">
+				<dl class="theleftList01">
+					<dt>商品兑换排行</dt>
+					<dd>
+						<ul>
+
+							<li>
+								<a href="detail.html">
+									<img th:src="@{/kaquan/assets/img/a7r2xgpr.jpg}" alt="" width="50px" height="50px"/>
+								</a>
+								<p>
+									<a href="local-adrp_show.aspx?productId=3120">厨房刀具八件套</a><br/> 【优惠】
+									<span>158 代金券</span></p>
+							</li>
+
+							<li>
+								<a href="local-adrp_show.aspx?productId=3121">
+									<img src="img/dq4d8idq.jpg" alt="" width="50px" height="50px"/>
+								</a>
+								<p>
+									<a href="local-adrp_show.aspx?productId=3121">迷你1L小电饭煲</a><br/> 【优惠】
+									<span>139 代金券</span></p>
+							</li>
+
+							<li>
+								<a href="local-adrp_show.aspx?productId=3122">
+									<img src="img/m5ghedf6.jpg" alt="" width="50px" height="50px"/>
+								</a>
+								<p>
+									<a href="local-adrp_show.aspx?productId=3122">jiuyong豆浆机</a><br/> 【优惠】
+									<span>239 代金券</span></p>
+							</li>
+
+							<li>
+								<a href="local-adrp_show.aspx?productId=3123">
+									<img src="img/nblyuo4b.jpg" alt="" width="50px" height="50px"/>
+								</a>
+								<p>
+									<a href="local-adrp_show.aspx?productId=3123">一品厨家用平底锅</a><br/> 【优惠】
+									<span>79 代金券</span></p>
+							</li>
+
+							<li>
+								<a href="local-adrp_show.aspx?productId=3124">
+									<img src="img/udxn3wlx.jpg" alt="" width="50px" height="50px"/>
+								</a>
+								<p>
+									<a href="local-adrp_show.aspx?productId=3124">樱花两用三折太阳伞</a><br/> 【优惠】
+									<span>119 代金券</span></p>
+							</li>
+
+						</ul>
+					</dd>
+					<dd class="btbg"><img th:src="@{/kaquan/assets/img/icon-012.gif}"/></dd>
+				</dl>
 			</div>
-			<!-- /end header -->
-			<script th:src="@{/kaquan/assets/js/common.js}" type="text/javascript"></script>
-			<script type="text/javascript" th:inline="javascript">
-			/*<![CDATA[*/
-				$(document).ready(function() {
+			<!-- /end defaultMainLeft -->
+			<div class="defaultMainRight">
+				<div class="the_one">
+					<h1 th:text="${p.name}">家用法式滤压壶咖啡壶</h1>
+					<div class="left_pic">
+						<div class="theMainRight">
+							<div id="Product_Intro_Left">
+								<div id="Product_BigImage" class="jqzoom">
+									<img th:src="${application.baseImageUrl + p.default_img}" id="defautlImage" width="310" height="310"/>
+								</div>
+								<!--<div id="Product_LittleImage">
+									<div class=" jcarousel-skin-tango">
+										<div class="jcarousel-container jcarousel-container-horizontal">
+											<div class="jcarousel-prev jcarousel-prev-horizontal"></div>
+											<div class="jcarousel-next jcarousel-next-horizontal"></div>
+											<div class="jcarousel-clip jcarousel-clip-horizontal">
+												<ul id="mycarousel" class="jcarousel-list jcarousel-list-horizontal">
 
-					var username = getCookie('eshop_userName');
+													<li class="jcarousel-item jcarousel-item-horizontal jcarousel-item-1 jcarousel-item-1-horizontal" jcarouselindex="1"><img onerror="this.src=&#39;upload-fileimg/product/none_50.gif&#39;" alt="" src="img/8sstskk5.jpg" name="upload-fileimg/product/4f5kv7n4.jpg"></li>
 
-					if(username != null) {
-						$('#member_username').html(username);
-						$('#member_username').show();
-						$('#head1_lblPrice').show();
-					} else {
-						$('#member_username').hide();
-						$('#head1_lblPrice').hide();
-					}
-					var isLogin = getCookie('eshop_isLogin');
-					if(isLogin != null && isLogin == "yes") {
-						//$('#logout').show();
-						$('#login').hide();
-						$('#logout').hide();
-						/*$('#logout').bind('click', function() {
-						    delCookie('eshop_isLogin');
-						    delCookie('eshop_userName');
-						    $(this).hide();
-						    window.location.href = 'login.aspx';
-						});*/
-					} else {
-						$('#logout').hide();
-						$('#login').show();
+													<li><img onerror="this.src=&#39;upload-fileimg/product/none_50.gif&#39;" alt="" src="img/h4dsk5a6.jpg" name="upload-fileimg/product/4jjjqvv1.jpg"></li>
 
-					}
-				});
-			/*]]>*/
-			</script>
-			<div class="banner"><img th:src="@{/kaquan/assets/img/adfile001.jpg}" alt=""/></div>
-			<!-- /end banner -->
-			<div class="defaultMain" id="defaultMain">
-				<div class="defaultMainLeft" onmousemove="document.getElementById(&quot;defaultMain&quot;).style.position=&quot;relative&quot;;">
-					<dl class="theleftList01">
-						<dt>商品兑换排行</dt>
-						<dd>
-							<ul>
-
-								<li>
-									<a href="detail.html">
-										<img th:src="@{/kaquan/assets/img/a7r2xgpr.jpg}" alt="" width="50px" height="50px"/>
-									</a>
-									<p>
-										<a href="local-adrp_show.aspx?productId=3120">厨房刀具八件套</a><br/> 【优惠】
-										<span>158 代金券</span></p>
-								</li>
-
-								<li>
-									<a href="local-adrp_show.aspx?productId=3121">
-										<img src="img/dq4d8idq.jpg" alt="" width="50px" height="50px"/>
-									</a>
-									<p>
-										<a href="local-adrp_show.aspx?productId=3121">迷你1L小电饭煲</a><br/> 【优惠】
-										<span>139 代金券</span></p>
-								</li>
-
-								<li>
-									<a href="local-adrp_show.aspx?productId=3122">
-										<img src="img/m5ghedf6.jpg" alt="" width="50px" height="50px"/>
-									</a>
-									<p>
-										<a href="local-adrp_show.aspx?productId=3122">jiuyong豆浆机</a><br/> 【优惠】
-										<span>239 代金券</span></p>
-								</li>
-
-								<li>
-									<a href="local-adrp_show.aspx?productId=3123">
-										<img src="img/nblyuo4b.jpg" alt="" width="50px" height="50px"/>
-									</a>
-									<p>
-										<a href="local-adrp_show.aspx?productId=3123">一品厨家用平底锅</a><br/> 【优惠】
-										<span>79 代金券</span></p>
-								</li>
-
-								<li>
-									<a href="local-adrp_show.aspx?productId=3124">
-										<img src="img/udxn3wlx.jpg" alt="" width="50px" height="50px"/>
-									</a>
-									<p>
-										<a href="local-adrp_show.aspx?productId=3124">樱花两用三折太阳伞</a><br/> 【优惠】
-										<span>119 代金券</span></p>
-								</li>
-
-							</ul>
-						</dd>
-						<dd class="btbg"><img th:src="@{/kaquan/assets/img/icon-012.gif}"/></dd>
-					</dl>
-				</div>
-				<!-- /end defaultMainLeft -->
-				<div class="defaultMainRight">
-					<div class="the_one">
-						<h1 th:text="${p.name}">家用法式滤压壶咖啡壶</h1>
-						<div class="left_pic">
-							<div class="theMainRight">
-								<div id="Product_Intro_Left">
-									<div id="Product_BigImage" class="jqzoom">
-										<img th:src="${application.baseImageUrl + p.default_img}" id="defautlImage" width="310" height="310"/>
-									</div>
-									<!--<div id="Product_LittleImage">
-										<div class=" jcarousel-skin-tango">
-											<div class="jcarousel-container jcarousel-container-horizontal">
-												<div class="jcarousel-prev jcarousel-prev-horizontal"></div>
-												<div class="jcarousel-next jcarousel-next-horizontal"></div>
-												<div class="jcarousel-clip jcarousel-clip-horizontal">
-													<ul id="mycarousel" class="jcarousel-list jcarousel-list-horizontal">
-
-														<li class="jcarousel-item jcarousel-item-horizontal jcarousel-item-1 jcarousel-item-1-horizontal" jcarouselindex="1"><img onerror="this.src=&#39;upload-fileimg/product/none_50.gif&#39;" alt="" src="img/8sstskk5.jpg" name="upload-fileimg/product/4f5kv7n4.jpg"></li>
-
-														<li><img onerror="this.src=&#39;upload-fileimg/product/none_50.gif&#39;" alt="" src="img/h4dsk5a6.jpg" name="upload-fileimg/product/4jjjqvv1.jpg"></li>
-
-													</ul>
-												</div>
+												</ul>
 											</div>
 										</div>
-									</div>-->
-								</div>
-								<div class="Description" id="Product_Intro_Right">
-									<li id="cx" style="display: none"></li>
-									<li id="liLargess" class="largess" style="display:none"></li>
-									<li id="nocoupon" style="display:none"></li>
-									<li class="ons" id="oldtonew" style="display:none"></li>
-									<span id="pShowSkuId" style="display:none"></span>
-									<div id="shipBarPanel" style="display:none;"></div>
-								</div>
+									</div>
+								</div>-->
 							</div>
-						</div>
-						<div class="right_word">
-							<ul>
-								<li class="li2">
-									<p>代金券</p>：
-									<b th:text="${p.price}">141</b>
-        						</li>
-								<li class="li3">
-									<p>运费</p>：
-									<label th:text="${p.freight_price>0?p.freight_price:'卖家承担运费'}"></label>
-								</li>
-								<li class="li4">
-									<p>已出售</p>：
-									<label th:text="${p.saled_num==null?0:p.saled_num}"></label>
-								</li>
-								<li class="li9">
-									<p>评价</p>：
-									<label>0</label>分（<label>0</label>人评价）
-								</li>
-								<li class="li5" style="display:none;">
-									<p>送积分</p>：单件送0积分</li>
-								<li class="li6">
-									<p>付款方式</p>：<img th:src="@{/kaquan/assets/img/icon-032.gif}" alt=""/>余额支付</li>
-								<li class="li7">
-									<p>数量</p>：<span><input name="txtNumber" type="text" value="1" id="txtNumber"/></span>件
-									<b th:text="${'库存' + p.quantity + '件'}">（库存99999件）</b> &nbsp;
-									<!--<a id="lBtnAddFavorite" href="javascript:__doPostBack(&#39;lBtnAddFavorite&#39;,&#39;&#39;)" style="color:Navy;">加入收藏</a>-->
-								</li>
-								<li class="li8">
-									<input type="image" name="imgBtnNowBuy" id="imgBtnNowBuy" th:src="@{/kaquan/assets/img/icon-033.gif}" style="border-width:0px;"/>&nbsp;&nbsp;
-									<!--<input type="image" name="imgBtnAddShppingCart" id="imgBtnAddShppingCart" src="img/icon-034.gif" style="border-width:0px;"></li>-->
-								</li>
-							</ul>
+							<div class="Description" id="Product_Intro_Right">
+								<li id="cx" style="display: none"></li>
+								<li id="liLargess" class="largess" style="display:none"></li>
+								<li id="nocoupon" style="display:none"></li>
+								<li class="ons" id="oldtonew" style="display:none"></li>
+								<span id="pShowSkuId" style="display:none"></span>
+								<div id="shipBarPanel" style="display:none;"></div>
+							</div>
 						</div>
 					</div>
-					<div class="the_two">
-						<div class="tmenu">
-							<ul id="tab1">
-								<li class="on" onclick="SetTab(&#39;tab1&#39;,0,5);">商品介绍</li>
-								<li onclick="SetTab(&#39;tab1&#39;,1,5);">评价详情</li>
-								<!-- <li onclick="SetTab(&#39;tab1&#39;,2,5);" style="display:none;">交易记录</li> -->
-							</ul>
-						</div>
-
-						<div class="tbox">
-							<div id="tab1-content0" class="block">
-								<div class="Properties">
-									<dl>
-										<dt><img th:src="@{/kaquan/assets/img/icon-039.gif}" alt=""/></dt>
-										<dd></dd>
-									</dl>
-								</div>
-								<br/>
-								<div th:text="${p.detail}"></div>
-							</div>
-							<div id="tab1-content1" class="none">
-								<table width="100%">
-
-									<tbody>
-										<tr>
-											<th width="55%" align="left">
-												&nbsp;评论
-											</th>
-											<th width="15%">
-												分数
-											</th>
-											<th width="15%" align="center">
-												评论人
-											</th>
-											<th width="15%" align="center">时间</th>
-										</tr>
-
-										<tr>
-											<td colspan="4">
-
-												<!-- AspNetPager V7.2 for VS2005 & VS2008  Copyright:2003-2008 Webdiyer (www.webdiyer.com) -->
-												<div id="AspNetPager2">
-													<table width="100%" border="0" cellpadding="0" cellspacing="0">
-														<tbody>
-															<tr>
-																<td align="left" valign="bottom" nowrap="true" style="width:40%;">共1页，当前为第1页，每页20条，共0条记录</td>
-																<td valign="bottom" nowrap="true" style="width:60%;">
-																	<span>
-																		<a disabled="disabled" style="margin-right:5px;">首页</a>
-																	</span>
-																	<span>
-																		<a disabled="disabled" style="margin-right:5px;">上一页</a>
-																	</span>
-																	<span style="margin-right:5px;font-weight:Bold;color:red;">1</span>
-																	<span>
-																		<a disabled="disabled" style="margin-right:5px;">下一页</a>
-																	</span>
-																	<span>
-																		<a disabled="disabled" style="margin-right:5px;">尾页</a>
-																	</span>&nbsp;&nbsp;
-																	转到<input type="text" value="1" disabled="disabled" name="AspNetPager2_input" id="AspNetPager2_input" onkeydown="ANP_keydown(event,&#39;AspNetPager2_btn&#39;);" style="width:30px;"/>页
-																	<input type="submit" value="Go" name="AspNetPager2" id="AspNetPager2_btn" disabled="disabled" onclick="if(ANP_checkInput(&#39;AspNetPager2_input&#39;,1)){__doPostBack(&#39;AspNetPager2&#39;,&#39;&#39;)} else{return false}"/>
-																</td>
-															</tr>
-														</tbody>
-													</table>
-												</div>
-												<!-- AspNetPager V7.2 for VS2005 & VS2008 End -->
-
-											</td>
-										</tr>
-									</tbody>
-								</table>
-
-							</div>
-							<div id="tab1-content2" class="none" style="display:none;">
-
-							</div>
-						</div>
-						<!--<div class="other_prodtct">
-							<dl>
-								<dt>浏览了该商品的用户还浏览了</dt>
-								<dd>
-									<ul>
-
-									</ul>
-								</dd>
-							</dl>
-							<dl>
-								<dt>相关产品</dt>
-								<dd>
-									<ul>
-
-									</ul>
-								</dd>
-							</dl>
-						</div>-->
+					<div class="right_word">
+						<ul>
+							<li class="li2">
+								<p>代金券</p>：
+								<b th:text="${p.price}">141</b>
+       						</li>
+							<li class="li3">
+								<p>运费</p>：
+								<label th:text="${p.freight_price>0?p.freight_price:'卖家承担运费'}"></label>
+							</li>
+							<li class="li4">
+								<p>已出售</p>：
+								<label th:text="${p.saled_num==null?0:p.saled_num}"></label>
+							</li>
+							<li class="li9">
+								<p>评价</p>：
+								<label>0</label>分（<label>0</label>人评价）
+							</li>
+							<li class="li5" style="display:none;">
+								<p>送积分</p>：单件送0积分</li>
+							<li class="li6">
+								<p>付款方式</p>：<img th:src="@{/kaquan/assets/img/icon-032.gif}" alt=""/>余额支付</li>
+							<li class="li7">
+								<p>数量</p>：<span><input name="txtNumber" type="text" value="1" id="txtNumber"/></span>件
+								<b th:text="${'库存' + p.quantity + '件'}">（库存99999件）</b> &nbsp;
+								<!--<a id="lBtnAddFavorite" href="javascript:__doPostBack(&#39;lBtnAddFavorite&#39;,&#39;&#39;)" style="color:Navy;">加入收藏</a>-->
+							</li>
+							<li class="li8">
+								<input type="image" onclick="nowBuy()" th:src="@{/kaquan/assets/img/icon-033.gif}" style="border-width:0px;"/>&nbsp;&nbsp;
+								<!--<input type="image" name="imgBtnAddShppingCart" id="imgBtnAddShppingCart" src="img/icon-034.gif" style="border-width:0px;"></li>-->
+							</li>
+						</ul>
 					</div>
 				</div>
-				<!-- /end defaultMainRight -->
-			</div>
-			<!-- /end banner -->
+				<div class="the_two">
+					<div class="tmenu">
+						<ul id="tab1">
+							<li class="on" onclick="SetTab(&#39;tab1&#39;,0,5);">商品介绍</li>
+							<li onclick="SetTab(&#39;tab1&#39;,1,5);">评价详情</li>
+							<!-- <li onclick="SetTab(&#39;tab1&#39;,2,5);" style="display:none;">交易记录</li> -->
+						</ul>
+					</div>
 
-			<!-- /end help -->
+					<div class="tbox">
+						<div id="tab1-content0" class="block">
+							<div class="Properties">
+								<dl>
+									<dt><img th:src="@{/kaquan/assets/img/icon-039.gif}" alt=""/></dt>
+									<dd></dd>
+								</dl>
+							</div>
+							<br/>
+							<div th:text="${p.detail}"></div>
+						</div>
+						<div id="tab1-content1" class="none">
+							<table width="100%">
 
-			<div class="bottominfo">
-				<p class="slht">
-					<a href="javascript:">网站首页</a>|
-					<a href="javascript:">关于我们</a>|
-					<a href="javascript:">新闻动态</a>|
-					<a href="javascript:">网站公告</a>|
-					<a href="javascript:">诚聘英才</a>|
-					<a href="javascript:">隐私保护</a>|
-					<a href="javascript:">政策法律声明</a>
-				</p>
-				<p class="copy">©
-					<a href="local-adr">卡券村</a> 2013-2017 All Rights Reserved. 未经许可 不得抄袭本站图片和内容<br/>
-				</p>
-				<p class="site">
-					<a href="javascript:"><img th:src="@{/kaquan/assets/img/icon-029.gif}" alt=""/></a>
-					<a href="javascript:"><img th:src="@{/kaquan/assets/img/icon-030.gif}" alt=""/></a>
-					<a href="javascript:"><img th:src="@{/kaquan/assets/img/icon-031.gif}" alt=""/></a>
-				</p>
-			</div>
-			<!-- <script th:src="@{/kaquan/assets/js/service.js}" type="text/javascript"></script>
-			<script th:src="@{/kaquan/assets/js/getonline.js}" type="text/javascript"></script>
-			<div id="contactContanier">
-				<div id="full" style="right:3px; top:180px; width:93px;position:absolute;z-index:1000;text-align:center;">
-					<img border="0" align="absmiddle" th:src="@{/kaquan/assets/img/fdqq.gif}" />
-					<a href="tencent://message/?uin=792066176&amp;Site=www.jifencun.com&amp;Menu=yes" class="qq">
-						<img border="0" align="absmiddle" th:src="@{/kaquan/assets/img/qq1.gif}"/>
-					</a>
-					<a href="tencent://message/?uin=792066176&amp;Site=www.jifencun.com&amp;Menu=yes" class="qq">
-						<img border="0" align="absmiddle" th:src="@{/kaquan/assets/img/qq2.gif}"/>
-					</a>
+								<tbody>
+									<tr>
+										<th width="55%" align="left">
+											&nbsp;评论
+										</th>
+										<th width="15%">
+											分数
+										</th>
+										<th width="15%" align="center">
+											评论人
+										</th>
+										<th width="15%" align="center">时间</th>
+									</tr>
+
+									<tr>
+										<td colspan="4">
+
+											<!-- AspNetPager V7.2 for VS2005 & VS2008  Copyright:2003-2008 Webdiyer (www.webdiyer.com) -->
+											<div id="AspNetPager2">
+												<table width="100%" border="0" cellpadding="0" cellspacing="0">
+													<tbody>
+														<tr>
+															<td align="left" valign="bottom" nowrap="true" style="width:40%;">共1页，当前为第1页，每页20条，共0条记录</td>
+															<td valign="bottom" nowrap="true" style="width:60%;">
+																<span>
+																	<a disabled="disabled" style="margin-right:5px;">首页</a>
+																</span>
+																<span>
+																	<a disabled="disabled" style="margin-right:5px;">上一页</a>
+																</span>
+																<span style="margin-right:5px;font-weight:Bold;color:red;">1</span>
+																<span>
+																	<a disabled="disabled" style="margin-right:5px;">下一页</a>
+																</span>
+																<span>
+																	<a disabled="disabled" style="margin-right:5px;">尾页</a>
+																</span>&nbsp;&nbsp;
+																转到<input type="text" value="1" disabled="disabled" name="AspNetPager2_input" id="AspNetPager2_input" onkeydown="ANP_keydown(event,&#39;AspNetPager2_btn&#39;);" style="width:30px;"/>页
+																<input type="submit" value="Go" name="AspNetPager2" id="AspNetPager2_btn" disabled="disabled" onclick="if(ANP_checkInput(&#39;AspNetPager2_input&#39;,1)){__doPostBack(&#39;AspNetPager2&#39;,&#39;&#39;)} else{return false}"/>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+											<!-- AspNetPager V7.2 for VS2005 & VS2008 End -->
+
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
+						</div>
+						<div id="tab1-content2" class="none" style="display:none;">
+
+						</div>
+					</div>
+					<!--<div class="other_prodtct">
+						<dl>
+							<dt>浏览了该商品的用户还浏览了</dt>
+							<dd>
+								<ul>
+
+								</ul>
+							</dd>
+						</dl>
+						<dl>
+							<dt>相关产品</dt>
+							<dd>
+								<ul>
+
+								</ul>
+							</dd>
+						</dl>
+					</div>-->
 				</div>
 			</div>
-			<script type="text/javascript" th:src="@{/kaquan/assets/js/jquery-plugins-vs1-20090707.js}"></script>
-			<script type="text/javascript" th:src="@{/kaquan/assets/js/p.pshow.v0122.js}"></script> -->
-		</form>
+			<!-- /end defaultMainRight -->
+		</div>
+		<!-- /end banner -->
 
+		<!-- /end help -->
+
+		<div class="bottominfo">
+			<p class="slht">
+				<a href="javascript:">网站首页</a>|
+				<a href="javascript:">关于我们</a>|
+				<a href="javascript:">新闻动态</a>|
+				<a href="javascript:">网站公告</a>|
+				<a href="javascript:">诚聘英才</a>|
+				<a href="javascript:">隐私保护</a>|
+				<a href="javascript:">政策法律声明</a>
+			</p>
+			<p class="copy">©
+				<a href="local-adr">卡券村</a> 2013-2017 All Rights Reserved. 未经许可 不得抄袭本站图片和内容<br/>
+			</p>
+			<p class="site">
+				<a href="javascript:"><img th:src="@{/kaquan/assets/img/icon-029.gif}" alt=""/></a>
+				<a href="javascript:"><img th:src="@{/kaquan/assets/img/icon-030.gif}" alt=""/></a>
+				<a href="javascript:"><img th:src="@{/kaquan/assets/img/icon-031.gif}" alt=""/></a>
+			</p>
+		</div>
+		<!-- <script th:src="@{/kaquan/assets/js/service.js}" type="text/javascript"></script>
+		<script th:src="@{/kaquan/assets/js/getonline.js}" type="text/javascript"></script>
+		<div id="contactContanier">
+			<div id="full" style="right:3px; top:180px; width:93px;position:absolute;z-index:1000;text-align:center;">
+				<img border="0" align="absmiddle" th:src="@{/kaquan/assets/img/fdqq.gif}" />
+				<a href="tencent://message/?uin=792066176&amp;Site=www.jifencun.com&amp;Menu=yes" class="qq">
+					<img border="0" align="absmiddle" th:src="@{/kaquan/assets/img/qq1.gif}"/>
+				</a>
+				<a href="tencent://message/?uin=792066176&amp;Site=www.jifencun.com&amp;Menu=yes" class="qq">
+					<img border="0" align="absmiddle" th:src="@{/kaquan/assets/img/qq2.gif}"/>
+				</a>
+			</div>
+		</div>
+		<script type="text/javascript" th:src="@{/kaquan/assets/js/jquery-plugins-vs1-20090707.js}"></script>
+		<script type="text/javascript" th:src="@{/kaquan/assets/js/p.pshow.v0122.js}"></script> -->
 	</body>
 
 </html>

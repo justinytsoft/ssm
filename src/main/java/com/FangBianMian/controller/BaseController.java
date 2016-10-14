@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.FangBianMian.constant.Common;
 import com.FangBianMian.dao.IBaseDao;
 import com.FangBianMian.domain.City;
 import com.FangBianMian.domain.PaymentType;
@@ -24,7 +25,6 @@ import com.FangBianMian.domain.Province;
 import com.FangBianMian.domain.SecurityUser;
 import com.FangBianMian.domain.SysRoles;
 import com.FangBianMian.utils.Captcha;
-import com.FangBianMian.utils.Constant;
 import com.FangBianMian.utils.DataUtil;
 import com.FangBianMian.utils.DataValidation;
 
@@ -153,15 +153,15 @@ public class BaseController {
 		}
 		
 		if(!StringUtils.isBlank(msg)){
-			if(Constant.LOGIN_FAILD.equals(msg)){
+			if(Common.LOGIN_FAILD.equals(msg)){
 				model.addAttribute("msg", "用户名或密码错误");
-			}else if(Constant.SESSION_INVALID.equals(msg)){
+			}else if(Common.SESSION_INVALID.equals(msg)){
 				model.addAttribute("msg", "session过期,请重新登录");
-			}else if(Constant.SESSION_MULTI.equals(msg)){
+			}else if(Common.SESSION_MULTI.equals(msg)){
 				model.addAttribute("msg", "该帐号已从其他地方登录");
-			}else if(Constant.CAPTCHA_FAILD.equals(msg)){
+			}else if(Common.CAPTCHA_FAILD.equals(msg)){
 				model.addAttribute("msg", "验证码错误");
-			}else if(Constant.CAPTCHA_GENERATED_FAILD.equals(msg)){
+			}else if(Common.CAPTCHA_GENERATED_FAILD.equals(msg)){
 				model.addAttribute("msg", "验证码创建失败");
 			}
 		}

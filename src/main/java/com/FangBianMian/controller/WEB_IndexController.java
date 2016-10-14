@@ -4,15 +4,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.FangBianMian.constant.Common;
 import com.FangBianMian.dao.IBaseDao;
 import com.FangBianMian.domain.Product;
 import com.FangBianMian.domain.ProductCategory;
+import com.FangBianMian.domain.User;
 import com.FangBianMian.service.IProductService;
 import com.FangBianMian.utils.DataUtil;
 
@@ -69,5 +74,18 @@ public class WEB_IndexController {
 		model.addAttribute("hot_ps", hot_ps);
 		model.addAttribute("pcs", pcs);
 		return "kaquan/index";
+	}
+	
+	/**
+	 * 判断用户是否登录
+	 * @return
+	 */
+	@RequestMapping("/logged")
+	@ResponseBody
+	public Map<String,Object> logged(HttpServletRequest request){
+		Map<String, Object> map = new HashMap<String, Object>();
+		User user = (User) request.getSession().getAttribute(Common.USER_SESSION);
+		map.put("flag", user==null);
+		return map;
 	}
 }

@@ -18,6 +18,8 @@ import org.patchca.service.ConfigurableCaptchaService;
 import org.patchca.utils.encoder.EncoderHelper;
 import org.patchca.word.RandomWordFactory;
 
+import com.FangBianMian.constant.Common;
+
 public class Captcha {
 
 	private static ConfigurableCaptchaService cs = new ConfigurableCaptchaService();
@@ -70,7 +72,7 @@ public class Captcha {
         }
         setResponseHeaders(response);
         String token = EncoderHelper.getChallangeAndWriteImage(cs, "png", response.getOutputStream());
-        session.setAttribute(Constant.SESSION_GENERATED_CAPTCHA_KEY, token);
+        session.setAttribute(Common.SESSION_GENERATED_CAPTCHA_KEY, token);
     }
     
     protected void setResponseHeaders(HttpServletResponse response) {

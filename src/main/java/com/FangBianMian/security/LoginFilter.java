@@ -7,8 +7,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.FangBianMian.constant.Common;
 import com.FangBianMian.exception.CaptchaException;
-import com.FangBianMian.utils.Constant;
 
 /**
  * 增加了验证码的验证
@@ -18,7 +18,7 @@ import com.FangBianMian.utils.Constant;
 public class LoginFilter extends UsernamePasswordAuthenticationFilter{
        
 	public static final String SPRING_SECURITY_FORM_CAPTCHA_KEY = "captcha";  
-    public static final String SESSION_GENERATED_CAPTCHA_KEY = Constant.SESSION_GENERATED_CAPTCHA_KEY;  
+    public static final String SESSION_GENERATED_CAPTCHA_KEY = Common.SESSION_GENERATED_CAPTCHA_KEY;  
       
     private String captchaParameter = SPRING_SECURITY_FORM_CAPTCHA_KEY;  
       
