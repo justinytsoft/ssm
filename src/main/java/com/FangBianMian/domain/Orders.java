@@ -13,6 +13,7 @@ public class Orders {
 	private Integer id;
 	private Integer mid;
 	private String sn;
+	private String express;
 	private Float amount;
 	private Float amount_paid;
 	private Float discount;
@@ -137,5 +138,11 @@ public class Orders {
 	}
 	public void setLogs(List<OrdersLog> logs) {
 		this.logs = logs;
+	}
+	public String getExpress() {
+		return express;
+	}
+	public void setExpress(String express) {
+		this.express = express;
 	}
 }

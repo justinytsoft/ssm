@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.FangBianMian.dao.IOrderDao">
+
+	<resultMap type="com.FangBianMian.domain.Orders" id="ordersMap">
+		<id property="id" column="id"/>
+		<result property="sn" column="sn"/>
+		<result property="express" column="express"/>
+		<result property="mid" column="mid"/>
+		<result property="amount_paid" column="amount_paid"/>
+		<result property="amount" column="amount"/>
+		<result property="discount" column="discount"/>
+		<result property="receiver" column="receiver"/>
+		<result property="phone" column="phone"/>
+		<result property="address" column="address"/>
+		<result property="deliver_type" column="deliver_type"/>
+		<result property="status" column="status"/>
+		<result property="freight" column="freight"/>
+		<result property="message" column="message"/>
+		<result property="postcode" column="postcode"/>
+		<result property="create_time" column="create_time"/>
+		
+		<collection property="items" column="id" javaType="List" ofType="com.FangBianMian.domain.OrdersItem" select="selectOrdersItemByOid"></collection>
+		<collection property="logs" column="id" javaType="List" ofType="com.FangBianMian.domain.OrdersLog" select="selectOrdersLogByOid"></collection>
+	</resultMap>
+
+	<!-- 更新订单状态 -->
+	<update id="updateOrderStatus">
+		UPDATE orders
+		<set>
+			<if test="param.status!=null">status = #{param.status}</if>
+			<if test="param.express!=null">express = #{param.express}</if>
+		</set>
+		WHERE id = #{param.oid}
+	</update>
+
+	<!-- 查询所有订单 -->
+	<select id="queryOrdersByParam" resultMap="ordersMap">
+		SELECT * FROM orders
+		<where>
+			<if test="param.invisible!=null">invisible = #{invisible}</if>
+			<if test="param.mid!=null">AND mid = #{mid}</if>
+			<if test="param.sn!=null">AND sn LIKE '%${param.sn}%'</if>
+			<if test="param.status!=null">AND status = #{param.status}</if>
+		</where>
+		<if test="param.page!=null">
+			LIMIT #{param.page},#{param.rows}
+		</if>
+	</select>
+
+	<!-- 查询所有订单总数 -->
+	<select id="queryOrdersByParamTotal" resultType="int">
+		SELECT COUNT(1) FROM orders
+		<where>
+			invisible = 0
+			<if test="param.mid!=null">AND mid = #{mid}</if>
+			<if test="param.sn!=null">AND sn LIKE '%${param.sn}%'</if>
+			<if test="param.status!=null">AND status = #{param.status}</if>
+		</where>
+	</select>
+	 
+	<!-- 查询订单商品条目 -->
+	<select id="selectOrdersItemByOid" resultType="com.FangBianMian.domain.OrdersItem">
+		SELECT * FROM orders_item WHERE oid = #{id}
+	</select>
+	
+	<!-- 查询订单日志 -->
+	<select id="selectOrdersLogByOid" resultType="com.FangBianMian.domain.OrdersLog">
+		SELECT * FROM orders_log WHERE oid = #{id}
+	</select>
+
+</mapper>

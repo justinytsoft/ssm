@@ -15,6 +15,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -40,6 +41,62 @@ import sun.misc.BASE64Encoder;
  * 
  */
 public class DataUtil {
+	
+	/**
+	 * 生成订单号(业务编码+年的后2位+月+日+订单流水号)
+	 * 业务编号：1、普通商品订单
+	 * 
+	 * @param id 订单流水号
+	 * @param bno 业务编号
+	 * @return
+	 */
+	public static String createOrderNO(Integer id, String bno) {
+		StringBuffer orderNumber = new StringBuffer();
+		orderNumber.append(bno);
+		String dateStr = DateFormatter.dateToString(new Date(), "yyMMdd");
+		orderNumber.append(dateStr);
+		orderNumber.append(DataUtil.fillData(id.toString()));
+		return orderNumber.toString();
+	}
+	
+	/**
+	 * 填充补齐字符串
+	 * @param data 需要补齐的字符
+	 * @param width 需要补齐多宽
+	 * @param repStr 用于补齐的字符
+	 * @return
+	 */
+	public static String fillData(String data, Integer width, String repStr) {
+		if (!StringUtils.isBlank(data)) {
+			StringBuffer d = new StringBuffer();
+			int fw = width - data.length();
+			for (int i = 1; i <= fw; i++) {
+				d.append(repStr);
+			}
+			d.append(data);
+			return d.toString();
+		}
+		return null;
+	}
+	
+	/**
+	 * 填充补齐字符串
+	 * @param data 需要补齐的字符
+	 * @param width 需要补齐多宽
+	 * @return
+	 */
+	public static String fillData(String data, Integer width) {
+		return fillData(data, width, "0");
+	}
+	
+	/**
+	 * 填充补齐字符串
+	 * @param data 需要补齐的字符
+	 * @return
+	 */
+	public static String fillData(String data) {
+		return fillData(data, 8, "0");
+	}
 	
 	/**
 	 * 图片转化成base64字符串
