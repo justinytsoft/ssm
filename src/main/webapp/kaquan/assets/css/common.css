@@ -49,12 +49,12 @@ a:hover{color:#fe6c00;text-decoration:none;}
 
 
 #ifocus {MARGIN: 0px; WIDTH:520px; HEIGHT:226px; border:#eeeeee solid 1px;}
-#ifocus_pic {Z-INDEX: 6; POSITION: relative; MARGIN: 0px; WIDTH:520px; DISPLAY: inline; FLOAT: left; HEIGHT:226px; OVERFLOW: hidden}
+#ifocus_pic {Z-INDEX: 6; POSITION: relative; MARGIN: 0px; WIDTH:800px; DISPLAY: inline; FLOAT: left; HEIGHT:226px; OVERFLOW: hidden}
 #ifocus_piclist {Z-INDEX: 7; POSITION: absolute;}
-#ifocus_piclist LI {WIDTH:520px; HEIGHT:226px; OVERFLOW: hidden;}
-#ifocus_piclist IMG {WIDTH:520px; HEIGHT:226px;}
-#ifocus_btn {Z-INDEX: 10; POSITION: absolute; TEXT-ALIGN: right; BOTTOM: 0px;left: 0px; width:520px;}
-#ifocus_btn LI {TEXT-ALIGN: center; LINE-HEIGHT: 25px; WIDTH:/* 103px;*/ 103px; FLOAT: left; HEIGHT: 25px; MARGIN-right: 1px; CURSOR: pointer; _width: /*103px;*/ 103px;}
+#ifocus_piclist LI {WIDTH:800px; HEIGHT:226px; OVERFLOW: hidden;}
+#ifocus_piclist IMG {WIDTH:800px; HEIGHT:226px;}
+#ifocus_btn {Z-INDEX: 10; POSITION: absolute; TEXT-ALIGN: right; BOTTOM: 0px;left: 0px; width:800px;}
+#ifocus_btn LI {TEXT-ALIGN: center; LINE-HEIGHT: 25px; WIDTH:151px; FLOAT: left; HEIGHT: 25px; MARGIN-right: 1px; CURSOR: pointer; _width: /*103px;*/ 103px;}
 #ifocus_btn IMG {MARGIN: 7px 0px 0px 11px; WIDTH: 75px; HEIGHT: 45px;}
 #ifocus_btn .current {FILTER: alpha(opacity=90); BACKGROUND-COLOR: #A81818; COLOR: #ffffff; opacity: 1; -moz-opacity:1;}
 #ifocus_opdiv {POSITION: absolute; FILTER: alpha(opacity=50); WIDTH: 410px; BOTTOM: 0px; BACKGROUND: #000; HEIGHT: 25px; LEFT: 0px; opacity: 0.5; -moz-opacity: 0.5;}

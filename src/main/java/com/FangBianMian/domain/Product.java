@@ -34,8 +34,11 @@ public class Product {
 	 */
 	private Integer saled_num;
 	/**
+	 * 评分人数
+	 */
+	private Integer common_num;
+	/**
 	 * 评分的平均分数
-	 * @return
 	 */
 	private Float score;
 	
@@ -140,5 +143,11 @@ public class Product {
 	}
 	public void setDefault_img(String default_img) {
 		this.default_img = default_img;
+	}
+	public Integer getCommon_num() {
+		return common_num;
+	}
+	public void setCommon_num(Integer common_num) {
+		this.common_num = common_num;
 	}
 }

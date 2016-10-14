@@ -53,8 +53,12 @@
 	 								data = eval('(' + data + ')');  // change the JSON string to javascript object
 	 						        cAlertFun(data.msg,function(){
 	 						        	if(data.flag){
-	 						        		var url = [[@{/admin/product/list}]] + "?curr=" + [[${page}]];
-	 						        		console.info(url);
+	 						        		var url = null;
+	 						        		if([[${page!=null}]]){//如果是从列表页面进入
+	 						        			url = [[@{/admin/product/list}]] + "?curr=" + [[${page}]];	
+	 						        		}else{
+	 						        			url = [[@{/admin/product/add}]];
+	 						        		}
 	 						        		refresh(url);
 	 						        	}
 	 						        })
@@ -116,10 +120,10 @@
 				<div class="bg-1 bg-12" style="background: #FFFFFF;">
 					<label>商品单价：</label>
 					<input name="price" th:value="${product!=null?product.price:''}" type="text" class="easyui-numberbox" data-options="precision:2,width:120,height:30,required:true,validateOnCreate:false,validType:['minNum[1]']"/>
-					<label class="mg-left-20">优惠价格：</label>
-					<input name="discount_price" th:value="${product!=null?product.discount_price:''}" type="text" class="easyui-numberbox" data-options="precision:2,width:120,height:30,prompt:'不填写则无优惠价格',validType:['minNum[1]']"/>
+					<!-- <label class="mg-left-20">优惠价格：</label>
+					<input name="discount_price" th:value="${product!=null?product.discount_price:''}" type="text" class="easyui-numberbox" data-options="precision:2,width:120,height:30,prompt:'不填写则无优惠价格',validType:['minNum[1]']"/> -->
 					<label class="mg-left-20">商品运费：</label>
-					<input name="freight_price" th:value="${product!=null?product.freight_price:''}" type="text" class="easyui-numberbox" data-options="precision:2,width:120,height:30,prompt:'不填写则无运费',validType:['minNum[1]']"/>
+					<input name="freight_price" th:value="${product!=null?product.freight_price:''}" type="text" class="easyui-numberbox" data-options="precision:2,width:120,height:30,prompt:'不填写则无运费',validType:['minNum[0]']"/>
 				</div>
 				
 				<div class="bg-1 bg-13">

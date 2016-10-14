@@ -205,7 +205,7 @@ public class ProductController {
 		p.setQuantity(quantity);
 		p.setPrice(price);
 		p.setDiscount_price(discount_price);
-		p.setFreight_price(freight_price);
+		p.setFreight_price(freight_price==null?0:freight_price);
 		p.setCategory_id(category);
 		p.setPayment_type(payment_type);
 		p.setStatus(status);

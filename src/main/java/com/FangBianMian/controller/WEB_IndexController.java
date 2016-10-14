@@ -37,12 +37,13 @@ public class WEB_IndexController {
 	 */
 	@RequestMapping("/index")
 	public String index(Model model,
+						@RequestParam(required=false) Boolean hot,
 						@RequestParam(required=false) Integer category_id){
 		Map<String, Object> hot_param = new HashMap<String, Object>();
 		hot_param.put("page", 0);
 		hot_param.put("rows", 5);
-		hot_param.put("hot", true);
-		hot_param.put("status", true);
+		hot_param.put("hot", true); //是否是热门商品
+		hot_param.put("status", true); //是否上架
 		//查询热门商品
 		List<Product> hot_ps = productService.queryProductsByParam(hot_param);
 
@@ -50,8 +51,13 @@ public class WEB_IndexController {
 		param.put("page", 0);
 		param.put("rows", 12);
 		param.put("status", true);
+		if(hot!=null){
+			param.put("hot", hot);
+			model.addAttribute("hot", hot);
+		}
 		if(category_id!=null){
 			param.put("category_id", category_id);
+			model.addAttribute("category_id", category_id);
 		}
 		//查询所有商品
 		List<Product> ps = productService.queryProductsByParam(param);

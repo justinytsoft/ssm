@@ -53,14 +53,17 @@
 							field:'freight_price',
 							title:'运费价格',
 							align:"center",
-							width:500
+							width:500,
+							formatter: function(value,row,index){
+								return value==null?0:value;
+							}
 						},
-						{
+						/* {
 							field:'discount_price',
 							title:'优惠价格',
 							align:"center",
 							width:500
-						},
+						}, */
 						{
 							field:'quantity',
 							title:'商品库存',
@@ -91,8 +94,8 @@
 							align:"center",
 							width:500,
 							formatter:function(value,row,index){
-								var edit = "<a class='editBtn c6' style='margin-right:10px' onclick='editProduct("+row.id+")'>编 辑</a>";
-								var del = "<a class='delBtn c5' onclick='delProduct("+row.id+")'>删 除</a>";
+								var edit = "<a class='editBtn c6' style='margin-right:10px;width:50px' onclick='editProduct("+row.id+")'>编 辑</a>";
+								var del = "<a class='delBtn c5' style='width:50px' onclick='delProduct("+row.id+")'>删 除</a>";
 								return edit + del;
 							}
 						}

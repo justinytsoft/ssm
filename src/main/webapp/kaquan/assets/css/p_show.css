@@ -151,7 +151,7 @@
 .defaultMain .defaultMainRight .the_two{wdith:100%; overflow:hidden;} 
 .defaultMain .defaultMainRight .the_two .tmenu ul{margin:0;padding:0;width:100%;overflow:hidden; border-bottom:#be0000 2px solid;}
 .defaultMain .defaultMainRight .the_two .tmenu li{float:left;height:27px;line-height:27px; text-align:center;width:84px;color:#cc3300;font-size:14px;background:url(../img/icon-036.gif) center center no-repeat; margin-right:2px; font-weight:900; cursor:pointer;}
-.defaultMain .defaultMainRight .the_two .tmenu li.on{ color:#FFf;background:url(../img/icon-035.gif) center center no-repeat;}
+.defaultMain .defaultMainRight .the_two .tmenu li.on{ color:#999;background:url(../img/icon-035.gif) center center no-repeat;}
 .defaultMain .defaultMainRight .the_two .tbox{ line-height:20px;}
 .block{display:block;}   
 .none{display:none;}

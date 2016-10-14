@@ -88,6 +88,7 @@
 		SELECT 
 			p.*, 
 			(SELECT AVG(pc.score) FROM product_comment pc WHERE p.id = pc.pid ) AS score,
+			(SELECT COUNT(1) FROM product_comment pc WHERE p.id = pc.pid ) AS common_num,
 			(SELECT SUM(oi.quantity) FROM orders_item oi WHERE p.id = oi.pid) AS saled_num
 		FROM product p 
 		<where>
@@ -119,6 +120,7 @@
 		SELECT 
 			p.*, 
 			(SELECT AVG(pc.score) FROM product_comment pc WHERE p.id = pc.pid ) AS score,
+			(SELECT COUNT(1) FROM product_comment pc WHERE p.id = pc.pid ) AS common_num,
 			(SELECT SUM(oi.quantity) FROM orders_item oi WHERE p.id = oi.pid) AS saled_num
 		FROM product p 
 		WHERE p.id = #{id} AND p.invisible = 0
