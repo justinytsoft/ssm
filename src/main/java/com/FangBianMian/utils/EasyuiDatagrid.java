@@ -24,5 +24,4 @@ public class EasyuiDatagrid<T> {
 	public void setRows(List<T> rows) {
 		this.rows = rows;
 	}
-	
 }

@@ -19,7 +19,7 @@ import com.FangBianMian.service.IUserService;
 import com.FangBianMian.utils.EasyUiTree;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/admin/user")
 public class UserController {
 
 	@Autowired

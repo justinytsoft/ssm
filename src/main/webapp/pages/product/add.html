@@ -53,7 +53,9 @@
 	 								data = eval('(' + data + ')');  // change the JSON string to javascript object
 	 						        cAlertFun(data.msg,function(){
 	 						        	if(data.flag){
-	 						        		refresh([[@{/admin/product/add}]]);
+	 						        		var url = [[@{/admin/product/list}]] + "?curr=" + [[${page}]];
+	 						        		console.info(url);
+	 						        		refresh(url);
 	 						        	}
 	 						        })
 	 						    }
@@ -95,6 +97,7 @@
 	
 		<form id="saveForm" th:action="@{/admin/product/save}" method="post">
 			<input type="hidden" th:value="${product!=null?product.id:''}" name="id"/>
+			<input type="hidden" th:value="${page}" name="page"/>
 		
 			<!--container-->
 			<div class="r_container commonAdd">

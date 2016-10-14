@@ -13,6 +13,7 @@
 		<result property="payment_type" column="payment_type"/>
 		<result property="quantity" column="quantity"/>
 		<result property="detail" column="detail"/>
+		<result property="default_img" column="default_img"/>
 		<result property="status" column="status"/>
 		<result property="hot" column="hot"/>
 		<result property="create_time" column="create_time"/>
@@ -53,6 +54,7 @@
 			<if test="payment_type!=null">payment_type = #{payment_type},</if>
 			<if test="quantity!=null">quantity = #{quantity},</if>
 			<if test="detail!=null">detail = #{detail},</if>
+			<if test="default_img!=null">default_img = #{default_img},</if>
 			<if test="status!=null">status = #{status},</if>
 			<if test="hot!=null">hot = #{hot}</if>
 		</set>
@@ -74,6 +76,7 @@
 			payment_type = #{payment_type},
 			quantity = #{quantity},
 			detail = #{detail},
+			default_img = #{default_img},
 			status = #{status},
 			hot = #{hot},
 			create_time = now()
@@ -118,7 +121,7 @@
 			(SELECT AVG(pc.score) FROM product_comment pc WHERE p.id = pc.pid ) AS score,
 			(SELECT SUM(oi.quantity) FROM orders_item oi WHERE p.id = oi.pid) AS saled_num
 		FROM product p 
-		WHERE p.id = 1 AND p.invisible = 0
+		WHERE p.id = #{id} AND p.invisible = 0
 	</select>
 	
 	<!-- 通过商品ID查询商品图片 -->

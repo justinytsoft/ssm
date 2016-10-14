@@ -54,6 +54,9 @@ public class ProductServiceImpl implements IProductService {
 				}
 			}
 			
+			//设置商品默认展示图
+			p.setDefault_img(productImgs[0]);
+
 			if(p.getId()!=null){
 				//更新商品信息
 				productDao.updateProduct(p); 

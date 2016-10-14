@@ -3,9 +3,9 @@ var online = new Array();
 var qq = new Array();
 qq[0] = new Array(); 
 qq[0][0] = "售前客服咨询";
-qq[0][1] = "792066176";
-qq[0][2] = "792066176";
-qq[0][3] = "792066176";
+qq[0][1] = "648878587";
+qq[0][2] = "648878587";
+qq[0][3] = "648878587";
 
 
 /*qq[1] = new Array(); 
@@ -73,7 +73,7 @@ function definedData(varData){
 function checkData(){
 		clearInterval(contactHandler);
 		suspendcode="<div id=\"full\" style='right:3px; top:180px; width:93px;position:absolute;z-index:1000;text-align:center;'>\n"
-		+ "<img  border='0' align='absmiddle' src='/images/fdqq.gif' /><a href='tencent://message/?uin=792066176&Site=www.jifencun.com&Menu=yes' class='qq'><img  border='0' align='absmiddle' src='/images/qq1.gif' /></a><a href='tencent://message/?uin=792066176&Site=www.jifencun.com&Menu=yes' class='qq'><img  border='0' align='absmiddle' src='/images/qq2.gif' /></a>"
+		+ "<img  border='0' align='absmiddle' src='/kaquan/assets/img/fdqq.gif' /><a href='tencent://message/?uin=676133829&Site=www.jifencun.com&Menu=yes' class='qq'><img  border='0' align='absmiddle' src='/kaquan/assets/img/qq1.gif' /></a><a href='tencent://message/?uin=676133829&Site=www.jifencun.com&Menu=yes' class='qq'><img  border='0' align='absmiddle' src='/kaquan/assets/img/qq2.gif' /></a>"
 		+ "</div>\n";
 		document.getElementById("contactContanier").innerHTML = suspendcode;
 }

@@ -69,7 +69,7 @@ a:hover{color:#fe6c00;text-decoration:none;}
 .navigationde li{float:left;overflow:hidden;padding-left:15px;}
 
 /* bottominfo */
-.bottominfo{width:1000px;margin:10px auto 0 auto;overflow:hidden;position:relative;}
+.bottominfo{width:1000px;margin:30px auto 50px auto;overflow:hidden;position:relative;}
 .bottominfo p{margin-bottom:5px;overflow:hidden;}
 .bottominfo p.slht{line-height:30px;color:#ccc;}
 .bottominfo p.slht a{margin:0 10px;}

@@ -7,6 +7,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
 	<mvc:resources location="/assets/" mapping="/assets/**" />
+	<mvc:resources location="/kaquan/assets/" mapping="/kaquan/assets/**" />
 	
 	<!-- 当前Spring支持注解 -->
 	<context:annotation-config/>

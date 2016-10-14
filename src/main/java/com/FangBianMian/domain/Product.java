@@ -25,6 +25,9 @@ public class Product {
 	private Date create_time;
 	private List<ProductImg> imgs;
 	
+	//默认显示图片
+	private String default_img;
+	
 	/**
 	 * 已出售数量
 	 * @return
@@ -131,5 +134,11 @@ public class Product {
 	}
 	public void setScore(Float score) {
 		this.score = score;
+	}
+	public String getDefault_img() {
+		return default_img;
+	}
+	public void setDefault_img(String default_img) {
+		this.default_img = default_img;
 	}
 }

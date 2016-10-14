@@ -7,6 +7,9 @@
 		/*<![CDATA[*/
 
 			$(function(){
+				//被编辑商品的所在页数
+				var curr = [[${curr}]];
+				
 				//加载商品分类
 	 			/* $("#category").combobox({
 	 				url : [[@{/product_category}]] + "?extend=true",
@@ -101,12 +104,21 @@
 						var editBtns = $(".editBtn");
 						var delBtns = $(".delBtn");
 						
+						//初始化操作按钮
 						$.each(editBtns,function(i,v){
 							$(this).linkbutton();
 						});
 						$.each(delBtns,function(i,v){
 							$(this).linkbutton();
 						});
+						
+						//设置当前页
+						if(curr!=null){
+							$(this).datagrid('getPager').pagination("refresh",{
+								pageNumber:curr
+							});
+							curr=null;
+						}
 						
 						//表头无分割线
 						$.each($("td"),function(){
@@ -151,7 +163,8 @@
             
 			//编辑方法
 			function editProduct(id){
-				refresh([[@{/admin/product/add}]] + "?id=" +id);
+				var options = $('#productList').datagrid('getPager').data("pagination").options;  
+				refresh([[@{/admin/product/add}]] + "?id=" +id + "&page=" + options.pageNumber);
 			}
 
 			//删除方法

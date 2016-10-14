@@ -129,7 +129,7 @@
 .defaultMain .defaultMainRight .thelistone{width:758px;font-family:Arial, Helvetica, sans-serif; clear:both;overflow:hidden;}
 .defaultMain .defaultMainRight .thelistone .slide{float:left;width:520px;}
 .defaultMain .defaultMainRight .thelistone .Notice{float:right;width:230px;}
-.defaultMain .defaultMainRight .thelistone .Notice dt{line-height:42px;background:url(../img/icon-010.gif) no-repeat;font-size:16px;font-weight:bold;text-indent:25px;}
+.defaultMain .defaultMainRight .thelistone .Notice dt{line-height:42px;background:#DADADA;font-size:16px;font-weight:bold;text-indent:25px;}
 .defaultMain .defaultMainRight .thelistone .Notice dd{border:1px solid #dddddd;border-top:none;}
 .defaultMain .defaultMainRight .thelistone .Notice li{line-height:23px;color:#b7b7b7;background:url(../img/icon-022.gif) no-repeat 15px center;text-indent:25px;}
 .defaultMain .defaultMainRight .thelistone .Notice li a{text-align:left;margin-left:5px;}

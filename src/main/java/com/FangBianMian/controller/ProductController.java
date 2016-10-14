@@ -78,11 +78,14 @@ public class ProductController {
 	/**
 	 * 商品列表页面
 	 * @param model
-	 * @param id
+	 * @param curr 被编辑商品的所在页数
 	 * @return
 	 */
 	@RequestMapping("/list")
-	public String list(){
+	public String list(Model model, @RequestParam(required=false) Integer curr){
+		if (curr!=null) {
+			model.addAttribute("curr", curr);
+		}
 		return "pages/product/list";
 	}
 	
@@ -132,11 +135,19 @@ public class ProductController {
 	/**
 	 * 商品添加和修改页面
 	 * @param model
-	 * @param id
+	 * @param id 商品id
+	 * @param page 在列表页面修改商品时传入
+	 * @param rows 在列表页面修改商品时传入
 	 * @return
 	 */
 	@RequestMapping("/add")
-	public String add(Model model, @RequestParam(required=false) Integer id){
+	public String add(Model model, 
+					  @RequestParam(required=false) Integer page,
+					  @RequestParam(required=false) Integer id){
+		
+		if(page!=null){
+			model.addAttribute("page", page);
+		}
 		
 		if(id!=null){
 			Product p = productService.queryProductById(id);
@@ -166,17 +177,18 @@ public class ProductController {
 	@RequestMapping("/save")
 	@ResponseBody
 	public Map<String, Object> save(@RequestParam(required=false) Integer id,
-					   @RequestParam(required=false) String name,
-					   @RequestParam(required=false) Integer quantity,
-					   @RequestParam(required=false) Float price,
-					   @RequestParam(required=false) Float discount_price,
-					   @RequestParam(required=false) Float freight_price,
-					   @RequestParam(required=false) Integer category,
-					   @RequestParam(required=false) Integer payment_type,
-					   @RequestParam(required=false) Boolean status,
-					   @RequestParam(required=false) Boolean hot,
-					   @RequestParam(required=false) String detail,
-					   @RequestParam(required=false) String[] productImgs){
+									@RequestParam(required=false) Integer page,
+									@RequestParam(required=false) String name,
+									@RequestParam(required=false) Integer quantity,
+									@RequestParam(required=false) Float price,
+									@RequestParam(required=false) Float discount_price,
+									@RequestParam(required=false) Float freight_price,
+									@RequestParam(required=false) Integer category,
+									@RequestParam(required=false) Integer payment_type,
+									@RequestParam(required=false) Boolean status,
+									@RequestParam(required=false) Boolean hot,
+									@RequestParam(required=false) String detail,
+									@RequestParam(required=false) String[] productImgs){
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
@@ -204,6 +216,7 @@ public class ProductController {
 		
 		map.put("flag", true);
 		map.put("msg", "保存成功");
+		map.put("page", page);
 		return map;
 	}
 }
