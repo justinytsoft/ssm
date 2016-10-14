@@ -13,4 +13,6 @@ public interface IOrderService {
 
 	void updateOrderStatus(Map<String, Object> param);
 
+	Orders queryOrdersByOid(Integer id);
+
 }

@@ -15,4 +15,6 @@ public interface IOrderDao {
 
 	void updateOrderStatus(@Param("param") Map<String, Object> param);
 
+	Orders queryOrdersByOid(@Param("id") Integer id);
+
 }

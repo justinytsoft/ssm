@@ -19,6 +19,7 @@ import com.FangBianMian.domain.Orders;
 import com.FangBianMian.domain.Product;
 import com.FangBianMian.service.IOrderService;
 import com.FangBianMian.utils.DataUtil;
+import com.FangBianMian.utils.DateFormatter;
 import com.FangBianMian.utils.EasyuiDatagrid;
 
 /**
@@ -72,13 +73,15 @@ public class OrderController {
 	 */
 	@RequestMapping("/detail")
 	public String Detail(Model model, @RequestParam(required=false) Integer id,
-						@RequestParam(required=false) Integer curr){
+						 @RequestParam(required=false) Integer curr){
 		if(id==null){
 			return "redirect: list";
 		}
 		if(curr!=null){
 			model.addAttribute("curr", curr);
 		}
+		Orders o = orderService.queryOrdersByOid(id);
+		model.addAttribute("o", o);
 		return "pages/order/detail";
 	}
 	
@@ -105,26 +108,40 @@ public class OrderController {
 	public EasyuiDatagrid<Orders> listData(@RequestParam(required=false) Integer page,
 											@RequestParam(required=false) Integer rows,
 											@RequestParam(required=false) String sn,
+											@RequestParam(required=false) String sdate,
+											@RequestParam(required=false) String edate,
 			   								@RequestParam(required=false) Integer status){
 		EasyuiDatagrid<Orders> ed = new EasyuiDatagrid<Orders>();
 		Map<String,Object> param = new HashMap<String,Object>();
 		
-		if(page!=null && rows!=null){
-			param.put("rows", rows);
-			param.put("page", ((page-1)*rows));
-		}
-		if(!StringUtils.isBlank(sn)){
-			param.put("sn", sn);
-		}
-		if(status!=null && status.intValue()!=-1){
-			param.put("status", status);
-		}
+		try{
+			if(page!=null && rows!=null){
+				param.put("rows", rows);
+				param.put("page", ((page-1)*rows));
+			}
+			if(!StringUtils.isBlank(sn)){
+				param.put("sn", sn);
+			}
+			if(status!=null && status.intValue()!=-1){
+				param.put("status", status);
+			}
+			if(!StringUtils.isBlank(sdate)){
+				sdate += " 00:00:00";
+				param.put("sdate", DateFormatter.parseByStr(sdate, DateFormatter.DATE_TIME));
+			}
+			if(!StringUtils.isBlank(edate)){
+				edate += " 23:59:59";
+				param.put("edate", DateFormatter.parseByStr(edate, DateFormatter.DATE_TIME));
+			}
 		
-		List<Orders> os = DataUtil.isEmpty(orderService.queryOrdersByParam(param));
-		int total = orderService.queryOrdersByParamTotal(param);
-		
-		ed.setRows(os);
-		ed.setTotal(total);
+			List<Orders> os = DataUtil.isEmpty(orderService.queryOrdersByParam(param));
+			int total = orderService.queryOrdersByParamTotal(param);
+			
+			ed.setRows(os);
+			ed.setTotal(total);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		return ed;
 	}
 }

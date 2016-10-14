@@ -30,5 +30,10 @@ public class OrderServiceImpl implements IOrderService {
 	public void updateOrderStatus(Map<String, Object> param) {
 		orderDao.updateOrderStatus(param);
 	}
+
+	@Override
+	public Orders queryOrdersByOid(Integer id) {
+		return orderDao.queryOrdersByOid(id);
+	}
 	
 }

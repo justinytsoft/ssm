@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<body>
+		<style>
+			.panel-div{
+				width:50%;
+				height:100px;
+				margin-top: 20px;
+				border: 1px solid #F7EDD8;
+				background-color: #FFFDF6;
+			}
+			
+			.r_container label{
+				color:#6D6E69;
+			}
+		</style>
+	
+		<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+	 	   $(function() {
+				//设置状态
+				var status = $("#status");
+				$.each(orderStatus,function(i,v){
+					if(v.status == status.text()){
+						status.text("订单状态：" + v.name);
+					}
+				});
+				
+				$("#return").click(function(){
+					refresh([[@{/admin/order/list(curr=${curr})}]]);
+				});
+	 		});
+		/*]]>*/
+		</script>
+	
+			<!--container-->
+			<div class="r_container commonAdd">
+				<div class="header">
+					<img th:src="@{/assets/imgs/home.png}" />
+					<span>订单管理>>订单详情</span>
+				</div>
+				
+				<div>
+					<div class="panel-div">
+						<div style="padding: 20px;">
+							<label style="font-size:15px;" th:text="${'订单编号：' + o.sn}"></label>
+							<label id="status" style="margin-left: 20px;font-size: 15px;" th:text="${o.status}"></label>
+							<a id="return" href="javascript:" style="float: right;color:#00BBEE;font-size: 13px">返 回</a>
+						</div>
+						<div>
+							
+						</div>
+					</div>
+				
+					<div style="margin-top: 20px">
+						<div class="easyui-panel" title="订单信息" style="width:50%;" data-options="height:150,left:10,top:180,inline:true">
+				       
+				        </div>
+					</div>
+					
+					<div style="margin-top: 20px">
+			        	<div class="easyui-panel" title="订单跟踪" style="width:50%;" data-options="height:150,left:320,top:180,inline:true ">
+			       
+			       	 	</div>
+			       	 </div>
+				</div>
+			</div>
+	</body>
+</html>

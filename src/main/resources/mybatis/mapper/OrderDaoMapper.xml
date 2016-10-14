@@ -23,6 +23,11 @@
 		<collection property="items" column="id" javaType="List" ofType="com.FangBianMian.domain.OrdersItem" select="selectOrdersItemByOid"></collection>
 		<collection property="logs" column="id" javaType="List" ofType="com.FangBianMian.domain.OrdersLog" select="selectOrdersLogByOid"></collection>
 	</resultMap>
+	
+	<!-- 根据订单ID查询订单 -->
+	<select id="queryOrdersByOid" resultMap="ordersMap">
+		SELECT * FROM orders WHERE id = #{id}
+	</select>
 
 	<!-- 更新订单状态 -->
 	<update id="updateOrderStatus">
@@ -42,6 +47,8 @@
 			<if test="param.mid!=null">AND mid = #{mid}</if>
 			<if test="param.sn!=null">AND sn LIKE '%${param.sn}%'</if>
 			<if test="param.status!=null">AND status = #{param.status}</if>
+			<if test="param.sdate!=null">AND create_time >= #{param.sdate}</if>
+			<if test="param.edate!=null"><![CDATA[AND create_time <= #{param.edate}]]></if>
 		</where>
 		<if test="param.page!=null">
 			LIMIT #{param.page},#{param.rows}
@@ -52,10 +59,12 @@
 	<select id="queryOrdersByParamTotal" resultType="int">
 		SELECT COUNT(1) FROM orders
 		<where>
-			invisible = 0
+			<if test="param.invisible!=null">invisible = #{invisible}</if>
 			<if test="param.mid!=null">AND mid = #{mid}</if>
 			<if test="param.sn!=null">AND sn LIKE '%${param.sn}%'</if>
 			<if test="param.status!=null">AND status = #{param.status}</if>
+			<if test="param.sdate!=null">AND create_time >= #{param.sdate}</if>
+			<if test="param.edate!=null"><![CDATA[AND create_time <= #{param.edate}]]></if>
 		</where>
 	</select>
 	 

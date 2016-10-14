@@ -19,8 +19,8 @@
 					striped : true, //设置为 true，则把行条纹化。（即奇偶行使用不同背景色）
 				    loadMsg : "数据加载中,请稍等...", //当从远程站点加载数据时，显示的提示消息。
 				    pagination:true, //设置为 true，则在数据网格（datagrid）底部显示分页工具栏。
-				    pageSize:30, //当设置了 pagination 属性时，初始化页面尺寸。
-				    pageList:[5,10,20,30,50,100], //当设置了 pagination 属性时，初始化页面尺寸的选择列表。
+				    pageSize:1, //当设置了 pagination 属性时，初始化页面尺寸。
+				    pageList:[1,5,10,20,30,50,100], //当设置了 pagination 属性时，初始化页面尺寸的选择列表。
 				    columns:[[ //设置表头 
 						{
 							field:'sn',
@@ -52,13 +52,13 @@
 							align:"center",
 							width:500,
 							formatter: function(value,row,index){
+								var status;
 								$.each(orderStatus,function(i,v){
-									console.info(v.status==value);
 									if(v.status==value){
-										console.info(1)
-										return v.name;
+										 status = v.name;
 									}
 								});
+								return status;
 							}
 						},
 						{
@@ -67,8 +67,8 @@
 							align:"center",
 							width:500,
 							formatter: function(value,row,index){
-								
-								return value?'是':'否';
+								var date = new Date(value);
+								return date.format("yyyy-MM-dd hh:mm");
 							}
 						},
 						{
@@ -77,9 +77,8 @@
 							align:"center",
 							width:500,
 							formatter:function(value,row,index){
-								var edit = "<a class='editBtn c6' style='margin-right:10px;width:50px' onclick='editProduct("+row.id+")'>编 辑</a>";
-								var del = "<a class='delBtn c5' style='width:50px' onclick='delProduct("+row.id+")'>删 除</a>";
-								return edit + del;
+								var edit = "<a class='editBtn c6' style='width:50px' onclick='orderDetail("+row.id+")'>详 情</a>";
+								return edit;
 							}
 						}
 					]],
@@ -97,7 +96,6 @@
 						$.each(delBtns,function(i,v){
 							$(this).linkbutton();
 						});
-						
 						//设置当前页
 						if(curr!=null){
 							$(this).datagrid('getPager').pagination("refresh",{
@@ -135,7 +133,9 @@
 			function searchClick(){
 				$("#orderList").datagrid("load",{
 					sn : $("#sn").textbox("getValue"),
-					status : $("#status").combobox("getValue")
+					status : $("#status").combobox("getValue"),
+					sdate : $("#sdate").datebox("getValue"), 
+					edate : $("#edate").datebox("getValue")
 				});
 			}
 		
@@ -145,10 +145,10 @@
 				$("#searchForm").form("reset");
 			}
             
-			//编辑方法
-			function editProduct(id){
+			//详情方法
+			function orderDetail(id){
 				var options = $('#orderList').datagrid('getPager').data("pagination").options;  
-				refresh([[@{/admin/product/add}]] + "?id=" +id + "&page=" + options.pageNumber);
+				refresh([[@{/admin/order/detail}]] + "?id=" +id + "&curr=" + options.pageNumber);
 			}
 		/*]]>*/
 		</script>
@@ -156,16 +156,16 @@
 		<div class="r_container activeAmin commonAdmin">
 			<div class="header">
 				<img th:src="@{/assets/imgs/home.png}" />
-				<span>商品管理>>商品列表</span>
+				<span>订单管理>>订单列表</span>
 			</div>
 			
 			<div class="bg-1">
 				<form id="searchForm" th:action="@{/admin/product/list}" method="post">
 					<div>
-						<label>订单编号</label>
+						<label>订单编号:</label>
 						<input id="sn" name="sn" type="text" class="easyui-textbox" data-options="width:120"/>
 						
-						<label class="mg-left-20" style="width: 55px">订单状态</label>
+						<label class="mg-left-20" style="width: 55px">订单状态:</label>
 						<select id="status" name="status" class="easyui-combobox" data-options="width:80,editable:false">
 							<option value="-1">不限</option>
 							<option value="2">待发货</option>
@@ -174,7 +174,13 @@
 							<option value="5">已完成</option>
 						</select>
 						
+						<label class="mg-left-20" style="width: 55px">下单时间:</label>
+						<input id="sdate" class="easyui-datebox" data-options="editable:false,width:100,buttons:dateboxReset"/>
+						~
+						<input id="edate" class="easyui-datebox" data-options="editable:false,width:100,buttons:dateboxReset"/>
+						
 	                   	<a href="javascript:" class="easyui-linkbutton" style="margin-left:20px" data-options="onClick:searchClick,width:60,height:29">查 询</a>
+	                   	<a href="javascript:" class="easyui-linkbutton" data-options="onClick:resetClick,width:60,height:29">重 置</a>
 					</div>
 				</form>
 			</div>	
