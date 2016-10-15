@@ -9,6 +9,7 @@
 	</settings>
     
     <mappers>
+    	<mapper resource="mybatis/mapper/MemberDaoMapper.xml" />
     	<mapper resource="mybatis/mapper/OrderDaoMapper.xml" />
     	<mapper resource="mybatis/mapper/ProductDaoMapper.xml" />
     	<mapper resource="mybatis/mapper/BaseDaoMapper.xml" />

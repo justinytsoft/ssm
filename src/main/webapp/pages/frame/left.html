@@ -26,6 +26,7 @@
 					}
 				});
 				
+				//二级菜单点击事件
 				$('.secMenu li').click(function(){
 					$('.secMenu li.bgc-color').removeClass('bgc-color');
 					$(this).addClass('bgc-color');
@@ -34,6 +35,10 @@
 					var url = $(this).attr("href");
 					refresh(url); 
 				});
+				
+				//设置默认页面
+				$(".menuA li > label:first").trigger("click");
+				$(".secMenu li:first").trigger("click");
 				
 				//menu height
 				function resizeP(){
@@ -52,7 +57,7 @@
 		<div class="menuA" style="position: fixed;overflow-x:hidden;">
 			<ul class="firMenu">
 				<!-- 一级菜单 -->
-				<li th:each="m:${menus}">
+				<li th:each="m,curr:${menus}">
 					<label th:id="@{${m.url}}">
 						<a href="javascript:">
 							<label>

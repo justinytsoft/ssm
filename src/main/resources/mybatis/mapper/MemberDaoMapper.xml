@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.FangBianMian.dao.IMemberDao">
+
+	<!-- 查询所有用户 -->
+	<select id="queryMembersByParam" resultType="com.FangBianMian.domain.Member">
+		SELECT * FROM member
+		<where>
+			<if test="param.name!=null">username LIKE '%${param.name}%'</if>
+		</where>
+		<if test="param.page!=null">
+			LIMIT #{param.page}, #{param.rows}
+		</if>
+	</select>
+
+	<!-- 查询所有用户总数 -->
+	<select id="queryMembersByParamTotal" resultType="int">
+		SELECT COUNT(1) FROM member
+		<where>
+			<if test="param.name!=null">username LIKE '%${param.name}%'</if>
+		</where>
+	</select>
+
+</mapper>
