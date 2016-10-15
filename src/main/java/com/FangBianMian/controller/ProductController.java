@@ -103,8 +103,6 @@ public class ProductController {
 	@ResponseBody
 	public EasyuiDatagrid<Product> listData(@RequestParam(required=false) Integer page,
 											@RequestParam(required=false) Integer rows,
-											@RequestParam(required=false) Integer e_page,
-											@RequestParam(required=false) Integer e_rows,
 											@RequestParam(required=false) String name,
 			   								@RequestParam(required=false) Integer status,
 			   								@RequestParam(required=false) Integer hot,
@@ -115,11 +113,6 @@ public class ProductController {
 		if(page!=null && rows!=null){
 			param.put("rows", rows);
 			param.put("page", ((page-1)*rows));
-		}
-		//从编辑页面获取的数据
-		if(e_page!=null && e_rows!=null){
-			param.put("rows", e_rows);
-			param.put("page", ((e_page-1)*e_rows));
 		}
 		if(!StringUtils.isBlank(name)){
 			param.put("name", name);
@@ -189,8 +182,6 @@ public class ProductController {
 	@RequestMapping("/save")
 	@ResponseBody
 	public Map<String, Object> save(@RequestParam(required=false) Integer id,
-									@RequestParam(required=false) Integer page,
-									@RequestParam(required=false) Integer size,
 									@RequestParam(required=false) String name,
 									@RequestParam(required=false) Integer quantity,
 									@RequestParam(required=false) Float price,
@@ -229,8 +220,6 @@ public class ProductController {
 		
 		map.put("flag", true);
 		map.put("msg", "保存成功");
-		map.put("page", page);
-		map.put("size", size);
 		return map;
 	}
 }

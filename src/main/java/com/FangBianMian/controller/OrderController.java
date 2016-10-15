@@ -43,7 +43,6 @@ public class OrderController {
 	@RequestMapping("/update")
 	@ResponseBody
 	public Map<String, Object> update(@RequestParam(required=false) Integer oid,
-									  @RequestParam(required=false) Integer curr,
 									  @RequestParam(required=false) String express){
 		Map<String,Object> map = new HashMap<String,Object>();
 		if(oid==null || StringUtils.isBlank(express)){
@@ -60,7 +59,6 @@ public class OrderController {
 		
 		map.put("flag", true);
 		map.put("msg", "发货成功");
-		map.put("curr", curr);
 		return map;
 	}
 	
@@ -73,12 +71,14 @@ public class OrderController {
 	 */
 	@RequestMapping("/detail")
 	public String Detail(Model model, @RequestParam(required=false) Integer id,
-						 @RequestParam(required=false) Integer curr){
+						 @RequestParam(required=false) Integer curr,
+						 @RequestParam(required=false) Integer size){
 		if(id==null){
 			return "redirect: list";
 		}
-		if(curr!=null){
+		if(curr!=null && size!=null){
 			model.addAttribute("curr", curr);
+			model.addAttribute("size", size);
 		}
 		Orders o = orderService.queryOrdersByOid(id);
 		model.addAttribute("o", o);
@@ -90,9 +90,12 @@ public class OrderController {
 	 * @return
 	 */
 	@RequestMapping("/list")
-	public String list(Model model, @RequestParam(required=false) Integer curr){
-		if(curr!=null){
+	public String list(Model model, 
+					   @RequestParam(required=false) Integer curr,
+					   @RequestParam(required=false) Integer size){
+		if(curr!=null && size!=null){
 			model.addAttribute("curr", curr);
+			model.addAttribute("size", size);
 		}
 		return "pages/order/list";
 	}

@@ -19,8 +19,8 @@
 					striped : true, //设置为 true，则把行条纹化。（即奇偶行使用不同背景色）
 				    loadMsg : "数据加载中,请稍等...", //当从远程站点加载数据时，显示的提示消息。
 				    pagination:true, //设置为 true，则在数据网格（datagrid）底部显示分页工具栏。
-				    pageSize:1, //当设置了 pagination 属性时，初始化页面尺寸。
-				    pageList:[1,5,10,20,30,50,100], //当设置了 pagination 属性时，初始化页面尺寸的选择列表。
+				    pageSize:20, //当设置了 pagination 属性时，初始化页面尺寸。
+				    pageList:[5,10,20,30,50,100], //当设置了 pagination 属性时，初始化页面尺寸的选择列表。
 				    columns:[[ //设置表头 
 						{
 							field:'sn',
@@ -96,11 +96,17 @@
 						$.each(delBtns,function(i,v){
 							$(this).linkbutton();
 						});
-						//设置当前页
+						
+						//回显编辑页
 						if(curr!=null){
-							$(this).datagrid('getPager').pagination("refresh",{
-								pageNumber:curr
-							});
+							$(this).datagrid({
+								pageNumber:curr,
+								pageSize:[[${size}]]
+							}); 
+							//分页条格式
+							$(this).datagrid('getPager').pagination({
+				                layout:['list','sep','first','prev','sep','links','sep','next','last','sep','refresh']
+				            });
 							curr=null;
 						}
 						
@@ -148,7 +154,7 @@
 			//详情方法
 			function orderDetail(id){
 				var options = $('#orderList').datagrid('getPager').data("pagination").options;  
-				refresh([[@{/admin/order/detail}]] + "?id=" +id + "&curr=" + options.pageNumber);
+				refresh([[@{/admin/order/detail}]] + "?id=" +id + "&curr=" + options.pageNumber + "&size=" + options.pageSize);
 			}
 		/*]]>*/
 		</script>

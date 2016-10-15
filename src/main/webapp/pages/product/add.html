@@ -101,8 +101,6 @@
 	
 		<form id="saveForm" th:action="@{/admin/product/save}" method="post">
 			<input type="hidden" th:value="${product!=null?product.id:''}" name="id"/>
-			<input type="hidden" th:value="${page}" name="page"/>
-			<input type="hidden" th:value="${size}" name="size"/>
 		
 			<!--container-->
 			<div class="r_container commonAdd">

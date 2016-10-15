@@ -51,8 +51,9 @@
 					}
 				});
 				
+				//返回到列表页面
 				$("#return").click(function(){
-					refresh([[@{/admin/order/list(curr=${curr})}]]);
+					refresh([[@{/admin/order/list(curr=${curr},size=${size})}]]);
 				});
 	 		});
 		/*]]>*/
