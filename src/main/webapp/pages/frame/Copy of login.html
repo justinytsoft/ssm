@@ -57,6 +57,18 @@
 					}
 				});
 				
+				//循环创建星星
+				var body = $("body");
+				for(var i = 0; i < 20; i++){
+					//自由下落
+					setTimeout(function(){
+						var num = getRandomNum(10,document.body.clientWidth);
+						var canv = $("<canvas id='"+num+"' class='starFreeDown'></canvas>");
+						canv.css("left",num);
+						body.append(canv);
+						drawStar(""+num);
+					},(i * 1000)); 
+				} 
 			});
 		/*]]>*/
 	</script>

@@ -14,6 +14,30 @@
 			.r_container label{
 				color:#6D6E69;
 			}
+			.info-box {margin-left:10px;margin-right:10px;}
+			.panel-div {width:80%;min-width:985px;}
+			.box-ul li {padding:5px 10px;border-bottom:1px solid #eee;}
+			.box-ul li span {color:#797676;}
+			.box-ul li label {font-size:12px;color:#000;}
+			.box-ul .lg {display:block;}
+			.box-ul dl ,.box-ul dt ,.box-ul dd{display:inline-block;color:#797676;}
+			.box-ul dl {margin-right:50px;margin-top:15px;}
+			.box-table ,.step-table{padding:auto 10px;}
+			.box-table table ,.step-table table{width:100%;}
+			.box-table table th {padding:5px; text-align:center; font-weight:normal;background:#eee;border:1px solid #ddd}
+			.box-table table td {text-align:center;border:1px solid #ddd;color:#797676;} 
+			.td-box .pic-box {height:60px;width:60px;margin-left:30px;float:left;margin-top:10px;margin-bottom:10px}
+			.td-box .word-box {float:left;margin-left:10px;margin-top:10px;}
+			.td-box .word-box p {margin:0px;text-align: left;}
+			.td-box .word-box .goods-name {color:#17A9FF;}
+			.td-box .word-box .goods-spec {color:#797676;padding-top:10px;}
+			.step-table {margin-top:10px}
+			.step-table table th ,.step-table table td{text-align:center; font-weight:normal;}
+			.step-table table th {padding-bottom:7px;border-bottom:1px solid #eee;}
+			.step-table table td {padding:8px;}
+			.box-bottom {text-align:right;line-height:30px;}
+			.box-bottom span {font-size:12px;color:#797676;line-height:30px;}
+			.box-bottom .color-red {color:#E80C0C;}
 		</style>
 	
 		<script type="text/javascript" th:inline="javascript">
@@ -48,22 +72,127 @@
 							<label id="status" style="margin-left: 20px;font-size: 15px;" th:text="${o.status}"></label>
 							<a id="return" href="javascript:" style="float: right;color:#00BBEE;font-size: 13px">返 回</a>
 						</div>
-						<div>
-							
+						<div style="margin-left:20px;">
+							<input type="text" class="easyui-textbox" data-options="width:120"/>
+							<a href="javascript:" class="easyui-linkbutton" style="margin-left:20px" data-options="width:60,height:29">查 询</a>
 						</div>
 					</div>
-				
-					<div style="margin-top: 20px">
-						<div class="easyui-panel" title="订单信息" style="width:50%;" data-options="height:150,left:10,top:180,inline:true">
-				       
-				        </div>
-					</div>
 					
-					<div style="margin-top: 20px">
-			        	<div class="easyui-panel" title="订单跟踪" style="width:50%;" data-options="height:150,left:320,top:180,inline:true ">
-			       
+					<!-- 订单跟踪 -->
+					<div style="margin-top: 20px;min-width:985px;width:80%;">
+			        	<div class="easyui-panel" title="订单跟踪" style="width:100%;" data-options="height:260,left:320,top:180,inline:true ">
+			       			<div class="info-box">
+			       				<div class="step-table">
+				       				<table>
+			       						<tr>
+			       							<th>处理时间</th>
+			       							<th>处理信息</th>
+			       							<th>处理状态</th>
+			       						</tr>
+			       						<tr>
+			       							<td>2014-04-01 14:45:02</td>
+			       							<td>用户提交订单</td>
+			       							<td>待付款</td>
+			       						</tr>
+			       						<tr>
+			       							<td>2014-04-01 14:45:02</td>
+			       							<td>用户支付订单</td>
+			       							<td>待商户确认</td>
+			       						</tr>
+			       						<tr>
+			       							<td>2014-04-01 14:45:02</td>
+			       							<td>商户取消订单</td>
+			       							<td>取消订单审核</td>
+			       						</tr>
+			       						<tr>
+			       							<td>2014-04-01 14:45:02</td>
+			       							<td>取消订单审核通过</td>
+			       							<td>待退款</td>
+			       						</tr>
+			       						<tr>
+			       							<td>2014-04-01 14:45:02</td>
+			       							<td>退款</td>
+			       							<td>已取消</td>
+			       						</tr>
+			       					</table>
+			       				</div>
+			       			</div>
 			       	 	</div>
 			       	 </div>
+					
+					
+					<!-- 订单信息 -->
+					<div style="margin-top: 20px;min-width:985px;width:80%;margin-bottom:60px">
+						<div class="easyui-panel" title="订单信息" style="width:100%;" data-options="left:10,top:180,inline:true">
+				       		<div class="info-box">
+				       			<div class="box-ul">
+				       				<ul>
+				       					<li>
+				       						<label>收货人：</label>
+				       						<span>XXXX</span>
+				       					</li>
+				       					<li>
+				       						<label>收货电话：</label>
+				       						<span>00000000000</span>
+				       					</li>
+				       					<li>
+				       						<label>收货地址：</label>
+				       						<span>四川省 成都市 高新区 天赋软件园XXXX</span>
+				       					</li>
+				       					<li>
+				       						<label class="lg">配送及支付信息</label>
+				       							<dl>
+				       								<dt>支付方式：</dt>
+				       								<dd>余额支付</dd>
+				       							</dl>
+				       							<dl>
+				       								<dt>支付状态：</dt>
+				       								<dd>支付成功</dd>
+				       							</dl>
+				       							<dl>
+				       								<dt>配送方式：</dt>
+				       								<dd>快递</dd>
+				       							</dl>
+				       							<dl>
+				       								<dt>配送时间：</dt>
+				       								<dd>不限</dd>
+				       							</dl>
+				       					</li>
+				       					<li>
+				       						<label class="lg">商品清单</label>
+				       					</li>
+				       				</ul>
+				       			</div>
+				       			<div class="box-table">
+				       				<table>
+				       					<tr>
+				       						<th>商品ID</th>
+				       						<th>商品信息</th>
+				       						<th>单价（元）</th>
+				       						<th>数量</th>
+				       					</tr>
+				       					<tr>
+				       						<td>10025</td>
+				       						<td>
+				       							<div class="td-box">
+				       								<div class="pic-box" style="background:red;">
+				       								</div>
+				       								<div class="word-box">
+				       									<p class="goods-name">小米5</p>
+				       									<p class="goods-spec">黄色 3g</p>
+				       								</div>
+				       							</div>
+				       						</td>
+				       						<td>999</td>
+				       						<td>8</td>
+				       					</tr>
+				       				</table>
+				       			</div>	
+				       			<p class="box-bottom"><span>运费：</span><span class="color-red">0.01元</span></p>
+				       			<p class="box-bottom"><span>实付金额：</span><span class="color-red">0.01元</span></p>
+				       		</div>
+				        </div>
+					</div>
 				</div>
 			</div>
 	</body>
