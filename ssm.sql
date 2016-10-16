@@ -30,6 +30,25 @@ CREATE TABLE `affiche` (
 
 /*Data for the table `affiche` */
 
+/*Table structure for table `cart` */
+
+DROP TABLE IF EXISTS `cart`;
+
+CREATE TABLE `cart` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '购物车',
+  `mid` int(11) DEFAULT NULL COMMENT '用户ID',
+  `pid` int(11) DEFAULT NULL COMMENT '商品ID',
+  `quantity` int(11) DEFAULT NULL COMMENT '数量',
+  `create_time` datetime DEFAULT NULL COMMENT '创计时间',
+  PRIMARY KEY (`id`),
+  KEY `FK_Reference_19` (`pid`),
+  KEY `FK_Reference_20` (`mid`)
+) ENGINE=InnoDB AUTO_INCREMENT=453 DEFAULT CHARSET=utf8;
+
+/*Data for the table `cart` */
+
+insert  into `cart`(`id`,`mid`,`pid`,`quantity`,`create_time`) values (3,5,2,9,'2016-08-25 12:21:21'),(4,5,3,2,'2016-08-25 12:21:22'),(5,5,6,4,'2016-08-25 12:21:24'),(20,5,1,23,'2016-08-29 15:10:39'),(21,7,1,10,'2016-08-30 10:58:04'),(22,8,1,1,'2016-08-30 11:41:13'),(25,3,1,7,'2016-08-30 12:11:41'),(168,3,7,1,'2016-09-08 14:19:03'),(169,3,5,1,'2016-09-08 14:19:08'),(170,7,8,1,'2016-09-08 14:55:48'),(175,8,26,2,'2016-09-12 10:58:38'),(218,3,26,3,'2016-09-12 18:42:56'),(219,3,27,1,'2016-09-12 18:43:08'),(223,6,175,1,'2016-09-12 19:41:49'),(452,18,38,1,'2016-09-28 10:15:11');
+
 /*Table structure for table `city` */
 
 DROP TABLE IF EXISTS `city`;
@@ -44,6 +63,18 @@ CREATE TABLE `city` (
 /*Data for the table `city` */
 
 insert  into `city`(`id`,`provinceId`,`name`) values (1,1,'北京市'),(2,1,'天津市'),(3,3,'石家庄市'),(4,3,'唐山市'),(5,3,'秦皇岛市'),(6,3,'邯郸市'),(7,3,'邢台市'),(8,3,'保定市'),(9,3,'张家口市'),(10,3,'承德市'),(11,3,'沧州市'),(12,3,'廊坊市'),(13,3,'衡水市'),(14,4,'太原市'),(15,4,'大同市'),(16,4,'阳泉市'),(17,4,'长治市'),(18,4,'晋城市'),(19,4,'朔州市'),(20,4,'晋中市'),(21,4,'运城市'),(22,4,'忻州市'),(23,4,'临汾市'),(24,4,'吕梁市'),(25,5,'呼和浩特市'),(26,5,'包头市'),(27,5,'乌海市'),(28,5,'赤峰市'),(29,5,'通辽市'),(30,5,'鄂尔多斯市'),(31,5,'呼伦贝尔市'),(32,5,'巴彦淖尔市'),(33,5,'乌兰察布市'),(34,5,'兴安盟'),(35,5,'锡林郭勒盟'),(36,5,'阿拉善盟'),(37,6,'沈阳市'),(38,6,'大连市'),(39,6,'鞍山市'),(40,6,'抚顺市'),(41,6,'本溪市'),(42,6,'丹东市'),(43,6,'锦州市'),(44,6,'营口市'),(45,6,'阜新市'),(46,6,'辽阳市'),(47,6,'盘锦市'),(48,6,'铁岭市'),(49,6,'朝阳市'),(50,6,'葫芦岛市'),(51,7,'长春市'),(52,7,'吉林市'),(53,7,'四平市'),(54,7,'辽源市'),(55,7,'通化市'),(56,7,'白山市'),(57,7,'松原市'),(58,7,'白城市'),(59,7,'延边朝鲜族自治州'),(60,8,'哈尔滨市'),(61,8,'齐齐哈尔市'),(62,8,'鸡西市'),(63,8,'鹤岗市'),(64,8,'双鸭山市'),(65,8,'大庆市'),(66,8,'伊春市'),(67,8,'佳木斯市'),(68,8,'七台河市'),(69,8,'牡丹江市'),(70,8,'黑河市'),(71,8,'绥化市'),(72,8,'大兴安岭地区'),(73,1,'上海市'),(74,10,'南京市'),(75,10,'无锡市'),(76,10,'徐州市'),(77,10,'常州市'),(78,10,'苏州市'),(79,10,'南通市'),(80,10,'连云港市'),(81,10,'淮安市'),(82,10,'盐城市'),(83,10,'扬州市'),(84,10,'镇江市'),(85,10,'泰州市'),(86,10,'宿迁市'),(87,11,'杭州市'),(88,11,'宁波市'),(89,11,'温州市'),(90,11,'嘉兴市'),(91,11,'湖州市'),(92,11,'绍兴市'),(93,11,'金华市'),(94,11,'衢州市'),(95,11,'舟山市'),(96,11,'台州市'),(97,11,'丽水市'),(98,12,'合肥市'),(99,12,'芜湖市'),(100,12,'蚌埠市'),(101,12,'淮南市'),(102,12,'马鞍山市'),(103,12,'淮北市'),(104,12,'铜陵市'),(105,12,'安庆市'),(106,12,'黄山市'),(107,12,'滁州市'),(108,12,'阜阳市'),(109,12,'宿州市'),(110,12,'巢湖市'),(111,12,'六安市'),(112,12,'亳州市'),(113,12,'池州市'),(114,12,'宣城市'),(115,13,'福州市'),(116,13,'厦门市'),(117,13,'莆田市'),(118,13,'三明市'),(119,13,'泉州市'),(120,13,'漳州市'),(121,13,'南平市'),(122,13,'龙岩市'),(123,13,'宁德市'),(124,14,'南昌市'),(125,14,'景德镇市'),(126,14,'萍乡市'),(127,14,'九江市'),(128,14,'新余市'),(129,14,'鹰潭市'),(130,14,'赣州市'),(131,14,'吉安市'),(132,14,'宜春市'),(133,14,'抚州市'),(134,14,'上饶市'),(135,15,'济南市'),(136,15,'青岛市'),(137,15,'淄博市'),(138,15,'枣庄市'),(139,15,'东营市'),(140,15,'烟台市'),(141,15,'潍坊市'),(142,15,'济宁市'),(143,15,'泰安市'),(144,15,'威海市'),(145,15,'日照市'),(146,15,'莱芜市'),(147,15,'临沂市'),(148,15,'德州市'),(149,15,'聊城市'),(150,15,'滨州市'),(151,15,'荷泽市'),(152,16,'郑州市'),(153,16,'开封市'),(154,16,'洛阳市'),(155,16,'平顶山市'),(156,16,'安阳市'),(157,16,'鹤壁市'),(158,16,'新乡市'),(159,16,'焦作市'),(160,16,'濮阳市'),(161,16,'许昌市'),(162,16,'漯河市'),(163,16,'三门峡市'),(164,16,'南阳市'),(165,16,'商丘市'),(166,16,'信阳市'),(167,16,'周口市'),(168,16,'驻马店市'),(169,17,'武汉市'),(170,17,'黄石市'),(171,17,'十堰市'),(172,17,'宜昌市'),(173,17,'襄樊市'),(174,17,'鄂州市'),(175,17,'荆门市'),(176,17,'孝感市'),(177,17,'荆州市'),(178,17,'黄冈市'),(179,17,'咸宁市'),(180,17,'随州市'),(181,17,'恩施土家族苗族自治州'),(182,17,'神农架'),(183,18,'长沙市'),(184,18,'株洲市'),(185,18,'湘潭市'),(186,18,'衡阳市'),(187,18,'邵阳市'),(188,18,'岳阳市'),(189,18,'常德市'),(190,18,'张家界市'),(191,18,'益阳市'),(192,18,'郴州市'),(193,18,'永州市'),(194,18,'怀化市'),(195,18,'娄底市'),(196,18,'湘西土家族苗族自治州'),(197,19,'广州市'),(198,19,'韶关市'),(199,19,'深圳市'),(200,19,'珠海市'),(201,19,'汕头市'),(202,19,'佛山市'),(203,19,'江门市'),(204,19,'湛江市'),(205,19,'茂名市'),(206,19,'肇庆市'),(207,19,'惠州市'),(208,19,'梅州市'),(209,19,'汕尾市'),(210,19,'河源市'),(211,19,'阳江市'),(212,19,'清远市'),(213,19,'东莞市'),(214,19,'中山市'),(215,19,'潮州市'),(216,19,'揭阳市'),(217,19,'云浮市'),(218,20,'南宁市'),(219,20,'柳州市'),(220,20,'桂林市'),(221,20,'梧州市'),(222,20,'北海市'),(223,20,'防城港市'),(224,20,'钦州市'),(225,20,'贵港市'),(226,20,'玉林市'),(227,20,'百色市'),(228,20,'贺州市'),(229,20,'河池市'),(230,20,'来宾市'),(231,20,'崇左市'),(232,21,'海口市'),(233,21,'三亚市'),(234,1,'重庆市'),(235,23,'成都市'),(236,23,'自贡市'),(237,23,'攀枝花市'),(238,23,'泸州市'),(239,23,'德阳市'),(240,23,'绵阳市'),(241,23,'广元市'),(242,23,'遂宁市'),(243,23,'内江市'),(244,23,'乐山市'),(245,23,'南充市'),(246,23,'眉山市'),(247,23,'宜宾市'),(248,23,'广安市'),(249,23,'达州市'),(250,23,'雅安市'),(251,23,'巴中市'),(252,23,'资阳市'),(253,23,'阿坝藏族羌族自治州'),(254,23,'甘孜藏族自治州'),(255,23,'凉山彝族自治州'),(256,24,'贵阳市'),(257,24,'六盘水市'),(258,24,'遵义市'),(259,24,'安顺市'),(260,24,'铜仁地区'),(261,24,'黔西南布依族苗族自治州'),(262,24,'毕节地区'),(263,24,'黔东南苗族侗族自治州'),(264,24,'黔南布依族苗族自治州'),(265,25,'昆明市'),(266,25,'曲靖市'),(267,25,'玉溪市'),(268,25,'保山市'),(269,25,'昭通市'),(270,25,'丽江市'),(271,25,'思茅市'),(272,25,'临沧市'),(273,25,'楚雄彝族自治州'),(274,25,'红河哈尼族彝族自治州'),(275,25,'文山壮族苗族自治州'),(276,25,'西双版纳傣族自治州'),(277,25,'大理白族自治州'),(278,25,'德宏傣族景颇族自治州'),(279,25,'怒江傈僳族自治州'),(280,25,'迪庆藏族自治州'),(281,26,'拉萨市'),(282,26,'昌都地区'),(283,26,'山南地区'),(284,26,'日喀则地区'),(285,26,'那曲地区'),(286,26,'阿里地区'),(287,26,'林芝地区'),(288,27,'西安市'),(289,27,'铜川市'),(290,27,'宝鸡市'),(291,27,'咸阳市'),(292,27,'渭南市'),(293,27,'延安市'),(294,27,'汉中市'),(295,27,'榆林市'),(296,27,'安康市'),(297,27,'商洛市'),(298,28,'兰州市'),(299,28,'嘉峪关市'),(300,28,'金昌市'),(301,28,'白银市'),(302,28,'天水市'),(303,28,'武威市'),(304,28,'张掖市'),(305,28,'平凉市'),(306,28,'酒泉市'),(307,28,'庆阳市'),(308,28,'定西市'),(309,28,'陇南市'),(310,28,'临夏回族自治州'),(311,28,'甘南藏族自治州'),(312,29,'西宁市'),(313,29,'海东地区'),(314,29,'海北藏族自治州'),(315,29,'黄南藏族自治州'),(316,29,'海南藏族自治州'),(317,29,'果洛藏族自治州'),(318,29,'玉树藏族自治州'),(319,29,'海西蒙古族藏族自治州'),(320,30,'银川市'),(321,30,'石嘴山市'),(322,30,'吴忠市'),(323,30,'固原市'),(324,30,'中卫市'),(325,31,'乌鲁木齐市'),(326,31,'克拉玛依市'),(327,31,'吐鲁番地区'),(328,31,'哈密地区'),(329,31,'昌吉回族自治州'),(330,31,'博尔塔拉蒙古自治州'),(331,31,'巴音郭楞蒙古自治州'),(332,31,'阿克苏地区'),(333,31,'克孜勒苏柯尔克孜自治州'),(334,31,'喀什地区'),(335,31,'和田地区'),(336,31,'伊犁哈萨克自治州'),(337,31,'塔城地区'),(338,31,'阿勒泰地区'),(339,31,'石河子市'),(340,31,'阿拉尔市'),(341,31,'图木舒克市'),(342,31,'五家渠市'),(343,32,'香港特别行政区'),(344,33,'澳门特别行政区'),(345,34,'台湾省');
+
+/*Table structure for table `delivery_time` */
+
+DROP TABLE IF EXISTS `delivery_time`;
+
+CREATE TABLE `delivery_time` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '配送时间表',
+  `time` datetime DEFAULT NULL COMMENT '配送时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `delivery_time` */
 
 /*Table structure for table `member` */
 
@@ -70,6 +101,93 @@ CREATE TABLE `member` (
 /*Data for the table `member` */
 
 insert  into `member`(`id`,`name`,`username`,`password`,`phone`,`status`,`create_time`,`balance`,`head`,`province`,`city`,`street`,`address`,`full_address`) values (1,'张三','18380426135','$2a$10$TeKfUiYucql6FBOkAtqLDuGylsEXX1tCExHMi/T81htqHXS7Qg.dS','15982157701',0,'2016-08-08 23:39:52','0.00',NULL,NULL,NULL,NULL,NULL,NULL);
+
+/*Table structure for table `orders` */
+
+DROP TABLE IF EXISTS `orders`;
+
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '订单表',
+  `sn` varchar(20) DEFAULT NULL COMMENT '订单编号',
+  `express` varchar(100) DEFAULT NULL COMMENT '快递单号',
+  `mid` int(11) DEFAULT NULL COMMENT '用户ID',
+  `amount_paid` decimal(8,2) DEFAULT NULL COMMENT '订单实付金额',
+  `amount` decimal(8,2) DEFAULT NULL COMMENT '订单总金额',
+  `discount` decimal(8,2) DEFAULT NULL COMMENT '折扣金额',
+  `receiver` varchar(20) DEFAULT NULL COMMENT '收货人姓名',
+  `phone` varchar(20) DEFAULT NULL COMMENT '收货人电话',
+  `address` varchar(50) DEFAULT NULL COMMENT '收货人地址',
+  `deliver_type` int(1) DEFAULT '0' COMMENT '收货方式 0 快递 1 自提',
+  `status` int(1) DEFAULT '0' COMMENT '0，待支付(下单)；1，待理货(已支付)；2，待发货(已理货)；3，待收货(已发货)；4，待评价(已收货)；5，完成(已评价)；6，取消(过期)；',
+  `freight` decimal(8,2) DEFAULT '0.00' COMMENT '运费',
+  `invisible` tinyint(1) DEFAULT '0' COMMENT '是否删除 0 否 1 是',
+  `message` varchar(200) DEFAULT NULL COMMENT '买家留言',
+  `postcode` varchar(20) DEFAULT NULL COMMENT '邮编',
+  `payment_type` varchar(100) DEFAULT NULL COMMENT '支付方式',
+  `delivery_time` datetime DEFAULT NULL COMMENT '配送时间',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `I_O_sn_unique` (`sn`),
+  KEY `FK_Reference_2` (`mid`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+/*Data for the table `orders` */
+
+insert  into `orders`(`id`,`sn`,`express`,`mid`,`amount_paid`,`amount`,`discount`,`receiver`,`phone`,`address`,`deliver_type`,`status`,`freight`,`invisible`,`message`,`postcode`,`payment_type`,`delivery_time`,`create_time`) values (1,'116101300000279','124215213123124',1,'11.00','11.00','0.00','test1','123215125215','四川啊打扫',0,3,'0.00',0,NULL,NULL,'余额支付',NULL,'2016-10-14 00:00:00'),(2,'116101300000230','2325342355555',2,'22.00','22.00','0.00','test2','123123123215','的撒刚华人回去确认',0,3,'0.00',0,NULL,NULL,'支付宝',NULL,'2016-10-12 00:00:00'),(3,'116101300000245',NULL,3,'33.00','33.00','0.00','test3','2512512512','确认且无人企鹅个人情感',0,4,'0.00',0,NULL,NULL,'微信',NULL,'2016-10-15 00:00:00');
+
+/*Table structure for table `orders_item` */
+
+DROP TABLE IF EXISTS `orders_item`;
+
+CREATE TABLE `orders_item` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '订单条目表',
+  `oid` int(11) DEFAULT NULL COMMENT '订单ID',
+  `pid` int(11) DEFAULT NULL COMMENT '商品ID',
+  `name` varchar(20) DEFAULT NULL COMMENT '商品名称',
+  `quantity` int(11) DEFAULT NULL COMMENT '购买数量',
+  `price` decimal(8,2) DEFAULT NULL COMMENT '商品单价',
+  `image` varchar(255) DEFAULT NULL COMMENT '商品图片',
+  `category` varchar(255) DEFAULT NULL COMMENT '商品分类',
+  PRIMARY KEY (`id`),
+  KEY `FK_Reference_13` (`oid`),
+  KEY `FK_Reference_14` (`pid`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+/*Data for the table `orders_item` */
+
+insert  into `orders_item`(`id`,`oid`,`pid`,`name`,`quantity`,`price`,`image`,`category`) values (1,1,1,'大炮',22,'12.00','II\\xf\\1476410992045.jpg','军火'),(2,2,3,'飞机',11,'13.00','II\\xf\\1476410992045.jpg','军火'),(3,3,2,'手枪',33,'11.00','II\\xf\\1476410992045.jpg','军火');
+
+/*Table structure for table `orders_log` */
+
+DROP TABLE IF EXISTS `orders_log`;
+
+CREATE TABLE `orders_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '订单日志表',
+  `oid` int(11) DEFAULT NULL COMMENT '订单ID',
+  `status` int(1) DEFAULT NULL COMMENT '订单状态',
+  `content` varchar(200) DEFAULT NULL COMMENT '日志信息',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `FK_Reference_15` (`oid`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+/*Data for the table `orders_log` */
+
+insert  into `orders_log`(`id`,`oid`,`status`,`content`,`create_time`) values (1,1,0,'已下单，未支付','2016-10-10 00:00:00'),(2,1,1,'支付成功','2016-10-11 11:02:03');
+
+/*Table structure for table `payment_type` */
+
+DROP TABLE IF EXISTS `payment_type`;
+
+CREATE TABLE `payment_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '支付方式表',
+  `type` varchar(100) DEFAULT NULL COMMENT '支付方式',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+/*Data for the table `payment_type` */
+
+insert  into `payment_type`(`id`,`type`) values (1,'余额支付');
 
 /*Table structure for table `persistent_logins` */
 
@@ -114,13 +232,17 @@ CREATE TABLE `product` (
   `payment_type` int(1) DEFAULT '0' COMMENT '0 余额支付',
   `quantity` int(11) DEFAULT NULL COMMENT '库存',
   `detail` text COMMENT '商品详情',
+  `default_img` varchar(255) DEFAULT NULL COMMENT '商品默认展示图',
   `status` int(1) DEFAULT '1' COMMENT '是否上架 0 否 1 是',
   `hot` int(1) DEFAULT '0' COMMENT '是否是热门商品 0 否 1 是',
+  `invisible` int(1) DEFAULT '0' COMMENT '是否删除 0 否 1 是',
   `create_time` datetime DEFAULT NULL COMMENT '商品创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 /*Data for the table `product` */
+
+insert  into `product`(`id`,`name`,`category_id`,`price`,`discount_price`,`freight_price`,`payment_type`,`quantity`,`detail`,`default_img`,`status`,`hot`,`invisible`,`create_time`) values (2,'黑人牙膏q',2,'22.00','22.00','10.00',1,22,'<p>黑人牙膏，谁用谁知道<img src=\"http://localhost:8099/ssm/temp/1476339719819_S.png\" title=\"\" alt=\"\"/>123</p>','Ms\\Qz\\1476417883813.jpg',1,1,0,'2016-10-13 17:35:09'),(3,'潜艇',2,'1.00','1.00','0.00',1,1,'<p>123123</p>','A3\\Sp\\1476411071876.png',1,1,0,'2016-10-14 10:11:14'),(4,'遥控赛车',3,'111.00',NULL,'12.00',1,123,'<p>访问时访问非威风威风违反&nbsp;</p>','X1\\Yq\\1476417929895.jpg',1,1,0,'2016-10-14 12:05:36'),(5,'自行车',4,'1234.00',NULL,'1.00',1,12,'<p>的前雾灯去</p>','Vq\\wF\\1476426202439.jpg',1,1,0,'2016-10-14 14:23:25'),(6,'大炮',3,'34352.00','3.00','32.00',1,3,'<p>234</p>','FG\\Da\\1476426519774.jpeg',1,1,0,'2016-10-14 14:28:42'),(7,'手枪',5,'3432.00',NULL,'0.00',1,2345,'<p>3223二分2<img src=\"http://img.baidu.com/hi/jx2/j_0060.gif\"/></p>','pI\\RC\\1476426633095.jpeg',1,1,0,'2016-10-14 14:30:38');
 
 /*Table structure for table `product_category` */
 
@@ -131,9 +253,11 @@ CREATE TABLE `product_category` (
   `name` varchar(1000) DEFAULT NULL COMMENT '分类名称',
   `icon` varchar(255) DEFAULT NULL COMMENT '分类图标',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `product_category` */
+
+insert  into `product_category`(`id`,`name`,`icon`) values (2,'话费Q币','Jx/s4/1475203910224.png'),(3,'电子产品','Jx/s4/1475203910224.png'),(4,'生活用品','Jx/s4/1475203910224.png'),(5,'家用小电器','Jx/s4/1475203910224.png');
 
 /*Table structure for table `product_comment` */
 
@@ -144,7 +268,7 @@ CREATE TABLE `product_comment` (
   `pid` int(11) DEFAULT NULL COMMENT '商品ID',
   `mid` int(11) DEFAULT NULL COMMENT '用户ID',
   `comment` text COMMENT '用户评论',
-  `core` int(11) DEFAULT NULL COMMENT '用户评分',
+  `score` int(11) DEFAULT NULL COMMENT '用户评分',
   `name` varchar(255) DEFAULT NULL COMMENT '用户名称',
   `create_time` datetime DEFAULT NULL COMMENT '评论时间',
   PRIMARY KEY (`id`)
@@ -161,9 +285,11 @@ CREATE TABLE `product_img` (
   `pid` int(11) DEFAULT NULL COMMENT '商品ID',
   `img` varchar(255) DEFAULT NULL COMMENT '商品图片',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=132 DEFAULT CHARSET=utf8;
 
 /*Data for the table `product_img` */
+
+insert  into `product_img`(`id`,`pid`,`img`) values (69,4,'X1\\Yq\\1476417929895.jpg'),(70,4,'tJ\\ww\\1476417931565.jpg'),(71,4,'Fj\\jT\\1476417933261.png'),(83,5,'Vq\\wF\\1476426202439.jpg'),(84,6,'FG\\Da\\1476426519774.jpeg'),(92,3,'A3\\Sp\\1476411071876.png'),(102,2,'Ms\\Qz\\1476417883813.jpg'),(103,2,'Qe\\De\\1476410984424.png'),(104,2,'II\\xf\\1476410992045.jpg'),(105,2,'K5\\rb\\1476410989521.png'),(106,2,'Lz\\jZ\\1476410995469.jpg'),(131,7,'pI\\RC\\1476426633095.jpeg');
 
 /*Table structure for table `province` */
 
@@ -192,11 +318,11 @@ CREATE TABLE `sys_menus` (
   `icon` varchar(255) DEFAULT NULL COMMENT '图标',
   `level` int(1) DEFAULT NULL COMMENT '菜单级别',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC COMMENT='菜单表';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC COMMENT='菜单表';
 
 /*Data for the table `sys_menus` */
 
-insert  into `sys_menus`(`id`,`name`,`parent_id`,`url`,`weight`,`icon`,`level`) values (1,'用户管理',0,'/admin/member/index',1,'/assets/imgs/menu/account.png',1),(2,'管理员管理',0,NULL,2,'/assets/imgs/menu/account.png',1),(3,'管理员列表',2,'/admin/user/list',1,NULL,2),(4,'管理员新增',2,'/admin/user/add',2,NULL,2),(5,'商品管理',0,NULL,3,'/assets/imgs/menu/account.png',1),(6,'商品列表',5,'/admin/product/list',1,NULL,2),(7,'商品新增',5,'/admin/product/add',2,NULL,2);
+insert  into `sys_menus`(`id`,`name`,`parent_id`,`url`,`weight`,`icon`,`level`) values (1,'用户管理',0,NULL,1,'/assets/imgs/menu/member.png',1),(2,'管理员管理',0,NULL,2,'/assets/imgs/menu/account.png',1),(3,'管理员列表',2,'/admin/user/list',1,NULL,2),(4,'管理员新增',2,'/admin/user/add',2,NULL,2),(5,'商品管理',0,NULL,3,'/assets/imgs/menu/product.png',1),(6,'商品列表',5,'/admin/product/list',1,NULL,2),(7,'商品新增',5,'/admin/product/add',2,NULL,2),(8,'订单管理',0,NULL,4,'/assets/imgs/menu/order.png',1),(9,'订单列表',8,'/admin/order/list',1,NULL,2),(11,'用户列表',1,'/admin/member/list',1,NULL,2);
 
 /*Table structure for table `sys_roles` */
 
@@ -225,11 +351,11 @@ CREATE TABLE `sys_roles_menus` (
   UNIQUE KEY `INDEX_SRM_rid_mid` (`role_id`,`menu_id`),
   KEY `FK_Reference_35` (`role_id`),
   KEY `FK_Reference_36` (`menu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='角色菜单表';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='角色菜单表';
 
 /*Data for the table `sys_roles_menus` */
 
-insert  into `sys_roles_menus`(`id`,`role_id`,`menu_id`) values (1,1,1),(2,1,2),(3,1,3),(4,1,4),(5,1,5),(6,1,6),(7,1,7);
+insert  into `sys_roles_menus`(`id`,`role_id`,`menu_id`) values (1,1,1),(5,1,5),(6,1,6),(7,1,7),(8,1,8),(9,1,9),(11,1,11);
 
 /*Table structure for table `sys_roles_users` */
 
@@ -269,7 +395,7 @@ CREATE TABLE `sys_users` (
 
 /*Data for the table `sys_users` */
 
-insert  into `sys_users`(`id`,`username`,`name`,`password`,`create_time`,`last_login_time`,`last_login_ip`,`enabled`,`head`,`type`,`verify_code`) values (1,'admin','超级管理员','$2a$10$TeKfUiYucql6FBOkAtqLDuGylsEXX1tCExHMi/T81htqHXS7Qg.dS','2016-03-25 19:01:29','2015-05-28 12:54:59','127.0.0.1',1,'Jx/s4/1475203910224.png',1,'7732'),(268,'18380426135','hansen','$2a$10$TeKfUiYucql6FBOkAtqLDuGylsEXX1tCExHMi/T81htqHXS7Qg.dS','2016-03-25 19:01:29','2015-05-28 12:54:59','127.0.0.1',1,'Jx/s4/1475203910224.png',1,'3142'),(269,'13438074645','mina','$2a$10$TeKfUiYucql6FBOkAtqLDuGylsEXX1tCExHMi/T81htqHXS7Qg.dS','2016-03-25 19:01:29','2015-05-28 12:54:59','127.0.0.1',1,'Jx/s4/1475203910224.png',1,'3142');
+insert  into `sys_users`(`id`,`username`,`name`,`password`,`create_time`,`last_login_time`,`last_login_ip`,`enabled`,`head`,`type`,`verify_code`) values (1,'admin','超级管理员','$2a$10$TeKfUiYucql6FBOkAtqLDuGylsEXX1tCExHMi/T81htqHXS7Qg.dS','2016-03-25 19:01:29','2015-05-28 12:54:59','127.0.0.1',1,'X1\\Yq\\1476417929895.jpg',1,'7732'),(268,'18380426135','hansen','$2a$10$TeKfUiYucql6FBOkAtqLDuGylsEXX1tCExHMi/T81htqHXS7Qg.dS','2016-03-25 19:01:29','2015-05-28 12:54:59','127.0.0.1',1,'Jx/s4/1475203910224.png',1,'3142'),(269,'13438074645','mina','$2a$10$TeKfUiYucql6FBOkAtqLDuGylsEXX1tCExHMi/T81htqHXS7Qg.dS','2016-03-25 19:01:29','2015-05-28 12:54:59','127.0.0.1',1,'Jx/s4/1475203910224.png',1,'3142');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
