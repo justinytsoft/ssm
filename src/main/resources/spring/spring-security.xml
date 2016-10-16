@@ -10,19 +10,27 @@
            http://www.springframework.org/schema/context
            http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-
+	<!-- 基础访问 -->
     <http pattern="/login" security="none"/>
     <http pattern="/sessionException" security="none"/>
     <http pattern="/captcha" security="none"/>
     <http pattern="/upload/**" security="none"/>
+    <http pattern="/payment_type" security="none"/>
+    <http pattern="/province" security="none"/>
+    <http pattern="/city" security="none"/>
+    <http pattern="/position" security="none"/>
+    <http pattern="/product_category" security="none"/>
     
+    <!-- 静态资源访问 -->
     <http pattern="/assets/**" security="none"/>
-    <http pattern="/kaquan/assets/**" security="none"/>
+    <http pattern="/web/assets/**" security="none"/>
     
+    <!-- 错误页面 -->
     <http pattern="/error" security="none"/>
     <http pattern="/denied" security="none"/>
     <http pattern="/notFound" security="none"/>
     
+    <!-- 用户商城访问 -->
     <http pattern="/ws/**" security="none"/>
     <http pattern="/web/**" security="none"/>
     

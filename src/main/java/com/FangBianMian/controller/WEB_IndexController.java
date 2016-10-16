@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,9 +18,12 @@ import com.FangBianMian.constant.Common;
 import com.FangBianMian.dao.IBaseDao;
 import com.FangBianMian.domain.Product;
 import com.FangBianMian.domain.ProductCategory;
+import com.FangBianMian.domain.SecurityUser;
+import com.FangBianMian.domain.SysRoles;
 import com.FangBianMian.domain.User;
 import com.FangBianMian.service.IProductService;
 import com.FangBianMian.utils.DataUtil;
+import com.FangBianMian.utils.DataValidation;
 
 /**
  * 商城首页
@@ -35,6 +39,48 @@ public class WEB_IndexController {
 	@Autowired
 	private IBaseDao baseDao;
 	
+	/**
+	 * 首页
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/main")
+	public String main(){
+		return "web/main";
+	}
+	
+	/**
+	 * 上
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/top")
+	public String top(Model model, HttpServletRequest request){
+		User user = (User)request.getSession().getAttribute(Common.USER_SESSION);
+		model.addAttribute("user", user);
+		return "web/header";
+	}
+
+	/**
+	 * 中
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/center")
+	public String center(){
+		return "web/list";
+	}
+
+	/**
+	 * 下
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/bottom")
+	public String left(){
+		return "web/footer";
+	}
+
 	/**
 	 * 首页
 	 * @param model
