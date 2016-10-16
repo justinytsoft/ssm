@@ -5,7 +5,6 @@
 		<style>
 			.panel-div{
 				width:50%;
-				height:100px;
 				margin-top: 20px;
 				border: 1px solid #F7EDD8;
 				background-color: #FFFDF6;
@@ -44,18 +43,45 @@
 		/*<![CDATA[*/
 	 	   $(function() {
 				//设置状态
-				var status = $("#status");
-				$.each(orderStatus,function(i,v){
-					if(v.status == status.text()){
-						status.text("订单状态：" + v.name);
-					}
+				var status = $(".status");
+				$.each(status,function(index,value){
+					$.each(orderStatus,function(i,v){
+						if(v.status == value.innerText){
+							if(index==0){
+								value.innerText = "订单状态：" + v.name;
+							}else{
+								value.innerText = v.name;
+							}
+						}
+					}); 
 				});
 				
 				//返回到列表页面
 				$("#return").click(function(){
 					refresh([[@{/admin/order/list(curr=${curr},size=${size})}]]);
 				});
+				
 	 		});
+
+			//发货
+			function send(){
+				var express = $.trim($("#express").textbox("getValue"));
+				if(express!=""){
+					cConfirm("确定要发货吗",function(flag){
+						if(flag){
+							$.post([[@{/admin/order/update}]],{_:Math.random(),oid:[[${o.id}]],express:express},function(data){
+								cAlertFun(data.msg,function(){
+									if(data.flag){
+										refresh([[@{/admin/order/detail(id=${o.id})}]]);
+									}
+								});
+							});
+						}
+					});
+				}else{
+					cAlert("快递单号不能为空");
+				}
+			}
 		/*]]>*/
 		</script>
 	
@@ -70,52 +96,38 @@
 					<div class="panel-div">
 						<div style="padding: 20px;">
 							<label style="font-size:15px;" th:text="${'订单编号：' + o.sn}"></label>
-							<label id="status" style="margin-left: 20px;font-size: 15px;" th:text="${o.status}"></label>
+							<label class="status" style="margin-left: 20px;font-size: 15px;" th:text="${o.status}"></label>
 							<a id="return" href="javascript:" style="float: right;color:#00BBEE;font-size: 13px">返 回</a>
 						</div>
-						<div style="margin-left:20px;">
-							<input type="text" class="easyui-textbox" data-options="width:120"/>
-							<a href="javascript:" class="easyui-linkbutton" style="margin-left:20px" data-options="width:60,height:29">查 询</a>
+						<div th:if="${o.deliver_type==0 and o.express==null}" class="mg-left-20 mg-bottom-20">
+							<input id="express" type="text" class="easyui-textbox" data-options="width:160,prompt:'请填写快递单号'"/>
+							<a href="javascript:" class="easyui-linkbutton" data-options="width:60,height:29,onClick:send">发 货</a>
+						</div>
+						<div th:if="${o.express!=null}" class="mg-left-20 mg-bottom-20">
+							<label style="font-size:15px;" th:text="${'快递编号：' + o.express}"></label>
 						</div>
 					</div>
 					
 					<!-- 订单跟踪 -->
 					<div style="margin-top: 20px;min-width:985px;width:80%;">
-			        	<div class="easyui-panel" title="订单跟踪" style="width:100%;" data-options="height:260,left:320,top:180,inline:true ">
+			        	<div class="easyui-panel" title="订单跟踪" style="width:100%;min-height:120px" data-options="left:320,top:180,inline:true ">
 			       			<div class="info-box">
 			       				<div class="step-table">
 				       				<table>
 			       						<tr>
-			       							<th>处理时间</th>
-			       							<th>处理信息</th>
-			       							<th>处理状态</th>
+			       							<th width="30%">处理时间</th>
+			       							<th width="40%">处理信息</th>
+			       							<th width="30%">处理状态</th>
 			       						</tr>
-			       						<tr>
-			       							<td>2014-04-01 14:45:02</td>
-			       							<td>用户提交订单</td>
-			       							<td>待付款</td>
-			       						</tr>
-			       						<tr>
-			       							<td>2014-04-01 14:45:02</td>
-			       							<td>用户支付订单</td>
-			       							<td>待商户确认</td>
-			       						</tr>
-			       						<tr>
-			       							<td>2014-04-01 14:45:02</td>
-			       							<td>商户取消订单</td>
-			       							<td>取消订单审核</td>
-			       						</tr>
-			       						<tr>
-			       							<td>2014-04-01 14:45:02</td>
-			       							<td>取消订单审核通过</td>
-			       							<td>待退款</td>
-			       						</tr>
-			       						<tr>
-			       							<td>2014-04-01 14:45:02</td>
-			       							<td>退款</td>
-			       							<td>已取消</td>
+			       						<tr th:unless="${#arrays.isEmpty(o.logs)}" th:each="l:${o.logs}">
+			       							<td th:text="${#dates.format(l.create_time,'yyyy-MM-dd HH:mm:ss')}">2014-04-01 14:45:02</td>
+			       							<td th:text="${l.content}">用户提交订单</td>
+			       							<td class="status" th:text="${l.status}">待付款</td>
 			       						</tr>
 			       					</table>
+			       					<div style="color:#797676;text-align: center;line-height: 80px;" th:if="${#arrays.isEmpty(o.logs)}">
+		       							暂无信息~
+		       						</div>
 			       				</div>
 			       			</div>
 			       	 	</div>
@@ -130,33 +142,29 @@
 				       				<ul>
 				       					<li>
 				       						<label>收货人：</label>
-				       						<span>XXXX</span>
+				       						<span th:text="${o.receiver}">XXXX</span>
 				       					</li>
 				       					<li>
 				       						<label>收货电话：</label>
-				       						<span>00000000000</span>
+				       						<span th:text="${o.phone}">00000000000</span>
 				       					</li>
 				       					<li>
 				       						<label>收货地址：</label>
-				       						<span>四川省 成都市 高新区 天赋软件园XXXX</span>
+				       						<span th:text="${o.address}">四川省 成都市 高新区 天赋软件园XXXX</span>
 				       					</li>
 				       					<li>
 				       						<label class="lg">配送及支付信息</label>
 				       							<dl>
 				       								<dt>支付方式：</dt>
-				       								<dd>余额支付</dd>
+				       								<dd th:text="${o.payment_type}">余额支付</dd>
 				       							</dl>
 				       							<dl>
 				       								<dt>支付状态：</dt>
-				       								<dd>支付成功</dd>
+				       								<dd th:text="${o.status}&lt;3?'等待支付':'支付成功'">支付成功</dd>
 				       							</dl>
 				       							<dl>
 				       								<dt>配送方式：</dt>
-				       								<dd>快递</dd>
-				       							</dl>
-				       							<dl>
-				       								<dt>配送时间：</dt>
-				       								<dd>不限</dd>
+				       								<dd th:text="${o.deliver_type==0?'快递':'自提'}">快递</dd>
 				       							</dl>
 				       					</li>
 				       					<li>
@@ -171,26 +179,27 @@
 				       						<th>商品信息</th>
 				       						<th>单价（元）</th>
 				       						<th>数量</th>
+				       						<th>小计（元）</th>
 				       					</tr>
-				       					<tr>
-				       						<td>10025</td>
+				       					<tr th:each="i:${o.items}">
+				       						<td th:text="${i.pid}">10025</td>
 				       						<td>
 				       							<div class="td-box">
-				       								<div class="pic-box" style="background:red;">
-				       								</div>
+				       								<div class="pic-box" th:style="${'border:1px solid #D4D0D0;background:url(' + application.baseImageUrl + i.image + ') no-repeat center center'}"></div>
 				       								<div class="word-box">
-				       									<p class="goods-name">小米5</p>
-				       									<p class="goods-spec">黄色 3g</p>
+				       									<p class="goods-name" th:text="${i.name}">小米5</p>
+				       									<p class="goods-spec" th:text="${i.category}">黄色 3g</p>
 				       								</div>
 				       							</div>
 				       						</td>
-				       						<td>999</td>
-				       						<td>8</td>
+				       						<td th:text="${i.price}">999</td>
+				       						<td th:text="${i.quantity}">8</td>
+				       						<td th:text="${i.quantity * i.price}">8</td>
 				       					</tr>
 				       				</table>
 				       			</div>	
-				       			<p class="box-bottom"><span>运费：</span><span class="color-red">0.01元</span></p>
-				       			<p class="box-bottom"><span>实付金额：</span><span class="color-red">0.01元</span></p>
+				       			<p class="box-bottom"><span>运费：</span><span class="color-red" th:text="${o.freight + '元'}">0.01元</span></p>
+				       			<p class="box-bottom"><span>实付金额：</span><span class="color-red" th:text="${o.amount_paid + '元'}">0.01元</span></p>
 				       		</div>
 				        </div>
 					</div>

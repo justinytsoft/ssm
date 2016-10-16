@@ -23,7 +23,7 @@ a {cursor: pointer;}
 .mg-right-20{margin-right: 20px}
 .mg-top-20{margin-top: 20px}
 .mg-bottom-20{margin-bottom: 20px}
-.bg-1{border-radius: 5px;padding: 20px 15px;background: #f3f3f3;}
+.bg-1{border-radius: 5px;padding: 20px 15px;background: #f3f3f3;min-width:985px;}
 .bg-2{border-radius: 5px;padding: 10px 10px 30px 10px;background: #f3f3f3;}
 .bg-input {display: inline-block;height: 23px;width: 263px;border: 1px solid #d2d2d2;border-radius: 10px;}
 .bg-input2 {display: inline-block;height: 23px;width: 203px;border: 1px solid #d2d2d2;border-radius: 10px;}

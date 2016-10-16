@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.soap.Detail;
-
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.FangBianMian.constant.OrderStatus;
 import com.FangBianMian.domain.Orders;
-import com.FangBianMian.domain.Product;
 import com.FangBianMian.service.IOrderService;
 import com.FangBianMian.utils.DataUtil;
 import com.FangBianMian.utils.DateFormatter;
@@ -70,7 +67,7 @@ public class OrderController {
 	 * @return
 	 */
 	@RequestMapping("/detail")
-	public String Detail(Model model, @RequestParam(required=false) Integer id,
+	public String detail(Model model, @RequestParam(required=false) Integer id,
 						 @RequestParam(required=false) Integer curr,
 						 @RequestParam(required=false) Integer size){
 		if(id==null){

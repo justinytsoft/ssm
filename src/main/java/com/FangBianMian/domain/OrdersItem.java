@@ -14,6 +14,7 @@ public class OrdersItem {
 	private String name;
 	private Float price;
 	private String image;
+	private String category;
 	
 	public Integer getId() {
 		return id;
@@ -56,5 +57,11 @@ public class OrdersItem {
 	}
 	public void setImage(String image) {
 		this.image = image;
+	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
 	}
 }

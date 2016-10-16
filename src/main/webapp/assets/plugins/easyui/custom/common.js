@@ -134,16 +134,6 @@ $.extend($.fn.validatebox.defaults.rules, {
 	}
 });
 
-/*打开dialog*/
-function openDialog(id){
-	$("#"+id).dialog("open",true);
-}
-
-/*关闭dialog*/
-function closeDialog(id){
-	$("#"+id).dialog("close",true);
-}
-
 /*图片查看*/
 function alertImg(msg){
 	$.messager.alert("",msg);

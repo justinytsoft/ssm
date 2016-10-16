@@ -26,6 +26,8 @@ public class Orders {
 	private Boolean invisible;
 	private String message;
 	private String postcode;
+	private String payment_type;
+	private Date delivery_time;
 	private Date create_time;
 	
 	private List<OrdersItem> items;
@@ -144,5 +146,17 @@ public class Orders {
 	}
 	public void setExpress(String express) {
 		this.express = express;
+	}
+	public String getPayment_type() {
+		return payment_type;
+	}
+	public void setPayment_type(String payment_type) {
+		this.payment_type = payment_type;
+	}
+	public Date getDelivery_time() {
+		return delivery_time;
+	}
+	public void setDelivery_time(Date delivery_time) {
+		this.delivery_time = delivery_time;
 	}
 }

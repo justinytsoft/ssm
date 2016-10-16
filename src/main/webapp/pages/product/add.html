@@ -142,7 +142,7 @@
 					</select>
 				</div>
 				
-				<div th:if="${product==null}" class="bg-1" style="background: #FFFFFF;">
+				<div th:if="${product==null}" class="bg-1" style="background: #FFFFFF;min-width:985px;">
 					<label>商品图片：</label>
 					
 					<div style="display: inline-block;">
@@ -176,7 +176,7 @@
 					</div>
 				</div>
 				
-				<div th:if="${product!=null}" class="bg-1" style="background: #FFFFFF;">
+				<div th:if="${product!=null}" class="bg-1" style="background: #FFFFFF;min-width:985px;">
 					<label>商品图片：</label>
 					
 					<div style="display: inline-block;" th:each="img,cur:${product.imgs}">

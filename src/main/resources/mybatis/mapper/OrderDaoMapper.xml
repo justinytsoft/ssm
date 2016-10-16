@@ -18,6 +18,8 @@
 		<result property="freight" column="freight"/>
 		<result property="message" column="message"/>
 		<result property="postcode" column="postcode"/>
+		<result property="payment_type" column="payment_type"/>
+		<result property="delivery_time" column="delivery_time"/>
 		<result property="create_time" column="create_time"/>
 		
 		<collection property="items" column="id" javaType="List" ofType="com.FangBianMian.domain.OrdersItem" select="selectOrdersItemByOid"></collection>
@@ -33,7 +35,7 @@
 	<update id="updateOrderStatus">
 		UPDATE orders
 		<set>
-			<if test="param.status!=null">status = #{param.status}</if>
+			<if test="param.status!=null">status = #{param.status},</if>
 			<if test="param.express!=null">express = #{param.express}</if>
 		</set>
 		WHERE id = #{param.oid}
