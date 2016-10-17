@@ -1,12 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-	<head>
-		<meta charset="utf-8" />
-		<title>和包村 商品列表</title>
-		<link rel="stylesheet" href="css/style.css" />
-		<link rel="stylesheet" href="css/swiper.min.css" />
-	</head>
+	<head th:include="fragment/web_import :: header"></head>
 
 	<body class="listbody sec-pages">
 		<section class="container">
@@ -209,10 +204,7 @@
 				</ul>
 			</div>
 		</section>
-		 <iframe MARGINWIDTH=0 MARGINHEIGHT=0 HSPACE=0 VSPACE=0 FRAMEBORDER=0 SCROLLING=no src="footer.html" width="100%"  height="160px">
-		 </iframe>
-		<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
-		<script type="text/javascript" src="js/swiper.min.js"></script>
+		<iframe MARGINWIDTH='0' MARGINHEIGHT='0' HSPACE='0' VSPACE='0' FRAMEBORDER='0' SCROLLING='no' th:src="@{bottom}" width="100%" height="270px"></iframe>
 		<script>
 			$(function() {
 				var mySwiper = new Swiper('.banner .swiper-container', {

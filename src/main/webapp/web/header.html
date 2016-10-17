@@ -36,19 +36,10 @@
 			<div class="menuBox">
 				<ul class="firUl">
 					<li>
-						<a href="" class="active">首页</a>
+						<a target="centerFrame" th:href="@{/web/index/center}" class="active">首页</a>
 					</li>
-					<li>
-						<a href="">服饰</a>
-					</li>
-					<li>
-						<a href="">药材</a>
-					</li>
-					<li>
-						<a href="">旅游</a>
-					</li>
-					<li>
-						<a href="">特色西藏</a>
+					<li th:each="pc:${pcs}">
+						<a target="centerFrame" th:href="@{/web/index/center(category_id=${pc.id})}" th:text="${pc.name}">服饰</a>
 					</li>
 				</ul>
 			</div>

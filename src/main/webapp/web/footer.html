@@ -1,54 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-	<head>
-		<meta charset="utf-8" />
-		<title>和包村 商品列表</title>
-		<link rel="stylesheet" href="css/style.css" />
-		<link rel="stylesheet" href="css/swiper.min.css" />
-	</head>
+	<head th:include="fragment/web_import :: header"></head>
 
 	<body>
+		<div style="height:80px;width:100%;background-color:#E8E7E7;margin:20px 0"></div>
 		<section class="footerBox">
 			<div class="footer">
 				<div class="footer-left fll">
 					<div class="footer-list1 list">
 						<ul>
 							<li>
-								<a href="#">网站首页</a>
+								<a href="javascript:">网站首页</a>
 							</li>
 							<li>
-								<a href="#">诚聘英才</a>
+								<a href="javascript:">诚聘英才</a>
 							</li>
 						</ul>
 					</div>
 					<div class="footer-list2 list">
 						<ul>
 							<li>
-								<a href="#">商家帮助</a>
+								<a href="javascript:">商家帮助</a>
 							</li>
 							<li>
-								<a href="#">隐私保护</a>
+								<a href="javascript:">隐私保护</a>
 							</li>
 						</ul>
 					</div>
 					<div class="footer-list3 list">
 						<ul>
 							<li>
-								<a href="#">网站公告</a>
+								<a href="javascript:">网站公告</a>
 							</li>
 							<li>
-								<a href="#">新闻动态</a>
+								<a href="javascript:">新闻动态</a>
 							</li>
 						</ul>
 					</div>
 					<div class="footer-list4 list">
 						<ul>
 							<li>
-								<a href="#">关注我们</a>
+								<a href="javascript:">关注我们</a>
 							</li>
 							<li>
-								<a href="#">政策法律声明</a>
+								<a href="javascript:">政策法律声明</a>
 							</li>
 						</ul>
 					</div>
@@ -56,11 +52,11 @@
 				<div class="footer-right flr">
 					<div class="pic1 erweima">
 						<!--<p>微信服务号</p>-->
-						<p><img src="img/icon-01.gif" /></p>
+						<p><img th:src="@{/web/assets/img/icon-01.gif}" /></p>
 					</div>
 					<div class="pic2 erweima">
 						<!--<p>客户端下载</p>-->
-						<p><img src="img/icon-02.gif" /></p>
+						<p><img th:src="@{/web/assets/img/icon-02.gif}" /></p>
 					</div>
 				</div>
 				<div class="clr"></div>
@@ -69,7 +65,6 @@
 				</div>
 			</div>
 		</section>
-		<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
 	</body>
 
 </html>

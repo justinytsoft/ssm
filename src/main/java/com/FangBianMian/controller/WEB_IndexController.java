@@ -7,7 +7,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,12 +17,9 @@ import com.FangBianMian.constant.Common;
 import com.FangBianMian.dao.IBaseDao;
 import com.FangBianMian.domain.Product;
 import com.FangBianMian.domain.ProductCategory;
-import com.FangBianMian.domain.SecurityUser;
-import com.FangBianMian.domain.SysRoles;
 import com.FangBianMian.domain.User;
 import com.FangBianMian.service.IProductService;
 import com.FangBianMian.utils.DataUtil;
-import com.FangBianMian.utils.DataValidation;
 
 /**
  * 商城首页
@@ -56,7 +52,12 @@ public class WEB_IndexController {
 	 */
 	@RequestMapping("/top")
 	public String top(Model model, HttpServletRequest request){
+		//获取登录用户
 		User user = (User)request.getSession().getAttribute(Common.USER_SESSION);
+		//获取商品分类列表
+		List<ProductCategory> pcs = DataUtil.isEmpty(baseDao.queryProductCategory());
+		
+		model.addAttribute("pcs", pcs);
 		model.addAttribute("user", user);
 		return "web/header";
 	}
@@ -67,7 +68,19 @@ public class WEB_IndexController {
 	 * @return
 	 */
 	@RequestMapping("/center")
-	public String center(){
+	public String center(Model model, @RequestParam(required=false) Integer category_id){
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("page", 0);
+		param.put("rows", 12);
+		param.put("status", true);
+		if(category_id!=null){
+			param.put("category_id", category_id);
+			model.addAttribute("category_id", category_id);
+		}
+		//查询所有商品
+		List<Product> ps = productService.queryProductsByParam(param);
+		
+		model.addAttribute("ps", ps);
 		return "web/list";
 	}
 
