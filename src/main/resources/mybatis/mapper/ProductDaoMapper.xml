@@ -24,6 +24,19 @@
 		<collection property="imgs" column="id" javaType="List" ofType="com.FangBianMian.domain.ProductImg" select="selectProductImgByPid"></collection>
 	</resultMap>
 	
+	<!-- 查询商品评论 -->
+	<select id="queryProductComments" resultType="com.FangBianMian.domain.ProductComment">
+		SELECT * FROM product_comment WHERE pid = #{param.id} 
+		<if test="param.page!=null">
+			LIMIT #{param.page},#{param.rows}
+		</if>
+	</select>
+
+	<!-- 查询商品评论总数 -->
+	<select id="queryProductCommentsTotal" resultType="int">
+		SELECT COUNT(1) FROM product_comment WHERE pid = #{param.id} 
+	</select>
+	
 	<!-- 删除商品 -->
 	<update id="deleteProductById">
 		UPDATE product SET invisible = 1 WHERE id = #{id}

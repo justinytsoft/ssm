@@ -7,205 +7,23 @@
 		<section class="container">
 			<div class="product-list">
 				<ul>
-					<li>
+					<li th:each="p:${ps}">
 						<div>
-							<a class="img-link" href="goodsDetail.html"><div class="img-size" style="background: url(img/product1.png) no-repeat center center;background-size: cover;">
-							</div></a>
+							<a class="img-link" th:href="@{/web/product/detail(id=${p.id})}" target="centerFrame">
+								<img class="img-size" alt="展示图" th:src="${application.baseImageUrl + p.default_img}"/>
+							</a>
 							<div class="product-info">
-								<div class="price fll"><em class="price-u">¥</em><span class="price-n">38.86</span></div>
-								<div class="fav flr"><em class="fav-i"></em> <span class="fav-n">142</span> </div>
+								<div class="price fll"><em class="price-u">¥</em><span class="price-n" th:text="${p.price}">38.86</span></div>
 							</div>
 							<div class="clr"></div>
-							<a href="goodsDetail.html" class="text-link">【百草味】-草莓干3袋草莓干3袋草莓干3袋草莓干3袋草莓干3袋</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<a class="img-link" href="goodsDetail.html"><div class="img-size" style="background: url(img/product2.png) no-repeat center center;background-size: cover;">
-								
-							</div></a>
-							<div class="product-info">
-								<div class="price fll"><em class="price-u">¥</em><span class="price-n">38.86</span></div>
-								<div class="fav flr"><em class="fav-i"></em> <span class="fav-n">142</span> </div>
-							</div>
-							<div class="clr"></div>
-							<a href="goodsDetail.html" class="text-link">【百草味】-草莓干3袋</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<a class="img-link" href="goodsDetail.html"><div class="img-size" style="background: url(img/product3.png) no-repeat center center;background-size: cover;">
-							</div>
-								</a>
-							<div class="product-info">
-								<div class="price fll"><em class="price-u">¥</em><span class="price-n">38.86</span></div>
-								<div class="fav flr"><em class="fav-i"></em> <span class="fav-n">142</span> </div>
-							</div>
-							<div class="clr"></div>
-							<a href="goodsDetail.html" class="text-link">【百草味】-草莓干3袋</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<a class="img-link" href="goodsDetail.html"><div class="img-size" style="background: url(img/product4.png) no-repeat center center;background-size: cover;">
-							</div>
-								</a>
-							<div class="product-info">
-								<div class="price fll"><em class="price-u">¥</em><span class="price-n">38.86</span></div>
-								<div class="fav flr"><em class="fav-i"></em> <span class="fav-n">142</span> </div>
-							</div>
-							<div class="clr"></div>
-							<a href="goodsDetail.html" class="text-link">【百草味】-草莓干3袋</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<a class="img-link" href="goodsDetail.html"><div class="img-size" style="background: url(img/product5.png) no-repeat center center;background-size: cover;">
-							</div>
-								</a>
-							<div class="product-info">
-								<div class="price fll"><em class="price-u">¥</em><span class="price-n">38.86</span></div>
-								<div class="fav flr"><em class="fav-i"></em> <span class="fav-n">142</span> </div>
-							</div>
-							<div class="clr"></div>
-							<a href="goodsDetail.html" class="text-link">【百草味】-草莓干3袋</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<a class="img-link" href="goodsDetail.html"><div class="img-size" style="background: url(img/product1.png) no-repeat center center;background-size: cover;">
-							</div>
-								</a>
-							<div class="product-info">
-								<div class="price fll"><em class="price-u">¥</em><span class="price-n">38.86</span></div>
-								<div class="fav flr"><em class="fav-i"></em> <span class="fav-n">142</span> </div>
-							</div>
-							<div class="clr"></div>
-							<a class="text-link">【百草味】-草莓干3袋</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<a class="img-link" href="goodsDetail.html"><div class="img-size" style="background: url(img/product2.png) no-repeat center center;background-size: cover;">
-							</div>
-								</a>
-							<div class="product-info">
-								<div class="price fll"><em class="price-u">¥</em><span class="price-n">38.86</span></div>
-								<div class="fav flr"><em class="fav-i"></em> <span class="fav-n">142</span> </div>
-							</div>
-							<div class="clr"></div>
-							<a class="text-link">【百草味】-草莓干3袋</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<a class="img-link" href="goodsDetail.html"><div class="img-size" style="background: url(img/product3.png) no-repeat center center;background-size: cover;">
-							</div>
-								</a>
-							<div class="product-info">
-								<div class="price fll"><em class="price-u">¥</em><span class="price-n">38.86</span></div>
-								<div class="fav flr"><em class="fav-i"></em> <span class="fav-n">142</span> </div>
-							</div>
-							<div class="clr"></div>
-							<a class="text-link">【百草味】-草莓干3袋</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<a class="img-link" href="goodsDetail.html"><div class="img-size" style="background: url(img/product4.png) no-repeat center center;background-size: cover;">
-							</div>
-								</a>
-							<div class="product-info">
-								<div class="price fll"><em class="price-u">¥</em><span class="price-n">38.86</span></div>
-								<div class="fav flr"><em class="fav-i"></em> <span class="fav-n">142</span> </div>
-							</div>
-							<div class="clr"></div>
-							<a class="text-link">【百草味】-草莓干3袋</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<a class="img-link" href="goodsDetail.html"><div class="img-size" style="background: url(img/product5.png) no-repeat center center;background-size: cover;">
-							</div>
-								</a>
-							<div class="product-info">
-								<div class="price fll"><em class="price-u">¥</em><span class="price-n">38.86</span></div>
-								<div class="fav flr"><em class="fav-i"></em> <span class="fav-n">142</span> </div>
-							</div>
-							<div class="clr"></div>
-							<a class="text-link">【百草味】-草莓干3袋</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<div class="img-size" style="background: url(img/product1.png) no-repeat center center;background-size: cover;">
-								<a class="img-link" href=""></a>
-							</div>
-							<div class="product-info">
-								<div class="price fll"><em class="price-u">¥</em><span class="price-n">38.86</span></div>
-								<div class="fav flr"><em class="fav-i"></em> <span class="fav-n">142</span> </div>
-							</div>
-							<div class="clr"></div>
-							<a class="text-link">【百草味】-草莓干3袋</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<div class="img-size" style="background: url(img/product2.png) no-repeat center center;background-size: cover;">
-								<a class="img-link" href=""></a>
-							</div>
-							<div class="product-info">
-								<div class="price fll"><em class="price-u">¥</em><span class="price-n">38.86</span></div>
-								<div class="fav flr"><em class="fav-i"></em> <span class="fav-n">142</span> </div>
-							</div>
-							<div class="clr"></div>
-							<a class="text-link">【百草味】-草莓干3袋</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<div class="img-size" style="background: url(img/product3.png) no-repeat center center;background-size: cover;">
-								<a class="img-link" href=""></a>
-							</div>
-							<div class="product-info">
-								<div class="price fll"><em class="price-u">¥</em><span class="price-n">38.86</span></div>
-								<div class="fav flr"><em class="fav-i"></em> <span class="fav-n">142</span> </div>
-							</div>
-							<div class="clr"></div>
-							<a class="text-link">【百草味】-草莓干3袋草莓干3袋草莓干3袋</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<div class="img-size" style="background: url(img/product4.png) no-repeat center center;background-size: cover;">
-								<a class="img-link" href=""></a>
-							</div>
-							<div class="product-info">
-								<div class="price fll"><em class="price-u">¥</em><span class="price-n">38.86</span></div>
-								<div class="fav flr"><em class="fav-i"></em> <span class="fav-n">142</span> </div>
-							</div>
-							<div class="clr"></div>
-							<a class="text-link">【百草味】-草莓干3袋</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<div class="img-size" style="background: url(img/product5.png) no-repeat center center;background-size: cover;">
-								<a class="img-link" href=""></a>
-							</div>
-							<div class="product-info">
-								<div class="price fll"><em class="price-u">¥</em><span class="price-n">38.86</span></div>
-								<div class="fav flr"><em class="fav-i"></em> <span class="fav-n">142</span> </div>
-							</div>
-							<div class="clr"></div>
-							<a class="text-link">【百草味】-草莓干3袋</a>
+							<a  th:href="@{/web/product/detail(id=${p.id})}" class="text-link" th:text="${p.name}">【百草味】-草莓干3袋草莓干3袋草莓干3袋草莓干3袋草莓干3袋</a>
 						</div>
 					</li>
 				</ul>
 			</div>
 		</section>
 		<iframe MARGINWIDTH='0' MARGINHEIGHT='0' HSPACE='0' VSPACE='0' FRAMEBORDER='0' SCROLLING='no' th:src="@{bottom}" width="100%" height="270px"></iframe>
-		<script>
+		<!-- <script>
 			$(function() {
 				var mySwiper = new Swiper('.banner .swiper-container', {
 					autoplay: 5000, //可选选项，自动滑动
@@ -213,7 +31,7 @@
 					pagination: '.pagination'
 				});
 			})
-		</script>
+		</script> -->
 	</body>
 
 </html>

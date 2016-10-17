@@ -1,11 +1,39 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-	<body class="listbody sec-pages">
+	<head th:include="fragment/web_import :: header"></head>
+
+	<script type="text/javascript" th:inline="javascript">
+	/*<![CDATA[*/
+	    //菜单切换
+		function menuSwitch(obj){
+			$.each($(".active"),function(){
+				$(this).removeClass("active");
+			});
+			$(obj).addClass("active");
+			search();
+			return false;
+		}
 	
-		<link rel="stylesheet" th:href="@{/web/assets/css/style.css}" />
-		<link rel="stylesheet" th:href="@{/web/assets/css/swiper.min.css}" />
-		
+		//刷新中间的frame页面
+		function search(){
+			var url = [[@{/web/index/center}]] + "?_=" + Math.random();
+			var name = $("#name").val();
+			var category_id = $(".active").attr("id");
+
+			if($.trim(name)!=''){
+				url += "&name=" + name;
+			}
+			if(category_id!=-1){
+				url += "&category_id=" + category_id;
+			}
+			
+			window.parent.frames["centerFrame"].location = url;
+		}
+	/*]]>*/
+	</script>
+
+	<body class="listbody sec-pages">
 		<section>
 			<div class="headerBox">
 				<ul>
@@ -22,10 +50,10 @@
 					<img th:src="@{/web/assets/img/logo.png}" />
 				</a>
 				<div class="seachBody">
-					<div class="search-tab"> <span class="active">宝贝</span></div>
+					<!-- <div class="search-tab"> <span class="active">宝贝</span></div> -->
 					<div class="search-box"> 
-						<input type="text" class="search-txt" placeholder="金秋最火单品你还没get" data-placeholder="金秋最火单品你还没get" data-key="风衣" /> 
-						<span class="search-btn">搜索</span>
+						<input id="name" type="text" class="search-txt" placeholder="金秋最火单品你还没get" data-placeholder="金秋最火单品你还没get" /> 
+						<span onclick="search()" class="search-btn">搜索</span>
 						<div class="suggest-box" style="display: none;"></div>
 					</div>
 				</div>
@@ -36,16 +64,14 @@
 			<div class="menuBox">
 				<ul class="firUl">
 					<li>
-						<a target="centerFrame" th:href="@{/web/index/center}" class="active">首页</a>
+						<a id="-1" th:href="@{/web/index/center}" class="active" onclick="return menuSwitch(this)">首页</a>
 					</li>
 					<li th:each="pc:${pcs}">
-						<a target="centerFrame" th:href="@{/web/index/center(category_id=${pc.id})}" th:text="${pc.name}">服饰</a>
+						<a th:id="${pc.id}" th:href="@{/web/index/center(category_id=${pc.id})}" th:text="${pc.name}" onclick="return menuSwitch(this)">服饰</a>
 					</li>
 				</ul>
 			</div>
 		</section>
-		<script type="text/javascript" th:src="@{/web/assets/js/jquery-1.10.2.min.js}"></script>
-		<script type="text/javascript" th:src="@{/web/assets/js/swiper.min.js}"></script>
 	</body>
 
 </html>

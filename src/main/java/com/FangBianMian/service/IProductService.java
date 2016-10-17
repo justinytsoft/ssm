@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.FangBianMian.domain.Product;
+import com.FangBianMian.domain.ProductComment;
 
 
 public interface IProductService {
@@ -41,5 +42,19 @@ public interface IProductService {
 	 * @param id
 	 */
 	void deleteProductById(Integer id);
+
+	/**
+	 * 查询商品评论
+	 * @param param
+	 * @return
+	 */
+	List<ProductComment> queryProductComments(Map<String, Object> param);
+
+	/**
+	 * 查询商品评论总数
+	 * @param param
+	 * @return
+	 */
+	int queryProductCommentsTotal(Map<String, Object> param);
 
 }

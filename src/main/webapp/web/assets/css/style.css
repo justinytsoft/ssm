@@ -48,13 +48,13 @@ em {font-style: normal;}
  search
  * */
 .searchBox a ,.seachBody{float: left;}
-.searchBox a {margin-top: 10px;margin-bottom: 5px;margin-left: 85px;font-size: 0px}
+.searchBox a {margin-bottom: 5px;margin-left: 85px;font-size: 0px}
 .seachBody {margin-left: 55px;margin-top: 20px;}
 .search-tab span {display: inline-block; height: 20px;width: 55px;background: #f2f2f2;text-align: center;line-height: 20px;}
 .search-tab span.active {background: #cf1523;color: #FFFFFF;}
 .search-box .search-txt {float: left; width: 365px;height: 25px;border: 1px solid #cf1425;padding-left: 10px;}
 .search-box .search-txt:focus {outline-offset: 0;outline: 0;float: left;}
-.search-box .search-btn {color: #FFFFFF; display: inline-block;height: 27px;width: 60px;background: #cf1425;float: left;line-height:27px;text-align: center;}
+.search-box .search-btn {color: #FFFFFF; display: inline-block;height: 27px;width: 60px;background: #cf1425;float: left;line-height:27px;text-align: center;cursor: pointer;}
 /*
  menu
  * */
@@ -123,9 +123,9 @@ product-list 商品列表页
 .sec-pages .menu .firUl>li a.active {border-bottom: 1px solid #FFFFFF;}
 .sec-pages .menu .firUl>li a{color: #FFFFFF;}
 .listbody .container {width: 1041px;margin-top: 17px;}
-.product-list li {width: 20%;float: left;}
+.product-list li {width: 25%;float: left;}
 .product-list li>div {margin: 13px 8px;}
-.product-list .img-size {width: 192px;height: 280px;overflow: hidden;}
+.product-list .img-size {width: 230px;height: 280px;overflow: hidden;}
 .product-list .img-size a {padding-top: 280px;}
 .product-list .text-link {color: #666;display: block;height: 16px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .product-list .product-info {margin-top: 5px;}

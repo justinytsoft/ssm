@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 import com.FangBianMian.domain.Product;
+import com.FangBianMian.domain.ProductComment;
 import com.FangBianMian.domain.ProductImg;
 
 public interface IProductDao {
@@ -27,5 +28,9 @@ public interface IProductDao {
 	List<ProductImg> selectProductImgByPid(@Param("id") Integer id);
 
 	void deleteProductById(@Param("id") Integer id);
+
+	List<ProductComment> queryProductComments(@Param("param") Map<String, Object> param);
+
+	int queryProductCommentsTotal(@Param("param") Map<String, Object> param);
 
 }

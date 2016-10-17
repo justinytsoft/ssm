@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -68,7 +69,8 @@ public class WEB_IndexController {
 	 * @return
 	 */
 	@RequestMapping("/center")
-	public String center(Model model, @RequestParam(required=false) Integer category_id){
+	public String center(Model model, @RequestParam(required=false) Integer category_id,
+						@RequestParam(required=false) String name){
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("page", 0);
 		param.put("rows", 12);
@@ -76,6 +78,9 @@ public class WEB_IndexController {
 		if(category_id!=null){
 			param.put("category_id", category_id);
 			model.addAttribute("category_id", category_id);
+		}
+		if(!StringUtils.isBlank(name)){
+			param.put("name", name);
 		}
 		//查询所有商品
 		List<Product> ps = productService.queryProductsByParam(param);

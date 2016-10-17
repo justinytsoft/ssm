@@ -16,8 +16,10 @@ import java.net.URLEncoder;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,6 +31,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -36,11 +40,31 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
+import com.FangBianMian.constant.Common;
+import com.FangBianMian.domain.User;
+
 /**
  * @author Administrator
  * 
  */
 public class DataUtil {
+	
+	/**
+	 * 判断集合是否为 null
+	 * @param param
+	 * @return 如果不为 null 直接返回，否则创建一个新的 ArrayList 返回
+	 */
+	public static <T> List<T> isEmpty(List<T> list){
+		return CollectionUtils.isEmpty(list) ? new ArrayList<T>() : list;
+	}
+	
+	/**
+	 * 获取用户session
+	 * @return
+	 */
+	public static User getSession(HttpServletRequest request){
+		return (User) request.getSession().getAttribute(Common.USER_SESSION);
+	}
 	
 	/**
 	 * 生成订单号(业务编码+年的后2位+月+日+订单流水号)
@@ -148,15 +172,6 @@ public class DataUtil {
 		} catch (Exception e) {
 			return false;
 		}
-	}
-	
-	/**
-	 * 判断集合是否为 null
-	 * @param param
-	 * @return 如果不为 null 直接返回，否则创建一个新的 ArrayList 返回
-	 */
-	public static <T> List<T> isEmpty(List<T> list){
-		return CollectionUtils.isEmpty(list) ? new ArrayList<T>() : list;
 	}
 	
 	/**
