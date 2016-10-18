@@ -24,6 +24,19 @@
 		<collection property="imgs" column="id" javaType="List" ofType="com.FangBianMian.domain.ProductImg" select="selectProductImgByPid"></collection>
 	</resultMap>
 	
+	<!-- 保存商品评论 -->
+	<insert id="insertProductComment" parameterType="com.FangBianMian.domain.ProductComment">
+		INSERT INTO product_comment
+		<set>
+			pid = #{pid},
+			mid = #{mid},
+			comment = #{comment},
+			score = #{score},
+			name = #{name},
+			create_time = now
+		</set>
+	</insert>
+	
 	<!-- 查询商品评论 -->
 	<select id="queryProductComments" resultType="com.FangBianMian.domain.ProductComment">
 		SELECT * FROM product_comment WHERE pid = #{param.id} 
@@ -73,6 +86,11 @@
 		</set>
 		WHERE id = #{id}
 	</update>
+	
+	<!-- 通过分类ID获取商品分类 -->
+	<select id="queryProductCategoryById" resultType="com.FangBianMian.domain.ProductCategory">
+		SELECT * FROM product_category WHERE id = #{id}
+	</select>
 	
 	<!-- 保存商品 -->
 	<insert id="insertProduct" parameterType="com.FangBianMian.domain.Product">

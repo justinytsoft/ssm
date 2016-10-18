@@ -8,13 +8,13 @@ package com.FangBianMian.constant;
 public class OrderStatus {
 	/**
 	 * 0，待支付(下单)；
-	 */
 	public static Integer WAIT_PAY = 0;
+	 */
 	
 	/**
 	 * 1，待理货(已支付)；
-	 */
 	public static Integer WAIT_TALLY = 1;
+	 */
 	
 	/**
 	 * 2，待发货(已理货)；
@@ -41,6 +41,6 @@ public class OrderStatus {
 	
 	/**
 	 * 6，取消(过期)；
-	 */
 	public static Integer CANCEL = 6;
+	 */
 }

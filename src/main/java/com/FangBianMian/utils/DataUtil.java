@@ -63,19 +63,14 @@ public class DataUtil {
 	}
 	
 	/**
-	 * 生成订单号(业务编码+年的后2位+月+日+订单流水号)
-	 * 业务编号：1、普通商品订单
-	 * 
-	 * @param id 订单流水号
-	 * @param bno 业务编号
+	 * 生成订单号(年的后2位+月+日+9位随机数   共15个字符)
 	 * @return
 	 */
-	public static String createOrderNO(Integer id, String bno) {
+	public static String createOrderNO() {
 		StringBuffer orderNumber = new StringBuffer();
-		orderNumber.append(bno);
 		String dateStr = DateFormatter.dateToString(new Date(), "yyMMdd");
 		orderNumber.append(dateStr);
-		orderNumber.append(DataUtil.fillData(id.toString()));
+		orderNumber.append(generateRandomString(9));
 		return orderNumber.toString();
 	}
 	

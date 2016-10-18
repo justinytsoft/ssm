@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.FangBianMian.dao.IProductDao;
 import com.FangBianMian.domain.Product;
+import com.FangBianMian.domain.ProductCategory;
 import com.FangBianMian.domain.ProductComment;
 import com.FangBianMian.domain.ProductImg;
 import com.FangBianMian.service.IProductService;
@@ -94,5 +95,15 @@ public class ProductServiceImpl implements IProductService {
 	@Override
 	public int queryProductCommentsTotal(Map<String, Object> param) {
 		return productDao.queryProductCommentsTotal(param);
+	}
+	
+	@Override
+	public ProductCategory queryProductCategoryById(Integer category_id) {
+		return productDao.queryProductCategoryById(category_id);
+	}
+	
+	@Override
+	public void insertProductComment(ProductComment pc) {
+		productDao.insertProductComment(pc);
 	}
 }

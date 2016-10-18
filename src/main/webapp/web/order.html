@@ -1,41 +1,164 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-	<head>
-		<meta charset="UTF-8">
-		<title>所有订单</title>
-		<link rel="stylesheet" type="text/css" href="css/style.css" />
-	</head>
+	<head th:include="fragment/web_import :: header"></head>
+	
+	<!-- easyui -->  
+  	<script th:src="@{/assets/plugins/easyui/jquery.easyui.min.js}"></script>
+  	<script th:src="@{/assets/plugins/easyui/locale/easyui-lang-zh_CN.js}"></script>
+  	<script th:src="@{/assets/plugins/easyui/custom/common.js}"></script> 
+  	<link rel="stylesheet" th:href="@{/assets/plugins/easyui/themes/material/easyui.css}" />
+  	<link rel="stylesheet" th:href="@{/assets/plugins/easyui/themes/icon.css}" />
+  	<link rel="stylesheet" th:href="@{/assets/plugins/easyui/themes/color.css}" />
+  	<link rel="stylesheet" th:href="@{/assets/plugins/easyui/custom/common.css}" />
+	
+	<script type="text/javascript" th:inline="javascript">
+	/*<![CDATA[*/
+		$(function(){
+			
+			//初始化订单状态
+			var arr = [{id:2,name:"待发货"},{id:3,name:"待收货"},{id:4,name:"待评价"},{id:5,name:"已完成"}];
+			var status = $(".status");
+			$.each(status,function(){
+				var obj = $(this);
+				$.each(arr,function(i,v){
+					if(obj.text()==v.id){
+						obj.text(v.name)
+					}
+				});
+			});
+			
+		});
 
+		//更新订单状态
+		function update(){
+			var obj = $(this);
+			if(obj.text()=="确认收货"){
+				cConfirm("确定要确认收货吗",function(flag){
+					if(flag){
+						$.post([[@{/web/order/update}]],{_:Math.random(),oid:obj.attr("id"),status:4},function(data){
+							if(data.flag){
+								alert("收货成功");
+								var active = $(".active").attr("id");
+								if(active=="-1"){
+									window.location.href = [[@{/web/order/index}]];
+								}else{
+									window.location.href = [[@{/web/order/index}]] + "?status=" + active;
+								}
+							}else{
+								alert("收货失败");
+							}
+						});
+					}
+				});
+			}else if(obj.text()=="待评价"){
+				var active = $(".active").attr("id");
+
+			}else if(obj.text()=="删除"){
+				cConfirm("确定要删除吗",function(flag){
+					if(flag){
+						$.post([[@{/web/order/update}]],{_:Math.random(),oid:obj.attr("id"),status:6},function(data){
+							if(data.flag){
+								alert("删除成功");
+								var active = $(".active").attr("id");
+								if(active=="-1"){
+									window.location.href = [[@{/web/order/index}]];
+								}else{
+									window.location.href = [[@{/web/order/index}]] + "?status=" + active;
+								}
+							}else{
+								alert("删除失败");
+							}
+						});	
+					}
+				});
+			}
+		}
+	/*]]>*/
+	</script>
+	
 	<body class="carBody allBody">
 		<section class="topStep">
 			<div class="stepBox">
 				<div class="box-menu flr">
 					<ul>
 						<li>
-							<a href="all-order.html" class="active">所有订单</a>
+							<a id="-1" th:href="@{/web/order/index}" th:class="${status==null?'active':''}">所有订单</a>
 						</li>
 						<li class="spacer"></li>
 						<li>
-							<a href="un-pay.html">待付款</a>
+							<a th:id="${orderStatus.WAIT_SEND}" th:href="@{/web/order/index(status=${orderStatus.WAIT_SEND})}" th:class="${status==orderStatus.WAIT_SEND?'active':''}">待发货</a>
 						</li>
 						<li class="spacer"></li>
 						<li>
-							<a href="un-delivery.html">待发货</a>
+							<a th:id="${orderStatus.WAIT_RECEVIE}" th:href="@{/web/order/index(status=${orderStatus.WAIT_RECEVIE})}" th:class="${status==orderStatus.WAIT_RECEVIE?'active':''}">待收货</a>
 						</li>
 						<li class="spacer"></li>
 						<li>
-							<a href="un-takegoods">待收货</a>
+							<a th:id="${orderStatus.WAIT_COMMENT}" th:href="@{/web/order/index(status=${orderStatus.WAIT_COMMENT})}" th:class="${status==orderStatus.WAIT_COMMENT?'active':''}">待评价</a>
 						</li>
 						<li class="spacer"></li>
 						<li>
-							<a href="un-assess">待评价</a>
+							<a th:id="${orderStatus.DONE}" th:href="@{/web/order/index(status=${orderStatus.DONE})}" th:class="${status==orderStatus.DONE?'active':''}">已完成</a>
 						</li>
 					</ul>
 				</div>
 			</div>
 		</section>
 		<section class="orderList">
+			<div class="list-wrap">
+				<div class="wrap-tab">
+					<table>
+						<tr>
+							<th width="395px">宝贝</th>
+							<th width="95px">单价</th>
+							<th width="30px">数量</th>
+							<th width="130px">交易状态</th>
+							<th width="150px">交易操作</th>
+						</tr>
+					</table>
+				</div>
+				<div th:if="${os!=null}" class="wrap-table list-table" th:each="o:${os}">
+					<table class="table-order">
+						<tr>
+							<th colspan="7">
+								<span th:text="${#dates.format(o.create_time,'yyyy-MM-dd')}">2016-09-23</span>
+								&nbsp;&nbsp;
+								<span th:text="${'订单号：' + o.sn}">订单号：12456645465465</span>
+								&nbsp;&nbsp;
+								<span th:text="${'运费：' + (o.freight==null?'无':o.freight)}">34</span>
+							</th>
+						</tr>
+						<tr th:each="i:${o.items}">
+							<td width="395px">
+								<img class="pic-box" style="margin-left: 10px;" alt="展示图" th:src="${application.baseImageUrl + i.image}" />
+								<p class="pic-title" th:text="${i.name}">跳转技术交底单是第几滴水</p>
+							</td>
+							<td width="95px" th:text="${i.price}">￥69.00</td>
+							<td width="30px" th:text="${i.quantity}">1</td>
+							<td width="130px" class="status" th:text="${o.status}">卖家已发货</td>
+							
+							<td width="150px" th:if="${o.status==orderStatus.WAIT_SEND}">
+								<a th:id="${o.id}" href="#" class="easyui-linkbutton c1" data-options="disabled:true,width:60">确认收货</a>
+							</td>
+							<td width="150px" th:if="${o.status==orderStatus.WAIT_RECEVIE}">
+								<a th:id="${o.id}" href="#" class="easyui-linkbutton c1" data-options="width:60,onClick:update">确认收货</a>
+							</td>
+							<td width="150px" th:if="${o.status==orderStatus.WAIT_COMMENT}">
+								<a th:id="${o.id}" href="#" class="easyui-linkbutton c6" data-options="width:60,onClick:update">待评价</a>
+							</td>
+							<td width="150px" th:if="${o.status==orderStatus.DONE}">
+								<a th:id="${o.id}" href="#" class="easyui-linkbutton c5" data-options="width:60,onClick:update">删除</a>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div th:if="${#arrays.isEmpty(os)}" class="wrap-table list-table" style="text-align: center;">
+					未查询到订单列表
+				</div>
+			</div>
+		</section>
+		<!-- <section class="orderList">
 			<div class="list-wrap">
 				<div class="wrap-tab">
 					<table>
@@ -94,67 +217,8 @@
 					</table>
 				</div>
 			</div>
-		</section>
-		 <section class="footerBox footerBox-transparent">
-			<div class="footer footer-transparent">
-				<div class="footer-left fll">
-					<div class="footer-list1 list">
-						<ul>
-							<li>
-								<a href="list.html">网站首页</a>
-							</li>
-							<li>
-								<a href="#">诚聘英才</a>
-							</li>
-						</ul>
-					</div>
-					<div class="footer-list2 list">
-						<ul>
-							<li>
-								<a href="#">商家帮助</a>
-							</li>
-							<li>
-								<a href="#">隐私保护</a>
-							</li>
-						</ul>
-					</div>
-					<div class="footer-list3 list">
-						<ul>
-							<li>
-								<a href="#">网站公告</a>
-							</li>
-							<li>
-								<a href="#">新闻动态</a>
-							</li>
-						</ul>
-					</div>
-					<div class="footer-list4 list">
-						<ul>
-							<li>
-								<a href="#">关注我们</a>
-							</li>
-							<li>
-								<a href="#">政策法律声明</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-				<div class="footer-right flr">
-					<div class="pic1 erweima">
-						<!--<p>微信服务号</p>-->
-						<p><img src="img/icon-01.gif" /></p>
-					</div>
-					<div class="pic2 erweima">
-						<!--<p>客户端下载</p>-->
-						<p><img src="img/icon-02.gif" /></p>
-					</div>
-				</div>
-				<div class="clr"></div>
-				<div class="adress">
-					<p style="color: #000;margin-top: 15px;">© 和包村 2016-2017 All Rights Reserved. 未经许可 不得抄袭本站图片和内容</p>
-				</div>
-			</div>
-		</section>
+		</section> -->
+		<iframe MARGINWIDTH='0' MARGINHEIGHT='0' HSPACE='0' VSPACE='0' FRAMEBORDER='0' SCROLLING='no' th:src="@{/web/index/bottom}" width="100%" height="270px"></iframe>
 	</body>
 
 </html>

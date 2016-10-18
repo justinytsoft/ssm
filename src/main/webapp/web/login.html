@@ -65,7 +65,7 @@
 			<div class="login-center">
 			<div class="loginheader">
 				<div class="logo fll">
-					<a href="index.html">
+					<a th:href="@{/web/index/main}">
 						<img th:src="@{/web/assets/img/logo.png}" />
 					</a>
 				</div>
@@ -82,10 +82,10 @@
 				<div class="clr"></div>
 				<div class="login-body">
 					<form id="loginForm" method="post" th:action="@{/web/user/signin}">
-						<div style="margin-bottom: 10px">
+						<div style="margin-bottom: 20px">
 							<input id="phone" name="phone" th:value="${phone}" type="text" class="easyui-textbox" style="padding:10px" data-options="width:283,prompt:'请输入手机号',validType:['isPhone'],required:true,validateOnCreate:false"/>
 						</div>
-						<div style="margin-bottom: 10px">
+						<div style="margin-bottom: 20px">
 							<input name="code" type="text" th:value="${code}" class="easyui-textbox" style="padding:10px" data-options="width:180,prompt:'请输入验证码',required:true,validateOnCreate:false"/>
 							<a id="vfcBtn" href="#" class="easyui-linkbutton c1" data-options="onClick:sendVerifyCode" style="width:100px;height:28px;">获取验证码</a>
 						</div>

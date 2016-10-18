@@ -26,8 +26,41 @@
 		<collection property="logs" column="id" javaType="List" ofType="com.FangBianMian.domain.OrdersLog" select="selectOrdersLogByOid"></collection>
 	</resultMap>
 	
+	<!-- 删除订单 -->
+	<update id="deleteOrderById">
+		UPDATE orders SET invisible = 1 WHERE id = #{oid}
+	</update>
+	
+	<!-- 插入订单日志 -->
+	<insert id="insertOrderLog" parameterType="com.FangBianMian.domain.OrdersLog">
+		INSERT INTO orders_log 
+		<set>
+			oid = #{oid},
+			status = #{status},
+			content = #{content},
+			create_time = now()
+		</set>
+	</insert>
+	
+	<!-- 插入订单商品条目 -->
+	<insert id="insertOrderItem" parameterType="com.FangBianMian.domain.OrdersItem">
+		INSERT INTO orders_item
+		<set>
+			oid = #{oid},
+			pid = #{pid},
+			name = #{name},
+			quantity = #{quantity},
+			price = #{price},
+			image = #{image},
+			category = #{category}
+		</set>
+	</insert>
+	
 	<!-- 保存订单 -->
 	<insert id="insertOrder" parameterType="com.FangBianMian.domain.Orders">
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+    		select LAST_INSERT_ID()
+    	</selectKey>
 		INSERT INTO orders
 		<set>
 			<if test="mid!=null">mid = #{mid},</if>
@@ -58,7 +91,10 @@
 		UPDATE orders
 		<set>
 			<if test="param.status!=null">status = #{param.status},</if>
-			<if test="param.express!=null">express = #{param.express}</if>
+			<if test="param.express!=null">
+				express = #{param.express},
+				delivery_time = now()
+			</if>
 		</set>
 		WHERE id = #{param.oid}
 	</update>
@@ -67,8 +103,8 @@
 	<select id="queryOrdersByParam" resultMap="ordersMap">
 		SELECT * FROM orders
 		<where>
-			<if test="param.invisible!=null">invisible = #{invisible}</if>
-			<if test="param.mid!=null">AND mid = #{mid}</if>
+			<if test="param.invisible!=null">invisible = #{param.invisible}</if>
+			<if test="param.mid!=null">AND mid = #{param.mid}</if>
 			<if test="param.sn!=null">AND sn LIKE '%${param.sn}%'</if>
 			<if test="param.status!=null">AND status = #{param.status}</if>
 			<if test="param.sdate!=null">AND create_time >= #{param.sdate}</if>
@@ -83,8 +119,8 @@
 	<select id="queryOrdersByParamTotal" resultType="int">
 		SELECT COUNT(1) FROM orders
 		<where>
-			<if test="param.invisible!=null">invisible = #{invisible}</if>
-			<if test="param.mid!=null">AND mid = #{mid}</if>
+			<if test="param.invisible!=null">invisible = #{param.invisible}</if>
+			<if test="param.mid!=null">AND mid = #{param.mid}</if>
 			<if test="param.sn!=null">AND sn LIKE '%${param.sn}%'</if>
 			<if test="param.status!=null">AND status = #{param.status}</if>
 			<if test="param.sdate!=null">AND create_time >= #{param.sdate}</if>

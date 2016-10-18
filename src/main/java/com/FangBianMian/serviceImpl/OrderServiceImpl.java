@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.FangBianMian.dao.IOrderDao;
 import com.FangBianMian.domain.Orders;
+import com.FangBianMian.domain.OrdersItem;
+import com.FangBianMian.domain.OrdersLog;
 import com.FangBianMian.service.IOrderService;
 
 @Service
@@ -41,4 +43,18 @@ public class OrderServiceImpl implements IOrderService {
 		orderDao.insertOrder(o);
 	}
 	
+	@Override
+	public void insertOrderItem(OrdersItem oi) {
+		orderDao.insertOrderItem(oi);
+	}
+	
+	@Override
+	public void insertOrderLog(OrdersLog ol) {
+		orderDao.insertOrderLog(ol);
+	}
+	
+	@Override
+	public void deleteOrderById(Integer oid) {
+		orderDao.deleteOrderById(oid);
+	}
 }

@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.FangBianMian.domain.Orders;
+import com.FangBianMian.domain.OrdersItem;
+import com.FangBianMian.domain.OrdersLog;
 
 public interface IOrderService {
 
@@ -38,5 +40,23 @@ public interface IOrderService {
 	 * @param o
 	 */
 	void insertOrder(Orders o);
+
+	/**
+	 * 保存订单商品条目
+	 * @param oi
+	 */
+	void insertOrderItem(OrdersItem oi);
+
+	/**
+	 * 保存订单日志
+	 * @param ol
+	 */
+	void insertOrderLog(OrdersLog ol);
+
+	/**
+	 * 删除订单
+	 * @param oid
+	 */
+	void deleteOrderById(Integer oid);
 
 }

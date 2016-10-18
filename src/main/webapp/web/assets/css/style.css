@@ -154,8 +154,8 @@ product-list 商品列表页
 .header {height:80px;}
 .loginheader .logo {width: 150px;height: 50px;}
 .loginheader .logo img {width: 100%;margin-top: 10px;}
-.login-bg {height:425px;/* background: url(../img/login-bg.png) no-repeat center center; */background-size: cover;}
-.login-box {height: 265px;width: 360px;float: right;margin-top: -360px;background: #FFFFFF;}
+.login-bg {height:425px;background: url(../img/login-bg.png) no-repeat center center;background-size: cover;}
+.login-box {height: 265px;width: 325px;float: right;margin-top: -360px;background: #FFFFFF;}
 .box-top {border-bottom: 1px solid darkgray;height: 40px;}
 .box-top span {margin-top: 15px;}
 .box-top .register-link {margin-right: 18px;text-decoration: underline}
@@ -269,7 +269,7 @@ product-list 商品列表页
 .wrap-table table {width: 100%;}
 .wrap-table .table-order tr {border: 0px;border: 1px solid #ededed;}
 .wrap-table .table-order tr td {font-size: 13px;background: #f8f8f8;}
-.wrap-table .table-order tr td .sure-btn {color: #FFFFFF;padding: 6px 15px;border-radius: 3px;background: #66b6ff;}
+.wrap-table .table-order tr td .sure-btn {color: #FFFFFF;padding: 6px 15px;border-radius: 3px;background: #66b6ff;cursor: pointer;}
 .table-order tr th{text-align: left;padding-left: 10px;font-weight: normal;}
 .orderList .list-table .table-order th {font-size: 13px; padding-top: 20px;padding-bottom: 10px;color: #7a7a7a;}
 

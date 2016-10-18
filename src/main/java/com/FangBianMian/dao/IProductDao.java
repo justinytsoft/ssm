@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 import com.FangBianMian.domain.Product;
+import com.FangBianMian.domain.ProductCategory;
 import com.FangBianMian.domain.ProductComment;
 import com.FangBianMian.domain.ProductImg;
 
@@ -32,5 +33,11 @@ public interface IProductDao {
 	List<ProductComment> queryProductComments(@Param("param") Map<String, Object> param);
 
 	int queryProductCommentsTotal(@Param("param") Map<String, Object> param);
+
+	ProductCategory queryProductCategoryById(@Param("id") Integer category_id);
+
+	void insertProductComment(@Param("pid") Integer pid, @Param("comment") String comment);
+
+	void insertProductComment(ProductComment pc);
 
 }

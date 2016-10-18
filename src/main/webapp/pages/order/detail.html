@@ -185,7 +185,7 @@
 				       						<td th:text="${i.pid}">10025</td>
 				       						<td>
 				       							<div class="td-box">
-				       								<div class="pic-box" th:style="${'border:1px solid #D4D0D0;background:url(' + application.baseImageUrl + i.image + ') no-repeat center center'}"></div>
+				       								<img class="pic-box" alt="展示图" th:src="${application.baseImageUrl + i.image}"/>
 				       								<div class="word-box">
 				       									<p class="goods-name" th:text="${i.name}">小米5</p>
 				       									<p class="goods-spec" th:text="${i.category}">黄色 3g</p>

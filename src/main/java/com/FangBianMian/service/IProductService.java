@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.FangBianMian.domain.Product;
+import com.FangBianMian.domain.ProductCategory;
 import com.FangBianMian.domain.ProductComment;
 
 
@@ -57,5 +58,19 @@ public interface IProductService {
 	 * @return
 	 */
 	int queryProductCommentsTotal(Map<String, Object> param);
+
+	/**
+	 * 通过分类ID获取分类
+	 * @param category_id
+	 * @return
+	 */
+	ProductCategory queryProductCategoryById(Integer category_id);
+
+	/**
+	 * 保存商品评论
+	 * @param pid
+	 * @param comment
+	 */
+	void insertProductComment(ProductComment pc);
 
 }

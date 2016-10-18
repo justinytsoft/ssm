@@ -42,7 +42,7 @@ public class WEB_ProductController {
 		//获取商品
 		Product p = productService.queryProductById(id, true);
 		if(p==null){
-			
+			return "redirect: ../index/center";
 		}
 		model.addAttribute("p", p);
 		return "web/detail";
