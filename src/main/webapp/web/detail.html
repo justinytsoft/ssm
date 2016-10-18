@@ -35,13 +35,20 @@
 				$('.tb-booth a img').attr('src',src);
 			});
 			
+			//结算点击事件
 			$("#buy").click(function(){
-				var num = $.trim($("#number").textbox("getValue"));
-				if(num==""){
-					alert("请填写购买数量");
-				}else{
-					$("#buyForm").submit();
-				}
+				$.get([[@{/web/index/logged}]],{_:Math.random()},function(data){
+					if(!data.flag){ //已登录
+						var num = $.trim($("#number").textbox("getValue"));
+						if(num==""){
+							alert("请填写购买数量");
+						}else{
+							$("#buyForm").submit();
+						}
+					}else{ //未登录
+						alert("您还没有登录，请登录后在进行购买");
+					}
+				});
 			});
 		});
 	

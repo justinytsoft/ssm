@@ -16,10 +16,8 @@ import java.net.URLEncoder;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,9 +28,7 @@ import javax.imageio.stream.MemoryCacheImageInputStream;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -41,6 +37,7 @@ import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
 import com.FangBianMian.constant.Common;
+import com.FangBianMian.domain.Member;
 import com.FangBianMian.domain.User;
 
 /**
@@ -50,20 +47,19 @@ import com.FangBianMian.domain.User;
 public class DataUtil {
 	
 	/**
-	 * 判断集合是否为 null
-	 * @param param
-	 * @return 如果不为 null 直接返回，否则创建一个新的 ArrayList 返回
-	 */
-	public static <T> List<T> isEmpty(List<T> list){
-		return CollectionUtils.isEmpty(list) ? new ArrayList<T>() : list;
-	}
-	
-	/**
-	 * 获取用户session
+	 * 获取后台用户session
 	 * @return
 	 */
 	public static User getSession(HttpServletRequest request){
-		return (User) request.getSession().getAttribute(Common.USER_SESSION);
+		return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	}
+
+	/**
+	 * 获取普通用户session
+	 * @return
+	 */
+	public static Member getMemberSession(HttpServletRequest request){
+		return (Member) request.getSession().getAttribute(Common.MEMBER_SESSION);
 	}
 	
 	/**

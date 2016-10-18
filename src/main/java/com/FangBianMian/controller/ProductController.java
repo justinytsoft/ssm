@@ -18,6 +18,7 @@ import com.FangBianMian.domain.Product;
 import com.FangBianMian.domain.ProductImg;
 import com.FangBianMian.service.IProductService;
 import com.FangBianMian.utils.DataUtil;
+import com.FangBianMian.utils.DataValidation;
 import com.FangBianMian.utils.EasyuiDatagrid;
 
 @RequestMapping("/admin/product")
@@ -127,7 +128,7 @@ public class ProductController {
 			param.put("hot", hot);
 		}
 		
-		List<Product> ps = DataUtil.isEmpty(productService.queryProductsByParam(param));
+		List<Product> ps = DataValidation.isEmpty(productService.queryProductsByParam(param));
 		int psTotal = productService.queryProductsByParamTotal(param);
 		
 		ed.setRows(ps);
@@ -155,12 +156,12 @@ public class ProductController {
 		}
 		
 		if(id!=null){
-			Product p = productService.queryProductById(id);
+			Product p = productService.queryProductById(id,null);
 			if(p==null){
 				model.addAttribute("msg", "未查询到商品记录");
 			}else{
 				//凑够5张图给thymeleaf遍历，让新增和编辑页面的图片保持一致
-				List<ProductImg> pis = DataUtil.isEmpty(p.getImgs());
+				List<ProductImg> pis = DataValidation.isEmpty(p.getImgs());
 				int max = 5 - pis.size();
 				for(int i = 0; i < max; i++){
 					ProductImg pi = new ProductImg();

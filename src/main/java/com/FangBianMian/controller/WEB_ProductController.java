@@ -40,7 +40,10 @@ public class WEB_ProductController {
 	@RequestMapping("/detail")
 	public String detail(Model model, @RequestParam(required=false) Integer id){
 		//获取商品
-		Product p = productService.queryProductById(id);
+		Product p = productService.queryProductById(id, true);
+		if(p==null){
+			
+		}
 		model.addAttribute("p", p);
 		return "web/detail";
 	}

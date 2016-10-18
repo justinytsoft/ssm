@@ -21,6 +21,7 @@ import com.FangBianMian.domain.ProductCategory;
 import com.FangBianMian.domain.User;
 import com.FangBianMian.service.IProductService;
 import com.FangBianMian.utils.DataUtil;
+import com.FangBianMian.utils.DataValidation;
 
 /**
  * 商城首页
@@ -56,7 +57,7 @@ public class WEB_IndexController {
 		//获取登录用户
 		User user = (User)request.getSession().getAttribute(Common.USER_SESSION);
 		//获取商品分类列表
-		List<ProductCategory> pcs = DataUtil.isEmpty(baseDao.queryProductCategory());
+		List<ProductCategory> pcs = DataValidation.isEmpty(baseDao.queryProductCategory());
 		
 		model.addAttribute("pcs", pcs);
 		model.addAttribute("user", user);
@@ -132,7 +133,7 @@ public class WEB_IndexController {
 		List<Product> ps = productService.queryProductsByParam(param);
 		
 		//获取商品分类列表
-		List<ProductCategory> pcs = DataUtil.isEmpty(baseDao.queryProductCategory());
+		List<ProductCategory> pcs = DataValidation.isEmpty(baseDao.queryProductCategory());
 		
 		model.addAttribute("ps", ps);
 		model.addAttribute("hot_ps", hot_ps);
@@ -149,7 +150,7 @@ public class WEB_IndexController {
 	public Map<String,Object> logged(HttpServletRequest request){
 		Map<String, Object> map = new HashMap<String, Object>();
 		User user = (User) request.getSession().getAttribute(Common.USER_SESSION);
-		map.put("flag", user==null);
+		map.put("flag", user!=null);
 		return map;
 	}
 }

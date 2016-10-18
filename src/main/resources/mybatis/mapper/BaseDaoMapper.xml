@@ -22,6 +22,21 @@
 		SELECT * FROM position WHERE c_id = #{cid}
 	</select>
 
+	<!-- 查询省份名称 -->
+	<select id="queryProvinceNameById" resultType="string">
+		SELECT name FROM province WHERE id = #{id}
+	</select>
+
+	<!-- 查询城市名称 -->
+	<select id="queryCityNameById" resultType="string">
+		SELECT name FROM city WHERE id = #{id}
+	</select>
+
+	<!-- 查询区县名称 -->
+	<select id="queryPositionNameById" resultType="string">
+		SELECT name FROM position WHERE id = #{id}
+	</select>
+
 	<!-- 查询商品一级分类 -->
 	<select id="queryProductCategory" resultType="com.FangBianMian.domain.ProductCategory">
 		SELECT * FROM product_category

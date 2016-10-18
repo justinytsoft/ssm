@@ -13,9 +13,14 @@ public class Common {
 	public static final String SESSION_GENERATED_CAPTCHA_KEY = "CAPTCHA_TOKEN";
 	
 	/**
-	 * 用户session
+	 * 后台用户session
 	 */
 	public static final String USER_SESSION = "USER_SESSION";
+
+	/**
+	 * 普通用户session
+	 */
+	public static final String MEMBER_SESSION = "MEMBER_SESSION";
 	
 	/**
 	 * 用户名和密码校验失败

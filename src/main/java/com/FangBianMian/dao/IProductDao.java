@@ -11,7 +11,7 @@ import com.FangBianMian.domain.ProductImg;
 
 public interface IProductDao {
 
-	Product queryProductById(@Param("id") Integer id);
+	Product queryProductById(@Param("id") Integer id, @Param("status") Boolean status);
 
 	List<Product> queryProductsByParam(@Param("param") Map<String, Object> param);
 

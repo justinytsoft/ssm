@@ -27,8 +27,8 @@ public class ProductServiceImpl implements IProductService {
 	}
 	
 	@Override
-	public Product queryProductById(Integer id) {
-		return productDao.queryProductById(id);
+	public Product queryProductById(Integer id, Boolean status) {
+		return productDao.queryProductById(id, status);
 	}
 
 	@Override

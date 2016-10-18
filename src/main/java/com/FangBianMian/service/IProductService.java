@@ -11,10 +11,11 @@ public interface IProductService {
 
 	/**
 	 * 通过商品ID查询商品
-	 * @param id
+	 * @param id 商品ID
+	 * @param status 是否上架 true 上架, flase 下架, null 不添加该条件
 	 * @return
 	 */
-	Product queryProductById(Integer id);
+	Product queryProductById(Integer id, Boolean status);
 
 	/**
 	 * 查询所有商品

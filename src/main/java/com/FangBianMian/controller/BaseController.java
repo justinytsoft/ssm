@@ -42,7 +42,7 @@ public class BaseController {
 	@RequestMapping("/payment_type")
 	@ResponseBody
 	public List<PaymentType> payment_type(){
-		List<PaymentType> pts = DataUtil.isEmpty(baseDao.queryPaymentType());
+		List<PaymentType> pts = DataValidation.isEmpty(baseDao.queryPaymentType());
 		return pts;
 	}
 	
@@ -54,7 +54,7 @@ public class BaseController {
 	@RequestMapping("/province")
 	@ResponseBody
 	public List<Province> province(@RequestParam(required=false) String extend){
-		List<Province> ps = DataUtil.isEmpty(baseDao.queryProvince());
+		List<Province> ps = DataValidation.isEmpty(baseDao.queryProvince());
 		//给返回的数据添加一个查询的逻辑元素
 		if(!StringUtils.isBlank(extend)){
 			Province p = new Province();
@@ -73,7 +73,7 @@ public class BaseController {
 	@RequestMapping("/city")
 	@ResponseBody
 	public List<City> city(@RequestParam(required=false) Integer pid,@RequestParam(required=false) String extend){
-		List<City> cs = DataUtil.isEmpty(baseDao.queryCityByPid(pid));
+		List<City> cs = DataValidation.isEmpty(baseDao.queryCityByPid(pid));
 		//给返回的数据添加一个查询的逻辑元素
 		if(!StringUtils.isBlank(extend)){
 			City c = new City();
@@ -92,7 +92,7 @@ public class BaseController {
 	@RequestMapping("/position")
 	@ResponseBody
 	public List<Position> position(@RequestParam(required=false) Integer cid,@RequestParam(required=false) String extend){
-		List<Position> ps = DataUtil.isEmpty(baseDao.queryPositionByCid(cid));
+		List<Position> ps = DataValidation.isEmpty(baseDao.queryPositionByCid(cid));
 		//给返回的数据添加一个查询的逻辑元素
 		if(!StringUtils.isBlank(extend)){
 			Position p = new Position();
@@ -111,7 +111,7 @@ public class BaseController {
 	@RequestMapping("/product_category")
 	@ResponseBody
 	public List<ProductCategory> product_category(@RequestParam(required=false) String extend){
-		List<ProductCategory> pcs = DataUtil.isEmpty(baseDao.queryProductCategory());
+		List<ProductCategory> pcs = DataValidation.isEmpty(baseDao.queryProductCategory());
 		//给返回的数据添加一个查询的逻辑元素
 		if(!StringUtils.isBlank(extend)){
 			ProductCategory pc = new ProductCategory();
@@ -234,9 +234,9 @@ public class BaseController {
 		if(user == null || user.getId()==null){
 			return "redirect: sessionException?msg=SEESION.INVALID";
 		}
-		List<SysRoles> srs = DataUtil.isEmpty(user.getRoles());
+		List<SysRoles> srs = DataValidation.isEmpty(user.getRoles());
 		SysRoles sr = srs.size()==0?new SysRoles():srs.get(0);
-		model.addAttribute("menus", DataUtil.isEmpty(sr.getMenus()));
+		model.addAttribute("menus", DataValidation.isEmpty(sr.getMenus()));
 		return "pages/frame/left";
 	}
 

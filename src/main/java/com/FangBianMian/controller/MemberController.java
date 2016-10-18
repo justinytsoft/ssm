@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.FangBianMian.domain.Member;
 import com.FangBianMian.service.IMemberService;
-import com.FangBianMian.utils.DataUtil;
+import com.FangBianMian.utils.DataValidation;
 import com.FangBianMian.utils.EasyuiDatagrid;
 
 @RequestMapping("/admin/member")
@@ -52,7 +52,7 @@ public class MemberController {
 			param.put("name", name);
 		}
 		
-		List<Member> ms = DataUtil.isEmpty(memerService.queryMembersByParam(param));
+		List<Member> ms = DataValidation.isEmpty(memerService.queryMembersByParam(param));
 		int total = memerService.queryMembersByParamTotal(param);
 		
 		ed.setRows(ms);

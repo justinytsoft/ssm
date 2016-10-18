@@ -61,7 +61,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler, Initia
             targetUrl = "/index";
         }
 
-        request.getSession().setAttribute("sessionUser", ud);
+        request.getSession().setAttribute(Common.USER_SESSION, ud);
         request.getSession().setAttribute(Common.WEBSOCKET_USERNAME, ud.getUsername());
 
 		if (this.forwardToDestination) {

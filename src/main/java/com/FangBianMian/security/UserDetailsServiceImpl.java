@@ -38,9 +38,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
         Collection<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
         
         //设置登录用户的类型
-        if(userDetails.getType().intValue() == UserType.APP){
-        	auths.add(new SimpleGrantedAuthority(UserType.APP_NAME));
-		}else if(userDetails.getType().intValue() == UserType.ADMIN){
+        if(userDetails.getType().intValue() == UserType.ADMIN){
 			auths.add(new SimpleGrantedAuthority(UserType.ADMIN_NAME));
 		}else if(userDetails.getType().intValue() == UserType.ENTERPRISE){
 			auths.add(new SimpleGrantedAuthority(UserType.ENTERPRISE_NAME));

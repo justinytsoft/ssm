@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.FangBianMian.constant.OrderStatus;
 import com.FangBianMian.domain.Orders;
 import com.FangBianMian.service.IOrderService;
-import com.FangBianMian.utils.DataUtil;
+import com.FangBianMian.utils.DataValidation;
 import com.FangBianMian.utils.DateFormatter;
 import com.FangBianMian.utils.EasyuiDatagrid;
 
@@ -134,7 +134,7 @@ public class OrderController {
 				param.put("edate", DateFormatter.parseByStr(edate, DateFormatter.DATE_TIME));
 			}
 		
-			List<Orders> os = DataUtil.isEmpty(orderService.queryOrdersByParam(param));
+			List<Orders> os = DataValidation.isEmpty(orderService.queryOrdersByParam(param));
 			int total = orderService.queryOrdersByParamTotal(param);
 			
 			ed.setRows(os);

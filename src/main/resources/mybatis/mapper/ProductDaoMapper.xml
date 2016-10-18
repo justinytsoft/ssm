@@ -136,7 +136,11 @@
 			(SELECT COUNT(1) FROM product_comment pc WHERE p.id = pc.pid ) AS common_num,
 			(SELECT SUM(oi.quantity) FROM orders_item oi WHERE p.id = oi.pid) AS saled_num
 		FROM product p 
-		WHERE p.id = #{id} AND p.invisible = 0
+		<where>
+			p.id = #{id} 
+			AND p.invisible = 0
+			<if test="status!=null">AND p.status = #{status}</if>
+		</where>
 	</select>
 	
 	<!-- 通过商品ID查询商品图片 -->

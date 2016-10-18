@@ -5,11 +5,15 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.poi.hssf.record.formula.functions.T;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.CollectionUtils;
 
+import com.FangBianMian.constant.Common;
 import com.FangBianMian.domain.SecurityUser;
+import com.FangBianMian.domain.User;
 
 /**
  * 校验传入数据
@@ -18,7 +22,7 @@ import com.FangBianMian.domain.SecurityUser;
 public class DataValidation {
 	
 	/**
-	 * 检查是否登录
+	 * 检查后台账户是否登录
 	 * @return 是返回true， 否则返回false
 	 */
 	public static boolean isLogin(){

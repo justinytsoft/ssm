@@ -40,6 +40,12 @@
 			    onSelect: function(rec){
 			    	var url = [[@{/position}]] + "?cid=" + rec.id;
 		        	$("#position").combobox("reload",url);
+		        },
+		        onLoadSuccess: function(){
+		        	var data = $(this).combobox("getData");
+					if(data.length > 0){
+						$(this).combobox("select",data[0].id);
+					}
 		        }
 			});
 
@@ -47,14 +53,20 @@
 			$("#position").combobox({
 				valueField:'id',
 			    textField:'name',
-			    method:"get"
+			    method:"get",
+		        onLoadSuccess: function(){
+		        	var data = $(this).combobox("getData");
+					if(data.length > 0){
+						$(this).combobox("select",data[0].id);
+					}
+		        }
 			});  
 		 	
 		 	//保存订单
 		 	$("#save").click(function(){
 		 		var form = $("#orderForm");
 		 		if(form.form("validate")){
-		 			alert(1)
+		 			form.submit();
 		 		}
 		 	});
 		});
@@ -67,6 +79,8 @@
 				<div class="box-title">选择收货地址</div>
 				<div class="box-table">
 					<form id="orderForm" method="post" th:action="@{/web/order/save}">
+						<input type="hidden" name="pid" th:value="${p.id}"/>
+						<input type="hidden" name="number" th:value="${number}"/>
 						<table>
 							<tr>
 								<th>省/市/区(县)：<span class="red">*</span></th>
@@ -91,7 +105,7 @@
 							<tr>
 								<th>手机：<span class="red">*</span></th>
 								<td>
-									<input name="phone" type="text" class="easyui-textbox" data-options="required:true,validateOnCreate:false" style="width:100%;"/>
+									<input name="phone" type="text" class="easyui-textbox" data-options="required:true,validateOnCreate:false,validType:['isTP']" style="width:100%;"/>
 								</td>
 							</tr>
 							<tr>

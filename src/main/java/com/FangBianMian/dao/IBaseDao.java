@@ -42,4 +42,25 @@ public interface IBaseDao {
 	 * @return
 	 */
 	List<PaymentType> queryPaymentType();
+
+	/**
+	 * 查询省份的名称
+	 * @param province
+	 * @return
+	 */
+	String queryProvinceNameById(@Param("id") Integer province);
+
+	/**
+	 * 查询区县的名称
+	 * @param province
+	 * @return
+	 */
+	String queryPositionNameById(@Param("id") Integer position);
+
+	/**
+	 * 查询城市的名称
+	 * @param province
+	 * @return
+	 */
+	String queryCityNameById(@Param("id") Integer city);
 }
