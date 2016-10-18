@@ -6,16 +6,10 @@ public class Member {
 	private Integer id;
 	private String username;
 	private String password;
-	private String name;
-	private String phone;
-	private Date create_time;
+	private Integer status;
+	private Integer login_num;
 	private Float balance;
-	private String head;
-	private Integer province;
-	private Integer city;
-	private Integer street;
-	private String address;
-	private String full_address;
+	private String message;
 	
 	public Integer getId() {
 		return id;
@@ -35,23 +29,17 @@ public class Member {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getName() {
-		return name;
+	public Integer getStatus() {
+		return status;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
-	public String getPhone() {
-		return phone;
+	public Integer getLogin_num() {
+		return login_num;
 	}
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-	public Date getCreate_time() {
-		return create_time;
-	}
-	public void setCreate_time(Date create_time) {
-		this.create_time = create_time;
+	public void setLogin_num(Integer login_num) {
+		this.login_num = login_num;
 	}
 	public Float getBalance() {
 		return balance;
@@ -59,40 +47,18 @@ public class Member {
 	public void setBalance(Float balance) {
 		this.balance = balance;
 	}
-	public String getHead() {
-		return head;
+	public String getMessage() {
+		return message;
 	}
-	public void setHead(String head) {
-		this.head = head;
+	public void setMessage(String message) {
+		this.message = message;
 	}
-	public Integer getProvince() {
-		return province;
+	public Date getCreate_time() {
+		return create_time;
 	}
-	public void setProvince(Integer province) {
-		this.province = province;
+	public void setCreate_time(Date create_time) {
+		this.create_time = create_time;
 	}
-	public Integer getCity() {
-		return city;
-	}
-	public void setCity(Integer city) {
-		this.city = city;
-	}
-	public Integer getStreet() {
-		return street;
-	}
-	public void setStreet(Integer street) {
-		this.street = street;
-	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	public String getFull_address() {
-		return full_address;
-	}
-	public void setFull_address(String full_address) {
-		this.full_address = full_address;
-	}
+	private Date create_time;
+	
 }

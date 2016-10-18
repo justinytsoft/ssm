@@ -17,6 +17,16 @@ public class MemberServiceImpl implements IMemberService {
 	private IMemberDao memberDao;
 
 	@Override
+	public void insertMember(Member m) {
+		memberDao.insertMember(m);
+	}
+	
+	@Override
+	public void updateMember(Member m) {
+		memberDao.updateMember(m);
+	}
+	
+	@Override
 	public List<Member> queryMembersByParam(Map<String, Object> param) {
 		return memberDao.queryMembersByParam(param);
 	}
@@ -24,5 +34,10 @@ public class MemberServiceImpl implements IMemberService {
 	@Override
 	public int queryMembersByParamTotal(Map<String, Object> param) {
 		return memberDao.queryMembersByParamTotal(param);
+	}
+	
+	@Override
+	public Member queryMemberByUsername(String phone) {
+		return memberDao.queryMemberByUsername(phone);
 	}
 }

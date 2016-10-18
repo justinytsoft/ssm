@@ -13,4 +13,10 @@ public interface IMemberDao {
 
 	int queryMembersByParamTotal(@Param("param") Map<String, Object> param);
 
+	Member queryMemberByUsername(@Param("username") String phone);
+
+	void insertMember(Member m);
+
+	void updateMember(Member m);
+
 }

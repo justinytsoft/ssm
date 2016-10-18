@@ -14,6 +14,10 @@
   	<link rel="stylesheet" th:href="@{/assets/plugins/easyui/themes/color.css}" />
   	<link rel="stylesheet" th:href="@{/assets/plugins/easyui/custom/common.css}" />
   	
+  	<!-- WebSocket -->
+	<script type="text/javascript" th:src="@{/assets/plugins/websocket/sockjs-0.3.4.js}"></script>
+ 	<script type="text/javascript" th:src="@{/assets/plugins/websocket/stomp.js}"></script>
+  	
   	<script type="text/javascript" th:inline="javascript">
   	/*<![CDATA[*/
   	    //倒计时
@@ -50,12 +54,54 @@
   			}
   		}
   	
-  		//登录
+  		//项目根路径
+	    var rootPath = [[@{/}]];
+  		//websocket请求前缀
+		var wsPrefix = location.href.split(rootPath)[0] + rootPath;   
+	    //websocket对象
+		var websocket;
+	    
+	    //设置websocket前缀
+	 	if (wsPrefix.slice(0, 5) === 'https') {
+			wsPrefix = 'wss' + wsPrefix.slice(5);
+	    } else {
+	    	wsPrefix = 'ws' + wsPrefix.slice(4);
+	    }
+
+	    //创建WebSocket对象
+        if ('WebSocket' in window) {
+            websocket = new WebSocket(wsPrefix + "veg");
+        } else if ('MozWebSocket' in window) {
+            websocket = new MozWebSocket("ws://veg");
+        } else {
+            websocket = new SockJS(wsPrefix + "com/veg");
+        }
+        websocket.onopen = function (evnt) {
+			alert("等待后台处理");
+        };
+        websocket.onmessage = function (evnt) {
+            console.info(evnt);
+            console.info(evnt.data);
+            alert("处理成功");
+        };
+        
+      	//登录
   		function login(){
   			var form = $("#loginForm");
-  			//if(form.form('validate')){
-  				form.submit();
-  			//}
+  			if(form.form('validate')){
+  				form.form('submit', {
+  				    success: function(data){
+  				        var data = eval('(' + data + ')');  // change the JSON string to javascript object
+  				        if (data.flag){
+  				        	websocket.onopen = function (evnt) {
+  			  					alert("等待后台处理");
+  			  		        };
+  				        }else {
+  				        	alert("登录失败");
+  				        }
+  				    }
+  				});
+  			}
   		}
   	/*]]>*/
   	</script>
