@@ -37,9 +37,9 @@
 		<section>
 			<div class="headerBox">
 				<ul>
-					<li style="text-align: right;">
-						<a target="_parent" href="login.html">登录</a>
-						<a target="bottomFrame" href="order.html">个人中心</a>
+					<li style="text-align: right;margin: 0 20px 0 0">
+						<a target="_parent" th:href="@{/web/index/login}" th:if="${user==null}">登录</a>
+						<a target="_centerFrame" th:href="@{/web/order/index}" th:if="${user!=null}">个人中心</a>
 					</li>
 				</ul>
 			</div>

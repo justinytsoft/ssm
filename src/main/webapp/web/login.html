@@ -1,111 +1,103 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title>注册</title>
-		<link rel="stylesheet" type="text/css" href="css/style.css"/>
-	</head>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head th:include="fragment/web_import :: header"></head>
+
+	<title>登录</title>
+	
+	<!-- easyui -->  
+  	<script th:src="@{/assets/plugins/easyui/jquery.easyui.min.js}"></script>
+  	<script th:src="@{/assets/plugins/easyui/locale/easyui-lang-zh_CN.js}"></script>
+  	<script th:src="@{/assets/plugins/easyui/custom/common.js}"></script> 
+  	<link rel="stylesheet" th:href="@{/assets/plugins/easyui/themes/material/easyui.css}" />
+  	<link rel="stylesheet" th:href="@{/assets/plugins/easyui/themes/icon.css}" />
+  	<link rel="stylesheet" th:href="@{/assets/plugins/easyui/themes/color.css}" />
+  	<link rel="stylesheet" th:href="@{/assets/plugins/easyui/custom/common.css}" />
+  	
+  	<script type="text/javascript" th:inline="javascript">
+  	/*<![CDATA[*/
+  	    //倒计时
+  		var timer;
+  	    var countdown=60; 
+		function settime() {
+			var obj = $("#vfcBtn");
+			if (countdown <= 0) { 
+				obj.linkbutton("enable");  
+				$('#vfcBtn span:last').html("获取验证码");
+				countdown = 60; 
+				clearInterval(timer);
+			} else { 
+				countdown--; 
+				$('#vfcBtn span:last').html(("重新发送(" + countdown + ")"));
+			} 
+		} 
+  	           
+  	    //发送验证码
+  		function sendVerifyCode(){
+  			var obj = $(this);
+  			var phone = $("#phone");
+  			if(phone.textbox("isValid")){
+	  			$.post([[@{/web/index/sendVerifyCode}]],{_:Math.random(),phone:phone.textbox("getValue")},function(data){
+	  				if(data.flag){
+	  					cAlert(data.msg);
+	  				}
+	  			});
+	  			obj.linkbutton("disable");
+	  			$('#vfcBtn span:last').html(("重新发送(" + countdown + ")"));
+	  			timer = setInterval(function() { 
+					settime(); 
+				},1000)
+  			}
+  		}
+  	
+  		//登录
+  		function login(){
+  			var form = $("#loginForm");
+  			//if(form.form('validate')){
+  				form.submit();
+  			//}
+  		}
+  	/*]]>*/
+  	</script>
+  	
 	<body class="loginBody">
-	<section class="header">
-		<div class="login-center">
-		<div class="loginheader">
-			<div class="logo fll">
-				<a href="index.html">
-					<img src="img/logo.png" />
-				</a>
+		<section class="header">
+			<div class="login-center">
+			<div class="loginheader">
+				<div class="logo fll">
+					<a href="index.html">
+						<img th:src="@{/web/assets/img/logo.png}" />
+					</a>
+				</div>
 			</div>
-		</div>
-		</div>
-	</section>
-	<section class-="login">
-		<div class="login-bg"></div>
-		<div class="login-center">
-		<div class="login-box">
-			<div class="box-top">
-				<span class="top-title fll">登录</span><span class="register-link flr"><a href="list.html">返回首页</a></span>
-			</div>
-			<div class="clr"></div>
-			<div class="login-body">
-				<div class="input">
-					<input type="text" placeholder="手机号码"/>
-				</div>
-				<div class="yzmBox">
-					<div class="input yzm">
-						<input type="text" placeholder="请输入验证码"/>
-					</div>
-					<span class="yzm-btn">获取验证码</span>
-				</div>
-				<div class="body-btn">
-					<span class="btn-cover">登录</span>
-					<button id="login">登录</button>
-				</div>
-				<!--<div class="body-term">
-					<input class="fll" type="checkbox" />
-					同意<a></a>
-				</div>-->
-			</div>
-		</div>
-		</div>
-	</section>
-	<section class="footerBox footerBox-white" style="height: 130px;">
-			<div class="footer footer-white" style="height: 130px;">
-				<div class="footer-left fll">
-					<div class="footer-list1 list">
-						<ul>
-							<li>
-								<a href="list.html">网站首页</a>
-							</li>
-							<li>
-								<a href="#">诚聘英才</a>
-							</li>
-						</ul>
-					</div>
-					<div class="footer-list2 list">
-						<ul>
-							<li>
-								<a href="#">商家帮助</a>
-							</li>
-							<li>
-								<a href="#">隐私保护</a>
-							</li>
-						</ul>
-					</div>
-					<div class="footer-list3 list">
-						<ul>
-							<li>
-								<a href="#">网站公告</a>
-							</li>
-							<li>
-								<a href="#">新闻动态</a>
-							</li>
-						</ul>
-					</div>
-					<div class="footer-list4 list">
-						<ul>
-							<li>
-								<a href="#">关注我们</a>
-							</li>
-							<li>
-								<a href="#">政策法律声明</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-				<div class="footer-right flr">
-					<div class="pic1 erweima">
-						<!--<p>微信服务号</p>-->
-						<p><img src="img/icon-01.gif" /></p>
-					</div>
-					<div class="pic2 erweima">
-						<!--<p>客户端下载</p>-->
-						<p><img src="img/icon-02.gif" /></p>
-					</div>
-				</div>
-				<div class="clr"></div>
-				<div class="adress">
-					<p style="color: #000;margin-top: 15px;">© 和包村 2016-2017 All Rights Reserved. 未经许可 不得抄袭本站图片和内容</p>
-				</div>
 			</div>
 		</section>
+		<section class="login">
+			<div class="login-bg"></div>
+			<div class="login-center">
+			<div class="login-box">
+				<div class="box-top">
+					<span class="top-title fll">登录</span><span class="register-link flr"><a th:href="@{/web/index/main}">返回首页</a></span>
+				</div>
+				<div class="clr"></div>
+				<div class="login-body">
+					<form id="loginForm" method="post" th:action="@{/web/user/signin}">
+						<div style="margin-bottom: 10px">
+							<input id="phone" name="phone" th:value="${phone}" type="text" class="easyui-textbox" style="padding:10px" data-options="width:283,prompt:'请输入手机号',validType:['isPhone'],required:true,validateOnCreate:false"/>
+						</div>
+						<div style="margin-bottom: 10px">
+							<input name="code" type="text" th:value="${code}" class="easyui-textbox" style="padding:10px" data-options="width:180,prompt:'请输入验证码',required:true,validateOnCreate:false"/>
+							<a id="vfcBtn" href="#" class="easyui-linkbutton c1" data-options="onClick:sendVerifyCode" style="width:100px;height:28px;">获取验证码</a>
+						</div>
+						<div style="margin-bottom: 10px">
+							<a href="#" class="easyui-linkbutton c1" data-options="onClick:login" style="width:283px;height:40px">登 录</a>
+							<span style="color: red;" th:text="${msg}">sssss</span>
+						</div>
+					</form>
+				</div>
+			</div>
+			</div>
+		</section>
+		<iframe MARGINWIDTH='0' MARGINHEIGHT='0' HSPACE='0' VSPACE='0' FRAMEBORDER='0' SCROLLING='no' th:src="@{/web/index/bottom}" width="100%" height="270px"></iframe>
 	</body>
 </html>

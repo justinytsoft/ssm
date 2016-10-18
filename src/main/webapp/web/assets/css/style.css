@@ -154,7 +154,7 @@ product-list 商品列表页
 .header {height:80px;}
 .loginheader .logo {width: 150px;height: 50px;}
 .loginheader .logo img {width: 100%;margin-top: 10px;}
-.login-bg {height:425px;background: url(../img/login-bg.png) no-repeat center center;background-size: cover;}
+.login-bg {height:425px;/* background: url(../img/login-bg.png) no-repeat center center; */background-size: cover;}
 .login-box {height: 265px;width: 360px;float: right;margin-top: -360px;background: #FFFFFF;}
 .box-top {border-bottom: 1px solid darkgray;height: 40px;}
 .box-top span {margin-top: 15px;}

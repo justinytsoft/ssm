@@ -20,7 +20,6 @@ import com.FangBianMian.domain.Product;
 import com.FangBianMian.domain.ProductCategory;
 import com.FangBianMian.domain.User;
 import com.FangBianMian.service.IProductService;
-import com.FangBianMian.utils.DataUtil;
 import com.FangBianMian.utils.DataValidation;
 
 /**
@@ -36,6 +35,34 @@ public class WEB_IndexController {
 	private IProductService productService;
 	@Autowired
 	private IBaseDao baseDao;
+	
+	/**
+	 * 发送验证码
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/sendVerifyCode")
+	@ResponseBody
+	public Map<String,Object> sendVerifyCode(@RequestParam(required=false) String phone){
+		Map<String,Object> map = new HashMap<String, Object>();
+		if(!DataValidation.isMobile(phone)){ //验证失败
+			map.put("flag", true);
+			map.put("msg", "发送失败");
+		}else{ //发送短信
+			
+		}
+		return map;
+	}
+	
+	/**
+	 * 登录页面
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/login")
+	public String login(){
+		return "web/login";
+	}
 	
 	/**
 	 * 首页
@@ -55,7 +82,7 @@ public class WEB_IndexController {
 	@RequestMapping("/top")
 	public String top(Model model, HttpServletRequest request){
 		//获取登录用户
-		User user = (User)request.getSession().getAttribute(Common.USER_SESSION);
+		User user = (User)request.getSession().getAttribute(Common.MEMBER_SESSION);
 		//获取商品分类列表
 		List<ProductCategory> pcs = DataValidation.isEmpty(baseDao.queryProductCategory());
 		
