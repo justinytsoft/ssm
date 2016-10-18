@@ -17,4 +17,6 @@ public interface IOrderDao {
 
 	Orders queryOrdersByOid(@Param("id") Integer id);
 
+	void insertOrder(Orders o);
+
 }

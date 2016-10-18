@@ -35,5 +35,10 @@ public class OrderServiceImpl implements IOrderService {
 	public Orders queryOrdersByOid(Integer id) {
 		return orderDao.queryOrdersByOid(id);
 	}
+
+	@Override
+	public void insertOrder(Orders o) {
+		orderDao.insertOrder(o);
+	}
 	
 }

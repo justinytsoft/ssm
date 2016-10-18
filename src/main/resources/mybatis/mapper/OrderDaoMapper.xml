@@ -26,6 +26,28 @@
 		<collection property="logs" column="id" javaType="List" ofType="com.FangBianMian.domain.OrdersLog" select="selectOrdersLogByOid"></collection>
 	</resultMap>
 	
+	<!-- 保存订单 -->
+	<insert id="insertOrder" parameterType="com.FangBianMian.domain.Orders">
+		INSERT INTO orders
+		<set>
+			<if test="mid!=null">mid = #{mid},</if>
+			<if test="sn!=null">sn = #{sn},</if>
+			<if test="amount!=null">amount = #{amount},</if>
+			<if test="amount_paid!=null">amount_paid = #{amount_paid},</if>
+			<if test="discount!=null">discount = #{discount},</if>
+			<if test="receiver!=null">receiver = #{receiver},</if>
+			<if test="phone!=null">phone = #{phone},</if>
+			<if test="address!=null">address = #{address},</if>
+			<if test="deliver_type!=null">deliver_type = #{deliver_type},</if>
+			<if test="status!=null">status = #{status},</if>
+			<if test="freight!=null">freight = #{freight},</if>
+			<if test="message!=null">message = #{message},</if>
+			<if test="postcode!=null">postcode = #{postcode},</if>
+			<if test="payment_type!=null">payment_type = #{payment_type},</if>
+			create_time = now()
+		</set>
+	</insert>
+	
 	<!-- 根据订单ID查询订单 -->
 	<select id="queryOrdersByOid" resultMap="ordersMap">
 		SELECT * FROM orders WHERE id = #{id}
