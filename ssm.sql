@@ -126,11 +126,11 @@ CREATE TABLE `member` (
   `message` text COMMENT '留言',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `member` */
 
-insert  into `member`(`id`,`username`,`password`,`status`,`balance`,`login_num`,`message`,`create_time`) values (1,'18380426135','111111',0,'0.00',1,'2016-10-18 17:57:40','2016-10-18 17:57:40');
+insert  into `member`(`id`,`username`,`password`,`status`,`balance`,`login_num`,`message`,`create_time`) values (1,'18380426135','123',1,'70.00',91,'2016-10-18 17:57:40,2016-10-19 10:24:33,2016-10-19 10:27:06,2016-10-19 10:49:05,2016-10-19 10:49:38,2016-10-19 10:58:14,2016-10-19 11:07:38,2016-10-19 11:07:50,2016-10-19 11:08:46,2016-10-19 11:08:51,2016-10-19 11:12:17,2016-10-19 11:14:06,2016-10-19 11:14:11,2016-10-19 11:16:46,2016-10-19 11:33:53,2016-10-19 11:34:50,2016-10-19 11:46:14,2016-10-19 11:46:24,2016-10-19 11:47:11,2016-10-19 11:47:33,2016-10-19 12:24:24,2016-10-19 12:26:27,2016-10-19 12:27:19,2016-10-19 12:29:13,2016-10-19 12:31:44,2016-10-19 12:36:58,2016-10-19 12:38:16,2016-10-19 13:35:31,2016-10-19 13:54:03,2016-10-19 14:06:43,2016-10-19 14:07:14,2016-10-19 14:09:49,2016-10-19 14:10:07,2016-10-19 14:10:20,2016-10-19 14:11:47,2016-10-19 14:15:47,2016-10-19 14:17:19,2016-10-19 14:17:24,2016-10-19 14:18:38,2016-10-19 14:19:39,2016-10-19 14:19:49,2016-10-19 14:31:22,2016-10-19 14:32:25,2016-10-19 14:40:56,2016-10-19 14:41:09,2016-10-19 14:42:46,2016-10-19 14:42:49,2016-10-19 14:42:49,2016-10-19 14:51:16,2016-10-19 15:01:02,2016-10-19 15:01:21,2016-10-19 15:37:33,2016-10-19 15:43:17,2016-10-19 15:45:31,2016-10-19 15:46:16,2016-10-19 15:47:46,2016-10-19 15:48:20,2016-10-19 15:50:30,2016-10-19 15:54:43,2016-10-19 15:54:59,2016-10-19 15:57:27,2016-10-19 15:58:15,2016-10-19 16:00:21,2016-10-19 16:06:11,2016-10-19 16:09:41,2016-10-19 16:11:08,2016-10-19 16:12:36,2016-10-19 16:13:50,2016-10-19 16:14:11,2016-10-19 16:15:26,2016-10-19 16:16:42,2016-10-19 16:18:44,2016-10-19 16:20:29,2016-10-19 16:21:28,2016-10-19 16:24:06,2016-10-19 16:39:17,2016-10-19 16:45:12,2016-10-19 16:46:47,2016-10-19 16:49:13,2016-10-19 17:02:00,2016-10-19 17:26:27,2016-10-19 17:40:35,2016-10-19 17:40:45,2016-10-19 17:42:27,2016-10-19 17:45:31,2016-10-19 17:46:28,2016-10-19 17:47:27,2016-10-19 18:28:58,2016-10-19 18:29:27,2016-10-19 18:31:01,2016-10-19 18:32:55','2016-10-18 17:57:40'),(2,'18380426133','123',2,'33.00',11,'2016-10-19 12:36:15,2016-10-19 14:14:40,2016-10-19 14:48:56,2016-10-19 14:48:58,2016-10-19 15:44:54,2016-10-19 15:48:56,2016-10-19 16:18:11,2016-10-19 16:18:18,2016-10-19 16:19:01,2016-10-19 17:43:26,2016-10-19 17:44:20','2016-10-19 12:36:15');
 
 /*Table structure for table `member_address` */
 
@@ -227,11 +227,11 @@ CREATE TABLE `orders` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `I_O_sn_unique` (`sn`),
   KEY `FK_Reference_2` (`mid`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 /*Data for the table `orders` */
 
-insert  into `orders`(`id`,`sn`,`express`,`mid`,`amount_paid`,`amount`,`discount`,`receiver`,`phone`,`address`,`deliver_type`,`status`,`freight`,`invisible`,`message`,`postcode`,`payment_type`,`delivery_time`,`create_time`) values (6,'161018356952923','123456',1,'54.00','54.00',NULL,'杨涛','18380426135','河北省石家庄市长安区天府软件园C区',0,5,'10.00',1,'test',NULL,'余额支付','2016-10-18 15:42:41','2016-10-18 14:13:02');
+insert  into `orders`(`id`,`sn`,`express`,`mid`,`amount_paid`,`amount`,`discount`,`receiver`,`phone`,`address`,`deliver_type`,`status`,`freight`,`invisible`,`message`,`postcode`,`payment_type`,`delivery_time`,`create_time`) values (6,'161018356952923','123456',1,'54.00','54.00',NULL,'杨涛','18380426135','河北省石家庄市长安区天府软件园C区',0,5,'10.00',1,'test',NULL,'余额支付','2016-10-18 15:42:41','2016-10-18 14:13:02'),(7,'161019083274162','fwefwefw',1,'13665.00','13665.00',NULL,'份饭','18380426135','河北省石家庄市长安区123124',0,5,'12.00',0,'曲儿曲儿',NULL,'余额支付','2016-10-19 17:28:00','2016-10-19 16:24:57'),(8,'161019996417212','ewfwefwerwq',1,'54.00','54.00',NULL,'驱蚊器','18380426135','河北省石家庄市长安区千万人千万人企鹅',0,3,'10.00',0,'134314123',NULL,'余额支付','2016-10-19 17:03:38','2016-10-19 17:02:33');
 
 /*Table structure for table `orders_item` */
 
@@ -249,11 +249,11 @@ CREATE TABLE `orders_item` (
   PRIMARY KEY (`id`),
   KEY `FK_Reference_13` (`oid`),
   KEY `FK_Reference_14` (`pid`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `orders_item` */
 
-insert  into `orders_item`(`id`,`oid`,`pid`,`name`,`quantity`,`price`,`image`,`category`) values (4,6,2,'黑人牙膏q',2,'22.00','Ms\\Qz\\1476417883813.jpg','话费Q币');
+insert  into `orders_item`(`id`,`oid`,`pid`,`name`,`quantity`,`price`,`image`,`category`) values (4,6,2,'黑人牙膏q',2,'22.00','Ms\\Qz\\1476417883813.jpg','话费Q币'),(5,7,4,'遥控赛车',123,'111.00','X1\\Yq\\1476417929895.jpg','电子产品'),(6,8,2,'黑人牙膏q',2,'22.00','Ms\\Qz\\1476417883813.jpg','话费Q币');
 
 /*Table structure for table `orders_log` */
 
@@ -267,11 +267,11 @@ CREATE TABLE `orders_log` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`),
   KEY `FK_Reference_15` (`oid`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 /*Data for the table `orders_log` */
 
-insert  into `orders_log`(`id`,`oid`,`status`,`content`,`create_time`) values (3,6,2,'用户完成下单','2016-10-18 14:13:02');
+insert  into `orders_log`(`id`,`oid`,`status`,`content`,`create_time`) values (3,6,2,'用户完成下单','2016-10-18 14:13:02'),(4,7,2,'用户完成下单','2016-10-19 16:24:57'),(5,8,2,'用户完成下单','2016-10-19 17:02:33'),(6,7,3,'订单已发货','2016-10-19 17:28:00'),(7,7,4,'用户已确认收货','2016-10-19 17:28:16'),(8,7,5,'用户对商品进行了评价； <br/> 评分：null <br/> 评论：null','2016-10-19 18:24:19'),(9,7,5,'用户对商品进行了评价； <br/> 评分：null <br/> 评论：null','2016-10-19 18:26:38'),(10,7,5,'用户对商品进行了评价；  评分：5 评论：qwe','2016-10-19 18:31:20');
 
 /*Table structure for table `payment_type` */
 
@@ -340,7 +340,7 @@ CREATE TABLE `product` (
 
 /*Data for the table `product` */
 
-insert  into `product`(`id`,`name`,`category_id`,`price`,`discount_price`,`freight_price`,`payment_type`,`quantity`,`detail`,`default_img`,`status`,`hot`,`invisible`,`create_time`) values (2,'黑人牙膏q',2,'22.00','22.00','10.00',1,22,'<p>黑人牙膏，谁用谁知道<img src=\"http://localhost:8099/ssm/temp/1476339719819_S.png\" title=\"\" alt=\"\"/>123</p>','Ms\\Qz\\1476417883813.jpg',1,1,0,'2016-10-13 17:35:09'),(3,'潜艇',2,'1.00','1.00','0.00',1,1,'<p>123123</p>','A3\\Sp\\1476411071876.png',1,1,1,'2016-10-14 10:11:14'),(4,'遥控赛车',3,'111.00',NULL,'12.00',1,123,'<p>访问时访问非威风威风违反&nbsp;</p>','X1\\Yq\\1476417929895.jpg',1,1,0,'2016-10-14 12:05:36'),(5,'自行车',4,'1234.00',NULL,'1.00',1,12,'<p>的前雾灯去</p>','Vq\\wF\\1476426202439.jpg',1,1,0,'2016-10-14 14:23:25'),(6,'大炮',3,'34352.00','3.00','32.00',1,3,'<p>234</p>','FG\\Da\\1476426519774.jpeg',1,1,0,'2016-10-14 14:28:42'),(7,'手枪',5,'3432.00',NULL,'0.00',1,2345,'<p>3223二分2<img src=\"http://img.baidu.com/hi/jx2/j_0060.gif\"/></p>','pI\\RC\\1476426633095.jpeg',1,1,0,'2016-10-14 14:30:38'),(8,'qwe',3,'11.00',NULL,'11.00',1,11,'<p>121we1</p>','3f\\MC\\1476757748004.jpg',1,0,0,'2016-10-18 10:29:10');
+insert  into `product`(`id`,`name`,`category_id`,`price`,`discount_price`,`freight_price`,`payment_type`,`quantity`,`detail`,`default_img`,`status`,`hot`,`invisible`,`create_time`) values (2,'黑人牙膏q',2,'22.00','22.00','10.00',1,20,'<p>黑人牙膏，谁用谁知道<img src=\"http://localhost:8099/ssm/temp/1476339719819_S.png\" title=\"\" alt=\"\"/>123</p>','Ms\\Qz\\1476417883813.jpg',1,1,0,'2016-10-13 17:35:09'),(3,'潜艇',2,'1.00','1.00','0.00',1,1,'<p>123123</p>','A3\\Sp\\1476411071876.png',1,1,1,'2016-10-14 10:11:14'),(4,'遥控赛车',3,'111.00',NULL,'12.00',1,123,'<p>访问时访问非威风威风违反&nbsp;</p>','X1\\Yq\\1476417929895.jpg',1,1,0,'2016-10-14 12:05:36'),(5,'自行车',4,'1234.00',NULL,'1.00',1,12,'<p>的前雾灯去</p>','Vq\\wF\\1476426202439.jpg',1,1,0,'2016-10-14 14:23:25'),(6,'大炮',3,'34352.00','3.00','32.00',1,3,'<p>234</p>','FG\\Da\\1476426519774.jpeg',1,1,0,'2016-10-14 14:28:42'),(7,'手枪',5,'3432.00',NULL,'0.00',1,2345,'<p>3223二分2<img src=\"http://img.baidu.com/hi/jx2/j_0060.gif\"/></p>','pI\\RC\\1476426633095.jpeg',1,1,0,'2016-10-14 14:30:38'),(8,'qwe',3,'11.00',NULL,'11.00',1,11,'<p>121we1</p>','3f\\MC\\1476757748004.jpg',1,0,0,'2016-10-18 10:29:10');
 
 /*Table structure for table `product_category` */
 
@@ -370,11 +370,11 @@ CREATE TABLE `product_comment` (
   `name` varchar(255) DEFAULT NULL COMMENT '用户名称',
   `create_time` datetime DEFAULT NULL COMMENT '评论时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `product_comment` */
 
-insert  into `product_comment`(`id`,`pid`,`mid`,`comment`,`score`,`name`,`create_time`) values (1,2,3,'111111111111111111',1,'1','2016-01-01 00:00:00'),(2,2,4,'222222222222222222222',2,'2','2016-01-02 00:00:00'),(3,2,5,'33333333333333333',3,'3','2016-01-03 00:00:00'),(4,2,6,'444444444444444',4,'4','2016-01-04 00:00:00');
+insert  into `product_comment`(`id`,`pid`,`mid`,`comment`,`score`,`name`,`create_time`) values (1,2,3,'111111111111111111',1,'1','2016-01-01 00:00:00'),(2,2,4,'222222222222222222222',2,'2','2016-01-02 00:00:00'),(3,2,5,'33333333333333333',3,'3','2016-01-03 00:00:00'),(4,2,6,'444444444444444',4,'4','2016-01-04 00:00:00'),(5,4,1,'qwe',5,'18380426135','2016-10-19 18:31:20');
 
 /*Table structure for table `product_img` */
 
