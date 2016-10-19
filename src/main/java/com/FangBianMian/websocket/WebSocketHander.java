@@ -24,7 +24,7 @@ public class WebSocketHander implements WebSocketHandler {
         users.add(session);
         String userName = (String) session.getAttributes().get(Common.WEBSOCKET_USERNAME);
         if(userName!= null){
-        	sendMessageToUsers(new TextMessage(userName + " 加入了讨论"));
+        	sendMessageToUser("admin", new TextMessage(userName));
         }
     }
     

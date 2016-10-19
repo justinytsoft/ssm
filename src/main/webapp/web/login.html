@@ -20,6 +20,20 @@
   	
   	<script type="text/javascript" th:inline="javascript">
   	/*<![CDATA[*/
+  	    //项目根路径
+	    var rootPath = [[@{/}]];
+		//websocket请求前缀
+		var wsPrefix = location.href.split(rootPath)[0] + rootPath;   
+	    //websocket对象
+		var websocket;
+	    
+	    //设置websocket前缀
+	 	if (wsPrefix.slice(0, 5) === 'https') {
+			wsPrefix = 'wss' + wsPrefix.slice(5);
+	    } else {
+	    	wsPrefix = 'ws' + wsPrefix.slice(4);
+	    }
+	
   	    //倒计时
   		var timer;
   	    var countdown=60; 
@@ -41,11 +55,13 @@
   			var obj = $(this);
   			var phone = $("#phone");
   			if(phone.textbox("isValid")){
-	  			$.post([[@{/web/index/sendVerifyCode}]],{_:Math.random(),phone:phone.textbox("getValue")},function(data){
+  				$.post([[@{/web/index/sendVerifyCode}]],{_:Math.random(),phone:phone.textbox("getValue")},function(data){
 	  				if(data.flag){
 	  					cAlert(data.msg);
 	  				}
 	  			});
+	  			
+	  			//倒计时
 	  			obj.linkbutton("disable");
 	  			$('#vfcBtn span:last').html(("重新发送(" + countdown + ")"));
 	  			timer = setInterval(function() { 
@@ -53,56 +69,36 @@
 				},1000)
   			}
   		}
-  	
-  		//项目根路径
-	    var rootPath = [[@{/}]];
-  		//websocket请求前缀
-		var wsPrefix = location.href.split(rootPath)[0] + rootPath;   
-	    //websocket对象
-		var websocket;
-	    
-	    //设置websocket前缀
-	 	if (wsPrefix.slice(0, 5) === 'https') {
-			wsPrefix = 'wss' + wsPrefix.slice(5);
-	    } else {
-	    	wsPrefix = 'ws' + wsPrefix.slice(4);
-	    }
-
-	    //创建WebSocket对象
-        if ('WebSocket' in window) {
-            websocket = new WebSocket(wsPrefix + "veg");
-        } else if ('MozWebSocket' in window) {
-            websocket = new MozWebSocket("ws://veg");
-        } else {
-            websocket = new SockJS(wsPrefix + "com/veg");
-        }
-        websocket.onopen = function (evnt) {
-			alert("等待后台处理");
-        };
-        websocket.onmessage = function (evnt) {
-            console.info(evnt);
-            console.info(evnt.data);
-            alert("处理成功");
-        };
-        
-      	//登录
-  		function login(){
-  			var form = $("#loginForm");
-  			if(form.form('validate')){
-  				form.form('submit', {
-  				    success: function(data){
-  				        var data = eval('(' + data + ')');  // change the JSON string to javascript object
-  				        if (data.flag){
-  				        	websocket.onopen = function (evnt) {
-  			  					alert("等待后台处理");
-  			  		        };
-  				        }else {
-  				        	alert("登录失败");
-  				        }
-  				    }
-  				});
-  			}
-  		}
+  	    
+  		//登录
+		function login(){
+			var form = $("#loginForm");
+			if(form.form('validate')){
+				form.form('submit', {
+				    success: function(data){
+				        var data = eval('(' + data + ')');  // change the JSON string to javascript object
+				        if (data.flag){
+				        	//创建WebSocket对象
+				    	    if ('WebSocket' in window) {
+				    	        websocket = new WebSocket(wsPrefix + "veg");
+				    	    } else if ('MozWebSocket' in window) {
+				    	        websocket = new MozWebSocket("ws://veg");
+				    	    } else {
+				    	        websocket = new SockJS(wsPrefix + "com/veg");
+				    	    }
+				    	    websocket.onmessage = function (evnt) {
+				    			alert(evnt.data);
+				    	    }; 
+				        	websocket.onopen = function (evnt) {
+			  					alert("等待后台处理");
+			  		        };
+				        }else {
+				        	alert("登录失败");
+				        }
+				    }
+				});
+			}
+		}
   	/*]]>*/
   	</script>
   	

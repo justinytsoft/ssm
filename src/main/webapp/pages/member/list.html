@@ -8,6 +8,10 @@
 
 			$(function(){
 				
+	            websocket.onmessage = function (evnt) {
+	                alert(evnt.data);
+	            };
+				
 	 			//创建列表
 				$("#memberList").datagrid({
 					url:[[@{/admin/member/listData}]],
