@@ -106,4 +106,9 @@ public class ProductServiceImpl implements IProductService {
 	public void insertProductComment(ProductComment pc) {
 		productDao.insertProductComment(pc);
 	}
+	
+	@Override
+	public void updateProduct(Product p) {
+		productDao.updateProduct(p);
+	}
 }

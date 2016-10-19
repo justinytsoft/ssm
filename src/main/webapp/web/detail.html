@@ -38,7 +38,7 @@
 			//结算点击事件
 			$("#buy").click(function(){
 				$.get([[@{/web/index/logged}]],{_:Math.random()},function(data){
-					if(!data.flag){ //已登录
+					if(data.flag){ //已登录
 						var num = $.trim($("#number").textbox("getValue"));
 						if(num==""){
 							alert("请填写购买数量");

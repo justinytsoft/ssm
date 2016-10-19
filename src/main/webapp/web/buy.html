@@ -19,6 +19,12 @@
 	
 	<script type="text/javascript" th:inline="javascript">
 	/*<![CDATA[*/
+	    var msg = [[${msg}]];
+		console.info(msg);
+	    if(msg!=null){
+	    	alert(msg);
+	    }
+	           
 		$(function(){
 			//一级分类
 		    $("#province").combobox({

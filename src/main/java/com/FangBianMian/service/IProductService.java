@@ -73,4 +73,10 @@ public interface IProductService {
 	 */
 	void insertProductComment(ProductComment pc);
 
+	/**
+	 * 更新商品
+	 * @param p
+	 */
+	void updateProduct(Product p);
+
 }

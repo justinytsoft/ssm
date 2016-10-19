@@ -6,7 +6,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.catalina.tribes.group.interceptors.OrderInterceptor;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +23,7 @@ import com.FangBianMian.domain.OrdersLog;
 import com.FangBianMian.domain.Product;
 import com.FangBianMian.domain.ProductCategory;
 import com.FangBianMian.domain.ProductComment;
+import com.FangBianMian.service.IMemberService;
 import com.FangBianMian.service.IOrderService;
 import com.FangBianMian.service.IProductService;
 import com.FangBianMian.utils.DataUtil;
@@ -39,6 +39,8 @@ public class WEB_OrderController {
 	private IProductService productService;
 	@Autowired
 	private IBaseDao baseDao;
+	@Autowired
+	private IMemberService memberService;
 	
 	/**
 	 * 更新订单状态
@@ -48,20 +50,20 @@ public class WEB_OrderController {
 	 */
 	@RequestMapping("/update")
 	@ResponseBody
-	public Map<String, Object> update(@RequestParam(required=false) Integer oid,
+	public Map<String, Object> update(HttpServletRequest request,
+									  @RequestParam(required=false) Integer oid,
 									  @RequestParam(required=false) Integer status,
 									  @RequestParam(required=false) Integer score,
 									  @RequestParam(required=false) String comment){
 		
-		/*Member m = DataUtil.getMemberSession(request);
-		if(m==null){
-			return "redirect: ../index/login";
-		}*/
-		Member m = new Member();
-		m.setId(1);
-		m.setUsername("18380426135");
-		
 		Map<String,Object> map = new HashMap<String,Object>();
+		Member m = DataUtil.getMemberSession(request);
+
+		if(m==null){
+			map.put("flag", false);
+			return map;
+		}
+		
 		if(oid==null || status==null){
 			map.put("flag", false);
 			return map;
@@ -104,14 +106,13 @@ public class WEB_OrderController {
 						@RequestParam(required=false) Integer page,
 						@RequestParam(required=false) Integer rows,
 						@RequestParam(required=false) Integer status){
-		/*Member m = DataUtil.getMemberSession(request);
+		Member m = DataUtil.getMemberSession(request);
 		if(m==null){
 			return "redirect: ../index/login";
-		}*/
+		}
 		
 		Map<String, Object> param = new HashMap<String, Object>();
-		//param.put("mid", m.getId());
-		param.put("mid", 1);
+		param.put("mid", m.getId());
 		param.put("invisible", 0);
 		if(page!=null && rows!=null){
 			param.put("page", ((page-1)*rows));
@@ -142,11 +143,21 @@ public class WEB_OrderController {
 	@RequestMapping("/confirm")
 	public String confirm(Model model,
 						  @RequestParam(required=false) Integer pid,
-						  @RequestParam(required=false) Integer number){
+						  @RequestParam(required=false) Integer number,
+						  @RequestParam(required=false) Integer flag){
 		Product p = productService.queryProductById(pid, true);
 		if(pid==null || number==null || p==null){
 			return "redirect: ../index/center";
 		}
+		
+		if(flag!=null){
+			if(flag==1){
+				model.addAttribute("msg", "商品库存不足");
+			}else if(flag==2){
+				model.addAttribute("msg", "您的余额不足");
+			}
+		}
+		
 		model.addAttribute("p", p);		
 		model.addAttribute("pid", pid);		
 		model.addAttribute("number", number);		
@@ -171,11 +182,8 @@ public class WEB_OrderController {
 					   @RequestParam(required=false) String phone,
 					   @RequestParam(required=false) String message){
 		
-		/*Member m = DataUtil.getMemberSession(request);*/
-		
-		Member m = new Member();
-		m.setId(1);
-		
+		Member m = DataUtil.getMemberSession(request);
+
 		if(m==null){
 			return "redirect: ../index/center";
 		}
@@ -190,20 +198,34 @@ public class WEB_OrderController {
 		if(p==null){
 			return "redirect: ../index/center";
 		}
-		if(p.getQuantity().intValue() < 1){
-			return "redirect: ../index/center";
+		
+		//判断库存是否足够
+		if(p.getQuantity().intValue() < number){
+			return "redirect: confirm?pid="+pid+"&number="+number+"&flag=1";
 		}
 		
+		m = memberService.queryMemberByUsername(m.getUsername());
+		
+		//判断用户余额是否足够
+		if(m.getBalance().floatValue() < (p.getPrice().floatValue() * number + p.getFreight_price().floatValue())){
+			return "redirect: confirm?pid="+pid+"&number="+number+"&flag=2";
+		}
+		
+		//拼接收货地址
 		String provinceName = baseDao.queryProvinceNameById(province);
 		String cityName = baseDao.queryCityNameById(city);
 		String positionName = baseDao.queryPositionNameById(position);
 		String fullAddress = provinceName + cityName + positionName + address;
 		
+		//商品总价
+		float total = p.getPrice().floatValue() * number + p.getFreight_price().floatValue();
+		
+		//保存订单
 		Orders o = new Orders();
 		o.setMid(m.getId());
 		o.setSn(DataUtil.createOrderNO());
-		o.setAmount(p.getPrice() * number + p.getFreight_price());
-		o.setAmount_paid(p.getPrice() * number + p.getFreight_price());
+		o.setAmount(total);
+		o.setAmount_paid(total);
 		o.setReceiver(receiver);
 		o.setPhone(phone);
 		o.setAddress(fullAddress);
@@ -215,6 +237,7 @@ public class WEB_OrderController {
 		o.setPostcode(null);
 		orderService.insertOrder(o);
 		
+		//保存订单商品条目
 		OrdersItem oi = new OrdersItem();
 		oi.setOid(o.getId());
 		oi.setPid(p.getId());
@@ -226,11 +249,24 @@ public class WEB_OrderController {
 		oi.setCategory(pc.getName());
 		orderService.insertOrderItem(oi);
 		
+		//保存订单日志
 		OrdersLog ol = new OrdersLog();
 		ol.setOid(o.getId());
 		ol.setStatus(o.getStatus());
 		ol.setContent("用户完成下单");
 		orderService.insertOrderLog(ol);
+		
+		//更新商品库存
+		Product product = new Product();
+		product.setId(p.getId());
+		product.setQuantity(p.getQuantity().intValue() - number);
+		productService.updateProduct(product);
+		
+		//更新用户余额
+		Member member = new Member();
+		member.setUsername(m.getUsername());
+		member.setBalance(m.getBalance().floatValue() - total);
+		memberService.updateMember(member);
 		
 		return "redirect: index";
 	}

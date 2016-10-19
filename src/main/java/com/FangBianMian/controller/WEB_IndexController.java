@@ -20,7 +20,6 @@ import com.FangBianMian.dao.IBaseDao;
 import com.FangBianMian.domain.Member;
 import com.FangBianMian.domain.Product;
 import com.FangBianMian.domain.ProductCategory;
-import com.FangBianMian.domain.User;
 import com.FangBianMian.service.IMemberService;
 import com.FangBianMian.service.IProductService;
 import com.FangBianMian.utils.DataValidation;
@@ -189,7 +188,7 @@ public class WEB_IndexController {
 	@ResponseBody
 	public Map<String,Object> logged(HttpServletRequest request){
 		Map<String, Object> map = new HashMap<String, Object>();
-		User user = (User) request.getSession().getAttribute(Common.USER_SESSION);
+		Member user = (Member) request.getSession().getAttribute(Common.MEMBER_SESSION);
 		map.put("flag", user!=null);
 		return map;
 	}
