@@ -21,6 +21,11 @@ public class Common {
 	 * 普通用户session
 	 */
 	public static final String MEMBER_SESSION = "MEMBER_SESSION";
+
+	/**
+	 * 普通用户等待登录的session
+	 */
+	public static final String MEMBER_SESSION_WAIT = "MEMBER_SESSION_WAIT";
 	
 	/**
 	 * 用户名和密码校验失败

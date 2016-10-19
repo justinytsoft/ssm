@@ -1,7 +1,6 @@
 package com.FangBianMian.websocket;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -10,7 +9,6 @@ import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import com.FangBianMian.constant.Common;
-import com.FangBianMian.utils.DateUtil;
 
 public class WebSocketHander implements WebSocketHandler {
 
@@ -23,7 +21,7 @@ public class WebSocketHander implements WebSocketHandler {
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         users.add(session);
         String userName = (String) session.getAttributes().get(Common.WEBSOCKET_USERNAME);
-        if(userName!= null){
+        if(userName!= null && !"admin".equals(userName)){
         	sendMessageToUser("admin", new TextMessage(userName));
         }
     }

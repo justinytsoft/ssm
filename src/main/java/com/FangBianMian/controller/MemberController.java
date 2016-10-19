@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -67,16 +68,30 @@ public class MemberController {
 		if(flag==null || StringUtils.isBlank(username)){
 			jrw.setFlag(false);
 			jrw.setMessage("操作失败，请求参数缺失");
+		}else{
+			Member m = memberService.queryMemberByUsername(username);
+			if(m!=null){
+				//更新用户的登录状态
+				m.setStatus(flag);
+				memberService.updateMember(m);
+				
+				//如果状态为登录失败，则吧等待确认的session清空
+				if(flag==LoginStatus.FIALD){ 
+					request.getSession().setAttribute(Common.MEMBER_SESSION_WAIT, null);
+				}else{//否则 吧用户信息放入 正式session中
+					request.getSession().setAttribute(Common.MEMBER_SESSION, m);
+				}
+			}else{
+				jrw.setFlag(false);
+				jrw.setMessage("操作失败，未查询到用户");
+			}
 		}
 		
-		Member m = new Member();
-		m.setUsername(username);
-		m.setStatus(flag);
-		memberService.updateMember(m);
-		
-		if(flag==LoginStatus.FIALD){ 
-			request.getSession().setAttribute(Common.MEMBER_SESSION, null);
-		}
+		//查询是否有等待登录的用户
+		Map<String,Object> param = new HashMap<String, Object>();
+		param.put("status", LoginStatus.WAIT);
+		List<Member> ms = memberService.queryMembersByParam(param);
+		jrw.setData(ms);
 		
 		return jrw;
 	}
@@ -86,7 +101,12 @@ public class MemberController {
 	 * @return
 	 */
 	@RequestMapping("/list")
-	public String list(){
+	public String list(Model model){
+		//查询是否有等待登录的用户
+		Map<String,Object> param = new HashMap<String, Object>();
+		param.put("status", LoginStatus.WAIT);
+		List<Member> ms = memberService.queryMembersByParam(param);
+		model.addAttribute("ms", ms);
 		return "pages/member/list";
 	}
 	

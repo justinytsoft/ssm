@@ -33,6 +33,10 @@
     <!-- 用户商城访问 -->
     <http pattern="/ws/**" security="none"/>
     <http pattern="/web/**" security="none"/>
+
+	<!-- websocket -->
+    <http pattern="/veg" security="none"/>
+    <http pattern="/com/veg" security="none"/>
     
     
     

@@ -5,11 +5,11 @@
 	
 		<script type="text/javascript" th:inline="javascript">
 		/*<![CDATA[*/
-		           
+		
           	//确认登录
             function confirmLogin(username){
             	cConfirm("是否允许<" + username + ">用户登录",function(flag){
-            		flag = flag?1:0;
+            		flag = flag?1:2;
             		$.post([[@{/admin/member/confirmLogin}]], {_:Math.random(), username:username, flag:flag}, function(data){
             			if(data.flag){
 		            		$("#memberList").datagrid("reload",{});
@@ -17,6 +17,10 @@
 		            		websocket.send(msg);
             			}else{
             				cAlert(data.mssage);
+            			}
+            			console.info(data.data.length)
+            			if(data.data.length<1){
+            				$("#wait").hide();
             			}
             		});
             	});
@@ -43,7 +47,15 @@
             }
 
 			$(function(){
+				//进页面时判断是否有等待登录的用户
+				var waitMs = [[${ms}]];
+				if(waitMs.length>0){
+					$("#wait").show();
+				}else{
+					$("#wait").hide();
+				}  
 				
+				//进页面后通过websocket判断是否有等待登录的用户
 	            websocket.onmessage = function (evnt) {
 	            	$("#memberList").datagrid("load",{});
 	            	$("#wait").show();

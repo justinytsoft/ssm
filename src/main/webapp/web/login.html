@@ -22,7 +22,7 @@
   	/*<![CDATA[*/
   	    //判断是否发送验证码的标记
   	    var verifyFlag = false;
-  	    //项目根路径
+  		//项目根路径
 	    var rootPath = [[@{/}]];
 		//websocket请求前缀
 		var wsPrefix = location.href.split(rootPath)[0] + rootPath;   
@@ -35,7 +35,7 @@
 	    } else {
 	    	wsPrefix = 'ws' + wsPrefix.slice(4);
 	    }
-	
+	    
   	    //倒计时
   		var timer;
   	    var countdown=60; 
@@ -61,11 +61,11 @@
   				verifyFlag = true
 				
   				//发送验证码
-  				$.post([[@{/web/index/sendVerifyCode}]],{_:Math.random(),phone:phone.textbox("getValue")},function(data){
+  				/* $.post([[@{/web/index/sendVerifyCode}]],{_:Math.random(),phone:phone.textbox("getValue")},function(data){
 	  				if(data.flag){
 	  					cAlert(data.msg);
 	  				}
-	  			});
+	  			}); */
 	  			
 	  			//倒计时
 	  			obj.linkbutton("disable");
@@ -83,25 +83,30 @@
 				if(form.form('validate')){
 					form.form('submit', {
 					    success: function(data){
-					        var data = eval('(' + data + ')');  // change the JSON string to javascript object
+					    	//创建WebSocket对象
+						    if ('WebSocket' in window) {
+						        websocket = new WebSocket(wsPrefix + "veg");
+						    } else if ('MozWebSocket' in window) {
+						        websocket = new MozWebSocket("ws://veg");
+						    } else {
+						        websocket = new SockJS(wsPrefix + "com/veg");
+						    }
+						 	
+						 	//接收服务器的消息
+						    websocket.onmessage = function (evnt) {
+								var data = evnt.data;
+								if(data==1){ //登录成功
+									window.location.href = [[@{/web/index/main}]];
+								}else{ 
+									$("#waitDialog").dialog("close",true);
+									alert("登录失败");
+								}
+						    };
+						    
+						    // change the JSON string to javascript object
+					        var data = eval('(' + data + ')'); 
 					        if (data.flag){
-					        	//创建WebSocket对象
-					    	    if ('WebSocket' in window) {
-					    	        websocket = new WebSocket(wsPrefix + "veg");
-					    	    } else if ('MozWebSocket' in window) {
-					    	        websocket = new MozWebSocket("ws://veg");
-					    	    } else {
-					    	        websocket = new SockJS(wsPrefix + "com/veg");
-					    	    }
-					    	    websocket.onmessage = function (evnt) {
-					    			var data = evnt.data;
-					    			if(data==1){
-					    				window.location.href = [[@{/web/index/main}]];
-					    			}else{
-					    				$("#waitDialog").dialog("close",true);
-					    				alert("登录失败");
-					    			}
-					    	    }; 
+					        	//给服务器建立连接
 					        	websocket.onopen = function (evnt) {
 				  					$("#waitDialog").dialog("open",true);
 				  		        };
