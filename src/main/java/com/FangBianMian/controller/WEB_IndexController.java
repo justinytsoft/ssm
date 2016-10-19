@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.FangBianMian.constant.Common;
+import com.FangBianMian.constant.LoginStatus;
 import com.FangBianMian.dao.IBaseDao;
 import com.FangBianMian.domain.Member;
 import com.FangBianMian.domain.Product;
 import com.FangBianMian.domain.ProductCategory;
 import com.FangBianMian.domain.User;
+import com.FangBianMian.service.IMemberService;
 import com.FangBianMian.service.IProductService;
 import com.FangBianMian.utils.DataValidation;
 
@@ -36,6 +38,8 @@ public class WEB_IndexController {
 	private IProductService productService;
 	@Autowired
 	private IBaseDao baseDao;
+	@Autowired
+	private IMemberService memberService;
 	
 	/**
 	 * 发送验证码
@@ -84,6 +88,14 @@ public class WEB_IndexController {
 	public String top(Model model, HttpServletRequest request){
 		//获取登录用户
 		Member user = (Member)request.getSession().getAttribute(Common.MEMBER_SESSION);
+		if(user!=null){
+			user = memberService.queryMemberByUsername(user.getUsername());
+			//如果session中的用户状态不是登录成功，则设为null
+			if(user.getStatus()!=LoginStatus.SUCCESS){
+				user = null;
+			}
+		}
+		
 		//获取商品分类列表
 		List<ProductCategory> pcs = DataValidation.isEmpty(baseDao.queryProductCategory());
 		

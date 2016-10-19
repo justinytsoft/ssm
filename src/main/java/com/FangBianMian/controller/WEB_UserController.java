@@ -64,7 +64,7 @@ public class WEB_UserController {
 			memberService.updateMember(m);
 		}
 	
-		request.getSession().setAttribute(Common.MEMBER_SESSION_WAIT, m);
+		request.getSession().setAttribute(Common.MEMBER_SESSION, m);
 		request.getSession().setAttribute(Common.WEBSOCKET_USERNAME, m.getUsername());
 		
 		map.put("flag", true);

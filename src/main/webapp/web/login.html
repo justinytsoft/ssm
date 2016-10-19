@@ -79,6 +79,9 @@
   		//登录
 		function login(){
   			if(verifyFlag){
+  				//打开登录等待提示框
+  				$("#waitDialog").dialog("open",true);
+  				
 				var form = $("#loginForm");
 				if(form.form('validate')){
 					form.form('submit', {
@@ -98,6 +101,7 @@
 								if(data==1){ //登录成功
 									window.location.href = [[@{/web/index/main}]];
 								}else{ 
+									//关闭登录等待提示框
 									$("#waitDialog").dialog("close",true);
 									alert("登录失败");
 								}
@@ -107,9 +111,7 @@
 					        var data = eval('(' + data + ')'); 
 					        if (data.flag){
 					        	//给服务器建立连接
-					        	websocket.onopen = function (evnt) {
-				  					$("#waitDialog").dialog("open",true);
-				  		        };
+					        	websocket.onopen = function (evnt) { };
 					        }else {
 					        	alert("登录失败");
 					        }

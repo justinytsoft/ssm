@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.FangBianMian.constant.Common;
 import com.FangBianMian.constant.LoginStatus;
 import com.FangBianMian.domain.Member;
 import com.FangBianMian.response.JsonResWrapper;
@@ -74,13 +73,6 @@ public class MemberController {
 				//更新用户的登录状态
 				m.setStatus(flag);
 				memberService.updateMember(m);
-				
-				//如果状态为登录失败，则吧等待确认的session清空
-				if(flag==LoginStatus.FIALD){ 
-					request.getSession().setAttribute(Common.MEMBER_SESSION_WAIT, null);
-				}else{//否则 吧用户信息放入 正式session中
-					request.getSession().setAttribute(Common.MEMBER_SESSION, m);
-				}
 			}else{
 				jrw.setFlag(false);
 				jrw.setMessage("操作失败，未查询到用户");
