@@ -15,7 +15,6 @@
 	<script type="text/javascript" th:inline="javascript">
 	/*<![CDATA[*/
 		$(function(){
-			
 			//初始化订单状态
 			var arr = [{id:2,name:"待发货"},{id:3,name:"待收货"},{id:4,name:"待评价"},{id:5,name:"已完成"}];
 			var status = $(".status");
@@ -29,7 +28,8 @@
 			});
 			
 		});
-
+		
+		var orderId;
 		//更新订单状态
 		function update(){
 			var obj = $(this);
@@ -39,6 +39,7 @@
 						$.post([[@{/web/order/update}]],{_:Math.random(),oid:obj.attr("id"),status:4},function(data){
 							if(data.flag){
 								alert("收货成功");
+								//当前分类 -1 为首页
 								var active = $(".active").attr("id");
 								if(active=="-1"){
 									window.location.href = [[@{/web/order/index}]];
@@ -52,8 +53,8 @@
 					}
 				});
 			}else if(obj.text()=="待评价"){
-				var active = $(".active").attr("id");
-
+				orderId = obj.attr("id");
+				$("#commentDialog").dialog("open",true);
 			}else if(obj.text()=="删除"){
 				cConfirm("确定要删除吗",function(flag){
 					if(flag){
@@ -74,8 +75,45 @@
 				});
 			}
 		}
+		
+		//保存评论
+		function commentSave(){
+			if($("#comment").textbox("isValid")){
+				var score = $("#score").combobox("getValue");
+				var comment = $("#comment").textbox("getValue");
+				$.post([[@{/web/order/update}]],{_:Math.random(),oid:orderId,status:5,score:score,comment:comment},function(data){
+					if(data.flag){
+						alert("评论成功");
+					}else{
+						alert("评论失败");
+					}
+					//当前分类 -1 为首页
+					var active = $(".active").attr("id");
+					if(active=="-1"){
+						window.location.href = [[@{/web/order/index}]];
+					}else{
+						window.location.href = [[@{/web/order/index}]] + "?status=" + active;
+					}
+				}); 
+			}
+		}
 	/*]]>*/
 	</script>
+	
+	<style>
+		/* 遮罩颜色和透明度 */
+		.window-proxy-mask, .window-mask {
+			background: #eae7e7;
+			opacity: 0.6;
+		}
+		.panel-title{
+  			line-height: 20px;
+  			margin-left: 6px;
+  		}
+  		#commentDialog{
+  			text-align: center;
+  		}
+	</style>
 	
 	<body class="carBody allBody">
 		<section class="topStep">
@@ -158,66 +196,25 @@
 				</div>
 			</div>
 		</section>
-		<!-- <section class="orderList">
-			<div class="list-wrap">
-				<div class="wrap-tab">
-					<table>
-						<tr>
-							<th width="395px">宝贝</th>
-							<th width="95px">单价</th>
-							<th width="30px">数量</th>
-							<th width="115px">商品操作</th>
-							<th width="95px">实付款</th>
-							<th width="130px">交易状态
-								<select>
-									<option></option>
-									<option></option>
-									<option></option>
-									<option></option>
-								</select>
-							</th>
-							<th width="150px">交易操作</th>
-						</tr>
-					</table>
-				</div>
-				<div class="wrap-table list-table">
-					<table class="table-order">
-						<tr><th colspan="7">2016-09-23&nbsp;订单号：12456645465465</th></tr>
-						<tr>
-							<td width="395px">
-								<div class="pic-box" style="margin-left: 10px; background: url(img/list-pic.png) no-repeat center center;background-size: cover;">
-								</div>
-								<p class="pic-title">跳转技术交底单是第几滴水</p>
-							</td>
-							<td width="95px">￥69.00</td>
-							<td width="30px">1</td>
-							<td width="115px">退款/退货</td>
-							<td width="95px">￥69.00</td>
-							<td width="130px">卖家已发货</td>
-							<td width="150px"><span class="sure-btn">确认收货</span></td>
-						</tr>
-					</table>
-				</div>
-				<div class="wrap-table list-table">
-					<table class="table-order">
-						<tr><th colspan="7">2016-09-23&nbsp;订单号：12456645465465</th></tr>
-						<tr>
-							<td width="395px">
-								<div class="pic-box" style="margin-left: 10px; background: url(img/list-pic.png) no-repeat center center;background-size: cover;">
-								</div>
-								<p class="pic-title">跳转技术交底单是第几滴水</p>
-							</td>
-							<td width="95px">￥69.00</td>
-							<td width="30px">1</td>
-							<td width="115px">退款/退货</td>
-							<td width="95px">￥69.00</td>
-							<td width="130px">卖家已发货</td>
-							<td width="150px"><span class="sure-btn">确认收货</span></td>
-						</tr>
-					</table>
-				</div>
+		
+		<!-- 评论弹出框 -->
+		<div id="commentDialog" class="easyui-dialog" title="商品评价" data-options="modal:true,closed:true,width:400,padding:10,buttons: [{text:'确 定',width:70,handler:function(){commentSave()}}]">
+			<div style="padding: 10px 0">
+				<span>评分：</span>
+				<select id="score" class="easyui-combobox" data-options="width:200,editable:false">
+					<option value="5">5</option>
+					<option value="4">4</option>
+					<option value="3">3</option>
+					<option value="2">2</option>
+					<option value="1">1</option>
+				</select>
 			</div>
-		</section> -->
+			<div style="padding-bottom: 10px">
+				<span>内容：</span>
+				<input id="comment" class="easyui-textbox" multiline="true" data-options="width:200,height:100,required:true,validateOnCreate:false" />
+			</div>
+	    </div>
+	    
 		<iframe MARGINWIDTH='0' MARGINHEIGHT='0' HSPACE='0' VSPACE='0' FRAMEBORDER='0' SCROLLING='no' th:src="@{/web/index/bottom}" width="100%" height="270px"></iframe>
 	</body>
 

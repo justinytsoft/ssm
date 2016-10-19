@@ -100,7 +100,7 @@ public class WEB_OrderController {
 		if(status==OrderStatus.WAIT_COMMENT){
 			ol.setContent("用户已确认收货");
 		}else if(status==OrderStatus.DONE){
-			ol.setContent("用户对商品进行了评价； <br/> 评分：" + score + " <br/> 评论：" + comment);
+			ol.setContent("用户对商品进行了评价；  评分：" + score + " 评论：" + comment);
 		}
 		orderService.insertOrderLog(ol);
 		

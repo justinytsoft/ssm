@@ -103,6 +103,7 @@
 								}else{ 
 									//关闭登录等待提示框
 									$("#waitDialog").dialog("close",true);
+									$("#code").textbox("clear");
 									alert("登录失败");
 								}
 						    };
@@ -162,7 +163,7 @@
 							<input id="phone" name="phone" th:value="${phone}" type="text" class="easyui-textbox" style="padding:10px" data-options="width:283,prompt:'请输入手机号',validType:['isPhone'],required:true,validateOnCreate:false"/>
 						</div>
 						<div style="margin-bottom: 20px">
-							<input name="code" type="text" th:value="${code}" class="easyui-textbox" style="padding:10px" data-options="width:180,prompt:'请输入验证码',required:true,validateOnCreate:false"/>
+							<input id="code" name="code" type="text" th:value="${code}" class="easyui-textbox" style="padding:10px" data-options="width:180,prompt:'请输入验证码',required:true,validateOnCreate:false"/>
 							<a id="vfcBtn" href="#" class="easyui-linkbutton c1" data-options="onClick:sendVerifyCode" style="width:100px;height:28px;">获取验证码</a>
 						</div>
 						<div style="margin-bottom: 10px">
