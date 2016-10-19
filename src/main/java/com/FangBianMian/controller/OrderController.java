@@ -1,5 +1,6 @@
 package com.FangBianMian.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.FangBianMian.constant.OrderStatus;
 import com.FangBianMian.domain.Orders;
+import com.FangBianMian.domain.OrdersLog;
 import com.FangBianMian.service.IOrderService;
 import com.FangBianMian.utils.DataValidation;
 import com.FangBianMian.utils.DateFormatter;
@@ -48,11 +50,19 @@ public class OrderController {
 			return map;
 		}
 		
+		//更新订单状态
 		Map<String,Object> param = new HashMap<String,Object>();
 		param.put("oid", oid);
 		param.put("status", OrderStatus.WAIT_RECEVIE);
 		param.put("express", express);
 		orderService.updateOrderStatus(param);
+		
+		//保存订单日志
+		OrdersLog ol = new OrdersLog();
+		ol.setOid(oid);
+		ol.setStatus(OrderStatus.WAIT_RECEVIE);
+		ol.setContent("订单已发货");
+		orderService.insertOrderLog(ol);
 		
 		map.put("flag", true);
 		map.put("msg", "发货成功");
