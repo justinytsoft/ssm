@@ -39,14 +39,18 @@ public class MemberController {
 		JsonResWrapper jrw = new JsonResWrapper();
 		if(StringUtils.isBlank(username) || price==null){
 			jrw.setFlag(false);
-			jrw.setMessage("操作失败，请求参数缺失");
+			jrw.setMessage("充值失败，请求参数缺失");
+		}else{
+			Member m = memberService.queryMemberByUsername(username);
+			if(m==null){
+				jrw.setFlag(false);
+				jrw.setMessage("充值失败，未查询到用户");
+			}else{
+				m.setUsername(username);
+				m.setBalance(m.getBalance()+price);
+				memberService.updateMember(m);
+			}
 		}
-		
-		Member m = new Member();
-		m.setUsername(username);
-		m.setBalance(m.getBalance()+price);
-		memberService.updateMember(m);
-		
 		return jrw;
 	}
 	

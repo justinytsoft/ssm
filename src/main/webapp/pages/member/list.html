@@ -21,10 +21,25 @@
             		});
             	});
             }
-            
+		
             //充值
-            function charge(id){
-            	
+            function charge(username){
+            	cPrompt("请输入要充值的金额：",function(price){
+            		if(typeof price!="undefined"){
+	            		if(checkMoney(price)){
+	            			$.post([[@{/admin/member/charge}]],{_:Math.random(),username:username,price:price},function(data){
+	                			if(data.flag){
+	                				cAlert("充值成功");
+	                				$("#memberList").datagrid("reload",{});
+	                			}else{
+	                				cAlert(data.mssage);
+	                			}
+	                		});
+	            		}else{
+	            			cAlert("输入金额错误，最多2位小数");
+	            		}
+            		}
+            	});
             }
 
 			$(function(){
@@ -120,11 +135,11 @@
 							formatter:function(value,row,index){
 								var confirm;
 								if(row.status==0){
-									confirm = "<a class='editBtn c6' data-options='disabled:true' style='width:80px' onclick='confirmLogin("+row.username+")'>确认登录</a>";
+									confirm = "<a class='editBtn c6' style='width:80px' onclick='confirmLogin("+row.username+")'>确认登录</a>";
 								}else{
 									confirm = "<a class='editBtn c6' data-options='disabled:true' style='width:80px' onclick='confirmLogin("+row.username+")'>确认登录</a>";
 								}
-								var charge = "<a class='editBtn c1' style='width:50px;margin-left:10px' onclick='charge("+row.id+")'>充 值</a>";
+								var charge = "<a class='editBtn c1' style='width:50px;margin-left:10px' onclick='charge("+row.username+")'>充 值</a>";
 								return confirm + charge;
 							}
 						}

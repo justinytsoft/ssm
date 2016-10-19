@@ -1,3 +1,13 @@
+/**
+ * 判断是否是金额
+ * @param v
+ * @returns 
+ */
+function checkMoney(v){
+    var a=/^[0-9]*(\.[0-9]{1,2})?$/;
+    return a.test(v);
+}
+
 //计数， 只需要在输入框class属性上加  tally 类
 $(".tally").keyup(function(){
 	var obj = $(this);
