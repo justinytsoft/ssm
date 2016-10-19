@@ -19,6 +19,11 @@ public class JsonResWrapper {
 	private String status = ResponseStatus.OK;
 	
 	/**
+	 * 状态
+	 */
+	private Boolean flag = true;
+	
+	/**
 	 * 消息
 	 */
 	private String message;
@@ -89,6 +94,14 @@ public class JsonResWrapper {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	public Boolean getFlag() {
+		return flag;
+	}
+
+	public void setFlag(Boolean flag) {
+		this.flag = flag;
 	}
 
 }

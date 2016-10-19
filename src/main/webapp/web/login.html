@@ -20,6 +20,8 @@
   	
   	<script type="text/javascript" th:inline="javascript">
   	/*<![CDATA[*/
+  	    //判断是否发送验证码的标记
+  	    var verifyFlag = false;
   	    //项目根路径
 	    var rootPath = [[@{/}]];
 		//websocket请求前缀
@@ -55,6 +57,10 @@
   			var obj = $(this);
   			var phone = $("#phone");
   			if(phone.textbox("isValid")){
+				//设置验证码标记为已发送
+  				verifyFlag = true
+				
+  				//发送验证码
   				$.post([[@{/web/index/sendVerifyCode}]],{_:Math.random(),phone:phone.textbox("getValue")},function(data){
 	  				if(data.flag){
 	  					cAlert(data.msg);
@@ -72,35 +78,56 @@
   	    
   		//登录
 		function login(){
-			var form = $("#loginForm");
-			if(form.form('validate')){
-				form.form('submit', {
-				    success: function(data){
-				        var data = eval('(' + data + ')');  // change the JSON string to javascript object
-				        if (data.flag){
-				        	//创建WebSocket对象
-				    	    if ('WebSocket' in window) {
-				    	        websocket = new WebSocket(wsPrefix + "veg");
-				    	    } else if ('MozWebSocket' in window) {
-				    	        websocket = new MozWebSocket("ws://veg");
-				    	    } else {
-				    	        websocket = new SockJS(wsPrefix + "com/veg");
-				    	    }
-				    	    websocket.onmessage = function (evnt) {
-				    			alert(evnt.data);
-				    	    }; 
-				        	websocket.onopen = function (evnt) {
-			  					alert("等待后台处理");
-			  		        };
-				        }else {
-				        	alert("登录失败");
-				        }
-				    }
-				});
-			}
+  			if(verifyFlag){
+				var form = $("#loginForm");
+				if(form.form('validate')){
+					form.form('submit', {
+					    success: function(data){
+					        var data = eval('(' + data + ')');  // change the JSON string to javascript object
+					        if (data.flag){
+					        	//创建WebSocket对象
+					    	    if ('WebSocket' in window) {
+					    	        websocket = new WebSocket(wsPrefix + "veg");
+					    	    } else if ('MozWebSocket' in window) {
+					    	        websocket = new MozWebSocket("ws://veg");
+					    	    } else {
+					    	        websocket = new SockJS(wsPrefix + "com/veg");
+					    	    }
+					    	    websocket.onmessage = function (evnt) {
+					    			var data = evnt.data;
+					    			if(data==1){
+					    				window.location.href = [[@{/web/index/main}]];
+					    			}else{
+					    				$("#waitDialog").dialog("close",true);
+					    				alert("登录失败");
+					    			}
+					    	    }; 
+					        	websocket.onopen = function (evnt) {
+				  					$("#waitDialog").dialog("open",true);
+				  		        };
+					        }else {
+					        	alert("登录失败");
+					        }
+					    }
+					});
+				}
+  			}else{
+  				alert("请先获取验证码");
+  			}
 		}
   	/*]]>*/
   	</script>
+  	
+  	<style>
+  		.panel-title{
+  			line-height: 20px;
+  			margin-left: 6px;
+  		}
+  		#waitDialog{
+  			text-align: center;
+  			line-height: 120px;
+  		}
+  	</style>
   	
 	<body class="loginBody">
 		<section class="header">
@@ -140,6 +167,11 @@
 			</div>
 			</div>
 		</section>
+		
+		<div id="waitDialog" class="easyui-dialog" title="系统消息" data-options="modal:true,closable:false,closed:true,width:400,height:200,padding:10">
+	    	登录中，请稍等片刻.
+	    </div>
+		
 		<iframe MARGINWIDTH='0' MARGINHEIGHT='0' HSPACE='0' VSPACE='0' FRAMEBORDER='0' SCROLLING='no' th:src="@{/web/index/bottom}" width="100%" height="270px"></iframe>
 	</body>
 </html>

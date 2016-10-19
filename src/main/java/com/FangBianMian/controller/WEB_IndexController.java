@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.FangBianMian.constant.Common;
 import com.FangBianMian.dao.IBaseDao;
+import com.FangBianMian.domain.Member;
 import com.FangBianMian.domain.Product;
 import com.FangBianMian.domain.ProductCategory;
 import com.FangBianMian.domain.User;
@@ -82,7 +83,7 @@ public class WEB_IndexController {
 	@RequestMapping("/top")
 	public String top(Model model, HttpServletRequest request){
 		//获取登录用户
-		User user = (User)request.getSession().getAttribute(Common.MEMBER_SESSION);
+		Member user = (Member)request.getSession().getAttribute(Common.MEMBER_SESSION);
 		//获取商品分类列表
 		List<ProductCategory> pcs = DataValidation.isEmpty(baseDao.queryProductCategory());
 		

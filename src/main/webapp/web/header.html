@@ -39,7 +39,8 @@
 				<ul>
 					<li style="text-align: right;margin: 0 20px 0 0">
 						<a target="_parent" th:href="@{/web/index/login}" th:if="${user==null}">登录</a>
-						<a target="centerFrame" th:href="@{/web/order/index}" th:if="${user==null}">个人中心</a>
+						<a target="centerFrame" th:href="@{/web/order/index}" th:if="${user!=null}">个人中心</a>
+						<span th:if="${user!=null}" style="margin-left: 20px" th:text="${'余额：' + user.balance}"></span>
 					</li>
 				</ul>
 			</div>

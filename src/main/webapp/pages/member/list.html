@@ -5,11 +5,33 @@
 	
 		<script type="text/javascript" th:inline="javascript">
 		/*<![CDATA[*/
+		           
+          	//确认登录
+            function confirmLogin(username){
+            	cConfirm("是否允许<" + username + ">用户登录",function(flag){
+            		flag = flag?1:0;
+            		$.post([[@{/admin/member/confirmLogin}]], {_:Math.random(), username:username, flag:flag}, function(data){
+            			if(data.flag){
+		            		$("#memberList").datagrid("reload",{});
+		            		var msg = username + "," + flag;
+		            		websocket.send(msg);
+            			}else{
+            				cAlert(data.mssage);
+            			}
+            		});
+            	});
+            }
+            
+            //充值
+            function charge(id){
+            	
+            }
 
 			$(function(){
 				
 	            websocket.onmessage = function (evnt) {
-	                alert(evnt.data);
+	            	$("#memberList").datagrid("load",{});
+	            	$("#wait").show();
 	            };
 				
 	 			//创建列表
@@ -18,7 +40,7 @@
 				    fitColumns : true, //设置为 true, 则自动调整宽度 
 					singleSelect : true, //	设置为 true，则只允许选中一行。
 				    rownumbers:false, //设置为 true，则显示带有行号的列。
-					nowrap : false, //设置为 true，则把数据显示在一行里。设置为 true 可提高加载性能。
+					nowrap : true, //设置为 true，则把数据显示在一行里。设置为 true 可提高加载性能。
 					striped : true, //设置为 true，则把行条纹化。（即奇偶行使用不同背景色）
 				    loadMsg : "数据加载中,请稍等...", //当从远程站点加载数据时，显示的提示消息。
 				    pagination:true, //设置为 true，则在数据网格（datagrid）底部显示分页工具栏。
@@ -38,32 +60,45 @@
 							width:500
 						},
 						{
-							field:'verify_code',
+							field:'password',
 							title:'验证码',
 							align:"center",
 							width:500
 						},
 						{
+							field:'status',
+							title:'登录状态',
+							align:"center",
+							width:500,
+							formatter: function(value,row,index){
+								if(value==0){
+									return "等待登录";
+								}else if(value==1){
+									return "登录成功";
+								}else{
+									return "登录失败";
+								}
+							}
+						},
+						{
 							field:'balance',
-							title:'类型',
+							title:'余额',
 							align:"center",
 							width:500
 						},
 						{
-							field:'balance',
-							title:'状态',
-							align:"center",
-							width:500
-						},
-						{
-							field:'balance',
-							title:'次数',
-							align:"center",
-							width:500
-						},
-						{
-							field:'balance',
+							field:'message',
 							title:'留言',
+							align:"center",
+							width:500,
+							formatter: function(value,row,index){
+								var msg = "<span title='"+value+"'>"+value+"</span>"
+								return msg;
+							}
+						},
+						{
+							field:'login_num',
+							title:'登录次数',
 							align:"center",
 							width:500
 						},
@@ -83,8 +118,13 @@
 							align:"center",
 							width:800,
 							formatter:function(value,row,index){
-								var confirm = "<a class='editBtn c6' style='width:80px' onclick='orderDetail("+row.id+")'>确认登录</a>";
-								var charge = "<a class='editBtn c1' style='width:50px;margin-left:10px' onclick='orderDetail("+row.id+")'>充 值</a>";
+								var confirm;
+								if(row.status==0){
+									confirm = "<a class='editBtn c6' data-options='disabled:true' style='width:80px' onclick='confirmLogin("+row.username+")'>确认登录</a>";
+								}else{
+									confirm = "<a class='editBtn c6' data-options='disabled:true' style='width:80px' onclick='confirmLogin("+row.username+")'>确认登录</a>";
+								}
+								var charge = "<a class='editBtn c1' style='width:50px;margin-left:10px' onclick='charge("+row.id+")'>充 值</a>";
 								return confirm + charge;
 							}
 						}
@@ -109,9 +149,9 @@
 							$(this).css("border-style","none");
 						});
 						if (data.total == 0) {//如果没有数据    进
-							var tip = '<div id="nothing" style="font-size:20px;height:200px;line-height:200px;text-align:center;color:rgb(200,200,200)"><span style="font-size: 16px;color:#B3B3B3;">未查询到订单列表</span></div>';
+							var tip = '<div id="nothing" style="font-size:20px;height:200px;line-height:200px;text-align:center;color:rgb(200,200,200)"><span style="font-size: 16px;color:#B3B3B3;">未查询到用户列表</span></div>';
 						    //添加一个新数据行，第一列的值为你需要的提示信息，然后将其他列合并到第一列来，注意修改colspan参数为你columns配置的总列数
-						    $(this).datagrid('appendRow', { sn:tip }).datagrid('mergeCells', { index: 0, field: 'sn', colspan: 7})
+						    $(this).datagrid('appendRow', { id:tip }).datagrid('mergeCells', { index: 0, field: 'id', colspan: 9})
 						    //隐藏分页导航条，这个需要熟悉datagrid的html结构，直接用jquery操作DOM对象，easyui datagrid没有提供相关方法隐藏导航条
 						    $(this).closest('div.datagrid-wrap').find('div.datagrid-pager').hide();
 						    //移除鼠标移到行上面时,让背景不发生改变
@@ -132,10 +172,8 @@
 			//查询方法
 			function searchClick(){
 				$("#memberList").datagrid("load",{
-					sn : $("#sn").textbox("getValue"),
-					status : $("#status").combobox("getValue"),
-					sdate : $("#sdate").datebox("getValue"), 
-					edate : $("#edate").datebox("getValue")
+					name : $("#name").textbox("getValue"),
+					status : $("#status").combobox("getValue")
 				});
 			}
 		
@@ -143,12 +181,6 @@
 			function resetClick(){
 				$("#memberList").datagrid("load",{});
 				$("#searchForm").form("reset");
-			}
-            
-			//详情方法
-			function orderDetail(id){
-				var options = $('#memberList').datagrid('getPager').data("pagination").options;  
-				refresh([[@{/admin/order/detail}]] + "?id=" +id + "&curr=" + options.pageNumber);
 			}
 		/*]]>*/
 		</script>
@@ -163,15 +195,26 @@
 				<form id="searchForm" th:action="@{/admin/product/list}" method="post">
 					<div>
 						<label style="width:40px">号 码：</label>
-						<input id="sn" name="sn" type="text" class="easyui-textbox" data-options="width:120"/>
+						<input id="name" type="text" class="easyui-textbox" data-options="width:120"/>
+
+						<label class="mg-left-20" style="width:60px">登录状态：</label>
+						<select id="status" type="text" class="easyui-combobox" data-options="width:120,editable:false">
+							<option value="-1">不限</option>
+							<option value="0">等待登录</option>
+							<option value="1">登录成功</option>
+							<option value="2">登录失败</option>
+						</select>
 						
 	                   	<a href="javascript:" class="easyui-linkbutton" style="margin-left:20px" data-options="onClick:searchClick,width:60,height:29">查 询</a>
 	                   	<a href="javascript:" class="easyui-linkbutton" data-options="onClick:resetClick,width:60,height:29">重 置</a>
+					
+						<span id="wait" style="color:red;margin-left: 50px;display:none">有等待登录的用户，请及时处理</span>
 					</div>
 				</form>
 			</div>	
 			
 			<div>
+				<!-- 用户列表 -->
 				<table id="memberList"></table>
 			</div>
 		</div>

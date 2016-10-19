@@ -26,6 +26,7 @@
 			<if test="login_num!=null">login_num = #{login_num},</if>
 			<if test="message!=null">message = #{message}</if>
 		</set>
+		WHERE username = #{username}
 	</insert>
 
 	<!-- 通过用户ID查询用户 -->
@@ -38,6 +39,7 @@
 		SELECT * FROM member
 		<where>
 			<if test="param.name!=null">username LIKE '%${param.name}%'</if>
+			<if test="param.status!=null">AND status = ${param.status}</if>
 		</where>
 		<if test="param.page!=null">
 			LIMIT #{param.page}, #{param.rows}
@@ -49,6 +51,7 @@
 		SELECT COUNT(1) FROM member
 		<where>
 			<if test="param.name!=null">username LIKE '%${param.name}%'</if>
+			<if test="param.status!=null">AND status = ${param.status}</if>
 		</where>
 	</select>
 
