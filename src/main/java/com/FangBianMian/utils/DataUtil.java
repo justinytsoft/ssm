@@ -47,6 +47,46 @@ import com.FangBianMian.domain.User;
 public class DataUtil {
 	
 	/**
+	 * 替换编辑器里的临时图片路径为正式路径
+	 * @param content
+	 * @return
+	 */
+	public static String replaceTempImgSrc(String content){
+		String imagePatternStr = "<img[\\w\\W]*?src=[\"|\']?([\\w\\W]*?)(jpg|png)[\\w\\W]*?/>";
+		Pattern imagePattern = Pattern.compile(imagePatternStr, Pattern.CASE_INSENSITIVE);
+		Matcher matcher = imagePattern.matcher(content);
+		
+		try{
+			while (matcher.find()) {
+				String prefix = matcher.group(1);
+				String suffix = matcher.group(2);
+				int start = prefix.indexOf("temp/") + 5;
+				int end = prefix.length();
+				
+				//临时文件的名称
+				System.out.println(matcher.group(1));
+				
+				/*String tempPath = SettingUtil.getCommonSetting("upload.file.temp.path") + File.separator + temp;// 临时文件夹
+				File file = new File(tempPath);
+				if(file.exists() && file.isFile()){ //判断是否存在临时目录，存在则移到正式目录并返回路径
+					String formal = "images/" + DataUtil.moveToDir(temp, true); //正式路径
+					temp = "temp/" + temp;
+					content = content.replaceFirst(temp, formal); //替换临时路径
+				}*/
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		return content;
+	}
+	
+	public static void main(String[] args) {
+		String img = "asegwegew<img src=\"http://yw-workspace.com:8099/ssm/temp/1476955592389_S.jpeg\" title=\"\" alt=\"\"/>wfefwfw<img src=\"http://yw-workspace.com:8099/ssm/temp/1476955595335_S.png\" title=\"\" alt=\"\"/>";
+		System.out.println(replaceTempImgSrc(img));
+	}
+	
+	/**
 	 * 获取后台用户session
 	 * @return
 	 */

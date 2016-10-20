@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.FangBianMian.domain.Product;
 import com.FangBianMian.domain.ProductImg;
 import com.FangBianMian.service.IProductService;
+import com.FangBianMian.utils.DataUtil;
 import com.FangBianMian.utils.DataValidation;
 import com.FangBianMian.utils.EasyuiDatagrid;
 
@@ -26,31 +27,6 @@ public class ProductController {
 	
 	@Autowired
 	private IProductService productService;
-	
-	/**
-	 * 替换ueditor编辑器里的图片路径为正式路径
-	 * @param content
-	 * @return
-	 */
-	public static String replaceImgSrc(String content){
-		String imagePatternStr = "<img[\\w\\W]*?src=[\"|\']?([\\w\\W]*?)(jpg|png)[\\w\\W]*?/>";
-		Pattern imagePattern = Pattern.compile(imagePatternStr, Pattern.CASE_INSENSITIVE);
-		Matcher matcher = imagePattern.matcher(content);
-		
-		while (matcher.find()) {
-			// img src中图片的url前缀
-			String imageFragmentURL = matcher.group(1);
-			// img src中图片的url后缀
-			String imageFragmentSuffix = matcher.group(2);
-		}
-		
-		return content;
-	}
-	
-	public static void main(String[] args) {
-		String content = "<p>黑人牙膏，谁用谁知道<img src=\"http://localhost:8099/ssm/temp/1476339719819_S.png\" title=\"\" alt=\"\"/></p>";
-		System.out.println(replaceImgSrc(content));
-	}
 	
 	/**
 	 * 删除商品
@@ -215,6 +191,7 @@ public class ProductController {
 		p.setStatus(status);
 		p.setHot(hot);
 		p.setDetail(detail);
+		//p.setDetail(DataUtil.replaceTempImgSrc(detail));
 		
 		productService.saveProduct(p, productImgs);
 		
