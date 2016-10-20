@@ -25,8 +25,7 @@ em {font-style: normal;}
 .ml88 {margin-left: 88px;}
 .flr {float: right;}
 .fll {float: left;}
-.headerBox ,.menuBox ,.page-next ,.container ,.logoheader ,.login-center ,.loginheader ,.orderWrap ,.topMemu .topMemu-box ,.stepBox ,.carList ,.orderList{width: 1025px;margin: auto;font-size: 0px}
-.searchBox {width: 1200px;margin: auto;}
+.headerBox ,.searchBox ,.menuBox ,.page-next ,.container ,.logoheader ,.login-center ,.loginheader ,.orderWrap ,.topMemu .topMemu-box ,.stepBox ,.carList ,.orderList{width: 1025px;margin: auto;font-size: 0px}
 /*
  title1 
  * */
@@ -39,12 +38,12 @@ em {font-style: normal;}
  header
  * */
 .index {background: url(../img/shuiyin.png) ;}
-.header1 {height: 35px;background: #f8f8f8;}
-.header1 ul {/*width: 815px;*//*width:900px;*/margin: auto;}
-.header1 ul li{float: left;line-height: 35px;}
+.header1 {height: 55px;background: #f8f8f8;}
+.header1 ul {/*width: 815px;*/width:900px;margin: auto;}
+.header1 ul li{float: left;}
 .header1 ul li img {vertical-align: sub;}
-.header1 ul li a{line-height: 35px;}
-.header1 .spacer {border-left: 1px dotted #B5B5B5;margin-left: 18px;margin-right: 18px;height: 20px;margin-top: 8px;}
+.header1 ul li a{line-height: 55px;}
+.header1 .spacer {border-left: 1px dotted #B5B5B5;margin-left: 18px;margin-right: 18px;height: 20px;margin-top: 17px;}
 /*
  search
  * */
@@ -118,15 +117,15 @@ em {font-style: normal;}
 product-list 商品列表页
  * */
 .sec-pages .searchBox a {margin-left: 0px;}
-.sec-pages .seachBody {margin-left: 148px;}
+.sec-pages .seachBody {margin-left: 130px;}
 .sec-pages .menu .firUl {margin-left: 0px;}
-.sec-pages .menu {border-bottom: 1px solid #a5111f;}
+.sec-pages .menu {background: #a5111f;}
 .sec-pages .menu .firUl>li a.active {border-bottom: 1px solid #FFFFFF;}
-.sec-pages .menu .firUl>li a{color: #434343;}
+.sec-pages .menu .firUl>li a{color: #FFFFFF;}
 .listbody .container {width: 1041px;margin-top: 17px;}
 .product-list li {width: 25%;float: left;}
 .product-list li>div {margin: 13px 8px;}
-.product-list .img-size {width: 100%;height: 280px;overflow: hidden;}
+.product-list .img-size {width: 230px;height: 280px;overflow: hidden;}
 .product-list .img-size a {padding-top: 280px;}
 .product-list .text-link {color: #666;display: block;height: 16px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .product-list .product-info {margin-top: 5px;}
@@ -153,10 +152,10 @@ product-list 商品列表页
  login
  * */
 .header {height:80px;}
-.loginheader .logo {width: 150px;height: 50px;}
+.loginheader .logo {width: 400px;height: 50px;}
 .loginheader .logo img {width: 100%;margin-top: 10px;}
-.login-bg {height:425px;background: url(../img/login-bg.png) no-repeat center center;background-size: cover;}
-.login-box {height: 265px;width: 325px;float: right;margin-top: -360px;background: #FFFFFF;}
+.login-bg {height:425px;background: url(../img/login_bg.jpg) no-repeat center center;background-size: cover;}
+.login-box {height: 265px;width: 325px;float: right;margin-top: -360px;background: rgba(129, 228, 250, 0.56);}
 .box-top {border-bottom: 1px solid darkgray;height: 40px;}
 .box-top span {margin-top: 15px;}
 .box-top .register-link {margin-right: 18px;text-decoration: underline}
@@ -274,23 +273,3 @@ product-list 商品列表页
 .table-order tr th{text-align: left;padding-left: 10px;font-weight: normal;}
 .orderList .list-table .table-order th {font-size: 13px; padding-top: 20px;padding-bottom: 10px;color: #7a7a7a;}
 
-/*
- 
- * 
- * 
- * mina add css
- * */
-em.arrow {
-    width: 6px;
-    margin-left: 10px;
-   }
-.my-account-li em {
-    display: inline-block;
-    /*width: 18px;*/
-    height: 16px;
-    vertical-align: sub;
-    /*margin-right: 7px;*/
-    background: url(../img/icon-bg.png) no-repeat; background-position: -180px 0;
-}
-.my-account-li {position: relative;}
-.my-account {background: #f8f8f8; display: none; border: 1px solid #f6f6f6;line-height: 30px;text-align: center;position: absolute;margin-left: -19px;width: 90px;}

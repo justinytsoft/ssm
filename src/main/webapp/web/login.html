@@ -167,11 +167,11 @@
 							<input id="phone" name="phone" type="text" class="easyui-textbox" style="padding:10px" data-options="width:283,prompt:'请输入手机号',validType:['isPhone'],required:true,validateOnCreate:false"/>
 						</div>
 						<div style="margin-bottom: 20px">
-							<input id="code" name="code" type="text" class="easyui-textbox" style="padding:10px" data-options="width:120,prompt:'请输入验证码',required:true,validateOnCreate:false"/>
-							<a id="vfcBtn" href="#" class="easyui-linkbutton c1" data-options="onClick:sendVerifyCode" style="width:100px;height:28px;">获取验证码</a>
+							<input id="code" name="code" type="text" class="easyui-textbox" style="padding:10px" data-options="width:180,prompt:'请输入验证码',required:true,validateOnCreate:false"/>
+							<a id="vfcBtn" href="#" class="easyui-linkbutton c1" data-options="onClick:sendVerifyCode" style="width:100px;height:30px;">获取验证码</a>
 						</div>
 						<div style="margin-bottom: 10px">
-							<a href="#" class="easyui-linkbutton c1" data-options="onClick:login" style="width:283px;height:35px">登 录</a>
+							<a href="#" class="easyui-linkbutton" data-options="onClick:login" style="width:283px;height:35px">登 录</a>
 							<span style="color: red;" th:text="${msg}">sssss</span>
 						</div>
 					</form>
@@ -184,6 +184,65 @@
 	    	登录中，请稍等片刻.
 	    </div>
 		
-		<iframe MARGINWIDTH='0' MARGINHEIGHT='0' HSPACE='0' VSPACE='0' FRAMEBORDER='0' SCROLLING='no' th:src="@{/web/index/bottom}" width="100%" height="270px"></iframe>
+		<section class="footerBox">
+			<div class="footer">
+				<div class="footer-left fll">
+					<div class="footer-list1 list">
+						<ul>
+							<li>
+								<a href="javascript:">网站首页</a>
+							</li>
+							<li>
+								<a href="javascript:">诚聘英才</a>
+							</li>
+						</ul>
+					</div>
+					<div class="footer-list2 list">
+						<ul>
+							<li>
+								<a href="javascript:">商家帮助</a>
+							</li>
+							<li>
+								<a href="javascript:">隐私保护</a>
+							</li>
+						</ul>
+					</div>
+					<div class="footer-list3 list">
+						<ul>
+							<li>
+								<a href="javascript:">网站公告</a>
+							</li>
+							<li>
+								<a href="javascript:">新闻动态</a>
+							</li>
+						</ul>
+					</div>
+					<div class="footer-list4 list">
+						<ul>
+							<li>
+								<a href="javascript:">关注我们</a>
+							</li>
+							<li>
+								<a href="javascript:">政策法律声明</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="footer-right flr">
+					<div class="pic1 erweima">
+						<!--<p>微信服务号</p>-->
+						<p><img th:src="@{/web/assets/img/icon-01.gif}" /></p>
+					</div>
+					<div class="pic2 erweima">
+						<!--<p>客户端下载</p>-->
+						<p><img th:src="@{/web/assets/img/icon-02.gif}" /></p>
+					</div>
+				</div>
+				<div class="clr"></div>
+				<div class="adress">
+					<p>© 和包村 2016-2017 All Rights Reserved. 未经许可 不得抄袭本站图片和内容</p>
+				</div>
+			</div>
+		</section>
 	</body>
 </html>
