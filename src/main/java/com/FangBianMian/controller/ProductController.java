@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.FangBianMian.domain.Product;
 import com.FangBianMian.domain.ProductImg;
 import com.FangBianMian.service.IProductService;
-import com.FangBianMian.utils.DataUtil;
 import com.FangBianMian.utils.DataValidation;
 import com.FangBianMian.utils.EasyuiDatagrid;
 

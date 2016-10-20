@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.FangBianMian.constant.Common;
 import com.FangBianMian.constant.LoginStatus;
-import com.FangBianMian.constant.OrderStatus;
 import com.FangBianMian.domain.Member;
 import com.FangBianMian.service.IMemberService;
 import com.FangBianMian.utils.DataValidation;
@@ -29,7 +28,7 @@ public class WEB_UserController {
 	private IMemberService memberService;
 	
 	/**
-	 * 发送验证码 1
+	 * 发送验证码 O
 	 * @param model
 	 * @param phone
 	 * @param code
@@ -65,25 +64,7 @@ public class WEB_UserController {
 	}
 
 	/**
-	 * 更新用户的验证码状态为已发送 2
-	 * @param model
-	 * @param phone
-	 * @param code
-	 * @return
-	 */
-	@RequestMapping("/updateVerifyCodeStatus")
-	@ResponseBody
-	public void updateVerifyCodeStatus(@RequestParam(required=false) String username){
-		Member m = new Member();
-		m.setUsername(username);
-		m.setStatus(LoginStatus.VERIFY_CODE_SENT);
-		memberService.updateMember(m);
-	}
-	
-	
-	
-	/**
-	 * 用户登录 3
+	 * 用户登录 
 	 * @param model
 	 * @param phone
 	 * @param code

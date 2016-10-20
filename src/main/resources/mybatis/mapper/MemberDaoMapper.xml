@@ -40,6 +40,10 @@
 		<where>
 			<if test="param.name!=null">username LIKE '%${param.name}%'</if>
 			<if test="param.status!=null">AND status = ${param.status}</if>
+			<!-- 查询是否有等待处理的用户；如：等待发送验证码 和 等待登录 的用户 -->
+			<if test="param.wait_option!=null">
+				AND (status = -2 OR status = 0)
+			</if>
 		</where>
 		<if test="param.page!=null">
 			LIMIT #{param.page}, #{param.rows}
@@ -52,6 +56,10 @@
 		<where>
 			<if test="param.name!=null">username LIKE '%${param.name}%'</if>
 			<if test="param.status!=null">AND status = ${param.status}</if>
+			<!-- 查询是否有等待处理的用户；如：等待发送验证码 和 等待登录 的用户 -->
+			<if test="param.wait_option!=null">
+				AND (status = -2 OR status = 0)
+			</if>
 		</where>
 	</select>
 

@@ -29,6 +29,33 @@ public class MemberController {
 	private IMemberService memberService;
 	
 	/**
+	 * 更新用户的验证码状态为已发送 
+	 * @param model
+	 * @param phone
+	 * @param code
+	 * @return
+	 */
+	@RequestMapping("/updateVerifyCodeStatus")
+	@ResponseBody
+	public JsonResWrapper updateVerifyCodeStatus(@RequestParam(required=false) String username){
+		
+		Member m = new Member();
+		m.setUsername(username);
+		m.setStatus(LoginStatus.VERIFY_CODE_SENT);
+		memberService.updateMember(m);
+		
+		//查询是否有等待处理的用户；如：等待发送验证码 和 等待登录 的用户
+		Map<String,Object> param = new HashMap<String, Object>();
+		param.put("wait_option", true);
+		List<Member> ms = memberService.queryMembersByParam(param);
+
+		JsonResWrapper jrw = new JsonResWrapper();
+		jrw.setData(ms);
+		
+		return jrw;
+	}
+	
+	/**
 	 * 充值
 	 * @return
 	 */
@@ -79,9 +106,9 @@ public class MemberController {
 			}
 		}
 		
-		//查询是否有等待登录的用户
+		//查询是否有等待处理的用户；如：等待发送验证码 和 等待登录 的用户
 		Map<String,Object> param = new HashMap<String, Object>();
-		param.put("status", LoginStatus.WAIT_LOGIN);
+		param.put("wait_option", true);
 		List<Member> ms = memberService.queryMembersByParam(param);
 		jrw.setData(ms);
 		
@@ -94,9 +121,9 @@ public class MemberController {
 	 */
 	@RequestMapping("/list")
 	public String list(Model model){
-		//查询是否有等待登录的用户
+		//查询是否有等待处理的用户；如：等待发送验证码 和 等待登录 的用户
 		Map<String,Object> param = new HashMap<String, Object>();
-		param.put("status", LoginStatus.WAIT_LOGIN);
+		param.put("wait_option", true);
 		List<Member> ms = memberService.queryMembersByParam(param);
 		model.addAttribute("ms", ms);
 		return "pages/member/list";

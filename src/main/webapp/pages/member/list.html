@@ -25,6 +25,16 @@
             	});
             }
 		
+          	//更新验证码状态为已发送
+			function updateStatus(username){
+				$.post([[@{/admin/member/updateVerifyCodeStatus}]],{_:Math.random(),username:username},function(data){
+					$("#memberList").datagrid('reload');
+					if(data.data.length<1){
+        				$("#wait").hide();
+        			}
+				});
+			}
+		
             //充值
             function charge(username){
             	cPrompt("请输入要充值的金额：",function(price){
@@ -46,13 +56,13 @@
             }
 
 			$(function(){
-				/* //进页面时判断是否有等待登录的用户
+				//进页面时判断是否有等待登录的用户
 				var waitMs = [[${ms}]];
 				if(waitMs.length>0){
 					$("#wait").show();
 				}else{
 					$("#wait").hide();
-				}    */
+				}   
 				
 				//进页面后通过websocket判断是否有等待登录的用户
 	            websocket.onmessage = function (evnt) {
@@ -206,13 +216,6 @@
 	            });
 			});
 
-			//更新验证码状态为已发送
-			function updateStatus(username){
-				$.post([[@{/web/user/updateVerifyCodeStatus}]],{_:Math.random(),username:username},function(){
-					$("#memberList").datagrid('reload');
-				});
-			}
-			
 			//查询方法
 			function searchClick(){
 				$("#memberList").datagrid("load",{
@@ -252,7 +255,7 @@
 	                   	<a href="javascript:" class="easyui-linkbutton" style="margin-left:20px" data-options="onClick:searchClick,width:60,height:29">查 询</a>
 	                   	<a href="javascript:" class="easyui-linkbutton" data-options="onClick:resetClick,width:60,height:29">重 置</a>
 					
-						<span id="wait" style="color:red;margin-left: 50px;display:none">有等待登录的用户，请及时处理</span>
+						<span id="wait" style="color:red;margin-left: 50px;display:none">有等待操作的用户，请及时处理</span>
 					</div>
 				</form>
 			</div>	
