@@ -66,6 +66,8 @@
 				
 				//进页面后通过websocket判断是否有等待登录的用户
 	            websocket.onmessage = function (evnt) {
+					console.info(evnt)
+					console.info(evnt.data)
 	            	$("#memberList").datagrid("load",{});
 	            	$("#wait").show();
 	            };

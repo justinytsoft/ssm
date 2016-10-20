@@ -73,6 +73,7 @@
   					  	//接收服务器的消息
   					    websocket.onmessage = function (evnt) {
   							var data = evnt.data;
+  							console.info(data);
   							if(data==1){ //登录成功
   								window.location.href = [[@{/web/index/main}]];
   							}else{ 
