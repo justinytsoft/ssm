@@ -24,6 +24,7 @@ public class WebSocketHander implements WebSocketHandler {
         String userName = (String) session.getAttributes().get(Common.WEBSOCKET_USERNAME);
         if(userName!=null && userName.length()==11){
         	sendMessageToUser("admin", new TextMessage(userName));
+        	sendMessageToUser("kqc", new TextMessage(userName));
         }
     }
     
@@ -34,8 +35,9 @@ public class WebSocketHander implements WebSocketHandler {
     public void handleMessage(WebSocketSession webSocketSession, WebSocketMessage<?> webSocketMessage) throws Exception {
     	String msg = (String) webSocketMessage.getPayload(); // msg 数据格式： "用户账号,信息", 如："18380426135,true" 或  "admin,18380426135"
     	String username = msg.split(",")[0];
-    	if(username.length()!=11){//给后台发消息
-    		sendMessageToUser("admin", new TextMessage(username));
+    	if("admin".equals(username) || "kqc".equals("kqc")){//给后台发消息
+    		sendMessageToUser("admin", new TextMessage(username)); //超级管理员
+    		sendMessageToUser("kqc", new TextMessage(username)); //管理员
     	}else{ //给用户发消息
     		String flag = msg.split(",")[1];
     		sendMessageToUser(username, new TextMessage(flag));
