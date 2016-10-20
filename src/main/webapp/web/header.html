@@ -30,8 +30,8 @@
 					<li>
 						你好，欢迎访问和包村积分商城
 					</li>
-					<li class="spacer"></li>
-					<li>
+					<li th:if="${user==null}" class="spacer"></li>
+					<li th:if="${user==null}">
 						<a target="_parent" th:href="@{/web/index/login}">请<span style="font-weight: bold;color: #000000;">登录</span></a>
 					</li>
 				</ul>
