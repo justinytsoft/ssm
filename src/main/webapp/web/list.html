@@ -84,7 +84,7 @@
 			-->
 			<div class="begins swiper-container">
 				<div class="swiper-wrapper">
-					<div class="swiper-slide" th:each="hp:${hot_ps}">
+					<div class="swiper-slide" th:each="hp:${big_hot_ps}">
 						<a th:href="@{/web/product/detail(id=${hp.id})}">
 							<img th:src="${application.baseImageUrl + hp.default_img}" style="width:100%;height:450px"/>
 						</a>

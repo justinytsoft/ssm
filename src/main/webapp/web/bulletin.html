@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head th:include="fragment/web_import :: header"></head>
+	
+	<!-- easyui -->  
+  	<script th:src="@{/assets/plugins/easyui/jquery.easyui.min.js}"></script>
+  	<script th:src="@{/assets/plugins/easyui/locale/easyui-lang-zh_CN.js}"></script>
+  	<script th:src="@{/assets/plugins/easyui/custom/common.js}"></script> 
+  	<link rel="stylesheet" th:href="@{/assets/plugins/easyui/themes/material/easyui.css}" />
+  	<link rel="stylesheet" th:href="@{/assets/plugins/easyui/themes/icon.css}" />
+  	<link rel="stylesheet" th:href="@{/assets/plugins/easyui/themes/color.css}" />
+  	<link rel="stylesheet" th:href="@{/assets/plugins/easyui/custom/common.css}" />
+
+	<style>
+		.container{
+			width:70%;
+			border: 1px solid #EEE;
+			margin: 10px auto;
+			text-align: center;
+			height:300px;
+		}
+		.title{
+			margin: 20px 0;
+			font-size: 14px;
+			padding-bottom:10px;
+			border-bottom: 1px dotted #EEE;
+		}
+		.content{
+			margin-bottom: 20px;
+		}
+	</style>	
+
+	<body>
+		<div>
+			<div style="margin-top: 10px">
+				<span style="margin-left: 15%"><a th:href="@{/web/index/center}">首页 > </a>公告详情</span>
+			</div>
+			<div class="container">
+				<p class="title" th:text="${b.title}"></p>
+				<div th:utext="${b.content}"></div>
+			</div>
+		</div>
+	
+		<iframe MARGINWIDTH='0' MARGINHEIGHT='0' HSPACE='0' VSPACE='0' FRAMEBORDER='0' SCROLLING='no' th:src="@{/web/index/bottom}" width="100%" height="160px"></iframe>
+	</body>
+
+</html>
