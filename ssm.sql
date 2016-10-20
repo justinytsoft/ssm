@@ -30,6 +30,39 @@ CREATE TABLE `affiche` (
 
 /*Data for the table `affiche` */
 
+/*Table structure for table `bulletin` */
+
+DROP TABLE IF EXISTS `bulletin`;
+
+CREATE TABLE `bulletin` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '公告表',
+  `title` varchar(1000) DEFAULT NULL COMMENT '标题',
+  `content` text COMMENT '内容',
+  `top` tinyint(1) DEFAULT '0' COMMENT '是否置顶 0 否 1 是',
+  `invisible` tinyint(1) DEFAULT '0' COMMENT '是否删除 0 否 1 是',
+  `type` int(11) DEFAULT NULL COMMENT '公告类型',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+/*Data for the table `bulletin` */
+
+insert  into `bulletin`(`id`,`title`,`content`,`top`,`invisible`,`type`,`create_time`) values (1,'test','<p>test</p>',0,1,2,'2016-10-20 11:28:27'),(2,'维护公告','<p>维护中<img src=\"http://localhost:8099/ssm/temp/1476934150840_S.png\" title=\"\" alt=\"\"/></p>',0,1,1,'2016-10-20 11:29:12'),(3,'优惠','<p>问题汕头市啊</p>',0,0,2,'2016-10-20 11:29:29'),(4,'通知','<p>访问我而去</p>',0,0,3,'2016-10-20 11:30:05'),(5,'eqeqrerq','<p>ewqfqefq<img src=\"http://img.baidu.com/hi/jx2/j_0026.gif\"/></p>',0,1,3,'2016-10-20 12:54:34');
+
+/*Table structure for table `bulletin_type` */
+
+DROP TABLE IF EXISTS `bulletin_type`;
+
+CREATE TABLE `bulletin_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '公告类型表',
+  `name` varchar(100) DEFAULT NULL COMMENT '类型名称',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+/*Data for the table `bulletin_type` */
+
+insert  into `bulletin_type`(`id`,`name`) values (1,'系统公告'),(2,'活动公告'),(3,'普通公告');
+
 /*Table structure for table `cart` */
 
 DROP TABLE IF EXISTS `cart`;
@@ -83,7 +116,7 @@ CREATE TABLE `coupon` (
 
 /*Data for the table `coupon` */
 
-insert  into `coupon`(`id`,`name`,`description`,`amount`,`currency`,`quantity`,`start_time`,`end_time`,`minimum_charge`) values (1,'金秋代金券','满100减10块','10.00',1,1000,'2016-08-24 00:46:14','2016-09-10 00:46:19','100.00'),(2,NULL,NULL,'20.00',1,1000,'0000-00-00 00:00:00','0000-00-00 00:00:00','122.00'),(3,NULL,NULL,'20.00',1,1000,'2016-08-24 00:22:13','2016-09-14 00:22:13','122.00'),(4,NULL,NULL,'1.00',1,12,'2016-08-31 14:08:29','2016-08-31 00:00:00','23.00'),(5,NULL,NULL,NULL,1,NULL,'2016-08-31 14:09:17','2016-09-08 00:00:00',NULL),(6,NULL,NULL,NULL,1,NULL,'2016-08-31 14:09:41','2016-09-16 00:00:00',NULL),(7,'信息',NULL,'12.00',1,1,'2016-08-31 14:15:56','1999-11-11 00:00:00','222.00'),(8,'牛奶牛',NULL,'3.00',1,3,'2016-08-31 14:20:43','1999-11-11 00:00:00','12.00'),(9,'十月',NULL,'12.00',1,12,'2016-08-31 14:52:46','2016-09-17 00:00:00','123.00'),(10,'sd',NULL,'12.00',1,3,'2016-08-31 17:37:45','2016-09-08 00:00:00','13.00'),(11,'kee',NULL,'22.00',1,11,'2016-09-01 12:28:42','2016-10-14 00:00:00','211.00'),(12,'信息',NULL,'12.00',1,1,'2016-09-01 14:40:54','1999-11-11 00:00:00','222.00'),(13,'ch',NULL,'1.00',1,1,'2016-09-01 14:45:20','2016-09-14 00:00:00','1.00'),(14,'11',NULL,'111.00',1,1,'2016-09-01 15:01:24','2016-09-12 00:00:00','11.00'),(15,'信息',NULL,'12.00',1,1,'2016-09-02 10:07:19','1999-11-11 00:00:00','222.00'),(16,'123',NULL,'123.00',1,3,'2016-09-02 10:07:54','2016-09-02 00:00:00','12.00'),(17,'123',NULL,'123.00',1,2,'2016-09-02 10:07:56','2016-09-02 00:00:00','12.00'),(18,'555',NULL,'10.00',1,2,'2016-09-13 09:49:19','2016-09-13 00:00:00','10.00'),(19,'1123',NULL,'10.00',1,1,'2016-09-13 09:58:41','2016-09-14 00:00:00','10.00'),(20,'1123',NULL,'10.00',1,1,'2016-09-18 14:54:02','2016-09-14 00:00:00','10.00'),(21,'1123',NULL,'10.00',1,1,'2016-09-18 14:54:45','2016-09-14 00:00:00','10.00'),(22,'1123',NULL,'10.00',1,1,'2016-09-18 14:54:54','2016-09-14 00:00:00','10.00'),(23,'d',NULL,'10.00',1,1,'2016-09-18 15:10:57','2016-09-22 00:00:00','10.00'),(24,'JJ',NULL,'51.00',1,10,'2016-09-20 10:52:40','2016-09-20 00:00:00','10.00'),(25,'MM',NULL,'11.00',1,1,'2016-09-20 11:01:47','2016-09-23 00:00:00','11.00'),(26,'这是一张代金券',NULL,'10.00',1,5,'2016-09-28 16:15:37','2016-10-20 00:00:00','10.00');
+insert  into `coupon`(`id`,`name`,`description`,`amount`,`currency`,`quantity`,`start_time`,`end_time`,`minimum_charge`) values (1,'金秋代金券','满100减10块','10.00',1,1000,'2016-08-24 00:46:14','2016-09-10 00:46:19','100.00');
 
 /*Table structure for table `coupon_category` */
 
@@ -120,17 +153,17 @@ CREATE TABLE `member` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(20) DEFAULT NULL COMMENT '账号',
   `password` varchar(64) DEFAULT NULL COMMENT '密码',
-  `status` int(1) DEFAULT '0' COMMENT '登录状态 0 等待登录 1 登录成功 2 登录失败',
+  `status` int(1) DEFAULT '-1' COMMENT '登录状态 -2 等待发送验证码 -1 验证码已发送 0 等待登录 1 登录成功 2 登录失败',
   `balance` decimal(8,2) DEFAULT '0.00' COMMENT '余额',
   `login_num` int(11) DEFAULT '0' COMMENT '登录次数',
   `message` text COMMENT '留言',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `member` */
 
-insert  into `member`(`id`,`username`,`password`,`status`,`balance`,`login_num`,`message`,`create_time`) values (1,'18380426135','123',1,'70.00',91,'2016-10-18 17:57:40,2016-10-19 10:24:33,2016-10-19 10:27:06,2016-10-19 10:49:05,2016-10-19 10:49:38,2016-10-19 10:58:14,2016-10-19 11:07:38,2016-10-19 11:07:50,2016-10-19 11:08:46,2016-10-19 11:08:51,2016-10-19 11:12:17,2016-10-19 11:14:06,2016-10-19 11:14:11,2016-10-19 11:16:46,2016-10-19 11:33:53,2016-10-19 11:34:50,2016-10-19 11:46:14,2016-10-19 11:46:24,2016-10-19 11:47:11,2016-10-19 11:47:33,2016-10-19 12:24:24,2016-10-19 12:26:27,2016-10-19 12:27:19,2016-10-19 12:29:13,2016-10-19 12:31:44,2016-10-19 12:36:58,2016-10-19 12:38:16,2016-10-19 13:35:31,2016-10-19 13:54:03,2016-10-19 14:06:43,2016-10-19 14:07:14,2016-10-19 14:09:49,2016-10-19 14:10:07,2016-10-19 14:10:20,2016-10-19 14:11:47,2016-10-19 14:15:47,2016-10-19 14:17:19,2016-10-19 14:17:24,2016-10-19 14:18:38,2016-10-19 14:19:39,2016-10-19 14:19:49,2016-10-19 14:31:22,2016-10-19 14:32:25,2016-10-19 14:40:56,2016-10-19 14:41:09,2016-10-19 14:42:46,2016-10-19 14:42:49,2016-10-19 14:42:49,2016-10-19 14:51:16,2016-10-19 15:01:02,2016-10-19 15:01:21,2016-10-19 15:37:33,2016-10-19 15:43:17,2016-10-19 15:45:31,2016-10-19 15:46:16,2016-10-19 15:47:46,2016-10-19 15:48:20,2016-10-19 15:50:30,2016-10-19 15:54:43,2016-10-19 15:54:59,2016-10-19 15:57:27,2016-10-19 15:58:15,2016-10-19 16:00:21,2016-10-19 16:06:11,2016-10-19 16:09:41,2016-10-19 16:11:08,2016-10-19 16:12:36,2016-10-19 16:13:50,2016-10-19 16:14:11,2016-10-19 16:15:26,2016-10-19 16:16:42,2016-10-19 16:18:44,2016-10-19 16:20:29,2016-10-19 16:21:28,2016-10-19 16:24:06,2016-10-19 16:39:17,2016-10-19 16:45:12,2016-10-19 16:46:47,2016-10-19 16:49:13,2016-10-19 17:02:00,2016-10-19 17:26:27,2016-10-19 17:40:35,2016-10-19 17:40:45,2016-10-19 17:42:27,2016-10-19 17:45:31,2016-10-19 17:46:28,2016-10-19 17:47:27,2016-10-19 18:28:58,2016-10-19 18:29:27,2016-10-19 18:31:01,2016-10-19 18:32:55','2016-10-18 17:57:40'),(2,'18380426133','123',2,'33.00',11,'2016-10-19 12:36:15,2016-10-19 14:14:40,2016-10-19 14:48:56,2016-10-19 14:48:58,2016-10-19 15:44:54,2016-10-19 15:48:56,2016-10-19 16:18:11,2016-10-19 16:18:18,2016-10-19 16:19:01,2016-10-19 17:43:26,2016-10-19 17:44:20','2016-10-19 12:36:15');
+insert  into `member`(`id`,`username`,`password`,`status`,`balance`,`login_num`,`message`,`create_time`) values (1,'18380426135','131',2,'70.00',108,'2016-10-18 17:57:40,2016-10-19 10:24:33,2016-10-19 10:27:06,2016-10-19 10:49:05,2016-10-19 10:49:38,2016-10-19 10:58:14,2016-10-19 11:07:38,2016-10-19 11:07:50,2016-10-19 11:08:46,2016-10-19 11:08:51,2016-10-19 11:12:17,2016-10-19 11:14:06,2016-10-19 11:14:11,2016-10-19 11:16:46,2016-10-19 11:33:53,2016-10-19 11:34:50,2016-10-19 11:46:14,2016-10-19 11:46:24,2016-10-19 11:47:11,2016-10-19 11:47:33,2016-10-19 12:24:24,2016-10-19 12:26:27,2016-10-19 12:27:19,2016-10-19 12:29:13,2016-10-19 12:31:44,2016-10-19 12:36:58,2016-10-19 12:38:16,2016-10-19 13:35:31,2016-10-19 13:54:03,2016-10-19 14:06:43,2016-10-19 14:07:14,2016-10-19 14:09:49,2016-10-19 14:10:07,2016-10-19 14:10:20,2016-10-19 14:11:47,2016-10-19 14:15:47,2016-10-19 14:17:19,2016-10-19 14:17:24,2016-10-19 14:18:38,2016-10-19 14:19:39,2016-10-19 14:19:49,2016-10-19 14:31:22,2016-10-19 14:32:25,2016-10-19 14:40:56,2016-10-19 14:41:09,2016-10-19 14:42:46,2016-10-19 14:42:49,2016-10-19 14:42:49,2016-10-19 14:51:16,2016-10-19 15:01:02,2016-10-19 15:01:21,2016-10-19 15:37:33,2016-10-19 15:43:17,2016-10-19 15:45:31,2016-10-19 15:46:16,2016-10-19 15:47:46,2016-10-19 15:48:20,2016-10-19 15:50:30,2016-10-19 15:54:43,2016-10-19 15:54:59,2016-10-19 15:57:27,2016-10-19 15:58:15,2016-10-19 16:00:21,2016-10-19 16:06:11,2016-10-19 16:09:41,2016-10-19 16:11:08,2016-10-19 16:12:36,2016-10-19 16:13:50,2016-10-19 16:14:11,2016-10-19 16:15:26,2016-10-19 16:16:42,2016-10-19 16:18:44,2016-10-19 16:20:29,2016-10-19 16:21:28,2016-10-19 16:24:06,2016-10-19 16:39:17,2016-10-19 16:45:12,2016-10-19 16:46:47,2016-10-19 16:49:13,2016-10-19 17:02:00,2016-10-19 17:26:27,2016-10-19 17:40:35,2016-10-19 17:40:45,2016-10-19 17:42:27,2016-10-19 17:45:31,2016-10-19 17:46:28,2016-10-19 17:47:27,2016-10-19 18:28:58,2016-10-19 18:29:27,2016-10-19 18:31:01,2016-10-19 18:32:55,2016-10-20 09:58:43,2016-10-20 15:16:27,2016-10-20 15:35:28,2016-10-20 15:49:40,2016-10-20 15:50:04,2016-10-20 15:52:45,2016-10-20 15:53:20,2016-10-20 15:55:03,2016-10-20 15:57:36,2016-10-20 15:57:46,2016-10-20 15:58:34,2016-10-20 16:06:28,2016-10-20 16:06:46,2016-10-20 16:08:01,2016-10-20 16:09:16,2016-10-20 16:26:46,2016-10-20 16:26:57','2016-10-18 17:57:40'),(2,'18380426133','123',2,'33.00',11,'2016-10-19 12:36:15,2016-10-19 14:14:40,2016-10-19 14:48:56,2016-10-19 14:48:58,2016-10-19 15:44:54,2016-10-19 15:48:56,2016-10-19 16:18:11,2016-10-19 16:18:18,2016-10-19 16:19:01,2016-10-19 17:43:26,2016-10-19 17:44:20','2016-10-19 12:36:15'),(3,'18380426144',NULL,-1,NULL,NULL,NULL,'2016-10-20 15:17:13'),(4,'18380426139',NULL,-1,NULL,NULL,NULL,'2016-10-20 15:56:59'),(5,'18380426138',NULL,-1,NULL,NULL,NULL,'2016-10-20 15:59:11'),(6,'18380426131','124241',2,'0.00',4,'null,2016-10-20 16:03:13,2016-10-20 16:03:30,2016-10-20 16:09:34,2016-10-20 16:10:14','2016-10-20 16:02:42');
 
 /*Table structure for table `member_address` */
 
@@ -340,7 +373,7 @@ CREATE TABLE `product` (
 
 /*Data for the table `product` */
 
-insert  into `product`(`id`,`name`,`category_id`,`price`,`discount_price`,`freight_price`,`payment_type`,`quantity`,`detail`,`default_img`,`status`,`hot`,`invisible`,`create_time`) values (2,'黑人牙膏q',2,'22.00','22.00','10.00',1,20,'<p>黑人牙膏，谁用谁知道<img src=\"http://localhost:8099/ssm/temp/1476339719819_S.png\" title=\"\" alt=\"\"/>123</p>','Ms\\Qz\\1476417883813.jpg',1,1,0,'2016-10-13 17:35:09'),(3,'潜艇',2,'1.00','1.00','0.00',1,1,'<p>123123</p>','A3\\Sp\\1476411071876.png',1,1,1,'2016-10-14 10:11:14'),(4,'遥控赛车',3,'111.00',NULL,'12.00',1,123,'<p>访问时访问非威风威风违反&nbsp;</p>','X1\\Yq\\1476417929895.jpg',1,1,0,'2016-10-14 12:05:36'),(5,'自行车',4,'1234.00',NULL,'1.00',1,12,'<p>的前雾灯去</p>','Vq\\wF\\1476426202439.jpg',1,1,0,'2016-10-14 14:23:25'),(6,'大炮',3,'34352.00','3.00','32.00',1,3,'<p>234</p>','FG\\Da\\1476426519774.jpeg',1,1,0,'2016-10-14 14:28:42'),(7,'手枪',5,'3432.00',NULL,'0.00',1,2345,'<p>3223二分2<img src=\"http://img.baidu.com/hi/jx2/j_0060.gif\"/></p>','pI\\RC\\1476426633095.jpeg',1,1,0,'2016-10-14 14:30:38'),(8,'qwe',3,'11.00',NULL,'11.00',1,11,'<p>121we1</p>','3f\\MC\\1476757748004.jpg',1,0,0,'2016-10-18 10:29:10');
+insert  into `product`(`id`,`name`,`category_id`,`price`,`discount_price`,`freight_price`,`payment_type`,`quantity`,`detail`,`default_img`,`status`,`hot`,`invisible`,`create_time`) values (2,'黑人牙膏q',2,'22.00','22.00','10.00',1,20,'<p>黑人牙膏，谁用谁知<img src=\"http://localhost:8099/ssm/imagesHwUI1476953911477_S.jpg\" title=\"\" alt=\"\"/><img src=\"http://localhost:8099/ssm/temp/1476954949677_S.png\" title=\"\" alt=\"\"/></p>','Ms\\Qz\\1476417883813.jpg',1,1,0,'2016-10-13 17:35:09'),(3,'潜艇',2,'1.00','1.00','0.00',1,1,'<p>123123</p>','A3\\Sp\\1476411071876.png',1,1,1,'2016-10-14 10:11:14'),(4,'遥控赛车',3,'111.00',NULL,'12.00',1,123,'<p>访问时访问非威风威风违反&nbsp;</p>','X1\\Yq\\1476417929895.jpg',1,1,0,'2016-10-14 12:05:36'),(5,'自行车',4,'1234.00',NULL,'1.00',1,12,'<p>的前雾灯去</p>','Vq\\wF\\1476426202439.jpg',1,1,0,'2016-10-14 14:23:25'),(6,'大炮',3,'34352.00','3.00','32.00',1,3,'<p>234</p>','FG\\Da\\1476426519774.jpeg',1,1,0,'2016-10-14 14:28:42'),(7,'手枪',5,'3432.00',NULL,'0.00',1,2345,'<p>3223二分2<img src=\"http://img.baidu.com/hi/jx2/j_0060.gif\"/></p>','pI\\RC\\1476426633095.jpeg',1,1,0,'2016-10-14 14:30:38'),(8,'qwe',3,'11.00',NULL,'11.00',1,11,'<p>121we1</p>','3f\\MC\\1476757748004.jpg',1,0,0,'2016-10-18 10:29:10');
 
 /*Table structure for table `product_category` */
 
@@ -385,11 +418,11 @@ CREATE TABLE `product_img` (
   `pid` int(11) DEFAULT NULL COMMENT '商品ID',
   `img` varchar(255) DEFAULT NULL COMMENT '商品图片',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=136 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=156 DEFAULT CHARSET=utf8;
 
 /*Data for the table `product_img` */
 
-insert  into `product_img`(`id`,`pid`,`img`) values (83,5,'Vq\\wF\\1476426202439.jpg'),(84,6,'FG\\Da\\1476426519774.jpeg'),(92,3,'A3\\Sp\\1476411071876.png'),(102,2,'Ms\\Qz\\1476417883813.jpg'),(103,2,'Qe\\De\\1476410984424.png'),(104,2,'II\\xf\\1476410992045.jpg'),(105,2,'K5\\rb\\1476410989521.png'),(106,2,'Lz\\jZ\\1476410995469.jpg'),(131,7,'pI\\RC\\1476426633095.jpeg'),(132,4,'X1\\Yq\\1476417929895.jpg'),(133,4,'tJ\\ww\\1476417931565.jpg'),(134,4,'Fj\\jT\\1476417933261.png'),(135,8,'3f\\MC\\1476757748004.jpg');
+insert  into `product_img`(`id`,`pid`,`img`) values (83,5,'Vq\\wF\\1476426202439.jpg'),(84,6,'FG\\Da\\1476426519774.jpeg'),(92,3,'A3\\Sp\\1476411071876.png'),(131,7,'pI\\RC\\1476426633095.jpeg'),(132,4,'X1\\Yq\\1476417929895.jpg'),(133,4,'tJ\\ww\\1476417931565.jpg'),(134,4,'Fj\\jT\\1476417933261.png'),(135,8,'3f\\MC\\1476757748004.jpg'),(151,2,'Ms\\Qz\\1476417883813.jpg'),(152,2,'Qe\\De\\1476410984424.png'),(153,2,'II\\xf\\1476410992045.jpg'),(154,2,'K5\\rb\\1476410989521.png'),(155,2,'Lz\\jZ\\1476410995469.jpg');
 
 /*Table structure for table `province` */
 
@@ -418,11 +451,11 @@ CREATE TABLE `sys_menus` (
   `icon` varchar(255) DEFAULT NULL COMMENT '图标',
   `level` int(1) DEFAULT NULL COMMENT '菜单级别',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC COMMENT='菜单表';
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC COMMENT='菜单表';
 
 /*Data for the table `sys_menus` */
 
-insert  into `sys_menus`(`id`,`name`,`parent_id`,`url`,`weight`,`icon`,`level`) values (1,'用户管理',0,NULL,1,'/assets/imgs/menu/member.png',1),(2,'管理员管理',0,NULL,2,'/assets/imgs/menu/account.png',1),(3,'管理员列表',2,'/admin/user/list',1,NULL,2),(4,'管理员新增',2,'/admin/user/add',2,NULL,2),(5,'商品管理',0,NULL,3,'/assets/imgs/menu/product.png',1),(6,'商品列表',5,'/admin/product/list',1,NULL,2),(7,'商品新增',5,'/admin/product/add',2,NULL,2),(8,'订单管理',0,NULL,4,'/assets/imgs/menu/order.png',1),(9,'订单列表',8,'/admin/order/list',1,NULL,2),(11,'用户列表',1,'/admin/member/list',1,NULL,2);
+insert  into `sys_menus`(`id`,`name`,`parent_id`,`url`,`weight`,`icon`,`level`) values (1,'用户管理',0,NULL,1,'/assets/imgs/menu/member.png',1),(2,'管理员管理',0,NULL,2,'/assets/imgs/menu/account.png',1),(3,'管理员列表',2,'/admin/user/list',1,NULL,2),(4,'管理员新增',2,'/admin/user/add',2,NULL,2),(5,'商品管理',0,NULL,3,'/assets/imgs/menu/product.png',1),(6,'商品列表',5,'/admin/product/list',1,NULL,2),(7,'商品新增',5,'/admin/product/add',2,NULL,2),(8,'订单管理',0,NULL,4,'/assets/imgs/menu/order.png',1),(9,'订单列表',8,'/admin/order/list',1,NULL,2),(11,'用户列表',1,'/admin/member/list',1,NULL,2),(12,'公告管理',0,NULL,5,'/assets/imgs/menu/order.png',1),(13,'公告列表',12,'/admin/bulletin/index',1,NULL,2),(14,'公告新增',12,'/admin/bulletin/add',2,NULL,2);
 
 /*Table structure for table `sys_roles` */
 
@@ -433,11 +466,11 @@ CREATE TABLE `sys_roles` (
   `name` varchar(50) NOT NULL COMMENT '角色名称',
   `code` varchar(50) NOT NULL COMMENT '角色名称代码',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `sys_roles` */
 
-insert  into `sys_roles`(`id`,`name`,`code`) values (1,'超级管理员','ADMIN');
+insert  into `sys_roles`(`id`,`name`,`code`) values (1,'超级管理员','SUPER_ADMIN'),(2,'管理员','ADMIN');
 
 /*Table structure for table `sys_roles_menus` */
 
@@ -451,11 +484,11 @@ CREATE TABLE `sys_roles_menus` (
   UNIQUE KEY `INDEX_SRM_rid_mid` (`role_id`,`menu_id`),
   KEY `FK_Reference_35` (`role_id`),
   KEY `FK_Reference_36` (`menu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='角色菜单表';
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='角色菜单表';
 
 /*Data for the table `sys_roles_menus` */
 
-insert  into `sys_roles_menus`(`id`,`role_id`,`menu_id`) values (1,1,1),(5,1,5),(6,1,6),(7,1,7),(8,1,8),(9,1,9),(11,1,11);
+insert  into `sys_roles_menus`(`id`,`role_id`,`menu_id`) values (1,1,1),(5,1,5),(6,1,6),(7,1,7),(8,1,8),(9,1,9),(11,1,11),(12,1,12),(13,1,13),(14,1,14),(15,2,1),(16,2,11);
 
 /*Table structure for table `sys_roles_users` */
 
@@ -468,11 +501,11 @@ CREATE TABLE `sys_roles_users` (
   PRIMARY KEY (`id`),
   KEY `fk_sru_role_id` (`role_id`),
   KEY `fk_sru_user_id` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `sys_roles_users` */
 
-insert  into `sys_roles_users`(`id`,`role_id`,`user_id`) values (1,1,1);
+insert  into `sys_roles_users`(`id`,`role_id`,`user_id`) values (1,1,1),(3,2,2);
 
 /*Table structure for table `sys_users` */
 
@@ -495,7 +528,7 @@ CREATE TABLE `sys_users` (
 
 /*Data for the table `sys_users` */
 
-insert  into `sys_users`(`id`,`username`,`name`,`password`,`create_time`,`last_login_time`,`last_login_ip`,`enabled`,`head`,`type`,`verify_code`) values (1,'admin','超级管理员','$2a$10$TeKfUiYucql6FBOkAtqLDuGylsEXX1tCExHMi/T81htqHXS7Qg.dS','2016-03-25 19:01:29','2015-05-28 12:54:59','127.0.0.1',1,'X1\\Yq\\1476417929895.jpg',1,'7732'),(268,'18380426135','hansen','$2a$10$TeKfUiYucql6FBOkAtqLDuGylsEXX1tCExHMi/T81htqHXS7Qg.dS','2016-03-25 19:01:29','2015-05-28 12:54:59','127.0.0.1',1,'Jx/s4/1475203910224.png',1,'3142'),(269,'13438074645','mina','$2a$10$TeKfUiYucql6FBOkAtqLDuGylsEXX1tCExHMi/T81htqHXS7Qg.dS','2016-03-25 19:01:29','2015-05-28 12:54:59','127.0.0.1',1,'Jx/s4/1475203910224.png',1,'3142');
+insert  into `sys_users`(`id`,`username`,`name`,`password`,`create_time`,`last_login_time`,`last_login_ip`,`enabled`,`head`,`type`,`verify_code`) values (1,'admin','超级管理员','$2a$10$TeKfUiYucql6FBOkAtqLDuGylsEXX1tCExHMi/T81htqHXS7Qg.dS','2016-03-25 19:01:29','2015-05-28 12:54:59','127.0.0.1',1,'X1\\Yq\\1476417929895.jpg',1,'7732'),(2,'kqc','管理员','$2a$10$TeKfUiYucql6FBOkAtqLDuGylsEXX1tCExHMi/T81htqHXS7Qg.dS','2016-03-25 19:01:29','2015-05-28 12:54:59','127.0.0.1',1,'X1\\Yq\\1476417929895.jpg',2,'7732');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
