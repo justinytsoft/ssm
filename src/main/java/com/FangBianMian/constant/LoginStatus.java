@@ -6,11 +6,21 @@ package com.FangBianMian.constant;
  *
  */
 public class LoginStatus {
+	
+	/**
+	 * 等待发送验证码
+	 */
+	public static final Integer WAIT_SEND_VERIFY_CODE = -2;
+
+	/**
+	 * 验证码已发送
+	 */
+	public static final Integer VERIFY_CODE_SENT = -1;
 
 	/**
 	 * 等待登录
 	 */
-	public static final Integer WAIT = 0;
+	public static final Integer WAIT_LOGIN = 0;
 	
 	/**
 	 * 登录成功

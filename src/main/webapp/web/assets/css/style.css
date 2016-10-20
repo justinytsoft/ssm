@@ -160,7 +160,7 @@ product-list 商品列表页
 .box-top span {margin-top: 15px;}
 .box-top .register-link {margin-right: 18px;text-decoration: underline}
 .box-top .top-title {margin-left: 18px;font-size: 13px;font-weight: bold;}
-.login-body {width: 285px;margin-left: 20px;margin-top: 20px;}
+.login-body {width: 285px;margin-left: 20px;margin-top: 40px;}
 .login-body .input {padding-left: 15px;border: 1px solid lightgray;margin-bottom: 15px;}
 .login-body input[type='text'] {padding: 5px 0px; display: block;width: 100%;}
 .login-body input[type='checkbox'] {margin-top: 3px;margin-right: 5px;} 

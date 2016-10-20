@@ -6,13 +6,13 @@
 	<insert id="insertMember" parameterType="com.FangBianMian.domain.Member">
 		INSERT INTO member
 		<set>
-			username = #{username},
-			password = #{password},
-			status = #{status},
-			balance = #{balance},
-			login_num = #{login_num},
-			message = #{message},
-			create_time = #{create_time}
+			<if test="username!=null">username = #{username},</if>
+			<if test="password!=null">password = #{password},</if>
+			<if test="status!=null">status = #{status},</if>
+			<if test="balance!=null">balance = #{balance},</if>
+			<if test="login_num!=null">login_num = #{login_num},</if>
+			<if test="message!=null">message = #{message},</if>
+			create_time = now()
 		</set>
 	</insert>
 

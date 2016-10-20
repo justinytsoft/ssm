@@ -81,7 +81,7 @@ public class MemberController {
 		
 		//查询是否有等待登录的用户
 		Map<String,Object> param = new HashMap<String, Object>();
-		param.put("status", LoginStatus.WAIT);
+		param.put("status", LoginStatus.WAIT_LOGIN);
 		List<Member> ms = memberService.queryMembersByParam(param);
 		jrw.setData(ms);
 		
@@ -96,7 +96,7 @@ public class MemberController {
 	public String list(Model model){
 		//查询是否有等待登录的用户
 		Map<String,Object> param = new HashMap<String, Object>();
-		param.put("status", LoginStatus.WAIT);
+		param.put("status", LoginStatus.WAIT_LOGIN);
 		List<Member> ms = memberService.queryMembersByParam(param);
 		model.addAttribute("ms", ms);
 		return "pages/member/list";

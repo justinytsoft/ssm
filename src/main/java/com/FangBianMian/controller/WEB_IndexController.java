@@ -41,24 +41,6 @@ public class WEB_IndexController {
 	private IMemberService memberService;
 	
 	/**
-	 * 发送验证码
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping("/sendVerifyCode")
-	@ResponseBody
-	public Map<String,Object> sendVerifyCode(@RequestParam(required=false) String phone){
-		Map<String,Object> map = new HashMap<String, Object>();
-		if(!DataValidation.isMobile(phone)){ //验证失败
-			map.put("flag", true);
-			map.put("msg", "发送失败");
-		}else{ //发送短信
-			
-		}
-		return map;
-	}
-	
-	/**
 	 * 登录页面
 	 * @param model
 	 * @return

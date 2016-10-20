@@ -22,7 +22,9 @@ public class HandshakeInterceptor implements org.springframework.web.socket.serv
             if (session != null) {
                 //获取客户端的名称，以便可以定向的向某个客户端推送消息
                 String userName = (String) session.getAttribute(Common.WEBSOCKET_USERNAME);
-                map.put(Common.WEBSOCKET_USERNAME,userName);
+                if(userName!=null){
+                	map.put(Common.WEBSOCKET_USERNAME,userName);
+                }
             }
         }
         return true;

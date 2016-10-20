@@ -57,22 +57,48 @@
   			var obj = $(this);
   			var phone = $("#phone");
   			if(phone.textbox("isValid")){
+  				
+  				//发送验证码
+  				$.post([[@{/web/user/sendVerifyCode}]], {_:Math.random(),phone:phone.textbox("getValue")}, function(data){
+  					if(data.flag){
+  						//创建WebSocket对象
+  					    if ('WebSocket' in window) {
+  					        websocket = new WebSocket(wsPrefix + "veg");
+  					    } else if ('MozWebSocket' in window) {
+  					        websocket = new MozWebSocket("ws://veg");
+  					    } else {
+  					        websocket = new SockJS(wsPrefix + "com/veg");
+  					    }
+
+  					  	//接收服务器的消息
+  					    websocket.onmessage = function (evnt) {
+  							var data = evnt.data;
+  							if(data==1){ //登录成功
+  								window.location.href = [[@{/web/index/main}]];
+  							}else{ 
+  								//关闭登录等待提示框
+  								$("#waitDialog").dialog("close",true);
+  								$("#code").textbox("clear");
+  								alert("登录失败");
+  							}
+  					    };
+  					    
+						//给服务器建立连接
+				    	websocket.onopen = function (evnt) { };
+					}else{
+						alert("手机格式错误");
+					}
+  				});
+  				
 				//设置验证码标记为已发送
   				verifyFlag = true
-				
-  				//发送验证码
-  				/* $.post([[@{/web/index/sendVerifyCode}]],{_:Math.random(),phone:phone.textbox("getValue")},function(data){
-	  				if(data.flag){
-	  					cAlert(data.msg);
-	  				}
-	  			}); */
 	  			
 	  			//倒计时
 	  			obj.linkbutton("disable");
 	  			$('#vfcBtn span:last').html(("重新发送(" + countdown + ")"));
 	  			timer = setInterval(function() { 
 					settime(); 
-				},1000)
+				},1000); 
   			}
   		}
   	    
@@ -86,34 +112,11 @@
 				if(form.form('validate')){
 					form.form('submit', {
 					    success: function(data){
-					    	//创建WebSocket对象
-						    if ('WebSocket' in window) {
-						        websocket = new WebSocket(wsPrefix + "veg");
-						    } else if ('MozWebSocket' in window) {
-						        websocket = new MozWebSocket("ws://veg");
-						    } else {
-						        websocket = new SockJS(wsPrefix + "com/veg");
-						    }
-						 	
-						 	//接收服务器的消息
-						    websocket.onmessage = function (evnt) {
-								var data = evnt.data;
-								if(data==1){ //登录成功
-									window.location.href = [[@{/web/index/main}]];
-								}else{ 
-									//关闭登录等待提示框
-									$("#waitDialog").dialog("close",true);
-									$("#code").textbox("clear");
-									alert("登录失败");
-								}
-						    };
-						    
-						    // change the JSON string to javascript object
 					        var data = eval('(' + data + ')'); 
 					        if (data.flag){
-					        	//给服务器建立连接
-					        	websocket.onopen = function (evnt) { };
-					        }else {
+					        	var msg = "admin," + $("#phone").textbox("getValue"); 
+					        	websocket.send(msg);
+					        }else{
 					        	alert("登录失败");
 					        }
 					    }
@@ -160,14 +163,14 @@
 				<div class="login-body">
 					<form id="loginForm" method="post" th:action="@{/web/user/signin}">
 						<div style="margin-bottom: 20px">
-							<input id="phone" name="phone" th:value="${phone}" type="text" class="easyui-textbox" style="padding:10px" data-options="width:283,prompt:'请输入手机号',validType:['isPhone'],required:true,validateOnCreate:false"/>
+							<input value="18380426135" id="phone" name="phone" type="text" class="easyui-textbox" style="padding:10px" data-options="width:283,prompt:'请输入手机号',validType:['isPhone'],required:true,validateOnCreate:false"/>
 						</div>
 						<div style="margin-bottom: 20px">
-							<input id="code" name="code" type="text" th:value="${code}" class="easyui-textbox" style="padding:10px" data-options="width:180,prompt:'请输入验证码',required:true,validateOnCreate:false"/>
+							<input id="code" name="code" type="text" class="easyui-textbox" style="padding:10px" data-options="width:120,prompt:'请输入验证码',required:true,validateOnCreate:false"/>
 							<a id="vfcBtn" href="#" class="easyui-linkbutton c1" data-options="onClick:sendVerifyCode" style="width:100px;height:28px;">获取验证码</a>
 						</div>
 						<div style="margin-bottom: 10px">
-							<a href="#" class="easyui-linkbutton c1" data-options="onClick:login" style="width:283px;height:40px">登 录</a>
+							<a href="#" class="easyui-linkbutton c1" data-options="onClick:login" style="width:283px;height:35px">登 录</a>
 							<span style="color: red;" th:text="${msg}">sssss</span>
 						</div>
 					</form>

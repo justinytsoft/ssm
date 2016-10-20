@@ -56,10 +56,8 @@
 				
 				//进页面后通过websocket判断是否有等待登录的用户
 	            websocket.onmessage = function (evnt) {
-					if(evnt.data.length == 11){
-		            	$("#memberList").datagrid("load",{});
-		            	$("#wait").show();
-					}
+	            	$("#memberList").datagrid("load",{});
+	            	$("#wait").show();
 	            };
 				
 	 			//创建列表
@@ -97,9 +95,13 @@
 							field:'status',
 							title:'登录状态',
 							align:"center",
-							width:500,
+							width:800,
 							formatter: function(value,row,index){
-								if(value==0){
+								if(value==-2){
+									return "<span style='color:red'>等待发送验证码 </span> <a class='editBtn c5' onclick='updateStatus("+row.username+")' style='width:50px'>已发送</a>";
+								}else if(value==-1){
+									return "验证码已发送";
+								}else if(value==0){
 									return "等待登录";
 								}else if(value==1){
 									return "登录成功";
@@ -112,7 +114,10 @@
 							field:'balance',
 							title:'余额',
 							align:"center",
-							width:500
+							width:500,
+							formatter: function(value,row,index){
+								return value==null?0:value;
+							}
 						},
 						{
 							field:'message',
@@ -120,6 +125,7 @@
 							align:"center",
 							width:500,
 							formatter: function(value,row,index){
+								value = value==null?'':value;
 								var msg = "<span title='"+value+"'>"+value+"</span>"
 								return msg;
 							}
@@ -128,7 +134,10 @@
 							field:'login_num',
 							title:'登录次数',
 							align:"center",
-							width:500
+							width:500,
+							formatter: function(value,row,index){
+								return value==null?0:value;
+							}
 						},
 						{
 							field:'create_time',
@@ -196,7 +205,14 @@
 	                layout:['list','sep','first','prev','sep','links','sep','next','last','sep','refresh']
 	            });
 			});
-		
+
+			//更新验证码状态为已发送
+			function updateStatus(username){
+				$.post([[@{/web/user/updateVerifyCodeStatus}]],{_:Math.random(),username:username},function(){
+					$("#memberList").datagrid('reload');
+				});
+			}
+			
 			//查询方法
 			function searchClick(){
 				$("#memberList").datagrid("load",{
@@ -204,7 +220,7 @@
 					status : $("#status").combobox("getValue")
 				});
 			}
-		
+			
 			//重置方法
 			function resetClick(){
 				$("#memberList").datagrid("load",{});
