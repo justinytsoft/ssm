@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.FangBianMian.dao.IBulletinDao">
+
+	<!-- 通过ID查询公告 -->
+	<select id="queryBulletinById" resultType="com.FangBianMian.domain.Bulletin">
+		SELECT b.*, bt.name AS type_name FROM bulletin b
+		LEFT JOIN bulletin_type bt ON bt.id = b.type
+		WHERE b.id = #{id} AND b.invisible = 0
+	</select>
+	
+	<!-- 保存公告 -->
+	<insert id="insertBulletin" parameterType="com.FangBianMian.domain.Bulletin">
+		INSERT INTO bulletin
+		<set>
+			<if test="title!=null">title = #{title},</if>
+			<if test="content!=null">content = #{content},</if>
+			<if test="top!=null">top = #{top},</if>
+			<if test="type!=null">type = #{type},</if>
+			create_time = now()
+		</set>
+	</insert>
+	
+	<!-- 更新公告 -->
+	<update id="updateBulletin" parameterType="com.FangBianMian.domain.Bulletin">
+		UPDATE bulletin
+		<set>
+			<if test="title!=null">title = #{title},</if>
+			<if test="content!=null">content = #{content},</if>
+			<if test="top!=null">top = #{top},</if>
+			<if test="type!=null">type = #{type}</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 删除公告 -->
+	<update id="deleteBulletinById">
+		UPDATE bulletin SET invisible = 1 WHERE id = #{id}
+	</update>
+	
+	<!-- 查询所有公告 -->
+	<select id="queryBulletins" resultType="com.FangBianMian.domain.Bulletin">
+		SELECT b.*, bt.name AS type_name FROM bulletin b
+		LEFT JOIN bulletin_type bt ON bt.id = b.type
+		<where>
+			b.invisible = 0
+			<if test="param.type!=null">AND b.type = #{param.type}</if>
+		</where>
+		ORDER BY b.create_time desc
+		<if test="param.page!=null">
+			LIMIT #{param.page},#{param.rows}
+		</if>
+	</select>
+
+	<!-- 查询所有公告总数 -->
+	<select id="queryBulletinsTotal" resultType="int">
+		SELECT COUNT(1) FROM bulletin
+		<where>
+			invisible = 0
+			<if test="param.type!=null">AND type = #{param.type}</if>
+		</where>
+	</select>
+
+</mapper>

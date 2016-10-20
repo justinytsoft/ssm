@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.FangBianMian.constant.Common;
 import com.FangBianMian.dao.IBaseDao;
+import com.FangBianMian.domain.BulletinType;
 import com.FangBianMian.domain.City;
 import com.FangBianMian.domain.PaymentType;
 import com.FangBianMian.domain.Position;
@@ -25,7 +26,6 @@ import com.FangBianMian.domain.Province;
 import com.FangBianMian.domain.SecurityUser;
 import com.FangBianMian.domain.SysRoles;
 import com.FangBianMian.utils.Captcha;
-import com.FangBianMian.utils.DataUtil;
 import com.FangBianMian.utils.DataValidation;
 
 @Controller
@@ -33,6 +33,25 @@ public class BaseController {
 
 	@Autowired
 	private IBaseDao baseDao;
+	
+	/**
+	 * 获取公告类型
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/bulletin_type")
+	@ResponseBody
+	public List<BulletinType> bulletin_type(@RequestParam(required=false) String extend){
+		List<BulletinType> bts = DataValidation.isEmpty(baseDao.queryBulletinType());
+		//给返回的数据添加一个查询的逻辑元素
+		if(!StringUtils.isBlank(extend)){
+			BulletinType bt = new BulletinType();
+			bt.setId(-1);
+			bt.setName("不限");
+			bts.add(0, bt);
+		}
+		return bts;
+	}
 	
 	/**
 	 * 获取支付方式

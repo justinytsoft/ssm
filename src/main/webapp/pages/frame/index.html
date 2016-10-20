@@ -12,10 +12,11 @@
 		    //设置ueditor访问的根路径
 		    window.UEDITOR_HOME_URL = [[@{/assets/plugins/ueditor/}]];
 			           
-		    //项目根路径
-		    var rootPath = [[@{/}]];
 			//设置订单状态
 			var orderStatus = [{status:0,name:"待支付"},{status:1,name:"待理货"},{status:2,name:"待发货"},{status:3,name:"待收货"},{status:4,name:"待评价"},{status:5,name:"已完成"},{status:6,name:"取消"}];
+			
+			//项目根路径
+		    var rootPath = [[@{/}]];
 		    //websocket请求前缀
 			var wsPrefix = location.href.split(rootPath)[0] + rootPath;   
 		    //websocket对象

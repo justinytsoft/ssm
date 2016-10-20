@@ -1,0 +1,178 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<body>
+	
+		<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+			$(function(){
+				var curr = [[${curr}]];
+				
+	 			//创建列表
+				$("#bulletinList").datagrid({
+					url:[[@{/admin/bulletin/list}]],
+				    fitColumns : true, //设置为 true, 则自动调整宽度 
+					singleSelect : true, //	设置为 true，则只允许选中一行。
+				    rownumbers:false, //设置为 true，则显示带有行号的列。
+					nowrap : false, //设置为 true，则把数据显示在一行里。设置为 true 可提高加载性能。
+					striped : true, //设置为 true，则把行条纹化。（即奇偶行使用不同背景色）
+				    loadMsg : "数据加载中,请稍等...", //当从远程站点加载数据时，显示的提示消息。
+				    pagination:true, //设置为 true，则在数据网格（datagrid）底部显示分页工具栏。
+				    pageSize:20, //当设置了 pagination 属性时，初始化页面尺寸。
+				    pageList:[5,10,20,30,50,100], //当设置了 pagination 属性时，初始化页面尺寸的选择列表。
+				    columns:[[ //设置表头 
+						{
+							field:'title',
+							title:'公告标题',
+							align:"center",
+							width:500
+						},
+						{
+							field:'type_name',
+							title:'公告类型',
+							align:"center",
+							width:500
+						},
+						{
+							field:'create_time',
+							title:'创建日期',
+							align:"center",
+							width:500,
+							formatter: function(value,row,index){
+								var date = new Date(value);
+								return date.format("yyyy-MM-dd hh:mm:ss");
+							}
+						},
+						{
+							field:'_del',
+							title:'操作',
+							align:"center",
+							width:500,
+							formatter:function(value,row,index){
+								var edit = "<a class='editBtn c6' style='margin-right:10px;width:50px' onclick='bulletinDetail("+row.id+")'>详 情</a>";
+								var del = "<a class='editBtn c5' style='width:50px' onclick='delBulletin("+row.id+")'>删 除</a>";
+								return edit + del;
+							}
+						}
+					]],
+					rowStyler:function(index,row){
+						return "height:50px";
+					},
+					onLoadSuccess:function(data){
+						var editBtns = $(".editBtn");
+						var delBtns = $(".delBtn");
+						
+						//初始化操作按钮
+						$.each(editBtns,function(i,v){
+							$(this).linkbutton();
+						});
+						$.each(delBtns,function(i,v){
+							$(this).linkbutton();
+						});
+						
+						//回显编辑页
+						if(curr!=null){
+							$(this).datagrid({
+								pageNumber:curr,
+								pageSize:[[${size}]]
+							}); 
+							//分页条格式
+							$(this).datagrid('getPager').pagination({
+				                layout:['list','sep','first','prev','sep','links','sep','next','last','sep','refresh']
+				            });
+							curr=null;
+						}
+						
+						//表头无分割线
+						$.each($("td"),function(){
+							$(this).css("border-style","none");
+						});
+						if (data.total == 0) {//如果没有数据    进
+							var tip = '<div id="nothing" style="font-size:20px;height:200px;line-height:200px;text-align:center;color:rgb(200,200,200)"><span style="font-size: 16px;color:#B3B3B3;">未查询到订单列表</span></div>';
+						    //添加一个新数据行，第一列的值为你需要的提示信息，然后将其他列合并到第一列来，注意修改colspan参数为你columns配置的总列数
+						    $(this).datagrid('appendRow', { title:tip }).datagrid('mergeCells', { index: 0, field: 'title', colspan: 4})
+						    //隐藏分页导航条，这个需要熟悉datagrid的html结构，直接用jquery操作DOM对象，easyui datagrid没有提供相关方法隐藏导航条
+						    $(this).closest('div.datagrid-wrap').find('div.datagrid-pager').hide();
+						    //移除鼠标移到行上面时,让背景不发生改变
+						    $(".datagrid-body tr").removeClass();
+						}
+						else { 
+						    //如果通过调用reload方法重新加载数据有数据时显示出分页导航容器
+						    $(this).closest('div.datagrid-wrap').find('div.datagrid-pager').show();
+						}
+					}
+				});
+				//分页条格式
+				$("#bulletinList").datagrid('getPager').pagination({
+	                layout:['list','sep','first','prev','sep','links','sep','next','last','sep','refresh']
+	            });
+			});
+		
+			//查询方法
+			function searchClick(){
+				$("#bulletinList").datagrid("load",{
+					type : $("#type").combobox("getValue")
+				});
+			}
+		
+			//详情方法
+			function bulletinDetail(id){
+				var options = $('#bulletinList').datagrid('getPager').data("pagination").options;  
+				refresh([[@{/admin/bulletin/add}]] + "?id=" +id + "&curr=" + options.pageNumber + "&size=" + options.pageSize);
+			}
+			
+			//删除方法
+			function delBulletin(id){
+				cConfirm("确定要删除吗",function(flag){
+					if(flag){
+						$.post([[@{/admin/bulletin/del}]],{"_":Math.random(),"id":id},function(data){
+							if(data.flag){
+								$("#bulletinList").datagrid("reload",{
+									type : $("#type").combobox("getValue")
+								});
+							}
+							cAlert(data.message);
+						});
+					}
+				});
+			}
+			
+			//加载公告类型
+ 			$("#type").combobox({
+ 				url : [[@{/bulletin_type}]] + "?extend=true",
+ 				method : "get",
+ 				valueField : 'id',
+			    textField : 'name',
+			    editable : false,
+			    onLoadSuccess:function(){ 
+			    	var data= $(this).combobox("getData");
+		        	$(this).combobox('select', data[0].id);
+ 				}
+ 			});
+		/*]]>*/
+		</script>
+	
+		<div class="r_container activeAmin commonAdmin">
+			<div class="header">
+				<img th:src="@{/assets/imgs/home.png}" />
+				<span>公告管理>>公告编辑</span>
+			</div>
+			
+			<div class="bg-1">
+				<form id="searchForm" th:action="@{/admin/bulletin/list}" method="post">
+					<div>
+						<label style="width: 55px">公告类型:</label>
+						<input id="type" name="type" type="text" class="easyui-combobox"/>
+						
+	                   	<a href="javascript:" class="easyui-linkbutton" style="margin-left:20px" data-options="onClick:searchClick,width:60,height:29">查 询</a>
+					</div>
+				</form>
+			</div>	
+			
+			<div>
+				<table id="bulletinList"></table>
+			</div>
+		</div>
+	</body>
+
+</html>

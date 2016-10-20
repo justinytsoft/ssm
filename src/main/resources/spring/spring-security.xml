@@ -15,11 +15,14 @@
     <http pattern="/sessionException" security="none"/>
     <http pattern="/captcha" security="none"/>
     <http pattern="/upload/**" security="none"/>
+    
+    <!-- 列表数据 -->
     <http pattern="/payment_type" security="none"/>
     <http pattern="/province" security="none"/>
     <http pattern="/city" security="none"/>
     <http pattern="/position" security="none"/>
     <http pattern="/product_category" security="none"/>
+    <http pattern="/bulletin_type" security="none"/>
     
     <!-- 静态资源访问 -->
     <http pattern="/assets/**" security="none"/>

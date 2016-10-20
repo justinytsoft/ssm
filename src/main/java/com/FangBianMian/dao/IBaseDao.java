@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.FangBianMian.domain.BulletinType;
 import com.FangBianMian.domain.City;
 import com.FangBianMian.domain.PaymentType;
 import com.FangBianMian.domain.Position;
@@ -63,4 +64,10 @@ public interface IBaseDao {
 	 * @return
 	 */
 	String queryCityNameById(@Param("id") Integer city);
+
+	/**
+	 * 获取公告类型
+	 * @return
+	 */
+	List<BulletinType> queryBulletinType();
 }

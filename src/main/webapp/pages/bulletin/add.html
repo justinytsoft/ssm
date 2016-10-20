@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<body>
+		<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+	 	   $(function() {
+				
+	 		   	//表单对象
+	 			var form = $("#saveForm");
+	 			
+	 			//保存
+	 			$("#saveButton").click(function() {
+	 				if(form.form("validate")){
+	 					var content = $.trim(ue.getContent());
+	 					if(content==""){
+	 						cAlert("请填写公告内容");
+	 					}else{
+	 						form.form("submit",{
+	 							success:function(data){
+	 								data = eval('(' + data + ')');  // change the JSON string to javascript object
+	 						        cAlertFun(data.message,function(){
+	 						        	if(data.flag){
+	 						        		var url = null;
+	 						        		if([[${curr!=null}]]){//如果是从列表页面进入
+	 						        			url = [[@{/admin/bulletin/index}]] + "?curr=" + [[${curr}]] + "&size=" + [[${size}]];	
+	 						        		}else{
+	 						        			url = [[@{/admin/bulletin/add}]];
+	 						        		}
+	 						        		refresh(url);
+	 						        	}
+	 						        })
+	 						    }
+	 						});
+	 					}			
+	 				}
+	 			});
+	 			
+	 			//加载公告类型
+	 			$("#type").combobox({
+	 				url : [[@{/bulletin_type}]],
+	 				method : "get",
+	 				valueField : 'id',
+ 				    textField : 'name',
+ 				    editable : false,
+ 				    onLoadSuccess:function(){ 
+ 				    	var data= $(this).combobox("getData");
+ 				    	if ([[${b!=null}]]) {//回显数据
+ 				        	$(this).combobox('select', [[${b!=null?b.type:''}]]);
+ 				        }else{//默认选中第一条
+ 				        	$(this).combobox('select', data[0].id);
+ 				        }
+	 				}
+	 			});
+	 		});
+		/*]]>*/
+		</script>
+	
+		<form id="saveForm" th:action="@{/admin/bulletin/save}" method="post">
+			
+			<input type="hidden" th:value="${b!=null?b.id:''}" name="id"/>
+		
+			<!--container-->
+			<div class="r_container commonAdd">
+				<div class="header">
+					<img th:src="@{/assets/imgs/home.png}" />
+					<span>公告管理>>公告编辑</span>
+				</div>
+				
+				<div class="bg-1 mg-top-20">
+					<label>公告标题：</label>
+					<input name="title" th:value="${b!=null?b.title:''}" type="text" class="easyui-textbox" data-options="width:240,height:30,required:true,validateOnCreate:false"/>
+				</div>
+				
+				<div class="bg-1 bg-12" style="background: #FFFFFF;">
+					<label>公告类型：</label>
+					<input id="type" name="type" type="text" class="easyui-combobox"/>
+				</div>
+				
+				<div class="bg-1 bg-14">
+					<label>公告内容：</label>
+					<div style="margin-top:10px">
+						<!-- 加载编辑器的容器 -->
+					    <script id="container" name="content" type="text/plain"></script>
+					    <!-- 配置文件 -->
+					    <script type="text/javascript" src="assets/plugins/ueditor/ueditor.config.js"></script>
+					    <!-- 编辑器源码文件 -->
+					    <script type="text/javascript" src="assets/plugins/ueditor/ueditor.all.js"></script>
+					    <!-- 实例化编辑器 -->
+					    <script type="text/javascript" th:inline="javascript">
+						/*<![CDATA[*/
+				            UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
+							UE.Editor.prototype.getActionUrl = function(action) {
+							    if (action == 'uploadimage' || action == 'uploadscrawl') {
+							        return [[@{/upload/uploadImage}]] + "?thumb=true&temp=true";
+							    } else {
+							        return this._bkGetActionUrl.call(this, action);
+							    }
+							}
+						    ue = UE.getEditor('container',{
+					        	wordCount:false
+					        });
+							ue.ready(function(){
+								ue.setContent([[${b!=null?b.content:''}]]);
+							});
+						/*]]>*/
+					    </script>
+					</div>
+				</div>
+				
+				<p>
+					<span class="btn-1" id="saveButton">确 认</span>
+				</p>
+			</div>
+		</form>
+	</body>
+</html>
