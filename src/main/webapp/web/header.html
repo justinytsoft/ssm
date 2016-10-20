@@ -2,77 +2,56 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 	<head th:include="fragment/web_import :: header"></head>
-
-	<script type="text/javascript" th:inline="javascript">
-	/*<![CDATA[*/
-	    //菜单切换
-		function menuSwitch(obj){
-			$.each($(".active"),function(){
-				$(this).removeClass("active");
-			});
-			$(obj).addClass("active");
-			search();
-			return false;
-		}
 	
-		//刷新中间的frame页面
-		function search(){
-			var url = [[@{/web/index/center}]] + "?_=" + Math.random();
-			var name = $("#name").val();
-			var category_id = $(".active").attr("id");
-
-			if($.trim(name)!=''){
-				url += "&name=" + name;
-			}
-			if(category_id!=-1){
-				url += "&category_id=" + category_id;
-			}
-			
-			window.parent.frames["centerFrame"].location = url;
-		}
-	/*]]>*/
-	</script>
-
+	<style>
+		.headerBox , .menuBox{width: 1200px;}
+	</style>
+	
 	<body class="listbody sec-pages">
-		<section>
+		<section class="header1">
 			<div class="headerBox">
-				<ul>
-					<li style="text-align: right;margin: 0 20px 0 0">
-						<a target="_parent" th:href="@{/web/index/login}" th:if="${user==null}">登录</a>
-						<a target="centerFrame" th:href="@{/web/order/index}" th:if="${user!=null}">个人中心</a>
-						<span th:if="${user!=null}" style="margin-left: 20px" th:text="${'余额：' + user.balance}"></span>
+				<ul class="fll">
+					<li>
+						你好，欢迎访问中国移动积分商城，
+					</li>
+					<li class="spacer"></li>
+					<li>
+						<a>请<span style="font-weight: bold;color: #000000;">登录</span></a>
+					</li>
+				</ul>
+				<ul class="flr">
+					<li>
+						<a>我的订单</a>
+					</li>
+					<li class="spacer"></li>
+					<li class="my-account-li" style="width: 75px;">
+						<a>我的帐户</a>
+						<em class="arrow"></em>
+						<p class="my-account">22积分</p>
 					</li>
 				</ul>
 			</div>
 		</section>
+		<script type="text/javascript">
+			$(function(){
+				$('.my-account-li').hover(function(){
+					$('.my-account').toggle();
+				})
+			})
+		</script>
 		<section class="search">
 			<div class="searchBox">
-				<a href="">
+				<a href="javascript:">
 					<img th:src="@{/web/assets/img/logo.png}" />
 				</a>
 				<div class="seachBody">
 					<!-- <div class="search-tab"> <span class="active">宝贝</span></div> -->
-					<div class="search-box"> 
-						<input id="name" type="text" class="search-txt" placeholder="金秋最火单品你还没get" data-placeholder="金秋最火单品你还没get" /> 
-						<span onclick="search()" class="search-btn">搜索</span>
+					<div class="search-box"> <input type="text" class="search-txt" placeholder="金秋最火单品你还没get" data-placeholder="金秋最火单品你还没get" data-key="风衣"/> <span class="search-btn">搜索</span>
 						<div class="suggest-box" style="display: none;"></div>
 					</div>
 				</div>
 			</div>
 			<div class="clr"></div>
 		</section>
-		<section class="menu">
-			<div class="menuBox">
-				<ul class="firUl">
-					<li>
-						<a id="-1" th:href="@{/web/index/center}" class="active" onclick="return menuSwitch(this)">首页</a>
-					</li>
-					<li th:each="pc:${pcs}">
-						<a th:id="${pc.id}" th:href="@{/web/index/center(category_id=${pc.id})}" th:text="${pc.name}" onclick="return menuSwitch(this)">服饰</a>
-					</li>
-				</ul>
-			</div>
-		</section>
 	</body>
-
 </html>
