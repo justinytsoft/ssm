@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.FangBianMian.constant.Common;
 import com.FangBianMian.constant.LoginStatus;
 import com.FangBianMian.dao.IBaseDao;
+import com.FangBianMian.domain.Bulletin;
 import com.FangBianMian.domain.Member;
 import com.FangBianMian.domain.Product;
 import com.FangBianMian.domain.ProductCategory;
+import com.FangBianMian.service.IBulletinService;
 import com.FangBianMian.service.IMemberService;
 import com.FangBianMian.service.IProductService;
 import com.FangBianMian.utils.DataValidation;
@@ -39,6 +41,8 @@ public class WEB_IndexController {
 	private IBaseDao baseDao;
 	@Autowired
 	private IMemberService memberService;
+	@Autowired
+	private IBulletinService bulletinService;
 	
 	/**
 	 * 登录页面
@@ -74,6 +78,8 @@ public class WEB_IndexController {
 			//如果session中的用户状态不是登录成功，则设为null
 			if(user.getStatus()!=LoginStatus.SUCCESS){
 				user = null;
+			}else{
+				request.getSession().setAttribute(Common.MEMBER_SESSION, user);
 			}
 		}
 		
@@ -91,23 +97,47 @@ public class WEB_IndexController {
 	 * @return
 	 */
 	@RequestMapping("/center")
-	public String center(Model model, @RequestParam(required=false) Integer category_id,
-						@RequestParam(required=false) String name){
-		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("page", 0);
-		param.put("rows", 12);
-		param.put("status", true);
-		if(category_id!=null){
-			param.put("category_id", category_id);
-			model.addAttribute("category_id", category_id);
-		}
-		if(!StringUtils.isBlank(name)){
-			param.put("name", name);
-		}
-		//查询所有商品
-		List<Product> ps = productService.queryProductsByParam(param);
+	public String center(Model model, 
+						 @RequestParam(required=false) Integer category_id,
+						 @RequestParam(required=false) String name){
+		//公告查询条件
+		Map<String, Object> bulletinParam = new HashMap<String, Object>();
+		bulletinParam.put("page", 0);
+		bulletinParam.put("rows", 15);
 		
+		//查询公告
+		List<Bulletin> bs = bulletinService.queryBulletins(bulletinParam);
+		
+		//商品查询条件
+		Map<String, Object> productParam = new HashMap<String, Object>();
+		productParam.put("page", 0);
+		productParam.put("rows", 5);
+		productParam.put("status", true);
+		productParam.put("hot", true);
+		
+		//查询大图热门商品
+		List<Product> big_hot_ps = productService.queryProductsByParam(productParam);
+		
+		if(!StringUtils.isBlank(name)){
+			productParam.put("name", name);
+		}
+		if(category_id!=null){
+			productParam.put("category_id", category_id);
+		}
+		
+		//查询热门商品
+		productParam.put("rows", 15);
+		List<Product> hot_ps = productService.queryProductsByParam(productParam);
+		
+		//查询普通商品
+		productParam.put("rows", 12);
+		productParam.put("hot", false);
+		List<Product> ps = productService.queryProductsByParam(productParam);
+		
+		model.addAttribute("bs", bs);
 		model.addAttribute("ps", ps);
+		model.addAttribute("hot_ps", hot_ps);
+		model.addAttribute("big_hot_ps", big_hot_ps);
 		return "web/list";
 	}
 
@@ -121,47 +151,6 @@ public class WEB_IndexController {
 		return "web/footer";
 	}
 
-	/**
-	 * 首页
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping("/index")
-	public String index(Model model,
-						@RequestParam(required=false) Boolean hot,
-						@RequestParam(required=false) Integer category_id){
-		Map<String, Object> hot_param = new HashMap<String, Object>();
-		hot_param.put("page", 0);
-		hot_param.put("rows", 5);
-		hot_param.put("hot", true); //是否是热门商品
-		hot_param.put("status", true); //是否上架
-		//查询热门商品
-		List<Product> hot_ps = productService.queryProductsByParam(hot_param);
-
-		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("page", 0);
-		param.put("rows", 12);
-		param.put("status", true);
-		if(hot!=null){
-			param.put("hot", hot);
-			model.addAttribute("hot", hot);
-		}
-		if(category_id!=null){
-			param.put("category_id", category_id);
-			model.addAttribute("category_id", category_id);
-		}
-		//查询所有商品
-		List<Product> ps = productService.queryProductsByParam(param);
-		
-		//获取商品分类列表
-		List<ProductCategory> pcs = DataValidation.isEmpty(baseDao.queryProductCategory());
-		
-		model.addAttribute("ps", ps);
-		model.addAttribute("hot_ps", hot_ps);
-		model.addAttribute("pcs", pcs);
-		return "kaquan/index";
-	}
-	
 	/**
 	 * 判断用户是否登录
 	 * @return

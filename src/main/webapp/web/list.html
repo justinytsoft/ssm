@@ -1,21 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-	<head>
-		<meta charset="utf-8" />
-		<title>和包村 商品列表</title>
-		<link rel="stylesheet" href="css/style.css" />
-		<link rel="stylesheet" href="css/swiper.min.css" />
-		<link rel="stylesheet" href="css/public.css" />
-		<link rel="stylesheet" type="text/css" href="css/layout.css"/>
-		<style type="text/css">
-			.listbody .container {width: 1200px;}
-			.swiper-container{margin:auto;margin-left: 4px;margin-top: 5px;}
-		</style>
-	</head>
+	<head th:include="fragment/web_import :: header"></head>
+	
+	<link rel="stylesheet" th:href="@{/web/assets/css/public.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/web/assets/css/layout.css}"/>
+	<style type="text/css">
+		.product-list ul {width: 1216px;margin-left: -8px;}
+		.listbody .container {width: 1200px;}
+		.swiper-pagination-bullet-active {background: #E6E6E6;}
+		.swiper-container{margin:auto;margin-left: 4px;margin-top: 5px;}
+		.hot-goods .product-list li>div {margin: 0px;border-left: 1px solid #e0e0e0;border-bottom: 1px solid #e0e0e0;}
+		.hot-goods .img-size img {width: 100%;height:100%}
+		.hot-goods .product-list li {width: 20%;}
+		.hot-goods .product-list li:nth-child(5n+0)>div {border-right: 1px solid #E0E0E0;}
+		.hot-goods .product-list ul {border-top: 1px solid #E0E0E0;}
+	</style>
 
 	<body class="listbody sec-pages">
-		
 		
 		<!-- 页签begin -->
 		<div class="navs">
@@ -27,63 +29,65 @@
 
 		<div class="focus clearfix">
 			<!--
-				
 				左边商品分类begin
 			-->
 			<div class="focus-left fl">
 				<div class="nav clearfix">
-					<span class="fl"><a href="">全部礼品分类</a></span>
+					<span class="fl"><a href="javascript:">全部礼品分类</a></span>
 				</div>
 				
 				<div class="item">
 					<h3>
-					<a href="javascript:void(0)">家用电器</a>	
+					<a th:href="@{/web/index/center(category_id=5)}">家用电器</a>	
 					</h3>
 				</div>
 				<div class="item">
 					<h3>
-						<a href="javascript:void(0)">服饰</a>、<a href="javascript:void(0)">鞋靴箱包</a>				
+						<a th:href="@{/web/index/center(category_id=6)}">服饰</a>、
+						<a th:href="@{/web/index/center(category_id=7)}">鞋靴箱包</a>				
 					</h3>
 				</div>
 				<div class="item">
 					<h3>
-						<a href="javascript:void(0)">家居</a>、<a href="javascript:void(0)">家纺</a>	、		
-						<a href="javascript:void(0)">家装</a>、<a href="javascript:void(0)">厨具</a>			
+						<a th:href="@{/web/index/center(category_id=8)}">家居</a>、
+						<a th:href="@{/web/index/center(category_id=9)}">家纺</a>	、		
+						<a th:href="@{/web/index/center(category_id=10)}">家装</a>、
+						<a th:href="@{/web/index/center(category_id=11)}">厨具</a>			
 					</h3>
 				</div>
 				<div class="item">
 					<h3>
-						<a href="javascript:void(0)">手机数码</a>、<a href="javascript:void(0)">电脑办公</a>				
+						<a th:href="@{/web/index/center(category_id=12)}">手机数码</a>、
+						<a th:href="@{/web/index/center(category_id=13)}">电脑办公</a>				
 					</h3>
 				</div>
 				<div class="item">
 					<h3>
-						<a href="javascript:void(0)">运动户外</a>、<a href="javascript:void(0)">汽车用品</a>				
+						<a th:href="@{/web/index/center(category_id=14)}">运动户外</a>、
+						<a th:href="@{/web/index/center(category_id=15)}">汽车用品</a>				
 					</h3>
 				</div>
 				<div class="item">
 					<h3>
-						<a href="javascript:void(0)">话费Q币</a>、<a href="javascript:void(0)">电子产品</a>				
+						<a th:href="@{/web/index/center(category_id=2)}">话费Q币</a>、
+						<a th:href="@{/web/index/center(category_id=3)}">电子产品</a>				
 					</h3>
 				</div>
 				<div class="item">
 					<h3>
-						<a href="javascript:void(0)">家用小电器</a>	
+						<a th:href="@{/web/index/center(category_id=5)}">家用小电器</a>	
 					</h3>
 				</div>
 			</div>
 			<!-- 
-					
 				中间内容轮播图begin
-			
 			-->
 			<div class="begins swiper-container">
 				<div class="swiper-wrapper">
-					<div class="swiper-slide">
-						<a href=""><img src="img/banner-a.png"/></a>
-					</div>
-					<div class="swiper-slide">
-						<a href=""><img src="img/banner-b.png" /></a>
+					<div class="swiper-slide" th:each="hp:${hot_ps}">
+						<a th:href="@{/web/product/detail(id=${hp.id})}">
+							<img th:src="${application.baseImageUrl + hp.default_img}" style="width:100%;height:450px"/>
+						</a>
 					</div>
 				</div>
 				<div class="swiper-pagination">
@@ -91,7 +95,6 @@
 				<div class="swiper-button-prev"></div>
 				<div class="swiper-button-next"></div>
 			</div>
-			<script type="text/javascript" src="js/swiper.min.js" ></script>
 			<script type="text/javascript">
 			 $(function(){
 			 	var mySwiper = new Swiper('.swiper-container', {
@@ -102,9 +105,7 @@
 			 })
 			</script>
 			<!--
-				
 				右侧公告
-			
 			-->
 			<div class="focus-right fr">
 				<div class="bulle">
@@ -114,54 +115,9 @@
 					        <span class="fl" style="line-height: 35px;">商城公告</span>
 					    </h3>
 						<ul class="notice">
-							<li>
-								<a id="0" style="color: #FF0000" href="">
+							<li th:each="b:${bs}">
+								<a th:style="${'color:' + (b.type==1?'#FF0000':(b.type==2?'#007aff':'#666'))}" th:href="@{/web/bulletin/detail(id=${b.id})}" th:text="${'[' + #dates.format(b.create_time,'MM-dd') + '] ' + b.title}">
 									积分商城10月20日系统维护升级...
-								</a>
-							</li>
-							<li>
-								<a id="1" style="color: #FF0000" href="">
-									北京移动客户暂停积分转赠业务公告...
-								</a>
-							</li>
-							<li>
-								<a id="2" style="color: #FF0000" href="">
-									广东移动客户暂停积分转赠业务公告
-								</a>
-							</li>
-							<li>
-								<a id="3" style="color: #FF0000" href="">
-									云南移动客户暂停积分转赠业务公告
-								</a>
-							</li>
-							<li>
-								<a id="4" style="color: #FF0000" href="">
-									关于部分虚拟券码类礼品短信兑换流...
-								</a>
-							</li>
-							<li>
-								<a id="5" style="color: #FF0000" href="">
-									关于积分兑换的风险提示
-								</a>
-							</li>
-							<li>
-								<a id="6" href="">
-									关于积分转赠次数调整的公告
-								</a>
-							</li>
-							<li>
-								<a id="7" style="color: #FF0000" href="">
-									重庆移动客户暂停积分转赠业务公告
-								</a>
-							</li>
-							<li>
-								<a id="8" style="color: #FF0000" href="">
-									近期部分客户积分被盗兑的安全提示
-								</a>
-							</li>
-							<li>
-								<a id="9" href="">
-									认准官网谨防诈骗通告
 								</a>
 							</li>
 						</ul>
@@ -169,223 +125,55 @@
 				</div>
 			</div>
 			<!--
-				
-				
 				右侧公告end
-			
 			-->
 		</div>
-		
-		
-		
-		
-		
-		
-		
-		
+
 		<!--
-			
-			
-			
 			////上面新增
-			
 		-->
 		
-		<section class="container">
+		<section class="hot-goods container">
+			<div class="title1">
+				<p class="ch">热门商品</p>
+				<p class="en">HOT COMMODITY</p>
+				<p class="line"><span></span></p>
+			</div>
 			<div class="product-list">
 				<ul>
-					<li>
+					<li th:each="p:${hot_ps}">
 						<div>
-							<a class="img-link" href="goodsDetail.html"><div class="img-size" style="background: url(img/product1.png) no-repeat center center;background-size: cover;">
-							</div></a>
-							<div class="product-info">
-								<div class="price fll"><em class="price-u">¥</em><span class="price-n">38.86</span></div>
-								<div class="fav flr"><em class="fav-i"></em> <span class="fav-n">142</span> </div>
-							</div>
-							<div class="clr"></div>
-							<a href="goodsDetail.html" class="text-link">【百草味】-草莓干3袋草莓干3袋草莓干3袋草莓干3袋草莓干3袋</a>
+							<a class="img-link" th:href="@{/web/product/detail(id=${p.id})}">
+								<div class="img-size" style="height: 244px;overflow: hidden;">
+									<img th:src="${application.baseImageUrl + p.default_img}"/>
+								</div>
+							</a>
 						</div>
 					</li>
-					<li>
+				</ul>
+			</div>
+		</section>
+		
+		<div class="clr"></div>
+		
+		<section class="container">
+			<div class="title1">
+				<p class="ch">普通商品</p>
+				<p class="en">GENERAL COMMODITY</p>
+				<p class="line"><span></span></p>
+			</div>
+			<div class="product-list">
+				<ul>
+					<li th:each="p:${ps}">
 						<div>
-							<a class="img-link" href="goodsDetail.html"><div class="img-size" style="background: url(img/product2.png) no-repeat center center;background-size: cover;">
-								
-							</div></a>
+							<a class="img-link" th:href="@{/web/product/detail(id=${p.id})}" target="centerFrame">
+								<img class="img-size" alt="展示图" th:src="${application.baseImageUrl + p.default_img}"/>
+							</a>
 							<div class="product-info">
-								<div class="price fll"><em class="price-u">¥</em><span class="price-n">38.86</span></div>
-								<div class="fav flr"><em class="fav-i"></em> <span class="fav-n">142</span> </div>
+								<div class="price fll"><em class="price-u">¥</em><span class="price-n" th:text="${p.price}">38.86</span></div>
 							</div>
 							<div class="clr"></div>
-							<a href="goodsDetail.html" class="text-link">【百草味】-草莓干3袋</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<a class="img-link" href="goodsDetail.html"><div class="img-size" style="background: url(img/product3.png) no-repeat center center;background-size: cover;">
-							</div>
-								</a>
-							<div class="product-info">
-								<div class="price fll"><em class="price-u">¥</em><span class="price-n">38.86</span></div>
-								<div class="fav flr"><em class="fav-i"></em> <span class="fav-n">142</span> </div>
-							</div>
-							<div class="clr"></div>
-							<a href="goodsDetail.html" class="text-link">【百草味】-草莓干3袋</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<a class="img-link" href="goodsDetail.html"><div class="img-size" style="background: url(img/product4.png) no-repeat center center;background-size: cover;">
-							</div>
-								</a>
-							<div class="product-info">
-								<div class="price fll"><em class="price-u">¥</em><span class="price-n">38.86</span></div>
-								<div class="fav flr"><em class="fav-i"></em> <span class="fav-n">142</span> </div>
-							</div>
-							<div class="clr"></div>
-							<a href="goodsDetail.html" class="text-link">【百草味】-草莓干3袋</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<a class="img-link" href="goodsDetail.html"><div class="img-size" style="background: url(img/product5.png) no-repeat center center;background-size: cover;">
-							</div>
-								</a>
-							<div class="product-info">
-								<div class="price fll"><em class="price-u">¥</em><span class="price-n">38.86</span></div>
-								<div class="fav flr"><em class="fav-i"></em> <span class="fav-n">142</span> </div>
-							</div>
-							<div class="clr"></div>
-							<a href="goodsDetail.html" class="text-link">【百草味】-草莓干3袋</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<a class="img-link" href="goodsDetail.html"><div class="img-size" style="background: url(img/product1.png) no-repeat center center;background-size: cover;">
-							</div>
-								</a>
-							<div class="product-info">
-								<div class="price fll"><em class="price-u">¥</em><span class="price-n">38.86</span></div>
-								<div class="fav flr"><em class="fav-i"></em> <span class="fav-n">142</span> </div>
-							</div>
-							<div class="clr"></div>
-							<a class="text-link">【百草味】-草莓干3袋</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<a class="img-link" href="goodsDetail.html"><div class="img-size" style="background: url(img/product2.png) no-repeat center center;background-size: cover;">
-							</div>
-								</a>
-							<div class="product-info">
-								<div class="price fll"><em class="price-u">¥</em><span class="price-n">38.86</span></div>
-								<div class="fav flr"><em class="fav-i"></em> <span class="fav-n">142</span> </div>
-							</div>
-							<div class="clr"></div>
-							<a class="text-link">【百草味】-草莓干3袋</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<a class="img-link" href="goodsDetail.html"><div class="img-size" style="background: url(img/product3.png) no-repeat center center;background-size: cover;">
-							</div>
-								</a>
-							<div class="product-info">
-								<div class="price fll"><em class="price-u">¥</em><span class="price-n">38.86</span></div>
-								<div class="fav flr"><em class="fav-i"></em> <span class="fav-n">142</span> </div>
-							</div>
-							<div class="clr"></div>
-							<a class="text-link">【百草味】-草莓干3袋</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<a class="img-link" href="goodsDetail.html"><div class="img-size" style="background: url(img/product4.png) no-repeat center center;background-size: cover;">
-							</div>
-								</a>
-							<div class="product-info">
-								<div class="price fll"><em class="price-u">¥</em><span class="price-n">38.86</span></div>
-								<div class="fav flr"><em class="fav-i"></em> <span class="fav-n">142</span> </div>
-							</div>
-							<div class="clr"></div>
-							<a class="text-link">【百草味】-草莓干3袋</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<a class="img-link" href="goodsDetail.html"><div class="img-size" style="background: url(img/product5.png) no-repeat center center;background-size: cover;">
-							</div>
-								</a>
-							<div class="product-info">
-								<div class="price fll"><em class="price-u">¥</em><span class="price-n">38.86</span></div>
-								<div class="fav flr"><em class="fav-i"></em> <span class="fav-n">142</span> </div>
-							</div>
-							<div class="clr"></div>
-							<a class="text-link">【百草味】-草莓干3袋</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<div class="img-size" style="background: url(img/product1.png) no-repeat center center;background-size: cover;">
-								<a class="img-link" href=""></a>
-							</div>
-							<div class="product-info">
-								<div class="price fll"><em class="price-u">¥</em><span class="price-n">38.86</span></div>
-								<div class="fav flr"><em class="fav-i"></em> <span class="fav-n">142</span> </div>
-							</div>
-							<div class="clr"></div>
-							<a class="text-link">【百草味】-草莓干3袋</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<div class="img-size" style="background: url(img/product2.png) no-repeat center center;background-size: cover;">
-								<a class="img-link" href=""></a>
-							</div>
-							<div class="product-info">
-								<div class="price fll"><em class="price-u">¥</em><span class="price-n">38.86</span></div>
-								<div class="fav flr"><em class="fav-i"></em> <span class="fav-n">142</span> </div>
-							</div>
-							<div class="clr"></div>
-							<a class="text-link">【百草味】-草莓干3袋</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<div class="img-size" style="background: url(img/product3.png) no-repeat center center;background-size: cover;">
-								<a class="img-link" href=""></a>
-							</div>
-							<div class="product-info">
-								<div class="price fll"><em class="price-u">¥</em><span class="price-n">38.86</span></div>
-								<div class="fav flr"><em class="fav-i"></em> <span class="fav-n">142</span> </div>
-							</div>
-							<div class="clr"></div>
-							<a class="text-link">【百草味】-草莓干3袋草莓干3袋草莓干3袋</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<div class="img-size" style="background: url(img/product4.png) no-repeat center center;background-size: cover;">
-								<a class="img-link" href=""></a>
-							</div>
-							<div class="product-info">
-								<div class="price fll"><em class="price-u">¥</em><span class="price-n">38.86</span></div>
-								<div class="fav flr"><em class="fav-i"></em> <span class="fav-n">142</span> </div>
-							</div>
-							<div class="clr"></div>
-							<a class="text-link">【百草味】-草莓干3袋</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<div class="img-size" style="background: url(img/product5.png) no-repeat center center;background-size: cover;">
-								<a class="img-link" href=""></a>
-							</div>
-							<div class="product-info">
-								<div class="price fll"><em class="price-u">¥</em><span class="price-n">38.86</span></div>
-								<div class="fav flr"><em class="fav-i"></em> <span class="fav-n">142</span> </div>
-							</div>
-							<div class="clr"></div>
-							<a class="text-link">【百草味】-草莓干3袋</a>
+							<a  th:href="@{/web/product/detail(id=${p.id})}" class="text-link" th:text="${p.name}">【百草味】-草莓干3袋草莓干3袋草莓干3袋草莓干3袋草莓干3袋</a>
 						</div>
 					</li>
 				</ul>
@@ -396,8 +184,6 @@
 		
 	    <iframe MARGINWIDTH="0" MARGINHEIGHT="0" HSPACE="0" VSPACE="0" FRAMEBORDER="0" SCROLLING="no" th:src="@{bottom}" width="100%"  height="160px"></iframe>
 		 
-		<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
-		<script type="text/javascript" src="js/swiper.min.js"></script>
 		<script>
 			$(function() {
 				var mySwiper = new Swiper('.banner .swiper-container', {

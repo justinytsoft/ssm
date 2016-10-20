@@ -128,11 +128,17 @@ product-list 商品列表页
 .product-list li>div {margin: 13px 8px;}
 .product-list .img-size {width: 100%;height: 280px;overflow: hidden;}
 .product-list .img-size a {padding-top: 280px;}
-.product-list .text-link {color: #666;display: block;height: 16px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
+.product-list .text-link {color: #666;display: block;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .product-list .product-info {margin-top: 5px;}
 .product-list .price {color: #ff3366;}
 .product-list .price em , .product-list .price span {font-size: 16px}
 .listbody .footer {margin-top: 90px;}
+.general-goods .product-list li>div {position: relative;}
+.general-goods .text-link ,.general-goods .product-info {position: absolute;}
+.general-goods .text-link {width: 140px;bottom: 1px;left: 5px;font-size: 16px;color: #fff;}
+.general-goods .product-info  {right: 5px;bottom:0px;}
+.general-goods .product-info .price .price-u {font-style: oblique;font-size: 18px;font-weight: bold;}
+.general-goods .product-info .price .price-n {font-style: oblique;font-size: 25px;font-weight: bold;}
 /*
  product detail
  * */
@@ -153,10 +159,10 @@ product-list 商品列表页
  login
  * */
 .header {height:80px;}
-.loginheader .logo {width: 150px;height: 50px;}
+.loginheader .logo {width: 400px;height: 50px;}
 .loginheader .logo img {width: 100%;margin-top: 10px;}
-.login-bg {height:425px;background: url(../img/login-bg.png) no-repeat center center;background-size: cover;}
-.login-box {height: 265px;width: 325px;float: right;margin-top: -360px;background: #FFFFFF;}
+.login-bg {height:425px;background: url(../img/login_bg.jpg) no-repeat center center;background-size: cover;}
+.login-box {height: 265px;width: 325px;float: right;margin-top: -360px;background: rgba(79, 168, 231, 0.48);}
 .box-top {border-bottom: 1px solid darkgray;height: 40px;}
 .box-top span {margin-top: 15px;}
 .box-top .register-link {margin-right: 18px;text-decoration: underline}

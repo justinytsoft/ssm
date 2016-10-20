@@ -7,27 +7,43 @@
 		.headerBox , .menuBox{width: 1200px;}
 	</style>
 	
+	<script type="text/javascript" th:inline="javascript">
+	/*<![CDATA[*/
+		//刷新中间的frame页面
+		function search(){
+			var url = [[@{/web/index/center}]] + "?_=" + Math.random();
+			var name = $("#name").val();
+
+			if($.trim(name)!=''){
+				url += "&name=" + name;
+			}
+			console.info(url);
+			window.parent.frames["centerFrame"].location = url;
+		}
+	/*]]>*/
+	</script>
+	
 	<body class="listbody sec-pages">
 		<section class="header1">
 			<div class="headerBox">
 				<ul class="fll">
 					<li>
-						你好，欢迎访问中国移动积分商城，
+						你好，欢迎访问和包村积分商城
 					</li>
 					<li class="spacer"></li>
 					<li>
-						<a>请<span style="font-weight: bold;color: #000000;">登录</span></a>
+						<a target="_parent" th:href="@{/web/index/login}">请<span style="font-weight: bold;color: #000000;">登录</span></a>
 					</li>
 				</ul>
-				<ul class="flr">
+				<ul class="flr" th:if="${user!=null}">
 					<li>
-						<a>我的订单</a>
+						<a target="centerFrame" th:href="@{/web/order/index}">我的订单</a>
 					</li>
 					<li class="spacer"></li>
 					<li class="my-account-li" style="width: 75px;">
 						<a>我的帐户</a>
 						<em class="arrow"></em>
-						<p class="my-account">22积分</p>
+						<p class="my-account" th:text="${user.balance + '积分'}">22积分</p>
 					</li>
 				</ul>
 			</div>
@@ -45,8 +61,10 @@
 					<img th:src="@{/web/assets/img/logo.png}" />
 				</a>
 				<div class="seachBody">
-					<!-- <div class="search-tab"> <span class="active">宝贝</span></div> -->
-					<div class="search-box"> <input type="text" class="search-txt" placeholder="金秋最火单品你还没get" data-placeholder="金秋最火单品你还没get" data-key="风衣"/> <span class="search-btn">搜索</span>
+					<div class="search-tab"> <span class="active">宝贝</span></div> 
+					<div class="search-box"> 
+						<input id="name" type="text" class="search-txt" placeholder="金秋最火单品你还没get" data-placeholder="金秋最火单品你还没get" data-key="风衣"/> 
+						<span onclick="search()" class="search-btn">搜索</span>
 						<div class="suggest-box" style="display: none;"></div>
 					</div>
 				</div>
