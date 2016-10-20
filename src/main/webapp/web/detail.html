@@ -46,7 +46,8 @@
 							$("#buyForm").submit();
 						}
 					}else{ //未登录
-						alert("您还没有登录，请登录后在进行购买");
+						//alert("您还没有登录，请登录后在进行购买");
+						window.parent.location.href = [[@{/web/index/login}]];
 					}
 				});
 			});

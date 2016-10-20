@@ -118,7 +118,7 @@
 					        	var msg = "admin," + $("#phone").textbox("getValue"); 
 					        	websocket.send(msg);
 					        }else{
-					        	alert("登录失败");
+					        	alert("验证码错误");
 					        }
 					    }
 					});
@@ -164,7 +164,7 @@
 				<div class="login-body">
 					<form id="loginForm" method="post" th:action="@{/web/user/signin}">
 						<div style="margin-bottom: 20px">
-							<input value="18380426135" id="phone" name="phone" type="text" class="easyui-textbox" style="padding:10px" data-options="width:283,prompt:'请输入手机号',validType:['isPhone'],required:true,validateOnCreate:false"/>
+							<input id="phone" name="phone" type="text" class="easyui-textbox" style="padding:10px" data-options="width:283,prompt:'请输入手机号',validType:['isPhone'],required:true,validateOnCreate:false"/>
 						</div>
 						<div style="margin-bottom: 20px">
 							<input id="code" name="code" type="text" class="easyui-textbox" style="padding:10px" data-options="width:120,prompt:'请输入验证码',required:true,validateOnCreate:false"/>
