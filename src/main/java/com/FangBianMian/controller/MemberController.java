@@ -39,16 +39,22 @@ public class MemberController {
 	@ResponseBody
 	public JsonResWrapper updateVerifyCodeStatus(@RequestParam(required=false) String username){
 		
-		Member m = new Member();
-		m.setUsername(username);
-		m.setStatus(LoginStatus.VERIFY_CODE_SENT);
-		memberService.updateMember(m);
-		
+
+		synchronized (this) {
+			Member member = memberService.queryMemberByUsername(username);
+			if(member!=null && member.getStatus() < LoginStatus.VERIFY_CODE_SENT){
+				Member m = new Member();
+				m.setUsername(username);
+				m.setStatus(LoginStatus.VERIFY_CODE_SENT);
+				memberService.updateMember(m);
+			}
+		}
+			
 		//查询是否有等待处理的用户；如：等待发送验证码 和 等待登录 的用户
 		Map<String,Object> param = new HashMap<String, Object>();
 		param.put("wait_option", true);
 		List<Member> ms = memberService.queryMembersByParam(param);
-
+		
 		JsonResWrapper jrw = new JsonResWrapper();
 		jrw.setData(ms);
 		
@@ -91,18 +97,26 @@ public class MemberController {
 									   @RequestParam(required=false) String username,
 									   @RequestParam(required=false) Integer flag){
 		JsonResWrapper jrw = new JsonResWrapper();
+		
 		if(flag==null || StringUtils.isBlank(username)){
 			jrw.setFlag(false);
 			jrw.setMessage("操作失败，请求参数缺失");
 		}else{
-			Member m = memberService.queryMemberByUsername(username);
-			if(m!=null){
-				//更新用户的登录状态
-				m.setStatus(flag);
-				memberService.updateMember(m);
-			}else{
-				jrw.setFlag(false);
-				jrw.setMessage("操作失败，未查询到用户");
+			synchronized (this) {
+				Member m = memberService.queryMemberByUsername(username);
+				if(m!=null){
+					if(m.getStatus()!=LoginStatus.SUCCESS && m.getStatus()!=LoginStatus.FIALD){
+						//更新用户的登录状态
+						m.setStatus(flag);
+						memberService.updateMember(m);
+					}else{
+						jrw.setFlag(false);
+						jrw.setMessage(username + " 用户已被其他管理员处理");
+					}
+				}else{
+					jrw.setFlag(false);
+					jrw.setMessage("操作失败，未查询到用户");
+				}
 			}
 		}
 		

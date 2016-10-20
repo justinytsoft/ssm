@@ -12,12 +12,16 @@
             		flag = flag?1:2;
             		$.post([[@{/admin/member/confirmLogin}]], {_:Math.random(), username:username, flag:flag}, function(data){
             			if(data.flag){
-		            		$("#memberList").datagrid("reload",{});
+            				//通知用户是否登录成功
 		            		var msg = username + "," + flag;
 		            		websocket.send(msg);
             			}else{
-            				cAlert(data.mssage);
+            				//确认失败
+            				cAlert(data.message);
             			}
+            			//刷新列表
+	            		$("#memberList").datagrid("reload",{});
+            			//判断是否还有等待处理的用户
             			if(data.data.length<1){
             				$("#wait").hide();
             			}
@@ -66,8 +70,6 @@
 				
 				//进页面后通过websocket判断是否有等待登录的用户
 	            websocket.onmessage = function (evnt) {
-					console.info(evnt)
-					console.info(evnt.data)
 	            	$("#memberList").datagrid("load",{});
 	            	$("#wait").show();
 	            };
