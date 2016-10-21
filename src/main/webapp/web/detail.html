@@ -202,8 +202,8 @@
 						</div>
 						<div class="tm-fcs-panel">
 							<dl class="tm-price-panel">
-								<dt class="tb-metatit">代金券</dt>
-								<dd th:text="${p.price}">666</dd>
+								<dt class="tb-metatit" style="font-size: 15px">代金券：</dt>
+								<dd th:text="${p.price}" style="color: #E40077;font-size: 15px">666</dd>
 							</dl>
 						</div>
 						<div class="tb-key">
@@ -212,30 +212,30 @@
 									<form id="buyForm" method="post" th:action="@{/web/order/confirm}">
 										<input type="hidden" name="pid" th:value="${p.id}" />
 										<dl class="tb-prop tm-sale-prop tm-clear tm-img-prop ">
-											<dt class="tb-metatit">运费：</dt>
-											<dd class="lteight" th:text="${p.freight_price}">
+											<dt class="tb-metatit" style="font-size: 15px">运费：</dt>
+											<dd class="lteight" th:text="${p.freight_price}" style="font-size: 15px">
 												66
 											</dd>
 										</dl>
 
 										<dl class="tb-prop tm-sale-prop tm-clear tm-img-prop ">
-											<dt class="tb-metatit">已出售：</dt>
-											<dd class="lteight" th:text="${p.saled_num==null?'0':p.saled_num}">
+											<dt class="tb-metatit" style="font-size: 15px">已出售：</dt>
+											<dd class="lteight" th:text="${p.saled_num==null?'0':p.saled_num}" style="font-size: 15px">
 												66
 											</dd>
 										</dl>
 	
 										<dl class="tb-prop tm-sale-prop tm-clear ">
-											<dt class="tb-metatit">评价：</dt>
-											<dd th:if="${p.score!=null}" class="lteight" th:text="${p.score + '分 (' + p.common_num + '人评价)'}"> 
+											<dt class="tb-metatit" style="font-size: 15px">评价：</dt>
+											<dd style="font-size: 15px" th:if="${p.score!=null}" class="lteight" th:text="${p.score + '分 (' + p.common_num + '人评价)'}"> 
 												0分（0人评价）
 											</dd>
-											<dd th:if="${p.score==null}" class="lteight"> 
+											<dd th:if="${p.score==null}" class="lteight" style="font-size: 15px"> 
 												暂无评价
 											</dd>
 										</dl>
 										<dl class="tb-prop tm-clear">
-											<dt class="tb-metatit">购买数量：</dt>
+											<dt class="tb-metatit" style="font-size: 15px">购买数量：</dt>
 											<dd>
 												<span class="tb-amount-widget mui-amount-wrap">
 													<input class="easyui-numberspinner" type="text" id="number" name="number" data-options="min:0"/>
@@ -245,13 +245,13 @@
 										</dl>
 	
 										<dl class="tb-prop tm-clear">
-											<dt class="tb-metatit">库存：</dt>
-											<dd class="lteight" th:text="${p.quantity}">
+											<dt class="tb-metatit" style="font-size: 15px">库存：</dt>
+											<dd class="lteight" th:text="${p.quantity}" style="font-size: 15px">
 												11
 											</dd>
 										</dl>
 
-										<div class="tb-action tm-clear">
+										<div class="tb-action tm-clear" style="margin-top: 45px">
 											<div class="tb-btn-buy tb-btn-sku">
 												<a href="javascript:" id="buy" rel="nofollow">立即购买</a>
 											</div>

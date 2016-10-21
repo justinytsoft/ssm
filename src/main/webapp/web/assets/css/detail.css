@@ -6982,7 +6982,8 @@ height: 100%
 #detail .tb-metatit {
 	text-align: left;
 	float: left;
-	width: 66px
+	width: 85px;
+	margin-top: 10px;
 }
 
 #detail .tb-sku {
@@ -8531,7 +8532,7 @@ height: 100%
 
 .tb-prop dd {
 	float: left;
-	
+	margin-top: 10px
 }
 .tb-prop dd.lteight
 {line-height: 28px;}
