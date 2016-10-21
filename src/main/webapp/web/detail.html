@@ -22,6 +22,12 @@
 			width: 760px;
 			margin: auto;
 		}
+		/* datagrid样式 */
+		.datagrid-header .datagrid-cell span {
+			font-size: 20px;
+			color: #333;
+			font-weight: normal;
+		}
 	</style>
 		
 	<script type="text/javascript" th:inline="javascript">
@@ -275,7 +281,7 @@
 			</div>
 		</div>
 		
-		<div id="mainwrap" class="main-wrap" style="margin: auto;width: 762px;">
+		<div id="mainwrap" class="main-wrap" style="margin: auto;width: 956px;">
 			<!--tab-->
 			<div id="J_TabBarBox">
 				<ul id="J_TabBar">
@@ -290,12 +296,12 @@
 			<!--end tab-->
 
 			<!--参数-->
-			<div id="attributes" class="attributes" style="width: 760px">
+			<div id="attributes" class="attributes" style="width: 954px">
 				<div class="attributes-list" id="J_AttrList" style="padding: 10px;" th:utext="${p.detail}"></div>
 			</div>
 
 			<!-- 评论-->
-			<div id="J_Detail">
+			<div id="J_Detail"  style="width: 954px;"> 
 				<table id="commentList"></table>
 			</div>
 

@@ -133,7 +133,7 @@
 			////上面新增
 		-->
 		
-		<section class="hot-goods container">
+		<!-- <section class="hot-goods container">
 			<div class="title1">
 				<p class="ch">热门商品</p>
 				<p class="en">HOT COMMODITY</p>
@@ -148,6 +148,30 @@
 									<img th:src="${application.baseImageUrl + p.default_img}"/>
 								</div>
 							</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</section> -->
+		
+		<section class="container">
+			<div class="title1">
+				<p class="ch">普通商品</p>
+				<p class="en">GENERAL COMMODITY</p>
+				<p class="line"><span></span></p>
+			</div>
+			<div class="product-list">
+				<ul>
+					<li th:each="p:${hot_ps}">
+						<div>
+							<a class="img-link" th:href="@{/web/product/detail(id=${p.id})}" target="centerFrame">
+								<img class="img-size" alt="展示图" th:src="${application.baseImageUrl + p.default_img}"/>
+							</a>
+							<div class="product-info">
+								<div class="price fll"><em class="price-u">¥</em><span class="price-n" th:text="${p.price}">38.86</span></div>
+							</div>
+							<div class="clr"></div>
+							<a  th:href="@{/web/product/detail(id=${p.id})}" class="text-link" th:text="${p.name}">【百草味】-草莓干3袋草莓干3袋草莓干3袋草莓干3袋草莓干3袋</a>
 						</div>
 					</li>
 				</ul>
