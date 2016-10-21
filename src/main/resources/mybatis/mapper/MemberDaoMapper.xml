@@ -45,6 +45,7 @@
 				AND (status = -2 OR status = 0)
 			</if>
 		</where>
+		ORDER BY status ASC
 		<if test="param.page!=null">
 			LIMIT #{param.page}, #{param.rows}
 		</if>
