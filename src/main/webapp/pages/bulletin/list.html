@@ -88,7 +88,7 @@
 							$(this).css("border-style","none");
 						});
 						if (data.total == 0) {//如果没有数据    进
-							var tip = '<div id="nothing" style="font-size:20px;height:200px;line-height:200px;text-align:center;color:rgb(200,200,200)"><span style="font-size: 16px;color:#B3B3B3;">未查询到订单列表</span></div>';
+							var tip = '<div id="nothing" style="font-size:20px;height:200px;line-height:200px;text-align:center;color:rgb(200,200,200)"><span style="font-size: 16px;color:#B3B3B3;">未查询到公告列表</span></div>';
 						    //添加一个新数据行，第一列的值为你需要的提示信息，然后将其他列合并到第一列来，注意修改colspan参数为你columns配置的总列数
 						    $(this).datagrid('appendRow', { title:tip }).datagrid('mergeCells', { index: 0, field: 'title', colspan: 4})
 						    //隐藏分页导航条，这个需要熟悉datagrid的html结构，直接用jquery操作DOM对象，easyui datagrid没有提供相关方法隐藏导航条
