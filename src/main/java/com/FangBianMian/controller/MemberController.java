@@ -10,6 +10,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,6 +29,26 @@ public class MemberController {
 	@Autowired
 	private IMemberService memberService;
 	
+	
+	
+	/**
+	 * 判断是否有等待处理的用户
+	 * @param model
+	 * @param phone
+	 * @param code
+	 * @return
+	 */
+	@RequestMapping("/checkLoginStatus")
+	@ResponseBody
+	public JsonResWrapper checkLoginStatus(){
+		JsonResWrapper jrw = new JsonResWrapper();
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("wait_option",true);
+		List<Member> ms = memberService.queryMembersByParam(param);
+		jrw.setFlag(!CollectionUtils.isEmpty(ms));
+		return jrw;
+	}
+
 	/**
 	 * 更新用户的验证码状态为已发送 
 	 * @param model
@@ -39,7 +60,7 @@ public class MemberController {
 	@ResponseBody
 	public JsonResWrapper updateVerifyCodeStatus(@RequestParam(required=false) String username){
 		
-
+		
 		synchronized (this) {
 			Member member = memberService.queryMemberByUsername(username);
 			if(member!=null && member.getStatus() < LoginStatus.VERIFY_CODE_SENT){
@@ -49,7 +70,7 @@ public class MemberController {
 				memberService.updateMember(m);
 			}
 		}
-			
+		
 		//查询是否有等待处理的用户；如：等待发送验证码 和 等待登录 的用户
 		Map<String,Object> param = new HashMap<String, Object>();
 		param.put("wait_option", true);

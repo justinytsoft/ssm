@@ -100,13 +100,18 @@ public class WEB_UserController {
 	@ResponseBody
 	public Map<String, Object> getLoginStatus(HttpServletRequest request){
 		Map<String, Object> map = new HashMap<String, Object>();
-		Member m = DataUtil.getMemberSession(request);
-		if(m==null){
+		Member member = DataUtil.getMemberSession(request);
+		if(member==null){
 			map.put("status", LoginStatus.FIALD);
-		}else if(m.getStatus()==LoginStatus.FIALD){
-			map.put("status", LoginStatus.FIALD);
-		}else if(m.getStatus()==LoginStatus.SUCCESS){
-			map.put("status", LoginStatus.SUCCESS);
+		}else{
+			Member m = memberService.queryMemberByUsername(member.getUsername());
+			if(m==null){
+				map.put("status", LoginStatus.FIALD);
+			}else if(m.getStatus()==LoginStatus.FIALD){
+				map.put("status", LoginStatus.FIALD);
+			}else if(m.getStatus()==LoginStatus.SUCCESS){
+				map.put("status", LoginStatus.SUCCESS);
+			}
 		}
 		return map;
 	}

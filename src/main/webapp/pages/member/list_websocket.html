@@ -11,7 +11,11 @@
             	cConfirm("是否允许<" + username + ">用户登录",function(flag){
             		flag = flag?1:2;
             		$.post([[@{/admin/member/confirmLogin}]], {_:Math.random(), username:username, flag:flag}, function(data){
-            			if(!data.flag){
+            			if(data.flag){
+            				//通知用户是否登录成功
+		            		var msg = username + "," + flag;
+		            		websocket.send(msg);
+            			}else{
             				//确认失败
             				cAlert(data.message);
             			}
@@ -64,15 +68,11 @@
 					$("#wait").hide();
 				}   
 				
-				//判断是否有等待处理的用户
-				setInterval(function(){
-					$.get([[@{/admin/member/checkLoginStatus}]],{_:Math.random()},function(data){
-						if(data.flag){
-							$("#memberList").datagrid("load",{});
-			            	$("#wait").show();
-						}
-					});
-				},3000);
+				//进页面后通过websocket判断是否有等待登录的用户
+	            websocket.onmessage = function (evnt) {
+	            	$("#memberList").datagrid("load",{});
+	            	$("#wait").show();
+	            };
 				
 	 			//创建列表
 				$("#memberList").datagrid({

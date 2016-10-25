@@ -20,6 +20,8 @@
   	    var verifyFlag = false;
   		//项目根路径
 	    var rootPath = [[@{/}]];
+  		//获取登录状态的定时器对象
+  		var login_timer;
 	    
   	    //倒计时
   		var timer;
@@ -75,8 +77,9 @@
 					        var data = eval('(' + data + ')'); 
 					        if (data.flag){
 					        	//定时器
-		  						setInterval(function(){
-		  							$.post([[@{/web/user/getLoginStatus}]], {_:Math.random(),phone:phone.textbox("getValue")}, function(data){
+		  						login_timer = setInterval(function(){
+		  							$.post([[@{/web/user/getLoginStatus}]], {_:Math.random()}, function(data){
+		  								console.info(data);
 			  							if(data.status==1){ //登录成功
 			  								window.location.href = [[@{/web/index/main}]];
 			  							}else if(data.status==2){ 
@@ -84,6 +87,7 @@
 			  								$("#waitDialog").dialog("close",true);
 			  								$("#code").textbox("clear");
 			  								alert("验证码错误，请重新输入");
+			  								clearInterval(login_timer);
 			  							}
 		  							});
 		  						},1000);

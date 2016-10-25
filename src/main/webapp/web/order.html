@@ -164,6 +164,8 @@
 								&nbsp;&nbsp;
 								<span th:text="${'订单号：' + o.sn}">订单号：12456645465465</span>
 								&nbsp;&nbsp;
+								<span th:if="${o.express!=null}" th:text="${'快递编号：' + o.express}">34</span>
+								&nbsp;&nbsp;
 								<span th:text="${'运费：' + (o.freight==null?'无':o.freight)}">34</span>
 							</th>
 						</tr>
