@@ -51,4 +51,24 @@
 		SELECT * FROM sys_users WHERE id = #{id}
 	</select>
 
+	<!-- 通过用户ID查询用户 -->
+	<select id="queryUserById" resultType="com.FangBianMian.domain.User">
+		SELECT * FROM sys_users WHERE id = #{id}
+	</select>
+	
+	<!-- 更新用户信息 -->
+	<update id="updateUser" parameterType="com.FangBianMian.domain.User">
+		UPDATE sys_users 
+		<set>
+			<if test="password!=null">password=#{password},</if>
+			<if test="head!=null">head=#{head},</if>
+			<if test="type!=null">type=#{type},</if>
+			<if test="name!=null">name=#{name},</if>
+			<if test="enabled!=null">enabled=#{enabled},</if>
+			<if test="last_login_time!=null">last_login_time=#{last_login_time},</if>
+			<if test="last_login_ip!=null">last_login_ip=#{last_login_ip}</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
 </mapper>
