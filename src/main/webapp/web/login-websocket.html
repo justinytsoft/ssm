@@ -14,12 +14,27 @@
   	<link rel="stylesheet" th:href="@{/assets/plugins/easyui/themes/color.css}" />
   	<link rel="stylesheet" th:href="@{/assets/plugins/easyui/custom/common.css}" />
   	
+  	<!-- WebSocket -->
+	<script type="text/javascript" th:src="@{/assets/plugins/websocket/sockjs-0.3.4.js}"></script>
+ 	<script type="text/javascript" th:src="@{/assets/plugins/websocket/stomp.js}"></script>
+  	
   	<script type="text/javascript" th:inline="javascript">
   	/*<![CDATA[*/
   	    //判断是否发送验证码的标记
   	    var verifyFlag = false;
   		//项目根路径
 	    var rootPath = [[@{/}]];
+		//websocket请求前缀
+		var wsPrefix = location.href.split(rootPath)[0] + rootPath;   
+	    //websocket对象
+		var websocket;
+	    
+	    //设置websocket前缀
+	 	if (wsPrefix.slice(0, 5) === 'https') {
+			wsPrefix = 'wss' + wsPrefix.slice(5);
+	    } else {
+	    	wsPrefix = 'ws' + wsPrefix.slice(4);
+	    }
 	    
   	    //倒计时
   		var timer;
@@ -45,7 +60,33 @@
   				
   				//发送验证码
   				$.post([[@{/web/user/sendVerifyCode}]], {_:Math.random(),phone:phone.textbox("getValue")}, function(data){
-  					if(!data.flag){
+  					if(data.flag){
+  						//创建WebSocket对象
+  					    if ('WebSocket' in window) {
+  					        websocket = new WebSocket(wsPrefix + "veg");
+  					    } else if ('MozWebSocket' in window) {
+  					        websocket = new MozWebSocket("ws://veg");
+  					    } else {
+  					        websocket = new SockJS(wsPrefix + "com/veg");
+  					    }
+
+  					  	//接收服务器的消息
+  					    websocket.onmessage = function (evnt) {
+  							var data = evnt.data;
+  							console.info(data);
+  							if(data==1){ //登录成功
+  								window.location.href = [[@{/web/index/main}]];
+  							}else{ 
+  								//关闭登录等待提示框
+  								$("#waitDialog").dialog("close",true);
+  								$("#code").textbox("clear");
+  								alert("登录失败");
+  							}
+  					    };
+  					    
+						//给服务器建立连接
+				    	websocket.onopen = function (evnt) { };
+					}else{
 						alert("手机格式错误");
 					}
   				});
@@ -74,23 +115,10 @@
 					    success: function(data){
 					        var data = eval('(' + data + ')'); 
 					        if (data.flag){
-					        	//定时器
-		  						setInterval(function(){
-		  							$.post([[@{/web/user/getLoginStatus}]], {_:Math.random(),phone:phone.textbox("getValue")}, function(data){
-			  							if(data.status==1){ //登录成功
-			  								window.location.href = [[@{/web/index/main}]];
-			  							}else if(data.status==2){ 
-			  								//关闭登录等待提示框
-			  								$("#waitDialog").dialog("close",true);
-			  								$("#code").textbox("clear");
-			  								alert("验证码错误，请重新输入");
-			  							}
-		  							});
-		  						},1000);
+					        	var msg = "admin," + $("#phone").textbox("getValue"); 
+					        	websocket.send(msg);
 					        }else{
-					        	//关闭登录等待提示框
-  								$("#waitDialog").dialog("close",true);
-					        	alert("数据不合法");
+					        	alert("验证码错误");
 					        }
 					    }
 					});
