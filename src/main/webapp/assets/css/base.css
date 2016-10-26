@@ -156,7 +156,7 @@ a {cursor: pointer;}
 .firMenu label{font-size: 15px;display:inline-block;width: 200px;line-height: 53px;cursor:pointer;}
 /* .firMenu label a {color: #17a9ff;} */
 .firMenu label a:hover {color: #17A9FF;}
-.firMenu label img {float: left; margin-left: 15px;margin-right:15px ;padding-top: 15px;padding-bottom: 15px;}
+.firMenu label img {float: left; margin-left: 15px;margin-right:15px ;margin-top: 15px;margin-bottom: 15px;}
 
 /**********************top*******************/
 
