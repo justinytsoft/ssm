@@ -151,6 +151,27 @@ public class DateUtil {
 		 c.add(Calendar.DATE, -day_of_week + 7);
 		 return c.getTime();
 	 }
+	 
+	 /**
+	 * 获取当前月的第一天
+	 * @return
+	 */
+	public static Date getFirstDayOfMonth(){
+		Calendar c = Calendar.getInstance();    
+        c.add(Calendar.MONTH, 0);
+        c.set(Calendar.DAY_OF_MONTH,1);//设置为1号,当前日期既为本月第一天 
+        return c.getTime();
+	}
+
+	/**
+	 * 获取当前月的最后一天
+	 * @return
+	 */
+	public static Date getLastDayOfMonth(){
+		Calendar ca = Calendar.getInstance();    
+        ca.set(Calendar.DAY_OF_MONTH, ca.getActualMaximum(Calendar.DAY_OF_MONTH));  
+		return ca.getTime();
+	}
 	
 	/**
 	 * 获取指定日期是星期几
