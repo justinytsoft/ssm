@@ -41,7 +41,8 @@
     <http pattern="/veg" security="none"/>
     <http pattern="/com/veg" security="none"/>
     
-    
+	<!-- 游戏页面 -->    
+    <http pattern="/game" security="none"/>
     
     <http access-denied-page="/denied" auto-config="false" use-expressions="false" entry-point-ref="authenticationProcessingFilterEntryPoint">
     
