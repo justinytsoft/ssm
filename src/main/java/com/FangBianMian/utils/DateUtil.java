@@ -1,18 +1,13 @@
 package com.FangBianMian.utils;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.joda.time.DateTime;
 
 public class DateUtil {
 	
-	public static final String DATE = "yyyy-MM-dd";
-	public static final String DATE_TIME = "yyyy-MM-dd HH:mm:ss";
-	public static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat(DATE);
-	public static final SimpleDateFormat FORMAT_DATE_TIME = new SimpleDateFormat(DATE_TIME);
-
 	public static String fromNowToDate(Date date) {
 		Date now = new Date();
 		Long time = now.getTime() - date.getTime();
@@ -81,66 +76,6 @@ public class DateUtil {
 	}
 	
 	/**
-	 * 通过传入的日期格式  解析 字符串
-	 * @param date
-	 * @param format
-	 * @return
-	 * @throws ParseException
-	 */
-	public static Date parseByStr(String date, String format) throws ParseException{
-		return new SimpleDateFormat(format).parse(date);
-	}
-	
-	/**
-	 * 通过传入的日期格式  格式化 日期
-	 * @param date
-	 * @param format
-	 * @return
-	 * @throws ParseException
-	 */
-	public static String formatByStr(Date date, String format){
-		return new SimpleDateFormat(format).format(date);
-	}
-	
-	/**
-	 * 将传入日期格式化为  yyyy-MM-dd 的字符串
-	 * @param date
-	 * @return
-	 */
-	public static String formatDate(Date date){
-		return FORMAT_DATE.format(date);
-	}
-
-	/**
-	 * 将传入日期格式化为  yyyy-MM-dd HH:mm:ss 的字符串
-	 * @param date
-	 * @return
-	 */
-	public static String formatDateTime(Date date){
-		return FORMAT_DATE_TIME.format(date);
-	}
-	
-	/**
-	 * 将传入的字符串解析为 yyyy-MM-dd 的日期
-	 * @param date
-	 * @return
-	 * @throws ParseException
-	 */
-	public static Date formatDate(String date) throws ParseException{
-		return FORMAT_DATE.parse(date);
-	}
-
-	/**
-	 * 将传入的字符串解析为 yyyy-MM-dd HH:mm:ss 的日期
-	 * @param date
-	 * @return
-	 * @throws ParseException
-	 */
-	public static Date formatDateTime(String date) throws ParseException{
-		return FORMAT_DATE_TIME.parse(date);
-	}
-	
-	/**
 	 * 获取指定日期指定天数后的日期
 	 * @param date 指定的时间
 	 * @param later 指定的天数
@@ -188,5 +123,54 @@ public class DateUtil {
 		long current = date.getTime();
 		return new Date(current - later * 60 * 60 * 1000);
 	}
+	
+	/**
+	  * 得到本周周一
+	  * @return 
+	  */
+	 public static Date getMondayOfWeek() {
+		 Calendar c = Calendar.getInstance();
+		 int day_of_week = c.get(Calendar.DAY_OF_WEEK) - 1;
+		 if (day_of_week == 0){
+			 day_of_week = 7;
+		 }
+		 c.add(Calendar.DATE, -day_of_week + 1);
+		 return c.getTime();
+	 }
 
+	 /**
+	  * 得到本周周日
+	  * @return 
+	  */
+	 public static Date getSundayOfWeek() {
+		 Calendar c = Calendar.getInstance();
+		 int day_of_week = c.get(Calendar.DAY_OF_WEEK) - 1;
+		 if (day_of_week == 0){
+			 day_of_week = 7;
+	 	}
+		 c.add(Calendar.DATE, -day_of_week + 7);
+		 return c.getTime();
+	 }
+	
+	/**
+	 * 获取指定日期是星期几
+	 * @param date
+	 * @return
+	 */
+	public static int getDayOfWeek(Date date) {
+		  Calendar cal = Calendar.getInstance();
+		  cal.setTime(date);
+		  //一周第一天是否为星期天
+		  boolean isFirstSunday = (cal.getFirstDayOfWeek() == Calendar.SUNDAY);
+		  //获取周几
+		  int weekDay = cal.get(Calendar.DAY_OF_WEEK);
+		  //若一周第一天为星期天，则-1
+		  if (isFirstSunday) {
+		  		weekDay = weekDay - 1;
+			  	if (weekDay == 0) {
+			  		weekDay = 7;
+			  	}
+		  }
+		  return weekDay;
+	}
 }

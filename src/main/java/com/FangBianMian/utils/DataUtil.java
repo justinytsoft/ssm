@@ -108,7 +108,7 @@ public class DataUtil {
 	 */
 	public static String createOrderNO() {
 		StringBuffer orderNumber = new StringBuffer();
-		String dateStr = DateFormatter.dateToString(new Date(), "yyMMdd");
+		String dateStr = DateFormatter.formatByStr(new Date(), "yyMMdd");
 		orderNumber.append(dateStr);
 		orderNumber.append(generateRandomString(9));
 		return orderNumber.toString();
