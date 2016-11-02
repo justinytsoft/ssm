@@ -29,6 +29,28 @@ public class DateUtil {
 	}
 	
 	/**
+	 * 将日期的时分秒转为 00:00:00
+	 * @param date
+	 * @return
+	 * @throws ParseException
+	 */
+	public static Date lowDate(Date date) throws ParseException{
+		String lowDate = DateFormatter.formatDate(date) + " 00:00:00";
+		return DateFormatter.parseByStr(lowDate,DateFormatter.DATE_TIME);
+	}
+
+	/**
+	 * 将日期的时分秒转为 23:59:59
+	 * @param date
+	 * @return
+	 * @throws ParseException
+	 */
+	public static Date hightDate(Date date) throws ParseException{
+		String lowDate = DateFormatter.formatDate(date) + " 23:59:59";
+		return DateFormatter.parseByStr(lowDate,DateFormatter.DATE_TIME);
+	}
+	
+	/**
 	 * 计算d1 到 d2 相差多少时间
 	 * @param d1 未来的时间
 	 * @param d2 现在的时间
