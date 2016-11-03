@@ -8,8 +8,13 @@ import com.cloopen.rest.sdk.CCPRestSmsSDK;
 public class SendTemplateSMS {
 
 	/**
-	 * @param args
+	 * 发送短信
+	 * @param phone 手机号
+	 * @param value1 内容
+	 * @param value2 多少分钟有效
+	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public static String sendSms(String phone,String value1,String value2 ) {
 		HashMap<String, Object> result = null;
 
@@ -71,5 +76,4 @@ public class SendTemplateSMS {
 			return "错误码=" + result.get("statusCode") +" 错误信息= "+result.get("statusMsg");
 		}
 	}
-
 }
