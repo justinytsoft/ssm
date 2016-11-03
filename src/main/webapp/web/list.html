@@ -161,7 +161,7 @@
 				<p class="line"><span></span></p>
 			</div>
 			<div class="product-list">
-				<ul>
+				<ul th:if="${not #lists.isEmpty(hot_ps)}">
 					<li th:each="p:${hot_ps}">
 						<div>
 							<a class="img-link" th:href="@{/web/product/detail(id=${p.id})}" target="centerFrame">
@@ -175,6 +175,9 @@
 						</div>
 					</li>
 				</ul>
+				<div th:unless="${not #lists.isEmpty(hot_ps)}" style="text-align: center;font-size: 20px">
+					未查询到热门商品
+				</div>
 			</div>
 		</section>
 		
@@ -187,7 +190,7 @@
 				<p class="line"><span></span></p>
 			</div>
 			<div class="product-list">
-				<ul>
+				<ul th:if="${not #lists.isEmpty(ps)}">
 					<li th:each="p:${ps}">
 						<div>
 							<a class="img-link" th:href="@{/web/product/detail(id=${p.id})}" target="centerFrame">
@@ -201,6 +204,9 @@
 						</div>
 					</li>
 				</ul>
+				<div th:unless="${not #lists.isEmpty(ps)}" style="text-align: center;font-size: 20px">
+					未查询到普通商品
+				</div>
 			</div>
 		</section>
 		
