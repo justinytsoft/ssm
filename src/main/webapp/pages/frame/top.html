@@ -4,14 +4,18 @@
 	
 	<body>
 		<div>
-			<div style="float:left;line-height:55px;margin-left: 20px;color:#17A9FF;font-size:20px">
+			<div style="float:left;line-height:45px;margin-left: 20px;color:#17A9FF;font-size:20px">
 				后台管理系统	
 			</div>
 			
-			<div style="float:right;line-height:55px;margin-right: 20px;">
+			<div style="float:right;line-height:45px;margin-right: 20px;">
 				<!-- <img alt="头像" th:src="${application.baseImageUrl + user.head}" style="vertical-align:middle;width:30px;height:30px;margin-right: 10px"/> -->
 				<span th:text="${user.name}"></span>
 				<a style="margin-left: 20px" th:href="@{/logout}">退 出</a>
+			</div>
+			
+			<div style="width:240px;margin: 10px auto;">
+				<iframe name="weather_inc" src="http://i.tianqi.com/index.php?c=code&amp;id=48" width="440" height="45" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
 			</div>
 		</div>
 	</body>
