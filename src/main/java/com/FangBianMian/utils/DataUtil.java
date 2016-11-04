@@ -46,25 +46,29 @@ import com.FangBianMian.domain.User;
  */
 public class DataUtil {
 	
+	public static void main(String[] args) {
+		String code = "sdfsdf<img src=\"https://gss0.bdstatic.com/70cFsjip0QIZ8tyhnq/hi/we.com\" />sdf<img src='https://gss0.bdstatic.com/70cFsjip0QIZ8tyhnq/hi/we.com' />sf'";
+		getImgs(code);
+	}
+	
 	/**
 	 * 替换编辑器里的临时图片路径为正式路径
 	 * @param content
 	 * @return
 	 */
-	public static String replaceTempImgSrc(String content){
-		String imagePatternStr = "<img[\\w\\W]*?src=[\"|\']?([\\w\\W]*?)(jpg|png)[\\w\\W]*?/>";
-		Pattern imagePattern = Pattern.compile(imagePatternStr, Pattern.CASE_INSENSITIVE);
-		Matcher matcher = imagePattern.matcher(content);
-		
-		try{
-			while (matcher.find()) {
-				String prefix = matcher.group(1);
-				String suffix = matcher.group(2);
-				int start = prefix.indexOf("temp/") + 5;
-				int end = prefix.length();
-				
-				//临时文件的名称
-				System.out.println(matcher.group(1));
+	private static void getImgs(String content) {
+		String img = "";
+		Pattern p_image;
+		Matcher m_image;
+		String regEx_img = "(<img.*src\\s*=\\s*(.*?)[^>]*?>)";
+		p_image = Pattern.compile(regEx_img, Pattern.CASE_INSENSITIVE);
+		m_image = p_image.matcher(content);
+		while (m_image.find()) {
+			img = m_image.group();
+			Matcher m = Pattern.compile("src\\s*=\\s*\"?(.*?)(\"|>|\\s+)").matcher(img);
+			while (m.find()) {
+				String temp = m.group(1);
+				System.out.println(temp);
 				
 				/*String tempPath = SettingUtil.getCommonSetting("upload.file.temp.path") + File.separator + temp;// 临时文件夹
 				File file = new File(tempPath);
@@ -74,16 +78,7 @@ public class DataUtil {
 					content = content.replaceFirst(temp, formal); //替换临时路径
 				}*/
 			}
-		}catch(Exception e){
-			e.printStackTrace();
 		}
-		
-		return content;
-	}
-	
-	public static void main(String[] args) {
-		String img = "asegwegew<img src=\"http://yw-workspace.com:8099/ssm/temp/1476955592389_S.jpeg\" title=\"\" alt=\"\"/>wfefwfw<img src=\"http://yw-workspace.com:8099/ssm/temp/1476955595335_S.png\" title=\"\" alt=\"\"/>";
-		System.out.println(replaceTempImgSrc(img));
 	}
 	
 	/**
