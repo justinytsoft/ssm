@@ -46,12 +46,6 @@ import com.FangBianMian.domain.User;
  */
 public class DataUtil {
 	
-	public static void main(String[] args) {
-		String a = "<p><img src=\"http://localhost/ssm/images/pn/P3/1478335413028_S.png\" title=\"\" alt=\"\"/><img src=\"http://localhost/ssm/images/3q/fg/1478335502062_S.png\" title=\"\" alt=\"\"/></p>";
-		String b = "http://localhost/ssm/images/pn/P3/1478335413028_S.png";
-		System.out.println(a.replace(b, ""));
-	}
-	
 	/**
 	 * 替换编辑器里的临时图片路径为正式路径
 	 * @param oldContent 旧的内容, 用于和新内容进行比较, 将正式目录里不要的图片删除
