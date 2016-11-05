@@ -190,8 +190,8 @@ public class ProductController {
 		p.setPayment_type(payment_type);
 		p.setStatus(status);
 		p.setHot(hot);
-		p.setDetail(detail);
-		//p.setDetail(DataUtil.replaceTempImgSrc(detail));
+		//p.setDetail(detail);
+		p.setDetail(DataUtil.replaceTempImgSrc(detail));
 		
 		productService.saveProduct(p, productImgs);
 		

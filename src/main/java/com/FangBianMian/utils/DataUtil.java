@@ -47,38 +47,51 @@ import com.FangBianMian.domain.User;
 public class DataUtil {
 	
 	public static void main(String[] args) {
-		String code = "sdfsdf<img src=\"https://gss0.bdstatic.com/70cFsjip0QIZ8tyhnq/hi/we.com\" />sdf<img src='https://gss0.bdstatic.com/70cFsjip0QIZ8tyhnq/hi/we.com' />sf'";
-		getImgs(code);
+		String code = "sdfsdf<img src=\"https://gss0.bdstatic.com/70cFsjip0QIZ8tyhnq/temp/we.com\" />sdf<img src='https://gss0.bdstatic.com/70cFsjip0QIZ8tyhnq/hi/we.com' />sf'";
+		replaceTempImgSrc(code);
 	}
 	
 	/**
 	 * 替换编辑器里的临时图片路径为正式路径
-	 * @param content
+	 * @param content 替换过路径的内容
 	 * @return
 	 */
-	private static void getImgs(String content) {
+	public static String replaceTempImgSrc(String content) {
 		String img = "";
 		Pattern p_image;
 		Matcher m_image;
 		String regEx_img = "(<img.*src\\s*=\\s*(.*?)[^>]*?>)";
 		p_image = Pattern.compile(regEx_img, Pattern.CASE_INSENSITIVE);
 		m_image = p_image.matcher(content);
-		while (m_image.find()) {
-			img = m_image.group();
-			Matcher m = Pattern.compile("src\\s*=\\s*\"?(.*?)(\"|>|\\s+)").matcher(img);
-			while (m.find()) {
-				String temp = m.group(1);
-				System.out.println(temp);
-				
-				/*String tempPath = SettingUtil.getCommonSetting("upload.file.temp.path") + File.separator + temp;// 临时文件夹
-				File file = new File(tempPath);
-				if(file.exists() && file.isFile()){ //判断是否存在临时目录，存在则移到正式目录并返回路径
-					String formal = "images/" + DataUtil.moveToDir(temp, true); //正式路径
-					temp = "temp/" + temp;
-					content = content.replaceFirst(temp, formal); //替换临时路径
-				}*/
+		try {
+			while (m_image.find()) {
+				img = m_image.group();
+				Matcher m = Pattern.compile("src\\s*=\\s*\"?(.*?)(\"|>|\\s+)").matcher(img);
+				while (m.find()) {
+					//临时路径
+					String tp = m.group(1);
+					//临时路径解析
+					String[] parse = tp.split("temp");
+					if(parse.length==2){
+						//临时文件的名称
+						String temp = parse[1].substring(1, parse[1].length()).replaceAll("_S", "");
+						//临时文件的物理地址
+						String tempPath = SettingUtil.getCommonSetting("upload.file.temp.path") + File.separator + temp;
+						File file = new File(tempPath);
+						if(file.exists() && file.isFile()){ //判断是否存在临时目录，存在则移到正式目录并返回路径
+							//正式路径
+							String formal = SettingUtil.getCommonSetting("base.image.url") + DataUtil.moveToDir(temp, true);
+							//正式路径下的缩略图
+							formal = formal.replace(".", "_S.");
+							content = content.replaceAll(tp, formal); //替换临时路径
+						}
+					}
+				}
 			}
-		}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		return content;
 	}
 	
 	/**
@@ -505,7 +518,8 @@ public class DataUtil {
 	 */
 	public static String moveToDir(String filename, boolean createThumb) throws IOException {
 		String fileDir = SettingUtil.getCommonSetting("upload.file.temp.path");
-		String sep = System.getProperty("file.separator");
+		//String sep = System.getProperty("file.separator");
+		String sep = "/";
 		String imgFileDir = SettingUtil.getCommonSetting("upload.image.path");
 
 		File srcFile = new File(fileDir + sep + filename);
