@@ -259,10 +259,11 @@ public class DataUtil {
 	 * 上传文件
 	 * @param request
 	 * @param isTemp 判断文件存放位置, true 临时目录, false 正式目录
+	 * @param fileSize 限制文件上传的大小
 	 * @return
 	 * @throws Exception
 	 */
-	public static List<String> uploadFile(HttpServletRequest request, boolean isTemp) throws Exception {
+	public static List<String> uploadFile(HttpServletRequest request, boolean isTemp, Long fileSize) throws Exception {
 		List<String> files = new ArrayList<String>(); //返回上传到服务器的路径
 		String sep = System.getProperty("file.separator"); //文件分隔符
 		String fileDir = null;// 存放图片的路径
@@ -297,16 +298,17 @@ public class DataUtil {
 				StringBuffer newFileName = new StringBuffer();
 				// 取得上传文件
 				MultipartFile file = multiRequest.getFile(iter.next());
-				if (file != null) {
-					//if (file != null && file.getBytes().length != 0) {
+				if (file != null && file.getBytes().length != 0) {
 					// 取得当前上传文件的文件名称
 					String fileTrueName = file.getOriginalFilename();
 					// 获取文件后缀
 					String ext = fileTrueName.substring(fileTrueName.lastIndexOf("."));
-					// 判断上传文件的后缀是否合法
-					/*if (!".jpg/.jpeg/.gif/.bmp/.png".contains(ext.toLowerCase())) {
-						throw new Exception("格式错误！");
-					}*/
+					// 判断上传文件的大小是否合法
+					if(fileSize!=null){
+						if(file.getSize() > fileSize.longValue()){
+							throw new Exception("文件大小超出限制");
+						}
+					}
 					// 如果名称不为“”,说明该文件存在，否则说明该文件不存在
 					if (fileTrueName.trim() != "") {
 						// 重命名上传后的文件名

@@ -22,12 +22,12 @@
 		     	   type: 'POST',
 		     	   dataType: 'json',
 		     	   success: function (result) {
-		     		   	if(result.status=="201"){
-							cAlert(result.message);		     		   		
-		     		   	}else{
+		     		   	if(result.flag){
 		    	       	   	var id = obj.attr("id");
 		        	        $("#"+id+"Val").val(result.data.paths[0]);
 		        	        $("#"+id+"Pre").attr("src",result.data.prefix + result.data.paths[0]).show();
+		     		   	}else{
+							cAlert(result.message);		     		   		
 		     		   	}
 	        		},
 	        		error:function(){

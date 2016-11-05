@@ -39,7 +39,7 @@ public class UploadController {
 		JsonResWrapper response = new JsonResWrapper();
 		try {
 			List<String> paths = null;
-			fileSize = fileSize==null?Long.parseLong(SettingUtil.getCommonSetting("upload.maxSize")):fileSize;
+			fileSize = fileSize==null?Long.parseLong(SettingUtil.getCommonSetting("upload.image.maxSize")):fileSize;
 			if(thumb){
 				paths = DataUtil.uploadImg(request, temp, 0, 0, fileSize);
 			}else{
@@ -51,7 +51,7 @@ public class UploadController {
 			response.setData(param);
 			return response;
 		} catch (Exception e) {
-			response.setStatus(ResponseStatus.FAILED);
+			response.setFlag(false);
 			response.setMessage(e.getMessage());
 			return response;
 		}
@@ -61,20 +61,25 @@ public class UploadController {
 	 * 上传普通文件到临时文件夹
 	 * @param model
 	 * @param request
+	 * @param temp 存放位置 true 临时目录 false 正式目录
+	 * @param fileSize 限制上传文件的大小，默认为配置文件中的限制
 	 * @return
 	 */
 	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
 	@ResponseBody 
-	public JsonResWrapper uploadFile(Model model, HttpServletRequest request) {
+	public JsonResWrapper uploadFile(Model model, HttpServletRequest request,
+									@RequestParam(required=false) boolean temp,
+									@RequestParam(required=false) Long fileSize) {
 		JsonResWrapper response = new JsonResWrapper();
 		try {
-			List<String> paths = DataUtil.uploadFile(request, true);
+			fileSize = fileSize==null?Long.parseLong(SettingUtil.getCommonSetting("upload.file.maxSize")):fileSize;
+			List<String> paths = DataUtil.uploadFile(request, temp, fileSize);
 			Map<String ,Object> param = new HashMap<String,Object>();
 			param.put("paths", paths);
 			response.setData(param);
 			return response;
 		} catch (Exception e) {
-			response.setStatus(ResponseStatus.FAILED);
+			response.setFlag(false);
 			response.setMessage(e.getMessage());
 			return response;
 		}
