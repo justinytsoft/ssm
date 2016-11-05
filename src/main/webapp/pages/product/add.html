@@ -22,9 +22,13 @@
 		     	   type: 'POST',
 		     	   dataType: 'json',
 		     	   success: function (result) {
-		    	    	var id = obj.attr("id");
-	        	        $("#"+id+"Val").val(result.data.paths[0]);
-	        	        $("#"+id+"Pre").attr("src",result.data.prefix + result.data.paths[0]).show();
+		     		   	if(result.status=="201"){
+							cAlert(result.message);		     		   		
+		     		   	}else{
+		    	       	   	var id = obj.attr("id");
+		        	        $("#"+id+"Val").val(result.data.paths[0]);
+		        	        $("#"+id+"Pre").attr("src",result.data.prefix + result.data.paths[0]).show();
+		     		   	}
 	        		},
 	        		error:function(){
 	        			cAlert("上传失败");
@@ -149,7 +153,7 @@
 					<div style="display: inline-block;">
 						<img id="cvoer1Pre" style="display:none;width:100px;height:100px;vertical-align: middle;border: 1px solid #F3F3F3"/>
 						<input id="cvoer1Val" name="productImgs" type="hidden" /> 
-						<input id="cvoer1" class="easyui-filebox" data-options="width:70,height:30,buttonText:'上传列表图',accept:'image/jpeg,image/png',onChange:fileUpload,required:true,validateOnCreate:false"/>
+						<input id="cvoer1" class="easyui-filebox" data-options="width:70,height:30,buttonText:'上传列表图',onChange:fileUpload,required:true,validateOnCreate:false"/>
 					</div>
 					
 					<div style="display: inline-block;">

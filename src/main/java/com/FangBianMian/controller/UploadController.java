@@ -27,20 +27,23 @@ public class UploadController {
 	 * @param request
 	 * @param thumb 是否压缩图片 true 压缩 false 不压缩
 	 * @param temp 存放位置 true 临时目录 false 正式目录
+	 * @param fileSize 限制上传文件的大小，默认为配置文件中的限制
 	 * @return
 	 */
 	@RequestMapping(value = "/uploadImage", method = RequestMethod.POST)
 	@ResponseBody 
 	public JsonResWrapper uploadImage(Model model, HttpServletRequest request, 
 										@RequestParam(required=false) boolean thumb,
-										@RequestParam(required=false) boolean temp) {
+										@RequestParam(required=false) boolean temp,
+										@RequestParam(required=false) Long fileSize) {
 		JsonResWrapper response = new JsonResWrapper();
 		try {
 			List<String> paths = null;
+			fileSize = fileSize==null?Long.parseLong(SettingUtil.getCommonSetting("upload.maxSize")):fileSize;
 			if(thumb){
-				paths = DataUtil.uploadImg(request, temp, 0, 0);
+				paths = DataUtil.uploadImg(request, temp, 0, 0, fileSize);
 			}else{
-				paths = DataUtil.uploadImg(request, temp);
+				paths = DataUtil.uploadImg(request, temp, fileSize);
 			}
 			Map<String ,Object> param = new HashMap<String,Object>();
 			param.put("prefix", temp ? SettingUtil.getCommonSetting("base.temp.url") : SettingUtil.getCommonSetting("base.image.url"));

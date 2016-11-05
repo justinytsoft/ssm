@@ -55,8 +55,8 @@ public class FileUtils {
 		String path = new File(filename).getParentFile().getPath() + File.separator;
 		String[] fullname = getFileNameAndExtension(new File(filename).getName());
 
-		String name = fullname[0];
-		String extension = fullname[1];
+		String name = fullname[0]; //文件名
+		String extension = fullname[1]; //后缀
 
 		return new String[] { path, name, extension };
 	}

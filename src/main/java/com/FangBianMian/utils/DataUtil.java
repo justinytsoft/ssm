@@ -372,10 +372,13 @@ public class DataUtil {
 	 * @param createThumb 是否创建缩略图
 	 * @param W 缩略图的宽
 	 * @param H 缩略图的高
+	 * @param fileSize 限制图片大小
 	 * @return
 	 * @throws Exception
 	 */
-	private static List<String> uploadImg(HttpServletRequest request, boolean isTemp, boolean createThumb, Integer W , Integer H) throws Exception {
+	private static List<String> uploadImg(HttpServletRequest request, boolean isTemp, boolean createThumb, 
+										  int W, int H, Long fileSize) throws Exception {
+		
 		List<String> files = new ArrayList<String>(); //返回上传到服务器的路径
 		String sep = System.getProperty("file.separator"); //文件分隔符
 		String fileDir = null;// 存放图片的路径
@@ -415,9 +418,16 @@ public class DataUtil {
 					String fileTrueName = file.getOriginalFilename();
 					// 获取文件后缀
 					String ext = fileTrueName.substring(fileTrueName.lastIndexOf("."));
+					// 判断上传文件的大小
+					if(fileSize!=null){
+						long fs = file.getSize();
+						if(fs > fileSize.longValue()){
+							throw new Exception("文件大小超出限制");
+						}
+					}
 					// 判断上传文件的后缀是否合法
 					if (!".jpg/.jpeg/.gif/.bmp/.png".contains(ext.toLowerCase())) {
-						throw new Exception("格式错误！");
+						throw new Exception("图片格式错误");
 					}
 					// 如果名称不为“”,说明该文件存在，否则说明该文件不存在
 					if (fileTrueName.trim() != "") {
@@ -442,11 +452,11 @@ public class DataUtil {
 							if(W == 0 && H == 0){
 								String widthS = SettingUtil.getCommonSetting("thumbnailator.width");
 								String heightS = SettingUtil.getCommonSetting("thumbnailator.height");
-								Integer width = !StringUtils.isBlank(widthS) ? Integer.valueOf(widthS) : 0;
-								Integer height = !StringUtils.isBlank(heightS) ? Integer.valueOf(heightS) : 0;
-								ImageResizer.resizeImage(fileName, width, height, "_S");
+								Integer width = !StringUtils.isBlank(widthS) ? Integer.valueOf(widthS) : 120;
+								Integer height = !StringUtils.isBlank(heightS) ? Integer.valueOf(heightS) : 100;
+								ImagesTool.img_small(fileName, "_S", width, height);
 							} else {
-								ImageResizer.resizeImage(fileName, W, H, "_S");
+								ImagesTool.img_small(fileName, "_S", W,	H);
 							}
 						}
 					}else{
@@ -467,8 +477,8 @@ public class DataUtil {
 	 * @return 返回上传后的路径
 	 * @throws Exception
 	 */
-	public static List<String> uploadImg(HttpServletRequest req, boolean isTemp) throws Exception {
-		return uploadImg(req,isTemp,false,0,0);
+	public static List<String> uploadImg(HttpServletRequest req, boolean isTemp, Long fileSize) throws Exception {
+		return uploadImg(req,isTemp,false,0,0,fileSize);
 	}
 	
 	/**
@@ -480,8 +490,8 @@ public class DataUtil {
 	 * @return 返回上传后的路径
 	 * @throws Exception
 	 */
-	public static List<String> uploadImg(HttpServletRequest req, boolean isTemp, Integer W, Integer H) throws Exception {
-		return uploadImg(req,isTemp,true,W,H);
+	public static List<String> uploadImg(HttpServletRequest req, boolean isTemp, Integer W, Integer H, Long fileSize) throws Exception {
+		return uploadImg(req,isTemp,true,W,H,fileSize);
 	}
 	
 	/**
@@ -532,7 +542,7 @@ public class DataUtil {
 			Integer height = !StringUtils.isBlank(heightS) ? Integer.valueOf(heightS) : 500;
 		
 			String fileName = imgFileDir + sep + subDir + sep + filename;
-			ImageResizer.resizeImage(fileName, width, height, "_S");
+			ImagesTool.img_small(fileName, "_S", width, height);
 		}
 
 		return subDir + sep + filename;
@@ -763,7 +773,7 @@ public class DataUtil {
 				w=200;
 				h=200;
 			}
-			ImageResizer.resizeImage(filenames, w, h, "_S");
+			ImagesTool.img_small(filenames, "_S", w, h);
 			return filename;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -806,7 +816,7 @@ public class DataUtil {
 			fos.close();
 			if (createThumb) {
 				String fileName = toDir + sep + filename;
-				ImageResizer.resizeImage(fileName, 200, 200, "_S");
+				ImagesTool.img_small(fileName, "_S", 200, 200);
 			}
 			return dirName + sep + filename;
 		} catch (Exception e) {
