@@ -60,6 +60,12 @@ public class ProductServiceImpl implements IProductService {
 			p.setDefault_img(productImgs[0]);
 
 			if(p.getId()!=null){
+				//将商品详情不需要的旧图删除
+				Product product = productDao.queryProductById(p.getId(), null);
+				if(product!=null){
+					p.setDetail(DataUtil.replaceTempImgSrc(product.getDetail(), p.getDetail()));
+				}
+				
 				//更新商品信息
 				productDao.updateProduct(p); 
 				//查询商品的图片
@@ -76,6 +82,7 @@ public class ProductServiceImpl implements IProductService {
 					}
 				}
 			}else{
+				p.setDetail(DataUtil.replaceTempImgSrc(null, p.getDetail()));
 				//保存商品信息
 				productDao.insertProduct(p);
 			}

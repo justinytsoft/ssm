@@ -47,51 +47,80 @@ import com.FangBianMian.domain.User;
 public class DataUtil {
 	
 	public static void main(String[] args) {
-		String code = "sdfsdf<img src=\"https://gss0.bdstatic.com/70cFsjip0QIZ8tyhnq/temp/we.com\" />sdf<img src='https://gss0.bdstatic.com/70cFsjip0QIZ8tyhnq/hi/we.com' />sf'";
-		replaceTempImgSrc(code);
+		String a = "<p><img src=\"http://localhost/ssm/images/pn/P3/1478335413028_S.png\" title=\"\" alt=\"\"/><img src=\"http://localhost/ssm/images/3q/fg/1478335502062_S.png\" title=\"\" alt=\"\"/></p>";
+		String b = "http://localhost/ssm/images/pn/P3/1478335413028_S.png";
+		System.out.println(a.replace(b, ""));
 	}
 	
 	/**
 	 * 替换编辑器里的临时图片路径为正式路径
-	 * @param content 替换过路径的内容
+	 * @param oldContent 旧的内容, 用于和新内容进行比较, 将正式目录里不要的图片删除
+	 * @param newContent 新的内容
 	 * @return
 	 */
-	public static String replaceTempImgSrc(String content) {
+	public static String replaceTempImgSrc(String oldContent, String newContent) {
 		String img = "";
 		Pattern p_image;
 		Matcher m_image;
 		String regEx_img = "(<img.*src\\s*=\\s*(.*?)[^>]*?>)";
 		p_image = Pattern.compile(regEx_img, Pattern.CASE_INSENSITIVE);
-		m_image = p_image.matcher(content);
+		m_image = p_image.matcher(newContent);
 		try {
 			while (m_image.find()) {
 				img = m_image.group();
 				Matcher m = Pattern.compile("src\\s*=\\s*\"?(.*?)(\"|>|\\s+)").matcher(img);
 				while (m.find()) {
-					//临时路径
+					//img路径
 					String tp = m.group(1);
-					//临时路径解析
+					//img路径解析
 					String[] parse = tp.split("temp");
-					if(parse.length==2){
+					
+					//将相同的路径去掉
+					if(!StringUtils.isBlank(oldContent)){
+						oldContent = oldContent.replaceAll(tp, "");
+					}
+					
+					//临时路径，将临时图片移到正式目录
+					if(parse.length==2){ 
 						//临时文件的名称
 						String temp = parse[1].substring(1, parse[1].length()).replaceAll("_S", "");
 						//临时文件的物理地址
 						String tempPath = SettingUtil.getCommonSetting("upload.file.temp.path") + File.separator + temp;
 						File file = new File(tempPath);
 						if(file.exists() && file.isFile()){ //判断是否存在临时目录，存在则移到正式目录并返回路径
-							//正式路径
+							//将临时图片移到正式目录并返回正式路径
 							String formal = SettingUtil.getCommonSetting("base.image.url") + DataUtil.moveToDir(temp, true);
 							//正式路径下的缩略图
 							formal = formal.replace(".", "_S.");
-							content = content.replaceAll(tp, formal); //替换临时路径
+							newContent = newContent.replaceAll(tp, formal); //替换临时路径
 						}
 					}
 				}
+				
+				m_image = p_image.matcher(oldContent);
+				while (m_image.find()) {
+					img = m_image.group();
+					m = Pattern.compile("src\\s*=\\s*\"?(.*?)(\"|>|\\s+)").matcher(img);
+					while (m.find()) {
+						//img路径
+						String tp = m.group(1);
+						//img路径解析
+						String[] parse = tp.split("images");
+						
+						//正式路径
+						if(parse.length==2){
+							String formal = parse[1].substring(1, parse[1].length()).replaceAll("_S", "");
+							//删除图片
+							deleteByUploadImg(formal);
+						}
+					}
+				}
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
-		return content;
+		return newContent;
 	}
 	
 	/**
