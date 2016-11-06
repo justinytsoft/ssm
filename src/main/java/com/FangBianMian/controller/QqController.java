@@ -1,4 +1,4 @@
-package com.FangBianMian.qq;
+package com.FangBianMian.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,7 +10,7 @@ import com.qq.connect.oauth.Oauth;
 
 @RequestMapping("/qq")
 @Controller
-public class LoginController {
+public class QqController {
 
 	@RequestMapping("/login")
 	public void login(HttpServletRequest request, HttpServletResponse response){

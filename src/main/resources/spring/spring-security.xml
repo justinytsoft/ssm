@@ -43,6 +43,9 @@
     
     <!-- qq相关访问 -->
     <http pattern="/qq/**" security="none"/>
+
+    <!-- 微信相关访问 -->
+    <http pattern="/wechat/**" security="none"/>
     
     <http access-denied-page="/denied" auto-config="false" use-expressions="false" entry-point-ref="authenticationProcessingFilterEntryPoint">
     
