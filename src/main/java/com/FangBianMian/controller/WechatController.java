@@ -8,11 +8,30 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.FangBianMian.wechant.service.CoreService;
 import com.FangBianMian.wechant.utils.ReqVerifyUtil;
 
 @RequestMapping("/wechat")
 @Controller
 public class WechatController {
+	
+	/** 
+     * 处理请求
+     */ 
+	@RequestMapping("/handler")
+	public void handler(HttpServletRequest request, HttpServletResponse response){
+		try {
+			 // 调用核心业务类接收消息、处理消息  
+	        String respMessage = CoreService.processRequest(request);  
+	          
+	        // 响应消息  
+	        PrintWriter out = response.getWriter();  
+	        out.print(respMessage);  
+	        out.close();  
+		} catch (IOException e) {
+			e.printStackTrace();
+		}  
+	}
 
 	/** 
      * 确认请求来自微信服务器 
