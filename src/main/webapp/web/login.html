@@ -68,14 +68,15 @@
   		//登录
 		function login(){
   			if(verifyFlag){
-  				//打开登录等待提示框
-  				$("#waitDialog").dialog("open",true);
   				
 				var form = $("#loginForm");
 				if(form.form('validate')){
 					form.form('submit', {
 					    success: function(data){
-					        var data = eval('(' + data + ')'); 
+			  				//打开登录等待提示框
+			  				$("#waitDialog").dialog("open",true);
+
+			  				var data = eval('(' + data + ')'); 
 					        if (data.flag){
 					        	//定时器
 		  						login_timer = setInterval(function(){
@@ -153,10 +154,10 @@
 						<div style="margin-bottom: 15px">
 							<a href="#" class="easyui-linkbutton" data-options="onClick:login" style="width:283px;height:35px">登 录</a>
 						</div>
-						<div>
+						<!-- <div>
 							<span style="color:white">第三方登录：</span>
 							<a target="_blank" th:href="@{/qq/login}"><img alt="qq" th:src="@{/assets/imgs/qq_login.png}" /></a>
-						</div>
+						</div> -->
 					</form>
 				</div>
 			</div>
