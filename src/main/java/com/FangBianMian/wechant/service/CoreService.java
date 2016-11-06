@@ -27,11 +27,11 @@ public class CoreService {
             Map<String, String> requestMap = MessageUtil.parseXml(request);  
   
             // 发送方帐号（open_id）  
-            String fromUserName = requestMap.get("fromUserName");  
+            String fromUserName = requestMap.get("FromUserName");  
             // 公众帐号  
-            String toUserName = requestMap.get("toUserName");  
+            String toUserName = requestMap.get("ToUserName");  
             // 消息类型  
-            String msgType = requestMap.get("msgType");  
+            String msgType = requestMap.get("MsgType");  
   
             // 回复文本消息  
             TextMessage textMessage = new TextMessage();  
