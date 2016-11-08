@@ -2,62 +2,120 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 	<body>
+		<script type="text/javascript" th:src="@{/assets/plugins/easyui/plugins/jquery.datagrid-detailview.js}"></script>
 		<script type="text/javascript" th:inline="javascript">
 		/*<![CDATA[*/
-	 	   $(function() {
-	 			//保存
-	 			$("#saveButton").click(function() {
-	 				//表单对象
-		 			var form = $("#saveForm");
-	 				if(form.form("validate")){
- 						form.form("submit",{
- 							success:function(data){
- 								data = eval('(' + data + ')');  // change the JSON string to javascript object
- 						        cAlertFun(data.message,function(){
- 						        	if(data.flag){
- 						        		refresh([[@{/admin/user/update_pwd}]]);
- 						        	}
- 						        });
- 						    }
- 						});
-	 				}
-	 			});
-	 		});
+		     var datas = [
+		                  {id:1,username:1,password:1},
+		                  {id:2,username:2,password:2},
+		                  {id:3,username:3,password:3}
+		                 ];
+		
+        	 $(function(){
+	            $("#memberList").datagrid({
+	            	view: detailview,
+	                detailFormatter:function(index,row){
+	                    return '<div style="padding:2px"><table class="ddv"></table></div>';
+	                },
+	                onExpandRow: function(index,row){
+	                    var ddv = $(this).datagrid('getRowDetail',index).find('table.ddv');
+	                    ddv.datagrid({
+	                        fitColumns:true,
+	                        singleSelect:true,
+	                        loadMsg:'数据加载中....',
+	                        height:'auto',
+	                        data:datas,
+	                        columns:[[ //设置表头 
+	            		               {
+	            							field:'id',
+	            							title:'编号',
+	            							align:"center",
+	            							width:500
+	            						},
+	            						{
+	            							field:'username',
+	            							title:'号码',
+	            							align:"center",
+	            							width:500
+	            						},
+	            						{
+	            							field:'password',
+	            							title:'验证码',
+	            							align:"center",
+	            							width:500
+	            						}
+	            					]],
+	                        onResize:function(){
+	                            $('#memberList').datagrid('fixDetailRowHeight',index);
+	                        },
+	                        onLoadSuccess:function(){
+	                            setTimeout(function(){
+	                                $('#memberList').datagrid('fixDetailRowHeight',index);
+	                            },0);
+	                        }
+	                    });
+	                    $('#memberList').datagrid('fixDetailRowHeight',index); 
+	                }, 
+	                data:datas,
+				    fitColumns : true, //设置为 true, 则自动调整宽度 
+					singleSelect : true, //	设置为 true，则只允许选中一行。
+				    rownumbers:false, //设置为 true，则显示带有行号的列。
+					nowrap : true, //设置为 true，则把数据显示在一行里。设置为 true 可提高加载性能。
+					striped : true, //设置为 true，则把行条纹化。（即奇偶行使用不同背景色）
+				    loadMsg : "数据加载中,请稍等...", //当从远程站点加载数据时，显示的提示消息。
+				    pagination:true, //设置为 true，则在数据网格（datagrid）底部显示分页工具栏。
+				    pageSize:20, //当设置了 pagination 属性时，初始化页面尺寸。
+				    pageList:[5,10,20,30,50,100], //当设置了 pagination 属性时，初始化页面尺寸的选择列表。
+				    scrollbarSize:0,
+				    columns:[[ //设置表头 
+		               {
+							field:'id',
+							title:'编号',
+							align:"center",
+							width:500
+						},
+						{
+							field:'username',
+							title:'号码',
+							align:"center",
+							width:500
+						},
+						{
+							field:'password',
+							title:'验证码',
+							align:"center",
+							width:500
+						}
+					]],
+					onLoadSuccess:function(data){
+						//表头无分割线
+						$.each($("td"),function(){
+							$(this).css("border-style","none");
+						});
+						if (data.total == 0) {//如果没有数据    进
+							var tip = '<div id="nothing" style="font-size:20px;height:200px;line-height:200px;text-align:center;color:rgb(200,200,200)"><span style="font-size: 16px;color:#B3B3B3;">未查询到用户列表</span></div>';
+						    //添加一个新数据行，第一列的值为你需要的提示信息，然后将其他列合并到第一列来，注意修改colspan参数为你columns配置的总列数
+						    $(this).datagrid('appendRow', { id:tip }).datagrid('mergeCells', { index: 0, field: 'id', colspan: 3})
+						    //隐藏分页导航条，这个需要熟悉datagrid的html结构，直接用jquery操作DOM对象，easyui datagrid没有提供相关方法隐藏导航条
+						    $(this).closest('div.datagrid-wrap').find('div.datagrid-pager').hide();
+						    //移除鼠标移到行上面时,让背景不发生改变
+						    $(".datagrid-body tr").removeClass();
+						}
+						else { 
+						    //如果通过调用reload方法重新加载数据有数据时显示出分页导航容器
+						    $(this).closest('div.datagrid-wrap').find('div.datagrid-pager').show();
+						}
+					}
+				});
+				//分页条格式
+				$("#memberList").datagrid('getPager').pagination({
+	                layout:['list','sep','first','prev','sep','links','sep','next','last','sep','refresh']
+	            });
+	        });
 		/*]]>*/
 		</script>
-		<style>
-			.bg-1 label{
-				padding-right:30px;
-			}
-		</style>
 		
-		<form id="saveForm" th:action="@{/admin/user/save_new_pwd}" method="post">
-			<!--container-->
-			<div class="r_container commonAdd">
-				<div class="header">
-					<img th:src="@{/assets/imgs/home.png}" />
-					<span>账户管理>>密码修改</span>
-				</div>
-				
-				<div class="bg-1 mg-top-20">
-					<label>原密码</label>
-					<input name="oldPwd" type="text" class="easyui-passwordbox" data-options="width:170,height:30,required:true,validateOnCreate:false"/>
-				</div>
-				
-				<div class="bg-1 bg-12" style="background: #FFFFFF;">
-					<label>新密码</label>
-					<input id="newPwd" name="newPwd" type="text" class="easyui-passwordbox" data-options="width:170,height:30,required:true,validateOnCreate:false"/>
-				</div>
-				
-				<div class="bg-1 bg-13">
-					<label style="padding-right: 18px">确认密码</label>
-					<input type="text" class="easyui-passwordbox" data-options="width:170,height:30,required:true,validateOnCreate:false,validType:['isSame[\'#newPwd\']']"/>
-				</div>
-				
-				<p>
-					<span class="btn-1" id="saveButton">确 认</span>
-				</p>
-			</div>
-		</form>
+	    <table id="memberList"></table>
+		
 	</body>
 </html>
