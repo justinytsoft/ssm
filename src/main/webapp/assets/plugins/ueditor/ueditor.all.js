@@ -24461,14 +24461,20 @@ UE.plugin.register('simpleupload', function (){
                 me.execCommand('inserthtml', '<img class="loadingclass" id="' + loadingId + '" src="' + me.options.themePath + me.options.theme +'/images/spacer.gif" title="' + (me.getLang('simpleupload.loading') || '') + '" >');
 
                 function callback(){
+                	var errorMsg = "";
                     try{
                         var link, json, loader,
                             body = (iframe.contentDocument || iframe.contentWindow.document).body,
                             result = body.innerText || body.textContent || '';
                         json = (new Function("return " + result))();
                         //link = me.options.imageUrlPrefix + json.url;
-                        var _myImg = json.data.paths[0].split(".");
-                        link = json.data.prefix + _myImg[0] + "_S." + _myImg[1];
+                        errorMsg = json.message; //错误信息
+                        var _myImg = json.data.paths[0].split("."); //图片路径
+                        if("gif"==_myImg[1]){ //如果是gif则不需要加_S
+                        	link = json.data.prefix + _myImg[0] + "." + _myImg[1];
+                        }else{
+                        	link = json.data.prefix + _myImg[0] + "_S." + _myImg[1];
+                        }
                         if(json.status == '200') {
                             loader = me.document.getElementById(loadingId);
                             loader.setAttribute('src', link);
@@ -24481,7 +24487,7 @@ UE.plugin.register('simpleupload', function (){
                             showErrorLoader && showErrorLoader(json.state);
                         }
                     }catch(er){
-                        showErrorLoader && showErrorLoader(me.getLang('simpleupload.loadError'));
+                        showErrorLoader && showErrorLoader(errorMsg);
                     }
                     form.reset();
                     domUtils.un(iframe, 'load', callback);

@@ -486,7 +486,7 @@ public class DataUtil {
 						// 保存上传的文件
 						file.transferTo(localFile);
 						//是否创建缩略图
-						if (createThumb) {
+						if (createThumb && !".gif".contains(ext.toLowerCase())) {
 							if(W == 0 && H == 0){
 								String widthS = SettingUtil.getCommonSetting("thumbnailator.width");
 								String heightS = SettingUtil.getCommonSetting("thumbnailator.height");
