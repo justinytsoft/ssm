@@ -23,6 +23,10 @@ A:active{text-decoration:none;}
 .custom-dialog .dialog-close{
 	cursor:pointer;
 	margin:12px 10px 0 0;
+	border: 1px solid #FBFBFB;
+}
+.custom-dialog .dialog-close:HOVER{
+	border: 1px solid #E8E8E8;
 }
 .custom-dialog .dialog-top{
 	height:40px;
