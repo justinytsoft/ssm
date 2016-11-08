@@ -38,7 +38,7 @@
             //充值
             function charge(username){
             	cPrompt("请输入要充值的金额：",function(price){
-            		if(typeof price!="undefined"){
+            		if(typeof price!="undefined" && price!=""){
 	            		if(checkMoney(price)){
 	            			$.post([[@{/admin/member/charge}]],{_:Math.random(),username:username,price:price},function(data){
 	                			if(data.flag){
@@ -236,6 +236,26 @@
 			}
 		/*]]>*/
 		</script>
+		
+		<!-- 充值对话框 -->
+		<div id="chargeDialog" class="easyui-dialog custom-dialog" data-options="width:350,height:300,border:false,noheader:true,modal:true,footer:'#dialogFooter'">
+	        <div class="dialog-top">
+	        	<span class="dialog-title">充 值</span>
+	        	<img class="dialog-close flr" alt="关闭" th:src="@{/assets/imgs/close.png}" onclick="$('#chargeDialog').dialog('close')"/>
+	        </div>
+	        
+	        <div class="dialog_content">
+	        	
+	        </div>
+	    </div>
+	    <div id="dialogFooter" class="custom-dialog-footer">
+	        <div>
+		        <span class="fll footer-btn" onclick="$('#chargeDialog').dialog('close')">取 消</span>
+	        </div>
+			<div>
+		        <span class="flr footer-btn">确 定</span>
+			</div>
+	    </div> 
 	
 		<div class="r_container activeAmin commonAdmin">
 			<div class="header">
@@ -270,21 +290,6 @@
 				<table id="memberList"></table>
 			</div>
 		</div>
-		
-		<div id="dlg" class="easyui-dialog" data-options="border:false,noheader:true,modal:true,footer:'#footer'" style="width:350px;height:300px;padding:10px">
-	        <div>
-	        	<span>充 值</span>
-	        	<img alt="关闭" th:src="@{/assets/imgs/close.gif}" />
-	        </div>
-	    </div>
-	    <div id="footer" style="padding:5px;height:30px;line-height:30px">
-	        <div style="padding:0 60px;">
-		        <span style="font-size:18px;color:#B9B9B9;float:left;cursor:pointer;">取 消</span>
-	        </div>
-			<div style="padding:0 60px;">
-		        <span style="font-size:18px;color:#B9B9B9;float:right;cursor:pointer;">确 定</span>
-			</div>
-	    </div>
 	</body>
 
 </html>

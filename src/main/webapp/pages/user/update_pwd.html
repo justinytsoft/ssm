@@ -25,7 +25,12 @@
 	 		});
 		/*]]>*/
 		</script>
-	
+		<style>
+			.bg-1 label{
+				padding-right:30px;
+			}
+		</style>
+		
 		<form id="saveForm" th:action="@{/admin/user/save_new_pwd}" method="post">
 			<!--container-->
 			<div class="r_container commonAdd">
@@ -35,18 +40,18 @@
 				</div>
 				
 				<div class="bg-1 mg-top-20">
-					<label>原密码：</label>
+					<label>原密码</label>
 					<input name="oldPwd" type="text" class="easyui-passwordbox" data-options="width:170,height:30,required:true,validateOnCreate:false"/>
 				</div>
 				
 				<div class="bg-1 bg-12" style="background: #FFFFFF;">
-					<label>新密码：</label>
+					<label>新密码</label>
 					<input id="newPwd" name="newPwd" type="text" class="easyui-passwordbox" data-options="width:170,height:30,required:true,validateOnCreate:false"/>
 				</div>
 				
 				<div class="bg-1 bg-13">
-					<label>确认密码：</label>
-					<input type="text" class="easyui-passwordbox" data-options="width:160,height:30,required:true,validateOnCreate:false,validType:['isSame[\'#newPwd\']']"/>
+					<label style="padding-right: 18px">确认密码</label>
+					<input type="text" class="easyui-passwordbox" data-options="width:170,height:30,required:true,validateOnCreate:false,validType:['isSame[\'#newPwd\']']"/>
 				</div>
 				
 				<p>

@@ -14,6 +14,39 @@ A:active{text-decoration:none;}
 	opacity: 0.6;
 }
 
+/* dialog样式 */
+.custom-dialog .dialog-title{
+	margin-left:30px;
+	font-size:19px;
+	color:#989898
+}
+.custom-dialog .dialog-close{
+	cursor:pointer;
+	margin:12px 10px 0 0;
+}
+.custom-dialog .dialog-top{
+	height:40px;
+	line-height:40px;
+	text-align:center;
+	background-color:#FBFBFB;
+	border-bottom:1px solid #E0DFDF
+}
+.custom-dialog-footer{
+	height:40px;
+	line-height:40px;
+}
+.custom-dialog-footer>div{
+	padding:0 60px;
+}
+.custom-dialog-footer .footer-btn{
+	color:#8E8E8E;
+	font-size:18px;
+	cursor:pointer;
+}
+.custom-dialog-footer .footer-btn:HOVER{
+	color:#D2D2D2;
+}
+
 /* 弹出框样式 */
 .messager-window{
 	background: rgb(250, 250, 250);
