@@ -1,10 +1,12 @@
 package com.FangBianMian.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -165,15 +167,39 @@ public class MemberController {
 	}
 	
 	/**
+	 * 跨域请求
+	 * @throws IOException
+	 */
+	@RequestMapping("/kyJson")
+	@ResponseBody
+	public void jsonpTest(HttpServletRequest request, HttpServletResponse response) throws IOException{
+	     //根据html指定的jsonp回调函数的参数名，获取回调函数的名称
+	     //callbackName的值其实就是：success_jsonpCallback
+	     String callbackName = request.getParameter("jsoncallback");
+	     //简单模拟一个json字符串，实际可使用google的gson进行转换，次数通过字符串拼接
+	     //{"name":"张三","age":28}
+	     //\是对"号进行转义
+	     String jsonStr = "{\"name\":\"张三\",\"age\":28}";
+	     //最终返回的数据为：success_jsonpCallback({"name":"张三","age":28})
+	     String renderStr = callbackName+"("+jsonStr+")";
+	     response.setContentType("text/plain;charset=UTF-8");
+	     response.getWriter().write(renderStr); 
+	 } 
+	
+	
+	/**
 	 * 用户列表数据
 	 * @return
 	 */
 	@RequestMapping("/listData")
 	@ResponseBody
-	public EasyuiDatagrid<Member> listData(@RequestParam(required=false) Integer page,
+	public EasyuiDatagrid<Member> listData(HttpServletResponse response,
+											@RequestParam(required=false) Integer page,
 											@RequestParam(required=false) Integer rows,
 											@RequestParam(required=false) String name,
 											@RequestParam(required=false) Integer status){
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		
 		EasyuiDatagrid<Member> ed = new EasyuiDatagrid<Member>();
 		Map<String,Object> param = new HashMap<String,Object>();
 
