@@ -12,8 +12,8 @@ public class AlidayuSMS {
 		//官网的URL
 		String url = "http://gw.api.taobao.com/router/rest";
 		//成为开发者，创建应用后系统自动生成
-		String appkey = "23655967";
-		String secret = "17ad96cdbaa53099f1a5f44200da07b9";
+		String appkey = "xxxxxx";
+		String secret = "xxxx";
 		//短信模板的内容
 		String json = JsonUtil.toJson(new AlidayuSMSBean());
 		
@@ -23,8 +23,8 @@ public class AlidayuSMS {
 		req.setSmsType("normal"); //默认使用 normal
 		req.setSmsFreeSignName("个人测试"); //短信签名
 		req.setSmsParam(json); //短信内容
-		req.setSmsTemplateCode("SMS_50145002"); //短信模板ID
-		req.setRecNum("18380426135");//手机号码，如果是多个手机号码可以用逗号隔开
+		req.setSmsTemplateCode("xxx"); //短信模板ID
+		req.setRecNum("xxxx");//手机号码，如果是多个手机号码可以用逗号隔开
 		
 		try{
 			AlibabaAliqinFcSmsNumSendResponse rsp = client.execute(req);
